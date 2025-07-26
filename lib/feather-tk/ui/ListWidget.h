@@ -64,6 +64,12 @@ namespace feather_tk
         //! Clear the search.
         void clearSearch();
 
+        //! Get whether the scroll area has a border.
+        bool hasBorder() const;
+
+        //! Set whether the scroll area has a border.
+        void setBorder(bool);
+
         void setGeometry(const Box2I&) override;
         void sizeHintEvent(const SizeHintEvent&) override;
 
