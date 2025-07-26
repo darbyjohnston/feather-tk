@@ -119,16 +119,6 @@ namespace feather_tk
         _p->scrollWidget->setGeometry(value);
     }
 
-    bool ListWidget::hasBorder() const
-    {
-        return _p->scrollWidget->hasBorder();
-    }
-
-    void ListWidget::setBorder(bool value)
-    {
-        _p->scrollWidget->setBorder(value);
-    }
-
     void ListWidget::sizeHintEvent(const SizeHintEvent& event)
     {
         IWidget::sizeHintEvent(event);
