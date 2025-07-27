@@ -41,6 +41,9 @@ namespace feather_tk
         //! Get the settings path.
         const std::filesystem::path& getPath() const;
 
+        //! Save the settings. The settings are also saved on destruction.
+        void save();
+
         //! Do the settings contain the given value?
         bool contains(const std::string& key) const;
 

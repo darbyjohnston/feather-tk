@@ -4,8 +4,11 @@
 
 #include <feather-tk/ui/Settings.h>
 
+#include <feather-tk/core/Context.h>
 #include <feather-tk/core/File.h>
 #include <feather-tk/core/FileIO.h>
+#include <feather-tk/core/Format.h>
+#include <feather-tk/core/LogSystem.h>
 #include <feather-tk/core/String.h>
 
 #include <map>
@@ -21,6 +24,7 @@ namespace feather_tk
 
     struct Settings::Private
     {
+        std::weak_ptr<LogSystem> logSystem;
         std::filesystem::path path;
         nlohmann::json settings;
     };
@@ -32,6 +36,9 @@ namespace feather_tk
         _p(new Private)
     {
         FEATHER_TK_P();
+
+        auto logSystem = context->getLogSystem();
+        p.logSystem = logSystem;
 
         p.path = path;
 
@@ -48,24 +55,20 @@ namespace feather_tk
                 {
                     p.settings = nlohmann::json::parse(contents);
                 }
-                catch (const std::exception&)
-                {}
+                catch (const std::exception& e)
+                {
+                    logSystem->print(
+                        "feather_tk::Settings",
+                        Format("Cannot read settings: {0}: {1}").arg(p.path).arg(e.what()),
+                        LogType::Error);
+                }
             }
         }
     }
 
     Settings::~Settings()
     {
-        FEATHER_TK_P();
-        if (!p.path.empty())
-        {
-            try
-            {
-                FileIO::create(p.path, FileMode::Write)->write(p.settings.dump(4));
-            }
-            catch (const std::exception&)
-            {}
-        }
+        save();
     }
 
     std::shared_ptr<Settings> Settings::create(
@@ -79,6 +82,28 @@ namespace feather_tk
     const std::filesystem::path& Settings::getPath() const
     {
         return _p->path;
+    }
+
+    void Settings::save()
+    {
+        FEATHER_TK_P();
+        if (!p.path.empty())
+        {
+            try
+            {
+                FileIO::create(p.path, FileMode::Write)->write(p.settings.dump(4));
+            }
+            catch (const std::exception& e)
+            {
+                if (auto logSystem = p.logSystem.lock())
+                {
+                    logSystem->print(
+                        "feather_tk::Settings",
+                        Format("Cannot write settings: {0}: {1}").arg(p.path).arg(e.what()),
+                        LogType::Error);
+                }
+            }
+        }
     }
 
     bool Settings::contains(const std::string& key) const
