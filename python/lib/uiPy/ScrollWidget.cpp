@@ -23,6 +23,8 @@ namespace feather_tk
                 py::arg("parent") = nullptr)
             .def_property("widget", &ScrollWidget::getWidget, &ScrollWidget::setWidget)
             .def_property_readonly("viewport", &ScrollWidget::getViewport)
+            .def_property("scrollType", &ScrollWidget::getScrollType, &ScrollWidget::setScrollType)
+            .def_property_readonly("scrollSize", &ScrollWidget::getScrollSize)
             .def_property("scrollPos", &ScrollWidget::getScrollPos, &ScrollWidget::setScrollPos)
             .def("setScrollPosCallback", &ScrollWidget::setScrollPosCallback)
             .def_property("scrollBarsVisible", &ScrollWidget::areScrollBarsVisible, &ScrollWidget::setScrollBarsVisible)

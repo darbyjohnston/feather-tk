@@ -67,6 +67,20 @@ namespace feather_tk
         return out;
     }
 
+    ScrollType ScrollArea::getScrollType() const
+    {
+        return _p->scrollType;
+    }
+
+    void ScrollArea::setScrollType(ScrollType value)
+    {
+        FEATHER_TK_P();
+        if (value == p.scrollType)
+            return;
+        p.scrollType = value;
+        _setSizeUpdate();
+    }
+
     const Size2I& ScrollArea::getScrollSize() const
     {
         return _p->scrollSize;

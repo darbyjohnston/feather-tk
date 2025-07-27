@@ -44,6 +44,12 @@ namespace feather_tk
             ScrollType = ScrollType::Both,
             const std::shared_ptr<IWidget>& parent = nullptr);
 
+        //! Get the scroll type.
+        ScrollType getScrollType() const;
+
+        //! Set the scroll type.
+        void setScrollType(ScrollType);
+
         //! Get the scroll size.
         const Size2I& getScrollSize() const;
 

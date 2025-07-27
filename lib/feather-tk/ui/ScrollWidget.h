@@ -40,6 +40,12 @@ namespace feather_tk
         //! Get the viewport geometry.
         Box2I getViewport() const;
 
+        //! Get the scroll type.
+        ScrollType getScrollType() const;
+
+        //! Set the scroll type.
+        void setScrollType(ScrollType);
+
         //! Get the scroll size.
         const Size2I& getScrollSize() const;
 

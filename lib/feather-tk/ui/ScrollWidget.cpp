@@ -48,75 +48,44 @@ namespace feather_tk
         p.scrollArea = ScrollArea::create(context, scrollType);
         p.scrollArea->setStretch(Stretch::Expanding);
 
-        switch (scrollType)
-        {
-        case ScrollType::Horizontal:
-            p.horizontalScrollBar = ScrollBar::create(context, Orientation::Horizontal);
-            break;
-        case ScrollType::Vertical:
-        case ScrollType::Menu:
-            p.verticalScrollBar = ScrollBar::create(context, Orientation::Vertical);
-            break;
-        case ScrollType::Both:
-            p.horizontalScrollBar = ScrollBar::create(context, Orientation::Horizontal);
-            p.verticalScrollBar = ScrollBar::create(context, Orientation::Vertical);
-            break;
-        default: break;
-        }
+        p.horizontalScrollBar = ScrollBar::create(context, Orientation::Horizontal);
+        p.verticalScrollBar = ScrollBar::create(context, Orientation::Vertical);
 
         p.layout = GridLayout::create(context, shared_from_this());
         p.layout->setMarginRole(p.border ? SizeRole::Border : SizeRole::None);
         p.layout->setSpacingRole(SizeRole::None);
         p.scrollArea->setParent(p.layout);
         p.layout->setGridPos(p.scrollArea, 0, 0);
-        if (p.horizontalScrollBar)
-        {
-            if (p.scrollBarsAutoHide)
-            {
-                p.horizontalScrollBar->hide();
-            }
-            p.horizontalScrollBar->setParent(p.layout);
-            p.layout->setGridPos(p.horizontalScrollBar, 1, 0);
-        }
-        if (p.verticalScrollBar)
-        {
-            if (p.scrollBarsAutoHide)
-            {
-                p.verticalScrollBar->hide();
-            }
-            p.verticalScrollBar->setParent(p.layout);
-            p.layout->setGridPos(p.verticalScrollBar, 0, 1);
-        }
+        p.horizontalScrollBar->setParent(p.layout);
+        p.layout->setGridPos(p.horizontalScrollBar, 1, 0);
+        p.verticalScrollBar->setParent(p.layout);
+        p.layout->setGridPos(p.verticalScrollBar, 0, 1);
 
-        if (p.horizontalScrollBar)
-        {
-            p.horizontalScrollBar->setScrollPosCallback(
-                [this](int value)
-                {
-                    V2I scrollPos;
-                    scrollPos.x = value;
-                    if (_p->verticalScrollBar)
-                    {
-                        scrollPos.y = _p->verticalScrollBar->getScrollPos();
-                    }
-                    _p->scrollArea->setScrollPos(scrollPos);
-                });
-        }
+        _scrollBarsUpdate();
 
-        if (p.verticalScrollBar)
-        {
-            p.verticalScrollBar->setScrollPosCallback(
-                [this](int value)
+        p.horizontalScrollBar->setScrollPosCallback(
+            [this](int value)
+            {
+                V2I scrollPos;
+                scrollPos.x = value;
+                if (_p->verticalScrollBar)
                 {
-                    V2I scrollPos;
-                    if (_p->horizontalScrollBar)
-                    {
-                        scrollPos.x = _p->horizontalScrollBar->getScrollPos();
-                    }
-                    scrollPos.y = value;
-                    _p->scrollArea->setScrollPos(scrollPos);
-                });
-        }
+                    scrollPos.y = _p->verticalScrollBar->getScrollPos();
+                }
+                _p->scrollArea->setScrollPos(scrollPos);
+            });
+
+        p.verticalScrollBar->setScrollPosCallback(
+            [this](int value)
+            {
+                V2I scrollPos;
+                if (_p->horizontalScrollBar)
+                {
+                    scrollPos.x = _p->horizontalScrollBar->getScrollPos();
+                }
+                scrollPos.y = value;
+                _p->scrollArea->setScrollPos(scrollPos);
+            });
 
         p.scrollArea->setScrollSizeCallback(
             [this](const Size2I& value)
@@ -190,6 +159,22 @@ namespace feather_tk
     Box2I ScrollWidget::getViewport() const
     {
         return _p->scrollArea->getChildrenClipRect();
+    }
+
+    ScrollType ScrollWidget::getScrollType() const
+    {
+        return _p->scrollArea->getScrollType();
+    }
+
+    void ScrollWidget::setScrollType(ScrollType value)
+    {
+        FEATHER_TK_P();
+        const bool changed = value != p.scrollArea->getScrollType();
+        p.scrollArea->setScrollType(value);
+        if (changed)
+        {
+            _scrollBarsUpdate();
+        }
     }
 
     const Size2I& ScrollWidget::getScrollSize() const
@@ -390,23 +375,26 @@ namespace feather_tk
         FEATHER_TK_P();
         const Size2I scrollSize = p.scrollArea->getScrollSize();
         const Size2I scrollAreaSize = p.scrollArea->getGeometry().size();
-        if (p.horizontalScrollBar)
+
+        bool hVisible = p.scrollBarsVisible;
+        bool vVisible = p.scrollBarsVisible;
+        switch (p.scrollType)
         {
-            bool visible = p.scrollBarsVisible;
-            if (p.scrollBarsAutoHide)
-            {
-                visible &= scrollSize.w > scrollAreaSize.w;
-            }
-            p.horizontalScrollBar->setVisible(visible);
+        case ScrollType::Horizontal:
+            vVisible = false;
+            break;
+        case ScrollType::Vertical:
+        case ScrollType::Menu:
+            hVisible = false;
+            break;
+        default: break;
         }
-        if (p.verticalScrollBar)
+        if (p.scrollBarsAutoHide)
         {
-            bool visible = p.scrollBarsVisible;
-            if (p.scrollBarsAutoHide)
-            {
-                visible &= scrollSize.h > scrollAreaSize.h;
-            }
-            p.verticalScrollBar->setVisible(visible);
+            hVisible &= scrollSize.w > scrollAreaSize.w;
+            vVisible &= scrollSize.h > scrollAreaSize.h;
         }
+        p.horizontalScrollBar->setVisible(hVisible);
+        p.verticalScrollBar->setVisible(vVisible);
     }
 }
