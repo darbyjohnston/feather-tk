@@ -118,6 +118,14 @@ Optional dependencies:
 
 ## Building on Linux
 
+Dependencies:
+* CMake 3.31
+
+Install system packages (Debian based systems):
+```
+sudo apt-get install xorg-dev libglu1-mesa-dev mesa-common-dev mesa-utils
+```
+
 Clone the repository:
 ```
 git clone https://github.com/darbyjohnston/feather-tk.git
@@ -144,6 +152,10 @@ cmake --build Debug -j 4 --config Debug
 
 
 ## Building on macOS
+
+Dependencies:
+* Xcode
+* CMake 3.31
 
 Clone the repository:
 ```
@@ -186,6 +198,13 @@ alias intel="env /usr/bin/arch -x86_64 /bin/zsh --login"
 
 
 ## Building on Windows
+
+Dependencies:
+* Visual Studio 2022
+* CMake 3.31
+
+Open the Visual Studio command console "x64 Native Tools Command Prompt for VS 2022".
+This can be found in the Start menu, in the "Visual Studio 2022" folder.
 
 Clone the repository:
 ```
