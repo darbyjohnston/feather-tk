@@ -15,7 +15,6 @@ namespace feather_tk
 {
     struct ScrollWidget::Private
     {
-        ScrollType scrollType = ScrollType::Both;
         bool scrollBarsVisible = true;
         bool scrollBarsAutoHide = true;
         bool scrollEventsEnabled = true;
@@ -42,8 +41,6 @@ namespace feather_tk
     {
         IWidget::_init(context, "feather_tk::ScrollWidget", parent);
         FEATHER_TK_P();
-
-        p.scrollType = scrollType;
 
         p.scrollArea = ScrollArea::create(context, scrollType);
         p.scrollArea->setStretch(Stretch::Expanding);
@@ -378,7 +375,7 @@ namespace feather_tk
 
         bool hVisible = p.scrollBarsVisible;
         bool vVisible = p.scrollBarsVisible;
-        switch (p.scrollType)
+        switch (p.scrollArea->getScrollType())
         {
         case ScrollType::Horizontal:
             vVisible = false;
