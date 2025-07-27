@@ -271,7 +271,8 @@ namespace feather_tk
             p.draw->glyphs,
             p.size.fontMetrics,
             p.draw->g2.min,
-            event.style->getColorRole(isEnabled() ?
+            event.style->getColorRole(
+                isEnabled() ?
                 p.textRole :
                 ColorRole::TextDisabled));
     }
