@@ -45,6 +45,7 @@ namespace feather_tk
         void sizeHintEvent(const SizeHintEvent&) override;
         void clipEvent(const Box2I&, bool) override;
         void drawEvent(const Box2I&, const DrawEvent&) override;
+        void scrollEvent(ScrollEvent&) override;
         void keyPressEvent(KeyEvent&) override;
         void keyReleaseEvent(KeyEvent&) override;
 

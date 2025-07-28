@@ -198,25 +198,22 @@ namespace feather_tk
         }
     }
 
+    void IDialog::scrollEvent(ScrollEvent& event)
+    {
+        event.accept = true;
+    }
+
     void IDialog::keyPressEvent(KeyEvent& event)
     {
-        if (0 == event.modifiers)
+        event.accept = event.key != Key::Tab;
+        if (Key::Escape == event.key && 0 == event.modifiers)
         {
-            if (Key::Escape == event.key)
-            {
-                event.accept = true;
-                close();
-            }
-        }
-        if (!event.accept)
-        {
-            IPopup::keyPressEvent(event);
+            close();
         }
     }
 
     void IDialog::keyReleaseEvent(KeyEvent& event)
     {
-        IPopup::keyReleaseEvent(event);
         event.accept = true;
     }
 }
