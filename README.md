@@ -126,6 +126,11 @@ Install system packages (Debian based systems):
 sudo apt-get install xorg-dev libglu1-mesa-dev mesa-common-dev mesa-utils
 ```
 
+Install system packages (Rocky 9):
+```
+sudo dnf install libX11-devel libXrandr-devel libXinerama-devel libXcursor-devel libXi-devel mesa-libGL-devel
+```
+
 Clone the repository:
 ```
 git clone https://github.com/darbyjohnston/feather-tk.git
