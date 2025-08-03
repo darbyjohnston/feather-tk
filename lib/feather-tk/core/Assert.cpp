@@ -10,7 +10,7 @@
 
 namespace feather_tk
 {
-    void _assert(const char* file, int line)
+    void ftk_assert(const char* file, int line)
     {
         std::cout << "ASSERT: " << file << ":" << line << std::endl;
         abort();

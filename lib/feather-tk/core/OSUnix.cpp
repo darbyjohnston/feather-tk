@@ -21,6 +21,8 @@
 #if defined(__APPLE__)
 #include <sys/types.h>
 #include <sys/sysctl.h>
+#elif defined(__FreeBSD__)
+#include <sys/sysctl.h>
 #else // __APPLE__
 #include <sys/sysinfo.h>
 #endif // __APPLE__
@@ -52,6 +54,13 @@ namespace feather_tk
             uint64_t size = 0;
             size_t len = sizeof(size);
             if (0 == sysctl(name, namelen, &size, &len, NULL, 0))
+            {
+                out = static_cast<size_t>(size);
+            }
+#elif defined(__FreeBSD__)
+            uint64_t size = 0;
+            size_t len = sizeof(size);
+            if (0 == sysctlbyname("hw.physmem", &size, &len, NULL, 0))
             {
                 out = static_cast<size_t>(size);
             }
