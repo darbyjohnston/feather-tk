@@ -6,7 +6,7 @@ if(POLICY CMP0135)
 endif()
 
 set(feather_tk_VERSION_MAJOR "0")
-set(feather_tk_VERSION_MINOR "4")
+set(feather_tk_VERSION_MINOR "5")
 set(feather_tk_VERSION_PATCH "0")
 set(feather_tk_VERSION ${feather_tk_VERSION_MAJOR}.${feather_tk_VERSION_MINOR}.${feather_tk_VERSION_PATCH})
 add_definitions(-Dfeather_tk_VERSION_MAJOR=${feather_tk_VERSION_MAJOR})
