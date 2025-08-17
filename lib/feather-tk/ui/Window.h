@@ -96,7 +96,7 @@ namespace feather_tk
     protected:
         virtual std::shared_ptr<IRender> _createRender(const std::shared_ptr<Context>&);
 
-        void _sizeUpdate(const Size2I& window, const Size2I& frameBuffer);
+        void _sizeUpdate();
 
         virtual void _update(
             const std::shared_ptr<FontSystem>&,

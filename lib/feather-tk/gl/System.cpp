@@ -50,7 +50,8 @@ namespace feather_tk
             FEATHER_TK_P();
 
             // Initialize SDL.
-            SDL_SetHint(SDL_HINT_WINDOWS_DPI_SCALING, "1");
+            SDL_SetHint(SDL_HINT_WINDOWS_DPI_AWARENESS, "permonitorv2");
+            //SDL_SetHint(SDL_HINT_WINDOWS_DPI_SCALING, "0");
             if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) < 0)
             {
                 throw std::runtime_error("Cannot initialize SDL");

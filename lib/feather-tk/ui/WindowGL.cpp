@@ -45,6 +45,7 @@ namespace feather_tk
 
         Size2I size;
         Size2I frameBufferSize;
+        float contentScale = 1.F;
         std::shared_ptr<ObservableValue<bool> > fullScreen;
         std::shared_ptr<ObservableValue<bool> > floatOnTop;
         std::shared_ptr<ObservableValue<ImageType> > bufferType;
@@ -84,15 +85,9 @@ namespace feather_tk
             size,
             static_cast<int>(gl::WindowOptions::DoubleBuffer));
 
-        if (SDL_Window* sdlWindow = SDL_GetWindowFromID(p.window->getID()))
-        {
-            SDL_GL_GetDrawableSize(sdlWindow, &p.frameBufferSize.w, &p.frameBufferSize.h);
-        }
-
         p.render = _createRender(context);
 
-        _setSizeUpdate();
-        _setDrawUpdate();
+        _sizeUpdate();
 
         app->addWindow(std::dynamic_pointer_cast<Window>(shared_from_this()));
     }
@@ -203,17 +198,14 @@ namespace feather_tk
 
     float Window::getContentScale() const
     {
-        FEATHER_TK_P();
-        return p.size.w > 0 ?
-            (p.frameBufferSize.w / static_cast<float>(p.size.w)) :
-            0.F;
+        return _p->contentScale;
     }
 
     float Window::getDisplayScale() const
     {
         FEATHER_TK_P();
         const float ds = p.displayScale->get();
-        return ds > 0.F ? ds : getContentScale();
+        return ds > 0.F ? ds : p.contentScale;
     }
 
     std::shared_ptr<IObservableValue<float> > Window::observeDisplayScale() const
@@ -315,11 +307,20 @@ namespace feather_tk
         return gl::Render::create(context);
     }
 
-    void Window::_sizeUpdate(const Size2I& window, const Size2I& frameBuffer)
+    void Window::_sizeUpdate()
     {
         FEATHER_TK_P();
-        p.size = window;
-        p.frameBufferSize = frameBuffer;
+        if (SDL_Window* sdlWindow = SDL_GetWindowFromID(p.window->getID()))
+        {
+            SDL_GetWindowSize(sdlWindow, &p.size.w, &p.size.h);
+            SDL_GL_GetDrawableSize(sdlWindow, &p.frameBufferSize.w, &p.frameBufferSize.h);
+            const int displayIndex = SDL_GetWindowDisplayIndex(sdlWindow);
+            float ddpi = 0.F;
+            float hdpi = 0.F;
+            float vdpi = 0.F;
+            SDL_GetDisplayDPI(displayIndex, &ddpi, &hdpi, &vdpi);
+            p.contentScale = hdpi / 96.F;
+        }
         _setSizeUpdate();
         _setDrawUpdate();
     }

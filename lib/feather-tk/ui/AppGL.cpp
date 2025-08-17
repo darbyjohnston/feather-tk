@@ -532,14 +532,7 @@ namespace feather_tk
                         {
                             if (window->getID() == event.window.windowID)
                             {
-                                if (SDL_Window* sdlWindow = SDL_GetWindowFromID(event.window.windowID))
-                                {
-                                    Size2I size;
-                                    SDL_GetWindowSize(sdlWindow, &size.w, &size.h);
-                                    Size2I frameBuffer;
-                                    SDL_GL_GetDrawableSize(sdlWindow, &frameBuffer.w, &frameBuffer.h);
-                                    window->_sizeUpdate(size, frameBuffer);
-                                }
+                                window->_sizeUpdate();
                                 break;
                             }
                         }
@@ -577,10 +570,7 @@ namespace feather_tk
                 case SDL_MOUSEMOTION:
                     if (auto window = p.activeWindow.lock())
                     {
-                        const float contentScale = window->getContentScale();
-                        window->_cursorPos(V2I(
-                            event.motion.x * contentScale,
-                            event.motion.y * contentScale));
+                        window->_cursorPos(V2I(event.motion.x, event.motion.y));
                     }
                     break;
                 case SDL_MOUSEBUTTONDOWN:
