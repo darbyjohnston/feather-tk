@@ -82,13 +82,15 @@ namespace feather_tk
                 sdlWindowFlags);
             if (!p.sdlWindow)
             {
-                throw std::runtime_error("Cannot create window");
+                throw std::runtime_error(Format("Cannot create window: {0}").
+                    arg(SDL_GetError()));
             }
 
             p.sdlGLContext = SDL_GL_CreateContext(p.sdlWindow);
             if (!p.sdlWindow)
             {
-                throw std::runtime_error("Cannot create OpenGL context");
+                throw std::runtime_error(Format("Cannot create OpenGL context: {0}").
+                    arg(SDL_GetError()));
             }
             if (options & static_cast<int>(WindowOptions::DoubleBuffer))
             {

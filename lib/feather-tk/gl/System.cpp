@@ -38,7 +38,6 @@ namespace feather_tk
         
         struct System::Private
         {
-            bool sdlInit = false;
             std::shared_ptr<ObservableList<MonitorInfo> > monitors;
             std::shared_ptr<ListObserver<MonitorInfo> > monitorsObserver;
         };
@@ -53,11 +52,14 @@ namespace feather_tk
             SDL_SetHint(SDL_HINT_WINDOWS_DPI_AWARENESS, "permonitorv2");
             if (SDL_Init(SDL_INIT_VIDEO) < 0)
             {
-                throw std::runtime_error("Cannot initialize SDL");
+                throw std::runtime_error(Format("Cannot initialize SDL: {0}").
+                    arg(SDL_GetError()));
             }
-            SDL_GL_LoadLibrary(NULL);
-            p.sdlInit = true;
-            //auto logSystem = context->getSystem<LogSystem>();
+            if (SDL_GL_LoadLibrary(NULL) < 0)
+            {
+                throw std::runtime_error(Format("Cannot initialize OpenGL: {0}").
+                    arg(SDL_GetError()));
+            }
 
             p.monitors = ObservableList<MonitorInfo>::create();
             p.monitorsObserver = ListObserver<MonitorInfo>::create(
@@ -90,11 +92,7 @@ namespace feather_tk
 
         System::~System()
         {
-            FEATHER_TK_P();
-            if (p.sdlInit)
-            {
-                SDL_Quit();
-            }
+            SDL_Quit();
         }
 
         std::shared_ptr<System> System::create(const std::shared_ptr<Context>& context)
