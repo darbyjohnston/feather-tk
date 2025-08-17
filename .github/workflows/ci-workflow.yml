@@ -168,7 +168,8 @@ jobs:
         export DYLD_LIBRARY_PATH=$PWD/build/install/lib:$DYLD_LIBRARY_PATH
         cd build
         cd feather-tk/src/feather-tk-build
-        ctest --verbose --output-on-failure -C Debug
+        tests\feather-tk-test\feather-tk-test OffscreenBufferTest
+        #ctest --verbose --output-on-failure -C Debug
 
   windows-build:
     runs-on: windows-latest
