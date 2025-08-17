@@ -173,14 +173,6 @@ namespace feather_tk
             .value("F10", Key::F10)
             .value("F11", Key::F11)
             .value("F12", Key::F12)
-            .value("LeftShift", Key::LeftShift)
-            .value("LeftControl", Key::LeftControl)
-            .value("LeftAlt", Key::LeftAlt)
-            .value("LeftSuper", Key::LeftSuper)
-            .value("RightShift", Key::RightShift)
-            .value("RightControl", Key::RightControl)
-            .value("RightAlt", Key::RightAlt)
-            .value("RightSuper", Key::RightSuper)
             .export_values();
         m.def(
             "getShortcutLabel",

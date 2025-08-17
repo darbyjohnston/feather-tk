@@ -4,6 +4,7 @@
 
 #include <uiPy/Window.h>
 
+#include <feather-tk/ui/App.h>
 #include <feather-tk/ui/Window.h>
 
 #include <pybind11/pybind11.h>
@@ -18,11 +19,12 @@ namespace feather_tk
     public:
         static std::shared_ptr<PyWindow> create(
             const std::shared_ptr<Context>& context,
+            const std::shared_ptr<App>& app,
             const std::string& name,
             const Size2I& size)
         {
             auto out = std::shared_ptr<PyWindow>(new PyWindow);
-            out->_init(context, name, size);
+            out->_init(context, app, name, size);
             return out;
         }
 
@@ -43,6 +45,7 @@ namespace feather_tk
             .def(
                 py::init(&Window::create, &PyWindow::create),
                 py::arg("context"),
+                py::arg("app"),
                 py::arg("name"),
                 py::arg("size"))
             .def("show", &Window::show);
