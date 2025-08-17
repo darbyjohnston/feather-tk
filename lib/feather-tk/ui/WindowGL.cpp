@@ -45,7 +45,6 @@ namespace feather_tk
 
         Size2I size;
         Size2I frameBufferSize;
-        float contentScale = 1.F;
         std::shared_ptr<ObservableValue<bool> > fullScreen;
         std::shared_ptr<ObservableValue<bool> > floatOnTop;
         std::shared_ptr<ObservableValue<ImageType> > bufferType;
@@ -86,6 +85,21 @@ namespace feather_tk
             static_cast<int>(gl::WindowOptions::DoubleBuffer));
 
         p.render = _createRender(context);
+
+        if (SDL_Window* sdlWindow = SDL_GetWindowFromID(p.window->getID()))
+        {
+            const int displayIndex = SDL_GetWindowDisplayIndex(sdlWindow);
+            float dDpi = 0.F;
+            float hDpi = 0.F;
+            float vDpi = 0.F;
+            SDL_GetDisplayDPI(displayIndex, &dDpi, &hDpi, &vDpi);
+#if defined(__APPLE__)
+            const float baseDpi = 72.F;
+#else
+            const float baseDpi = 96.F;
+#endif // __APPLE__
+            p.displayScale->setIfChanged(hDpi / baseDpi);
+        }
 
         _sizeUpdate();
 
@@ -198,14 +212,17 @@ namespace feather_tk
 
     float Window::getContentScale() const
     {
-        return _p->contentScale;
+        FEATHER_TK_P();
+        return p.size.w > 0 ?
+            (p.frameBufferSize.w / static_cast<float>(p.size.w)) :
+            0.F;
     }
 
     float Window::getDisplayScale() const
     {
         FEATHER_TK_P();
         const float ds = p.displayScale->get();
-        return ds > 0.F ? ds : p.contentScale;
+        return ds > 0.F ? ds : getContentScale();
     }
 
     std::shared_ptr<IObservableValue<float> > Window::observeDisplayScale() const
@@ -314,12 +331,6 @@ namespace feather_tk
         {
             SDL_GetWindowSize(sdlWindow, &p.size.w, &p.size.h);
             SDL_GL_GetDrawableSize(sdlWindow, &p.frameBufferSize.w, &p.frameBufferSize.h);
-            const int displayIndex = SDL_GetWindowDisplayIndex(sdlWindow);
-            float ddpi = 0.F;
-            float hdpi = 0.F;
-            float vdpi = 0.F;
-            SDL_GetDisplayDPI(displayIndex, &ddpi, &hdpi, &vdpi);
-            p.contentScale = hdpi / 96.F;
         }
         _setSizeUpdate();
         _setDrawUpdate();

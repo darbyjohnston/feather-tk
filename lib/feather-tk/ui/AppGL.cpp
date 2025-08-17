@@ -489,6 +489,10 @@ namespace feather_tk
             {
                 out |= static_cast<int>(KeyModifier::Alt);
             }
+            if (value & KMOD_GUI)
+            {
+                out |= static_cast<int>(KeyModifier::Super);
+            }
             return out;
         }
     }
@@ -570,7 +574,10 @@ namespace feather_tk
                 case SDL_MOUSEMOTION:
                     if (auto window = p.activeWindow.lock())
                     {
-                        window->_cursorPos(V2I(event.motion.x, event.motion.y));
+                        const float contentScale = window->getContentScale();
+                        window->_cursorPos(V2I(
+                            event.motion.x * contentScale,
+                            event.motion.y * contentScale));
                     }
                     break;
                 case SDL_MOUSEBUTTONDOWN:
@@ -594,9 +601,10 @@ namespace feather_tk
                 case SDL_MOUSEWHEEL:
                     if (auto window = p.activeWindow.lock())
                     {
+                        const float contentScale = window->getContentScale();
                         window->_scroll(V2F(
-                            event.wheel.preciseX,
-                            event.wheel.preciseY),
+                            event.wheel.preciseX * contentScale,
+                            event.wheel.preciseY * contentScale),
                             fromSDL(static_cast<uint16_t>(SDL_GetModState())));
                     }
                     break;
