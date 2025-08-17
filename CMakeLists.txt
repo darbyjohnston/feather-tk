@@ -128,7 +128,7 @@ if(feather_tk_UI_LIB)
         "${feather_tk_API}" STREQUAL "GL_4_1_Debug" OR
         "${feather_tk_API}" STREQUAL "GLES_2")
         find_package(OpenGL REQUIRED)
-        find_package(glfw3 REQUIRED)
+        find_package(SDL2 REQUIRED)
         add_subdirectory(deps/glad_${feather_tk_API})
     endif()
     add_definitions(-DFEATHER_TK_API_${feather_tk_API})

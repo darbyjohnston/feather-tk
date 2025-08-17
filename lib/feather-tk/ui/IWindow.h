@@ -8,16 +8,25 @@
 
 namespace feather_tk
 {
-    class IClipboard;
+    class App;
 
     //! Base class for windows.
     class IWindow : public IWidget
     {
     protected:
+        void _init(
+            const std::shared_ptr<Context>&,
+            const std::shared_ptr<App>&,
+            const std::string& objectName,
+            const std::shared_ptr<IWidget>& parent);
+
         IWindow();
 
     public:
         virtual ~IWindow() = 0;
+
+        //! Get the application.
+        std::shared_ptr<App> getApp() const;
 
         //! Get the widget with key focus.
         std::shared_ptr<IWidget> getKeyFocus() const;
@@ -30,12 +39,6 @@ namespace feather_tk
 
         //! Get the previous widget to focus.
         std::shared_ptr<IWidget> getPrevKeyFocus(const std::shared_ptr<IWidget>&);
-
-        //! Get the clipboard.
-        const std::shared_ptr<IClipboard>& getClipboard() const;
-
-        //! Set the clipboard.
-        void setClipboard(const std::shared_ptr<IClipboard>&);
 
         //! Get whether tooltips are enabled.
         bool getTooltipsEnabled() const;
@@ -113,6 +116,8 @@ namespace feather_tk
             std::list<std::shared_ptr<IWidget> >&);
 
         void _closeTooltip();
+
+        friend class App;
 
         FEATHER_TK_PRIVATE();
     };

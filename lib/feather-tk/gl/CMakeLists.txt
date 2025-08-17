@@ -34,7 +34,7 @@ elseif ("${feather_tk_API}" STREQUAL "GLES_2")
 endif()
 
 add_library(feather-tk-gl ${HEADERS} ${PRIVATE_HEADERS} ${SOURCE})
-target_link_libraries(feather-tk-gl feather-tk-core glad glfw)
+target_link_libraries(feather-tk-gl feather-tk-core glad SDL2::SDL2-static)
 set_target_properties(feather-tk-gl PROPERTIES FOLDER lib)
 set_target_properties(feather-tk-gl PROPERTIES PUBLIC_HEADER "${HEADERS}")
 

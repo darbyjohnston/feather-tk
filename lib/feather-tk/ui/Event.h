@@ -243,14 +243,6 @@ namespace feather_tk
         F10,
         F11,
         F12,
-        LeftShift,
-        LeftControl,
-        LeftAlt,
-        LeftSuper,
-        RightShift,
-        RightControl,
-        RightAlt,
-        RightSuper,
 
         Count,
         First = Unknown

@@ -33,13 +33,12 @@ FEATHER_TK_MAIN()
         window->setWidget(layout);
 
         // Create a secondary window.
-        auto secondaryWindow = Window::create(context, "Secondary Window", Size2I(1280, 960));
+        auto secondaryWindow = Window::create(context, app, "Secondary Window", Size2I(1280, 960));
         auto secondaryLayout = VerticalLayout::create(context, secondaryWindow);
         secondaryLayout->setAlign(HAlign::Center, VAlign::Center);
         auto label = Label::create(context, "Secondary Window", secondaryLayout);
         auto fullScreenButton = PushButton::create(context, "Full Screen", secondaryLayout);
         fullScreenButton->setCheckable(true);
-        app->addWindow(secondaryWindow);
 
         // Create a button to open the secondary window.
         auto button = PushButton::create(context, "Secondary Window", layout);

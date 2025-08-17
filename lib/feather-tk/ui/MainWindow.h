@@ -42,9 +42,6 @@ namespace feather_tk
         void keyPressEvent(KeyEvent&) override;
         void keyReleaseEvent(KeyEvent&) override;
 
-    protected:
-        const std::shared_ptr<App> _getApp() const;
-
     private:
         FEATHER_TK_PRIVATE();
     };

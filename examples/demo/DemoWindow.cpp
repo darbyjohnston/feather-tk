@@ -90,12 +90,12 @@ std::shared_ptr<DemoWindow> DemoWindow::create(
     return out;
 }
 
-void DemoWindow::update(
+void DemoWindow::_update(
     const std::shared_ptr<FontSystem>& fontSystem,
     const std::shared_ptr<IconSystem>& iconSystem,
     const std::shared_ptr<Style>& style)
 {
-    MainWindow::update(fontSystem, iconSystem, style);
+    MainWindow::_update(fontSystem, iconSystem, style);
     if (_doScreenshot)
     {
         _doScreenshot = false;

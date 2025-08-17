@@ -34,25 +34,10 @@ namespace feather_tk
             {
                 Size2I size(1024, 1024);
                 auto window = Window::create(context, "WindowTest", size);
-                FEATHER_TK_ASSERT(window->getGLFW());
-                FEATHER_TK_ASSERT(size == window->getSize());                
-                _print(Format("Frame buffer size: {0}").arg(window->getFrameBufferSize()));
-                _print(Format("Content scale: {0}").arg(window->getContentScale()));
+                FEATHER_TK_ASSERT(window->getID());
                 _print(Format("Screen: {0}").arg(window->getScreen()));
                 _print(Format("Full screen: {0}").arg(window->isFullScreen()));
                 _print(Format("Float on top: {0}").arg(window->isFloatOnTop()));
-
-                window->setSizeCallback([](const Size2I&){});
-                window->setFrameBufferSizeCallback([](const Size2I&){});
-                window->setContentScaleCallback([](const V2F&){});
-                window->setRefreshCallback([]{});
-                window->setCursorEnterCallback([](bool){});
-                window->setCursorPosCallback([](const V2F&){});
-                window->setButtonCallback([](int, int, int){});
-                window->setScrollCallback([](const V2F&){});
-                window->setKeyCallback([](int, int, int, int){});
-                window->setCharCallback([](unsigned int){});
-                window->setDropCallback([](int, const char**){});
 
                 size = Size2I(512, 512);
                 window->setSize(size);
@@ -66,17 +51,6 @@ namespace feather_tk
                 window->setFloatOnTop(false);
                 window->makeCurrent();
                 window->swap();
-                window->doneCurrent();
-            }
-            if (auto context = _context.lock())
-            {
-                try
-                {
-                    auto window = Window::create(context, "WindowTest", Size2I(0, 0));
-                    FEATHER_TK_ASSERT(false);
-                }
-                catch (const std::exception&)
-                {}
             }
         }
     }

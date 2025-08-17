@@ -9,8 +9,7 @@
 
 #include <feather-tk/core/Context.h>
 
-#define GLFW_INCLUDE_NONE
-#include <GLFW/glfw3.h>
+#include <SDL2/SDL.h>
 
 namespace feather_tk
 {
@@ -29,7 +28,7 @@ namespace feather_tk
 #if defined(FEATHER_TK_API_GL_4_1)
             gladLoaderLoadGL();
 #elif defined(FEATHER_TK_API_GLES_2)
-            gladLoadGLES2Loader((GLADloadproc)glfwGetProcAddress);
+            gladLoadGLES2Loader((GLADloadproc)SDL_GL_GetProcAddress);
 #endif // FEATHER_TK_API_GL_4_1
         }
     }

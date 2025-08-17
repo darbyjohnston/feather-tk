@@ -14,6 +14,7 @@ namespace feather_tk
     protected:
         void _init(
             const std::shared_ptr<Context>&,
+            const std::shared_ptr<App>&,
             const std::string& name,
             const Size2I&);
 
@@ -25,8 +26,12 @@ namespace feather_tk
         //! Create a new window.
         static std::shared_ptr<Window> create(
             const std::shared_ptr<Context>&,
+            const std::shared_ptr<App>&,
             const std::string& name,
             const Size2I&);
+
+        //! Get the window ID.
+        uint32_t getID() const;
 
         //! Get the window size.
         const Size2I& getSize() const;
@@ -67,6 +72,9 @@ namespace feather_tk
         //! Set the frame buffer type.
         void setFrameBufferType(ImageType);
 
+        //! Get the content scale.
+        float getContentScale() const;
+
         //! Get the display scale.
         float getDisplayScale() const;
 
@@ -76,12 +84,6 @@ namespace feather_tk
         //! Set the display scale. A value of zero will set the display scale
         //! automatically.
         void setDisplayScale(float);
-
-        //! Update the window.
-        virtual void update(
-            const std::shared_ptr<FontSystem>&,
-            const std::shared_ptr<IconSystem>&,
-            const std::shared_ptr<Style>&);
 
         void setIcons(const std::vector<std::shared_ptr<Image> >&) override;
         std::shared_ptr<Image> screenshot(const Box2I& = Box2I(0, 0, -1, -1)) override;
@@ -94,10 +96,18 @@ namespace feather_tk
     protected:
         virtual std::shared_ptr<IRender> _createRender(const std::shared_ptr<Context>&);
 
+        void _sizeUpdate(const Size2I& window, const Size2I& frameBuffer);
+
+        virtual void _update(
+            const std::shared_ptr<FontSystem>&,
+            const std::shared_ptr<IconSystem>&,
+            const std::shared_ptr<Style>&);
+
         void _makeCurrent();
-        void _doneCurrent();
 
     private:
+        friend class App;
+
         FEATHER_TK_PRIVATE();
     };
 }

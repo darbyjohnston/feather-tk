@@ -4,7 +4,6 @@
 
 #include <feather-tk/ui/IWindow.h>
 
-#include <feather-tk/ui/IClipboard.h>
 #include <feather-tk/ui/IDialog.h>
 #include <feather-tk/ui/IPopup.h>
 #include <feather-tk/ui/Tooltip.h>
@@ -13,6 +12,8 @@ namespace feather_tk
 {
     struct IWindow::Private
     {
+        std::weak_ptr<App> app;
+
         bool inside = false;
         V2I cursorPos;
         V2I cursorPosPrev;
@@ -31,8 +32,6 @@ namespace feather_tk
         V2I dndCursorHotspot;
         std::weak_ptr<IWidget> dndHover;
 
-        std::shared_ptr<IClipboard> clipboard;
-
         bool tooltipsEnabled = true;
         std::shared_ptr<Tooltip> tooltip;
         V2I tooltipPos;
@@ -45,14 +44,29 @@ namespace feather_tk
         SizeData size;
     };
 
-    IWindow::IWindow() :
-        _p(new Private)
+    void IWindow::_init(
+        const std::shared_ptr<Context>& context,
+        const std::shared_ptr<App>& app,
+        const std::string& objectName,
+        const std::shared_ptr<IWidget>& parent)
     {
+        IWidget::_init(context, objectName, parent);
+        FEATHER_TK_P();
+        p.app = app;
         setBackgroundRole(ColorRole::Window);
     }
 
+    IWindow::IWindow() :
+        _p(new Private)
+    {}
+
     IWindow::~IWindow()
     {}
+
+    std::shared_ptr<App> IWindow::getApp() const
+    {
+        return _p->app.lock();
+    }
 
     std::shared_ptr<IWidget> IWindow::getKeyFocus() const
     {
@@ -137,16 +151,6 @@ namespace feather_tk
             }
         }
         return out;
-    }
-
-    const std::shared_ptr<IClipboard>& IWindow::getClipboard() const
-    {
-        return _p->clipboard;
-    }
-
-    void IWindow::setClipboard(const std::shared_ptr<IClipboard>& value)
-    {
-        _p->clipboard = value;
     }
 
     bool IWindow::getTooltipsEnabled() const

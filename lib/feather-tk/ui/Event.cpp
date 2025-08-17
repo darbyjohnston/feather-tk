@@ -215,15 +215,7 @@ namespace feather_tk
         "F9",
         "F10",
         "F11",
-        "F12",
-        "LeftShift",
-        "LeftControl",
-        "LeftAlt",
-        "LeftSuper",
-        "RightShift",
-        "RightControl",
-        "RightAlt",
-        "RightSuper");
+        "F12");
 
     std::string getShortcutLabel(Key key, int modifiers)
     {

@@ -11,8 +11,7 @@
 #include <feather-tk/core/LogSystem.h>
 #include <feather-tk/core/String.h>
 
-#define GLFW_INCLUDE_NONE
-#include <GLFW/glfw3.h>
+#include <SDL2/SDL.h>
 
 #include <iostream>
 
@@ -36,74 +35,13 @@ namespace feather_tk
         {
             return !(*this == other);
         }
-
-        namespace
-        {
-            void glfwErrorCallback(int, const char* description)
-            {
-                std::cerr << "GLFW ERROR: " << description << std::endl;
-            }
-
-            MonitorInfo getMonitorInfo(GLFWmonitor* monitor)
-            {
-                MonitorInfo out;
-                out.name = glfwGetMonitorName(monitor);
-                const GLFWvidmode* vm = glfwGetVideoMode(monitor);
-                out.size.w = vm->width;
-                out.size.h = vm->height;
-                out.colorBits[0] = vm->redBits;
-                out.colorBits[1] = vm->greenBits;
-                out.colorBits[2] = vm->blueBits;
-                out.refreshRate = vm->refreshRate;
-                glfwGetMonitorContentScale(monitor, &out.contentScale.x, &out.contentScale.y);
-                glfwGetMonitorPos(monitor, &out.pos.x, &out.pos.y);
-                glfwGetMonitorPhysicalSize(monitor, &out.physicalSizeMM.w, &out.physicalSizeMM.h);
-                return out;
-            }
-
-            std::vector<MonitorInfo> getMonitorInfo()
-            {
-                std::vector<MonitorInfo> out;
-                int monitorCount = 0;
-                GLFWmonitor** glfwMonitors = glfwGetMonitors(&monitorCount);
-                for (int i = 0; i < monitorCount; ++i)
-                {
-                    out.push_back(getMonitorInfo(glfwMonitors[i]));
-                }
-                return out;
-            }
-        }
         
         struct System::Private
         {
-            bool glfwInit = false;
+            bool sdlInit = false;
             std::shared_ptr<ObservableList<MonitorInfo> > monitors;
             std::shared_ptr<ListObserver<MonitorInfo> > monitorsObserver;
-
-            static void monitorCallback(GLFWmonitor* monitor, int event);
-
-            void monitorsUpdate();
         };
-
-        void System::Private::monitorCallback(GLFWmonitor* monitor, int event)
-        {
-            if (System::Private* p = reinterpret_cast<System::Private*>(
-                glfwGetMonitorUserPointer(monitor)))
-            {
-                p->monitors->setIfChanged(getMonitorInfo());
-                p->monitorsUpdate();
-            }
-        }
-
-        void System::Private::monitorsUpdate()
-        {
-            int monitorCount = 0;
-            GLFWmonitor** glfwMonitors = glfwGetMonitors(&monitorCount);
-            for (int i = 0; i < monitorCount; ++i)
-            {
-                glfwSetMonitorUserPointer(glfwMonitors[i], this);
-            }
-        }
         
         System::System(const std::shared_ptr<Context>& context) :
             ISystem(context, "feather_tk::gl::System"),
@@ -111,27 +49,17 @@ namespace feather_tk
         {
             FEATHER_TK_P();
 
-            // Initialize GLFW.
-            glfwSetErrorCallback(glfwErrorCallback);
-            int glfwMajor = 0;
-            int glfwMinor = 0;
-            int glfwRevision = 0;
-            glfwGetVersion(&glfwMajor, &glfwMinor, &glfwRevision);
-            if (!glfwInit())
+            // Initialize SDL.
+            SDL_SetHint(SDL_HINT_WINDOWS_DPI_SCALING, "1");
+            if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) < 0)
             {
-                throw std::runtime_error("Cannot initialize GLFW");
+                throw std::runtime_error("Cannot initialize SDL");
             }
-            p.glfwInit = true;
-            auto logSystem = context->getSystem<LogSystem>();
-            logSystem->print(
-                "feather_tk::gl::System",
-                Format("GLFW version: {0}.{1}.{2}").
-                arg(glfwMajor).
-                arg(glfwMinor).
-                arg(glfwRevision));
+            SDL_GL_LoadLibrary(NULL);
+            p.sdlInit = true;
+            //auto logSystem = context->getSystem<LogSystem>();
 
-            p.monitorsUpdate();
-            p.monitors = ObservableList<MonitorInfo>::create(getMonitorInfo());
+            p.monitors = ObservableList<MonitorInfo>::create();
             p.monitorsObserver = ListObserver<MonitorInfo>::create(
                 p.monitors,
                 [this](const std::vector<MonitorInfo>& value)
@@ -158,15 +86,14 @@ namespace feather_tk
                             join(lines, '\n'));
                     }
                 });
-            glfwSetMonitorCallback(&p.monitorCallback);
         }
 
         System::~System()
         {
             FEATHER_TK_P();
-            if (p.glfwInit)
+            if (p.sdlInit)
             {
-                glfwTerminate();
+                SDL_Quit();
             }
         }
 

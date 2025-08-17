@@ -26,7 +26,8 @@ public:
         const std::shared_ptr<Context>&,
         const std::shared_ptr<App>&);
 
-    void update(
+protected:
+    void _update(
         const std::shared_ptr<FontSystem>&,
         const std::shared_ptr<IconSystem>&,
         const std::shared_ptr<Style>&) override;

@@ -60,7 +60,7 @@ void DialogsWindow::_init(
         static_cast<int>(commandKeyModifier),
         [this]
         {
-            _getApp()->exit();
+            getApp()->exit();
         }));
 
     // Create the layout.

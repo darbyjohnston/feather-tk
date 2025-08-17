@@ -15,7 +15,6 @@ namespace feather_tk
 {
     struct MainWindow::Private
     {
-        std::weak_ptr<App> app;
         std::shared_ptr<MenuBar> menuBar;
         std::map<std::string, std::shared_ptr<Menu> > menus;
         std::vector<float> displayScales = { 0.F, 1.F, 1.5F, 2.F, 2.5F, 3.F, 3.5F, 4.F };
@@ -38,11 +37,8 @@ namespace feather_tk
         const std::string& name,
         const Size2I& size)
     {
-        Window::_init(context, name, size);
+        Window::_init(context, app, name, size);
         FEATHER_TK_P();
-
-        app->addWindow(std::dynamic_pointer_cast<Window>(shared_from_this()));
-        p.app = app;
 
         p.menuBar = MenuBar::create(context);
         auto fileMenu = Menu::create(context);
@@ -52,7 +48,7 @@ namespace feather_tk
             static_cast<int>(commandKeyModifier),
             [this]
             {
-                if (auto app = _p->app.lock())
+                if (auto app = getApp())
                 {
                     app->exit();
                 }
@@ -76,7 +72,7 @@ namespace feather_tk
                 getLabel(colorStyle),
                 [this, colorStyle]
                 {
-                    if (auto app = _p->app.lock())
+                    if (auto app = getApp())
                     {
                         app->setColorStyle(colorStyle);
                     }
@@ -93,7 +89,7 @@ namespace feather_tk
                 0 == i ? "Automatic" : Format("{0}").arg(displayScale).str(),
                 [this, displayScale](bool)
                 {
-                    if (auto app = _p->app.lock())
+                    if (auto app = getApp())
                     {
                         app->setDisplayScale(displayScale);
                     }
@@ -106,7 +102,7 @@ namespace feather_tk
             "Tooltips",
             [this](bool value)
             {
-                if (auto app = _p->app.lock())
+                if (auto app = getApp())
                 {
                     app->setTooltipsEnabled(value);
                 }
@@ -206,10 +202,5 @@ namespace feather_tk
     void MainWindow::keyReleaseEvent(KeyEvent& event)
     {
         event.accept = true;
-    }
-
-    const std::shared_ptr<App> MainWindow::_getApp() const
-    {
-        return _p->app.lock();
     }
 }

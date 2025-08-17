@@ -29,7 +29,6 @@ set(HEADERS
     GridLayout.h
     GroupBox.h
     IButton.h
-    IClipboard.h
     IDialog.h
     IMenuPopup.h
     IPopup.h
@@ -129,7 +128,6 @@ set(SOURCE
     GridLayout.cpp
     GroupBox.cpp
     IButton.cpp
-    IClipboard.cpp
     IDialog.cpp
     IMenuPopup.cpp
     IPopup.cpp

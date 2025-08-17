@@ -6,8 +6,6 @@
 
 #include <feather-tk/core/Image.h>
 
-struct GLFWwindow;
-
 namespace feather_tk
 {
     class Context;
@@ -53,20 +51,11 @@ namespace feather_tk
                     static_cast<int>(WindowOptions::MakeCurrent),
                 const std::shared_ptr<Window>& share = nullptr);
         
-            //! Get the GLFW window pointer.
-            GLFWwindow* getGLFW() const;
-
-            //! Get the window size.
-            const Size2I& getSize() const;
+            //! Get the window ID.
+            uint32_t getID() const;
 
             //! Set the window size.
             void setSize(const Size2I&);
-
-            //! Get the frame buffer size.
-            const Size2I& getFrameBufferSize() const;
-
-            //! Get the window content scale.
-            const V2F& getContentScale() const;
 
             //! Show the window.
             void show();
@@ -84,9 +73,6 @@ namespace feather_tk
 
             //! Make the OpenGL context current.
             void makeCurrent();
-
-            //! Release the OpenGL context.
-            void doneCurrent();
 
             //! Get which screen the window is on.
             int getScreen() const;
@@ -106,62 +92,7 @@ namespace feather_tk
             //! Swap the buffers.
             void swap();
 
-            //! Set the window size callback.
-            void setSizeCallback(
-                const std::function<void(const Size2I&)>&);
-
-            //! Set the frame buffer size callback.
-            void setFrameBufferSizeCallback(
-                const std::function<void(const Size2I&)>&);
-
-            //! Set the content scale callback.
-            void setContentScaleCallback(
-                const std::function<void(const V2F&)>&);
-
-            //! Set the window refresh callback.
-            void setRefreshCallback(const std::function<void(void)>&);
-
-            //! Set the window full screen callback.
-            void setFullScreenCallback(const std::function<void(bool)>&);
-
-            //! Set the cursor enter callback.
-            void setCursorEnterCallback(const std::function<void(bool)>&);
-
-            //! Set the cursor position callback.
-            void setCursorPosCallback(const std::function<void(const V2F&)>&);
-
-            //! Set the mouse button callback.
-            void setButtonCallback(const std::function<void(int, int, int)>&);
-
-            //! Set the scroll callback.
-            void setScrollCallback(const std::function<void(const V2F&)>&);
-
-            //! Set the key callback.
-            void setKeyCallback(const std::function<void(int, int, int, int)>&);
-
-            //! Set the character callback.
-            void setCharCallback(const std::function<void(unsigned int)>&);
-
-            //! Set the drop callback.
-            void setDropCallback(const std::function<void(int, const char**)>&);
-
-            //! Set the window close callback.
-            void setCloseCallback(const std::function<void(void)>&);
-
         private:
-            static void _sizeCallback(GLFWwindow*, int, int);
-            static void _frameBufferSizeCallback(GLFWwindow*, int, int);
-            static void _windowContentScaleCallback(GLFWwindow*, float, float);
-            static void _windowRefreshCallback(GLFWwindow*);
-            static void _cursorEnterCallback(GLFWwindow*, int);
-            static void _cursorPosCallback(GLFWwindow*, double, double);
-            static void _mouseButtonCallback(GLFWwindow*, int, int, int);
-            static void _scrollCallback(GLFWwindow*, double, double);
-            static void _keyCallback(GLFWwindow*, int, int, int, int);
-            static void _charCallback(GLFWwindow*, unsigned int);
-            static void _dropCallback(GLFWwindow*, int, const char**);
-            static void _closeCallback(GLFWwindow*);
-
             FEATHER_TK_PRIVATE();
         };
         

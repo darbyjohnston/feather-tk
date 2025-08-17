@@ -18,8 +18,7 @@
 #include <feather-tk/core/Time.h>
 #include <feather-tk/core/Timer.h>
 
-#define GLFW_INCLUDE_NONE
-#include <GLFW/glfw3.h>
+#include <SDL2/SDL.h>
 
 #include <algorithm>
 #include <iostream>
@@ -61,9 +60,11 @@ namespace feather_tk
         std::shared_ptr<ObservableValue<ColorStyle> > colorStyle;
         std::shared_ptr<ObservableMap<ColorRole, Color4F> > customColorRoles;
         std::shared_ptr<ObservableValue<float> > displayScale;
+        std::shared_ptr<ObservableValue<std::string> > clipboard;
         std::shared_ptr<ObservableValue<bool> > tooltipsEnabled;
         bool running = true;
         std::list<std::shared_ptr<Window> > windows;
+        std::weak_ptr<Window> activeWindow;
         std::list<int> tickTimes;
         std::shared_ptr<Timer> logTimer;
     };
@@ -121,6 +122,7 @@ namespace feather_tk
         {
             p.displayScale->setIfChanged(p.cmdLine.displayScale->getValue());
         }
+        p.clipboard = ObservableValue<std::string>::create();
         p.tooltipsEnabled = ObservableValue<bool>::create(true);
 
         _styleUpdate();
@@ -210,9 +212,7 @@ namespace feather_tk
 
     int App::getScreenCount() const
     {
-        int glfwMonitorsCount = 0;
-        glfwGetMonitors(&glfwMonitorsCount);
-        return glfwMonitorsCount;
+        return 1;
     }
 
     const std::shared_ptr<FontSystem>& App::getFontSystem() const
@@ -301,6 +301,21 @@ namespace feather_tk
         return _p->cmdLine.displayScale;
     }
 
+    const std::string& App::getClipboard() const
+    {
+        return _p->clipboard->get();
+    }
+
+    std::shared_ptr<IObservableValue<std::string> > App::observeClipboard() const
+    {
+        return _p->clipboard;
+    }
+
+    void App::setClipboard(const std::string& value)
+    {
+        _p->clipboard->setIfChanged(value);
+    }
+
     bool App::areTooltipsEnabled() const
     {
         return _p->tooltipsEnabled->get();
@@ -326,34 +341,306 @@ namespace feather_tk
         _p->running = false;
     }
 
+    void App::tick()
+    {
+        FEATHER_TK_P();
+
+        _context->tick();
+        _tick();
+
+        for (const auto& window : p.windows)
+        {
+            TickEvent tickEvent;
+            _tickRecursive(
+                window,
+                window->isVisible(false),
+                window->isEnabled(false),
+                tickEvent);
+
+            if (window->isVisible(false))
+            {
+                window->_update(p.fontSystem, p.iconSystem, p.style);
+            }
+        }
+    }
+
+    namespace
+    {
+        Key fromSDL(int32_t value)
+        {
+            Key out = Key::Unknown;
+            switch (value)
+            {
+            case SDLK_RETURN: out = Key::Enter; break;
+            case SDLK_ESCAPE: out = Key::Escape; break;
+            case SDLK_BACKSPACE: out = Key::Backspace; break;
+            case SDLK_TAB: out = Key::Tab; break;
+            case SDLK_SPACE: out = Key::Space; break;
+            case SDLK_EXCLAIM: break;
+            case SDLK_QUOTEDBL: break;
+            case SDLK_HASH: break;
+            case SDLK_PERCENT: break;
+            case SDLK_DOLLAR: break;
+            case SDLK_AMPERSAND: break;
+            case SDLK_QUOTE: out = Key::Apostrophe; break;
+            case SDLK_LEFTPAREN: break;
+            case SDLK_RIGHTPAREN: break;
+            case SDLK_ASTERISK: break;
+            case SDLK_PLUS: break;
+            case SDLK_COMMA: out = Key::Comma; break;
+            case SDLK_MINUS: out = Key::Minus; break;
+            case SDLK_PERIOD: out = Key::Period; break;
+            case SDLK_SLASH: out = Key::Slash; break;
+            case SDLK_0: out = Key::_0; break;
+            case SDLK_1: out = Key::_1; break;
+            case SDLK_2: out = Key::_2; break;
+            case SDLK_3: out = Key::_3; break;
+            case SDLK_4: out = Key::_4; break;
+            case SDLK_5: out = Key::_5; break;
+            case SDLK_6: out = Key::_6; break;
+            case SDLK_7: out = Key::_7; break;
+            case SDLK_8: out = Key::_8; break;
+            case SDLK_9: out = Key::_9; break;
+            case SDLK_COLON: break;
+            case SDLK_SEMICOLON: out = Key::Semicolon; break;
+            case SDLK_LESS: break;
+            case SDLK_EQUALS: out = Key::Equal; break;
+            case SDLK_GREATER: break;
+            case SDLK_QUESTION: break;
+            case SDLK_AT: break;
+
+            case SDLK_LEFTBRACKET: out = Key::LeftBracket; break;
+            case SDLK_BACKSLASH: out = Key::Backslash; break;
+            case SDLK_RIGHTBRACKET: out = Key::RightBracket; break;
+            case SDLK_CARET: break;
+            case SDLK_UNDERSCORE: break;
+            case SDLK_BACKQUOTE: out = Key::GraveAccent; break;
+            case SDLK_a: out = Key::A; break;
+            case SDLK_b: out = Key::B; break;
+            case SDLK_c: out = Key::C; break;
+            case SDLK_d: out = Key::D; break;
+            case SDLK_e: out = Key::E; break;
+            case SDLK_f: out = Key::F; break;
+            case SDLK_g: out = Key::G; break;
+            case SDLK_h: out = Key::H; break;
+            case SDLK_i: out = Key::I; break;
+            case SDLK_j: out = Key::J; break;
+            case SDLK_k: out = Key::K; break;
+            case SDLK_l: out = Key::L; break;
+            case SDLK_m: out = Key::M; break;
+            case SDLK_n: out = Key::N; break;
+            case SDLK_o: out = Key::O; break;
+            case SDLK_p: out = Key::P; break;
+            case SDLK_q: out = Key::Q; break;
+            case SDLK_r: out = Key::R; break;
+            case SDLK_s: out = Key::S; break;
+            case SDLK_t: out = Key::T; break;
+            case SDLK_u: out = Key::U; break;
+            case SDLK_v: out = Key::V; break;
+            case SDLK_w: out = Key::W; break;
+            case SDLK_x: out = Key::X; break;
+            case SDLK_y: out = Key::Y; break;
+            case SDLK_z: out = Key::Z; break;
+
+            case SDLK_CAPSLOCK: out = Key::CapsLock; break;
+
+            case SDLK_F1: out = Key::F1; break;
+            case SDLK_F2: out = Key::F2; break;
+            case SDLK_F3: out = Key::F3; break;
+            case SDLK_F4: out = Key::F4; break;
+            case SDLK_F5: out = Key::F5; break;
+            case SDLK_F6: out = Key::F6; break;
+            case SDLK_F7: out = Key::F7; break;
+            case SDLK_F8: out = Key::F8; break;
+            case SDLK_F9: out = Key::F9; break;
+            case SDLK_F10: out = Key::F10; break;
+            case SDLK_F11: out = Key::F11; break;
+            case SDLK_F12: out = Key::F12; break;
+
+            case SDLK_PRINTSCREEN: out = Key::PrintScreen; break;
+            case SDLK_SCROLLLOCK: out = Key::ScrollLock; break;
+            case SDLK_PAUSE: out = Key::Pause; break;
+            case SDLK_INSERT: out = Key::Insert; break;
+            case SDLK_HOME: out = Key::Home; break;
+            case SDLK_PAGEUP: out = Key::PageUp; break;
+            case SDLK_DELETE: out = Key::Delete; break;
+            case SDLK_END: out = Key::End; break;
+            case SDLK_PAGEDOWN: out = Key::PageDown; break;
+            case SDLK_RIGHT: out = Key::Right; break;
+            case SDLK_LEFT: out = Key::Left; break;
+            case SDLK_DOWN: out = Key::Down; break;
+            case SDLK_UP: out = Key::Up; break;
+            }
+            return out;
+        }
+
+        int fromSDL(uint16_t value)
+        {
+            int out = 0;
+            if (value & KMOD_SHIFT)
+            {
+                out |= static_cast<int>(KeyModifier::Shift);
+            }
+            if (value & KMOD_CTRL)
+            {
+                out |= static_cast<int>(KeyModifier::Control);
+            }
+            if (value & KMOD_ALT)
+            {
+                out |= static_cast<int>(KeyModifier::Alt);
+            }
+            return out;
+        }
+    }
+
     void App::run()
     {
         FEATHER_TK_P();
         auto t0 = std::chrono::steady_clock::now();
         while (p.running && !p.windows.empty())
         {
-            glfwPollEvents();
-
-            _context->tick();
-
-            _tick();
-
-            size_t visibleWindows = 0;
-            for (const auto& window : p.windows)
+            SDL_Event event;
+            while (SDL_PollEvent(&event))
             {
-                TickEvent tickEvent;
-                _tickRecursive(
-                    window,
-                    window->isVisible(false),
-                    window->isEnabled(false),
-                    tickEvent);
-
-                if (window->isVisible(false))
+                switch (event.type)
                 {
-                    ++visibleWindows;
-                    window->update(p.fontSystem, p.iconSystem, p.style);
+                case SDL_WINDOWEVENT:
+                    switch (event.window.event)
+                    {
+                    case SDL_WINDOWEVENT_SHOWN:
+                        for (const auto& window : p.windows)
+                        {
+                            if (window->getID() == event.window.windowID)
+                            {
+                                window->setVisible(true);
+                                break;
+                            }
+                        }
+                        break;
+                    case SDL_WINDOWEVENT_HIDDEN:
+                        for (const auto& window : p.windows)
+                        {
+                            if (window->getID() == event.window.windowID)
+                            {
+                                window->setVisible(true);
+                                break;
+                            }
+                        }
+                        break;
+                    case SDL_WINDOWEVENT_SIZE_CHANGED:
+                        for (const auto& window : p.windows)
+                        {
+                            if (window->getID() == event.window.windowID)
+                            {
+                                if (SDL_Window* sdlWindow = SDL_GetWindowFromID(event.window.windowID))
+                                {
+                                    Size2I size;
+                                    SDL_GetWindowSize(sdlWindow, &size.w, &size.h);
+                                    Size2I frameBuffer;
+                                    SDL_GL_GetDrawableSize(sdlWindow, &frameBuffer.w, &frameBuffer.h);
+                                    window->_sizeUpdate(size, frameBuffer);
+                                }
+                                break;
+                            }
+                        }
+                        break;
+                    case SDL_WINDOWEVENT_ENTER:
+                        for (const auto& window : p.windows)
+                        {
+                            if (window->getID() == event.window.windowID)
+                            {
+                                window->_cursorEnter(true);
+                                p.activeWindow = window;
+                                break;
+                            }
+                        }
+                        break;
+                    case SDL_WINDOWEVENT_LEAVE:
+                        if (auto window = p.activeWindow.lock())
+                        {
+                            window->_cursorEnter(false);
+                        }
+                        p.activeWindow.reset();
+                        break;
+                    case SDL_WINDOWEVENT_CLOSE:
+                        for (const auto& window : p.windows)
+                        {
+                            if (window->getID() == event.window.windowID)
+                            {
+                                window->hide();
+                                break;
+                            }
+                        }
+                        break;
+                    }
+                    break;
+                case SDL_MOUSEMOTION:
+                    if (auto window = p.activeWindow.lock())
+                    {
+                        const float contentScale = window->getContentScale();
+                        window->_cursorPos(V2I(
+                            event.motion.x * contentScale,
+                            event.motion.y * contentScale));
+                    }
+                    break;
+                case SDL_MOUSEBUTTONDOWN:
+                    if (auto window = p.activeWindow.lock())
+                    {
+                        window->_mouseButton(
+                            event.button.button,
+                            true,
+                            fromSDL(static_cast<uint16_t>(SDL_GetModState())));
+                    }
+                    break;
+                case SDL_MOUSEBUTTONUP:
+                    if (auto window = p.activeWindow.lock())
+                    {
+                        window->_mouseButton(
+                            event.button.button,
+                            false,
+                            fromSDL(static_cast<uint16_t>(SDL_GetModState())));
+                    }
+                    break;
+                case SDL_MOUSEWHEEL:
+                    if (auto window = p.activeWindow.lock())
+                    {
+                        window->_scroll(V2F(
+                            event.wheel.preciseX,
+                            event.wheel.preciseY),
+                            fromSDL(static_cast<uint16_t>(SDL_GetModState())));
+                    }
+                    break;
+                case SDL_KEYDOWN:
+                    if (auto window = p.activeWindow.lock())
+                    {
+                        window->_key(
+                            fromSDL(event.key.keysym.sym),
+                            true,
+                            fromSDL(event.key.keysym.mod));
+                    }
+                    break;
+                case SDL_KEYUP:
+                    if (auto window = p.activeWindow.lock())
+                    {
+                        window->_key(
+                            fromSDL(event.key.keysym.sym),
+                            false,
+                            fromSDL(event.key.keysym.mod));
+                    }
+                    break;
+                case SDL_TEXTINPUT:
+                    if (auto window = p.activeWindow.lock())
+                    {
+                        window->_text(event.text.text);
+                    }
+                    break;
+                case SDL_CLIPBOARDUPDATE:
+                    p.clipboard->setIfChanged(SDL_GetClipboardText());
+                    break;
                 }
             }
+
+            tick();
 
             auto t1 = std::chrono::steady_clock::now();
             sleep(timeout, t0, t1);
@@ -366,6 +653,14 @@ namespace feather_tk
             }
             t0 = t1;
 
+            size_t visibleWindows = 0;
+            for (const auto& window : p.windows)
+            {
+                if (window->isVisible(false))
+                {
+                    ++visibleWindows;
+                }
+            }
             if (p.cmdLine.exit->found() || 0 == visibleWindows)
             {
                 break;

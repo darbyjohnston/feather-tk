@@ -4,8 +4,8 @@
 
 #include <feather-tk/ui/LineEdit.h>
 
+#include <feather-tk/ui/App.h>
 #include <feather-tk/ui/DrawUtil.h>
-#include <feather-tk/ui/IClipboard.h>
 #include <feather-tk/ui/IWindow.h>
 #include <feather-tk/ui/LayoutUtil.h>
 
@@ -510,13 +510,13 @@ namespace feather_tk
                     {
                         if (auto window = getWindow())
                         {
-                            if (auto clipboard = window->getClipboard())
+                            if (auto app = window->getApp())
                             {
                                 const auto selection = p.selection.getSorted();
                                 const std::string text = p.text.substr(
                                     selection.first,
                                     selection.second - selection.first);
-                                clipboard->setText(text);
+                                app->setClipboard(text);
                             }
                         }
                     }
@@ -528,9 +528,9 @@ namespace feather_tk
                 {
                     if (auto window = getWindow())
                     {
-                        if (auto clipboard = window->getClipboard())
+                        if (auto app = window->getApp())
                         {
-                            const std::string text = clipboard->getText();
+                            const std::string text = app->getClipboard();
                             if (p.selection.isValid())
                             {
                                 const auto selection = p.selection.getSorted();
@@ -563,13 +563,13 @@ namespace feather_tk
                     {
                         if (auto window = getWindow())
                         {
-                            if (auto clipboard = window->getClipboard())
+                            if (auto app = window->getApp())
                             {
                                 const auto selection = p.selection.getSorted();
                                 const std::string text = p.text.substr(
                                     selection.first,
                                     selection.second - selection.first);
-                                clipboard->setText(text);
+                                app->setClipboard(text);
                                 p.text.replace(
                                     selection.first,
                                     selection.second - selection.first,
