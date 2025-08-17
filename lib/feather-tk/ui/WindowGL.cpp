@@ -467,9 +467,9 @@ namespace feather_tk
                     "transform.mvp",
                     ortho(
                         0.F,
-                        static_cast<float>(p.bufferSize.w),
+                        static_cast<float>(p.frameBufferSize.w),
                         0.F,
-                        static_cast<float>(p.bufferSize.h),
+                        static_cast<float>(p.frameBufferSize.h),
                         -1.F,
                         1.F));
                 p.shader->setUniform("textureSampler", 0);
@@ -480,8 +480,8 @@ namespace feather_tk
                 auto mesh = feather_tk::mesh(Box2I(
                     0,
                     0,
-                    p.bufferSize.w,
-                    p.bufferSize.h));
+                    p.frameBufferSize.w,
+                    p.frameBufferSize.h));
                 auto vboData = gl::convert(
                     mesh,
                     gl::VBOType::Pos2_F32_UV_U16,
