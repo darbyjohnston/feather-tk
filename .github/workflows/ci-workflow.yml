@@ -208,5 +208,5 @@ jobs:
       run: |
         cd build
         cd feather-tk\src\feather-tk-build
-        tests\feather-tk-test\feather-tk-test OffscreenBufferTest -log
+        tests\feather-tk-test\Debug\feather-tk-test.exe OffscreenBufferTest -log
 
