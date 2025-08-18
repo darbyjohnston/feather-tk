@@ -108,7 +108,21 @@ namespace feather_tk
             }
 
             std::cout << "Window 5!" << std::endl;
-            initGLAD();
+            int gladVersion = initGLAD();
+#if defined(FEATHER_TK_API_GL_4_1)
+            if (gladVersion < 4)
+            {
+                throw std::runtime_error(Format("Cannot initialize GLAD, got version: {0}").
+                    arg(gladVersion));
+            }
+#elif defined(FEATHER_TK_API_GLES_2)
+            if (gladVersion < 2)
+            {
+                throw std::runtime_error(Format("Cannot initialize GLAD, got version: {0}").
+                    arg(gladVersion));
+            }
+#endif // FEATHER_TK_API_GL_4_1
+
 #if defined(FEATHER_TK_API_GL_4_1_Debug)
             GLint flags = 0;
             glGetIntegerv(GL_CONTEXT_FLAGS, &flags);

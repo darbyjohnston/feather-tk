@@ -17,7 +17,7 @@ namespace feather_tk
         void init(const std::shared_ptr<Context>&);
 
         //! Initialize GLAD.
-        void initGLAD();
+        int initGLAD();
     }
 }
 
