@@ -4,12 +4,11 @@
 
 #include <uiTest/FileEditTest.h>
 
-#include <uiTest/App.h>
-#include <uiTest/Window.h>
-
+#include <feather-tk/ui/App.h>
 #include <feather-tk/ui/FileBrowser.h>
 #include <feather-tk/ui/FileEdit.h>
 #include <feather-tk/ui/RowLayout.h>
+#include <feather-tk/ui/Window.h>
 
 #include <feather-tk/core/Assert.h>
 #include <feather-tk/core/Format.h>
@@ -63,23 +62,6 @@ namespace feather_tk
                 auto system = context->getSystem<FileBrowserSystem>();
                 system->setNativeFileDialog(false);
                 FEATHER_TK_ASSERT(!system->isNativeFileDialog());
-
-                window->setCursorEnter(true);
-                window->setKey(Key::Tab);
-                window->setKey(Key::Tab);
-                window->setKey(Key::Enter);
-                window->setKey(Key::Tab, static_cast<int>(KeyModifier::Shift));
-                window->setKey(Key::Tab, static_cast<int>(KeyModifier::Shift));
-                window->setKey(Key::Enter);
-
-                window->setKey(Key::Tab);
-                window->setKey(Key::Enter);
-                window->setKey(Key::Tab, static_cast<int>(KeyModifier::Shift));
-                window->setKey(Key::Enter);
-
-                window->setKey(Key::Tab);
-                window->setKey(Key::Tab);
-                window->setKey(Key::Enter);
             }
         }
     }

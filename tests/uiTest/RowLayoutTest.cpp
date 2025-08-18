@@ -4,9 +4,6 @@
 
 #include <uiTest/RowLayoutTest.h>
 
-#include <uiTest/App.h>
-#include <uiTest/Window.h>
-
 #include <feather-tk/ui/Label.h>
 #include <feather-tk/ui/Spacer.h>
 

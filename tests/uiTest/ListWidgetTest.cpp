@@ -4,9 +4,6 @@
 
 #include <uiTest/ListWidgetTest.h>
 
-#include <uiTest/App.h>
-#include <uiTest/Window.h>
-
 #include <feather-tk/ui/ListWidget.h>
 
 #include <feather-tk/core/Assert.h>
@@ -79,24 +76,6 @@ namespace feather_tk
             widget->clearSearch();
             FEATHER_TK_ASSERT(widget->getSearch().empty());
             app->tick();
-
-            window->setCursorEnter(true);
-            window->setKey(Key::Tab);
-            window->setKey(Key::Enter);
-            switch (type)
-            {
-            case ButtonGroupType::Check:
-            case ButtonGroupType::Radio:
-            case ButtonGroupType::Toggle:
-                FEATHER_TK_ASSERT(widget->getChecked(0));
-                break;
-            default: break;
-            }
-            window->setKey(Key::Down);
-            window->setKey(Key::Up);
-            window->setKey(Key::End);
-            window->setKey(Key::Home);
-            window->setKey(Key::Escape);
         }
     }
 }

@@ -4,11 +4,10 @@
 
 #include <uiTest/FloatSliderTest.h>
 
-#include <uiTest/App.h>
-#include <uiTest/Window.h>
-
+#include <feather-tk/ui/App.h>
 #include <feather-tk/ui/FloatSlider.h>
 #include <feather-tk/ui/RowLayout.h>
+#include <feather-tk/ui/Window.h>
 
 #include <feather-tk/core/Assert.h>
 #include <feather-tk/core/Format.h>
@@ -64,28 +63,6 @@ namespace feather_tk
                 FEATHER_TK_ASSERT(.2F == slider->getStep());
                 slider->setLargeStep(.3F);
                 FEATHER_TK_ASSERT(.3F == slider->getLargeStep());
-
-                Box2I g = slider->getGeometry();
-                V2I c = center(g);
-                window->setCursorPos(c);
-                window->setButton(0, true);
-                window->setCursorPos(V2I(g.max.x, c.y));
-                window->setButton(0, false);
-
-                window->setKey(Key::Home);
-                FEATHER_TK_ASSERT(value == 0.F);
-                window->setKey(Key::Right);
-                FEATHER_TK_ASSERT(fuzzyCompare(value, .2F));
-                window->setKey(Key::PageUp);
-                FEATHER_TK_ASSERT(fuzzyCompare(value, .5F));
-                window->setKey(Key::Left);
-                FEATHER_TK_ASSERT(fuzzyCompare(value, .3F));
-                window->setKey(Key::PageDown);
-                FEATHER_TK_ASSERT(fuzzyCompare(value, 0.F));
-                window->setKey(Key::End);
-                FEATHER_TK_ASSERT(value == .5F);
-                window->setKey(Key::Escape);
-                FEATHER_TK_ASSERT(!slider->hasKeyFocus());
             }
         }
     }

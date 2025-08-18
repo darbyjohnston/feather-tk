@@ -4,11 +4,10 @@
 
 #include <uiTest/ConfirmDialogTest.h>
 
-#include <uiTest/App.h>
-#include <uiTest/Window.h>
-
+#include <feather-tk/ui/App.h>
 #include <feather-tk/ui/DialogSystem.h>
 #include <feather-tk/ui/ConfirmDialog.h>
+#include <feather-tk/ui/Window.h>
 
 #include <feather-tk/core/Assert.h>
 #include <feather-tk/core/Format.h>
@@ -54,8 +53,6 @@ namespace feather_tk
                     window,
                     [&confirmed](bool value) { confirmed = value; });
                 app->tick();
-                window->setKey(Key::Enter);
-                FEATHER_TK_ASSERT(confirmed);
             }
         }
     }

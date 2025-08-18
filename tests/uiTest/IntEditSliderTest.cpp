@@ -4,11 +4,10 @@
 
 #include <uiTest/IntEditSliderTest.h>
 
-#include <uiTest/App.h>
-#include <uiTest/Window.h>
-
+#include <feather-tk/ui/App.h>
 #include <feather-tk/ui/IntEditSlider.h>
 #include <feather-tk/ui/RowLayout.h>
+#include <feather-tk/ui/Window.h>
 
 #include <feather-tk/core/Assert.h>
 #include <feather-tk/core/Format.h>
@@ -69,13 +68,6 @@ namespace feather_tk
                 slider->setFontRole(FontRole::Label);
                 FEATHER_TK_ASSERT(FontRole::Label == slider->getFontRole());
                 slider->setFontRole(FontRole::Mono);
-
-                Box2I g = slider->getGeometry();
-                V2I c = center(g);
-                window->setCursorPos(c);
-                window->setButton(0, true);
-                window->setCursorPos(V2I(g.max.x, c.y));
-                window->setButton(0, false);
             }
         }
     }

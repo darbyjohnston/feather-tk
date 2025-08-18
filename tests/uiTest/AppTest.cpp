@@ -46,10 +46,7 @@ namespace feather_tk
                     r = app->getExit();
                     if (0 == r)
                     {
-                        auto window = Window::create(
-                            context,
-                            "feather_tk::ui_test::App",
-                            Size2I(1280, 960));
+                        auto window = Window::create(context, app, "feather_tk::ui_test::App");
                         auto layout = VerticalLayout::create(context, window);
                         auto button = PushButton::create(context, "Button", layout);
                         app->addWindow(window);

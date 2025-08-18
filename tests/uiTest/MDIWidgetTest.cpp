@@ -4,12 +4,11 @@
 
 #include <uiTest/MDIWidgetTest.h>
 
-#include <uiTest/App.h>
-#include <uiTest/Window.h>
-
+#include <feather-tk/ui/App.h>
 #include <feather-tk/ui/Label.h>
 #include <feather-tk/ui/MDICanvas.h>
 #include <feather-tk/ui/MDIWidget.h>
+#include <feather-tk/ui/Window.h>
 
 #include <feather-tk/core/Assert.h>
 #include <feather-tk/core/Format.h>
@@ -85,16 +84,6 @@ namespace feather_tk
                 FEATHER_TK_ASSERT(label == widget->getWidget());
                 widget->setPos(V2I(200, 200));
                 widget->setSize(Size2I(1000, 1000));
-
-                window->setCursorEnter(true);
-                Box2I g = widget->getGeometry();
-                V2I c = center(g);
-                window->setCursorPos(c);
-                window->setButton(0, true);
-                window->setCursorPos(c + V2I(100, 100));
-                window->setButton(0, false);
-                window->setCursorPos(c);
-                window->setButton(0);
             }
         }
     }

@@ -4,10 +4,9 @@
 
 #pragma once
 
-#include <uiTest/App.h>
-#include <uiTest/Window.h>
-
+#include <feather-tk/ui/App.h>
 #include <feather-tk/ui/ButtonGroup.h>
+#include <feather-tk/ui/Window.h>
 
 #include <testLib/ITest.h>
 

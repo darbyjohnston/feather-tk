@@ -4,11 +4,10 @@
 
 #include <uiTest/ComboBoxTest.h>
 
-#include <uiTest/App.h>
-#include <uiTest/Window.h>
-
-#include <feather-tk/ui/ComboBoxPrivate.h>
+#include <feather-tk/ui/App.h>
+#include <feather-tk/ui/ComboBox.h>
 #include <feather-tk/ui/RowLayout.h>
+#include <feather-tk/ui/Window.h>
 
 #include <feather-tk/core/Assert.h>
 #include <feather-tk/core/Format.h>
@@ -79,52 +78,6 @@ namespace feather_tk
                 widget->setFontRole(FontRole::Mono);
                 FEATHER_TK_ASSERT(FontRole::Mono == widget->getFontRole());
                 widget->setFontRole(FontRole::Label);
-
-                auto button = ComboBoxButton::create(
-                    context,
-                    ComboBoxItem("Item"),
-                    layout);
-
-                window->setCursorEnter(true);
-                window->setKey(Key::Tab);
-                window->setKey(Key::Enter);
-                window->setKey(Key::Home);
-                window->setKey(Key::Enter);
-                FEATHER_TK_ASSERT(0 == index);
-                FEATHER_TK_ASSERT(items[0] == item);
-                window->setKey(Key::Enter);
-                window->setKey(Key::Down);
-                window->setKey(Key::Up);
-                window->setKey(Key::End);
-                window->setKey(Key::Home);
-                window->setKey(Key::Escape);
-
-                Box2I g = widget->getGeometry();
-                V2I c = center(g);
-                window->setCursorPos(c);
-                window->setButton(0);
-                window->setKey(Key::Escape);
-                window->setKey(Key::Escape);
-                window->setCursorPos(V2I(0, 0));
-
-                window->setKey(Key::Tab);
-                window->setKey(Key::Down);
-                FEATHER_TK_ASSERT(1 == index);
-                window->setKey(Key::Up);
-                FEATHER_TK_ASSERT(0 == index);
-                window->setKey(Key::End);
-                FEATHER_TK_ASSERT(items.size() - 1 == index);
-                window->setKey(Key::Home);
-                FEATHER_TK_ASSERT(0 == index);
-                window->setKey(Key::Escape);
-                FEATHER_TK_ASSERT(!widget->hasKeyFocus());
-
-                g = button->getGeometry();
-                c = center(g);
-                window->setCursorPos(c);
-                window->setButton(0);
-                window->setKey(Key::Escape);
-                window->setCursorPos(V2I(0, 0));
 
                 app->setDisplayScale(2.F);
                 app->tick();

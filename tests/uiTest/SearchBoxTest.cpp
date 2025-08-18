@@ -4,11 +4,10 @@
 
 #include <uiTest/SearchBoxTest.h>
 
-#include <uiTest/App.h>
-#include <uiTest/Window.h>
-
+#include <feather-tk/ui/App.h>
 #include <feather-tk/ui/SearchBox.h>
 #include <feather-tk/ui/RowLayout.h>
+#include <feather-tk/ui/Window.h>
 
 #include <feather-tk/core/Assert.h>
 #include <feather-tk/core/Format.h>
@@ -58,16 +57,6 @@ namespace feather_tk
                 widget->setText("Search");
                 widget->setText("Search");
                 FEATHER_TK_ASSERT("Search" == widget->getText());
-
-                window->setCursorEnter(true);
-                window->setKey(Key::Tab);
-                window->setKey(Key::A, static_cast<int>(KeyModifier::Control));
-                window->setKey(Key::Delete);
-                window->setText("Filter");
-                FEATHER_TK_ASSERT("Filter" == text);
-                window->setKey(Key::Tab);
-                window->setKey(Key::Enter);
-                FEATHER_TK_ASSERT(text.empty());
             }
         }
     }

@@ -42,7 +42,7 @@ namespace feather_tk
                     argv,
                     "ButtonTest",
                     "Button test.");
-                auto window = Window::create(context, app, "ButtonTest", Size2I(1280, 720));
+                auto window = Window::create(context, app, "ButtonTest");
                 auto layout = VerticalLayout::create(context, window);
                 layout->setMarginRole(SizeRole::MarginLarge);
                 window->show();
@@ -65,14 +65,9 @@ namespace feather_tk
 
                 button = CheckBox::create(context, "CheckBox", layout);
                 _test(app, window, layout, button);
-                window->setCursorEnter(true);
                 std::string tooltip = "This is a tooltip";
                 button->setTooltip(tooltip);
                 FEATHER_TK_ASSERT(tooltip == button->getTooltip());
-                window->setCursorPos(center(button->getGeometry()));
-                sleep(tooltipTimeout * 2);
-                window->setCursorPos(center(button->getGeometry()));
-                window->setCursorPos(V2I(0, 0));
                 button->setParent(nullptr);
                 button.reset();
             }
@@ -84,8 +79,6 @@ namespace feather_tk
             const std::shared_ptr<VerticalLayout>& layout,
             const std::shared_ptr<IButton>& button)
         {
-            window->setCursorPos(V2I(0, 0));
-
             FEATHER_TK_ASSERT(button->getParent().lock());
             FEATHER_TK_ASSERT(button->getParentT<Window>());
             FEATHER_TK_ASSERT(button->getWindow());
@@ -155,75 +148,10 @@ namespace feather_tk
             bool checked = false;
             button->setCheckedCallback([&checked](bool value) { checked = value; });
 
-            window->setCursorEnter(true);
-            window->setCursorPos(center(button->getGeometry()));
-            FEATHER_TK_ASSERT(hovered);
-            window->setButton(0, true);
-            FEATHER_TK_ASSERT(pressed);
-            window->setButton(0, false);
-            FEATHER_TK_ASSERT(clicks);
-            FEATHER_TK_ASSERT(checked);
-            if (button->acceptsKeyFocus())
-            {
-                FEATHER_TK_ASSERT(button->hasKeyFocus());
-            }
-            window->setCursorPos(V2I(0, 0));
-            FEATHER_TK_ASSERT(!hovered);
-            window->setCursorPos(center(button->getGeometry()));
-            window->setCursorEnter(false);
-
-            clicks = 0;
-
-            window->setCursorEnter(true);
-            window->setCursorPos(center(button->getGeometry()));
-            window->setKey(Key::Enter);
-            FEATHER_TK_ASSERT(clicks);
-            FEATHER_TK_ASSERT(!checked);
-
-            window->setKey(Key::Escape);
-            if (button->acceptsKeyFocus())
-            {
-                FEATHER_TK_ASSERT(!button->hasKeyFocus());
-            }
-
-            window->setKey(Key::Tab);
-            window->setKey(Key::Tab);
-            if (button->acceptsKeyFocus())
-            {
-                FEATHER_TK_ASSERT(button->hasKeyFocus());
-            }
-            window->hide();
-            window->show();
-            if (button->acceptsKeyFocus())
-            {
-                FEATHER_TK_ASSERT(!button->hasKeyFocus());
-            }
-            window->setCursorEnter(true);
-            window->setKey(Key::Tab, static_cast<int>(KeyModifier::Shift));
-            if (button->acceptsKeyFocus())
-            {
-                FEATHER_TK_ASSERT(button->hasKeyFocus());
-            }
-
-            window->setCursorPos(center(button->getGeometry()));
-            window->hide();
-            window->show();
-            window->setCursorPos(center(button->getGeometry()));
-            window->setButton(0, true);
-            app->tick();
-            window->hide();
-            window->show();
-            window->setCursorPos(center(button->getGeometry()));
-            app->tick();
-            window->setKey(Key::Enter, true);
-            app->tick();
-            window->hide();
-            window->show();
-
             app->setDisplayScale(2.F);
-            app->tick(1000);
+            app->tick();
             app->setDisplayScale(1.F);
-            app->tick(1000);
+            app->tick();
         }
     }
 }

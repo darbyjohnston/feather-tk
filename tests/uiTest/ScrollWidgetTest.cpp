@@ -4,9 +4,6 @@
 
 #include <uiTest/ScrollWidgetTest.h>
 
-#include <uiTest/App.h>
-#include <uiTest/Window.h>
-
 #include <feather-tk/ui/GridLayout.h>
 #include <feather-tk/ui/Label.h>
 
@@ -107,17 +104,6 @@ namespace feather_tk
             scrollWidget->setMarginRole(SizeRole::Margin);
             FEATHER_TK_ASSERT(SizeRole::Margin == scrollWidget->getMarginRole());
             scrollWidget->setMarginRole(SizeRole::None);
-
-            window->setCursorEnter(true);
-            Box2I g = scrollWidget->getGeometry();
-            V2I c = center(g);
-            window->setCursorPos(c);
-            window->setScroll(V2F(0, -1));
-            window->setScroll(V2F(0, -1));
-            window->setScroll(V2F(0, 1));
-            window->setScroll(V2F(0, 1));
-            window->setKey(Key::PageDown);
-            window->setKey(Key::PageUp);
 
             Size2I size = scrollWidget->getScrollSize();
             scrollWidget->setScrollPos(V2I(size.w, size.h));

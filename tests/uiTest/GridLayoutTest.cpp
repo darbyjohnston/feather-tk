@@ -4,12 +4,11 @@
 
 #include <uiTest/GridLayoutTest.h>
 
-#include <uiTest/App.h>
-#include <uiTest/Window.h>
-
+#include <feather-tk/ui/App.h>
 #include <feather-tk/ui/Divider.h>
 #include <feather-tk/ui/GridLayout.h>
 #include <feather-tk/ui/Spacer.h>
+#include <feather-tk/ui/Window.h>
 
 #include <feather-tk/core/Assert.h>
 #include <feather-tk/core/Format.h>

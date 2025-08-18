@@ -4,11 +4,10 @@
 
 #include <uiTest/IconTest.h>
 
-#include <uiTest/App.h>
-#include <uiTest/Window.h>
-
+#include <feather-tk/ui/App.h>
 #include <feather-tk/ui/Icon.h>
 #include <feather-tk/ui/RowLayout.h>
+#include <feather-tk/ui/Window.h>
 
 #include <feather-tk/core/Assert.h>
 #include <feather-tk/core/Format.h>
@@ -53,10 +52,8 @@ namespace feather_tk
                 widget->setIcon("PlaybackStop");
                 widget->setIcon("PlaybackStop");
                 FEATHER_TK_ASSERT("PlaybackStop" == widget->getIcon());
-                app->tick(1000);
                 widget->setIcon("PlaybackForward");
                 widget->setIcon("PlaybackForward");
-                app->tick(1000);
                 widget->setMarginRole(SizeRole::Margin);
                 widget->setMarginRole(SizeRole::Margin);
                 FEATHER_TK_ASSERT(SizeRole::Margin == widget->getMarginRole());
@@ -73,9 +70,9 @@ namespace feather_tk
                 app->tick();
 
                 app->setDisplayScale(2.F);
-                app->tick(1000);
+                app->tick();
                 app->setDisplayScale(1.F);
-                app->tick(1000);
+                app->tick();
             }
         }
     }

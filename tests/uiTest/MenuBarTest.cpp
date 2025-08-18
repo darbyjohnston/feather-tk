@@ -4,11 +4,10 @@
 
 #include <uiTest/MenuBarTest.h>
 
-#include <uiTest/App.h>
-#include <uiTest/Window.h>
-
+#include <feather-tk/ui/App.h>
 #include <feather-tk/ui/MenuBar.h>
 #include <feather-tk/ui/RowLayout.h>
+#include <feather-tk/ui/Window.h>
 
 #include <feather-tk/core/Assert.h>
 #include <feather-tk/core/Format.h>
@@ -93,47 +92,6 @@ namespace feather_tk
                 menuBar->addMenu("Menu 2", menu);
                 app->tick();
 
-                window->setCursorEnter(true);
-                window->setKey(Key::Tab);
-                window->setKey(Key::Enter);
-                Box2I g = menuBar->getGeometry();
-                V2I c = center(g);
-                for (int x = g.min.x; x < g.max.x; ++x)
-                {
-                    window->setCursorPos(V2I(x, c.y));
-                }
-                window->setKey(Key::Escape);
-                window->setKey(Key::Escape);
-
-                window->setKey(Key::Tab);
-                window->setKey(Key::Home);
-                window->setKey(Key::Enter);
-                window->setKey(Key::Enter);
-                FEATHER_TK_ASSERT(action1);
-
-                window->setKey(Key::Enter);
-                window->setKey(Key::Down);
-                window->setKey(Key::Up);
-                window->setKey(Key::End);
-                window->setKey(Key::Home);
-                window->setKey(Key::Enter);
-
-                window->setKey(Key::Right);
-                window->setKey(Key::Left);
-                window->setKey(Key::End);
-                window->setKey(Key::Home);
-
-                window->setKey(Key::Enter);
-                window->setKey(Key::Down);
-                window->setKey(Key::Down);
-                window->setKey(Key::Enter);
-                window->setKey(Key::Escape);
-                window->setKey(Key::Escape);
-
-                window->setKey(Key::Enter);
-                window->setKey(Key::Escape);
-                window->setKey(Key::Escape);
-
                 menuBar->shortcut(Key::_4, static_cast<int>(KeyModifier::Control));
                 FEATHER_TK_ASSERT(action4);
                 menuBar->shortcut(Key::_5, static_cast<int>(KeyModifier::Control));
@@ -141,12 +99,10 @@ namespace feather_tk
                 menuBar->shortcut(Key::_5, static_cast<int>(KeyModifier::Control));
                 FEATHER_TK_ASSERT(!action5);
 
-                window->setKey(Key::Tab);
-                window->setKey(Key::Enter);
                 app->setDisplayScale(2.F);
-                app->tick(1000);
+                app->tick();
                 app->setDisplayScale(1.F);
-                app->tick(1000);
+                app->tick();
 
                 menu->clear();
             }

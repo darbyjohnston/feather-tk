@@ -4,15 +4,11 @@
 
 #include <uiTest/FileBrowserTest.h>
 
-#include <uiTest/App.h>
-#include <uiTest/Window.h>
-
-#include <uiTest/App.h>
-#include <uiTest/Window.h>
-
+#include <feather-tk/ui/App.h>
 #include <feather-tk/ui/FileBrowserPrivate.h>
 #include <feather-tk/ui/RecentFilesModel.h>
 #include <feather-tk/ui/RowLayout.h>
+#include <feather-tk/ui/Window.h>
 
 #include <feather-tk/core/Assert.h>
 #include <feather-tk/core/Format.h>
@@ -70,20 +66,6 @@ namespace feather_tk
                 auto recentFilesModel = RecentFilesModel::create(context);
                 recentFilesModel->addRecent(std::filesystem::current_path());
                 panel->setRecentFilesModel(recentFilesModel);
-
-                //! \bug Sleep a bit to wait for the drives model.
-                sleep(std::chrono::milliseconds(500));
-                window->setCursorEnter(true);
-                window->setKey(Key::Tab, static_cast<int>(KeyModifier::Shift));
-                window->setKey(Key::Enter);
-                app->tick(1000);
-                window->setKey(Key::Tab, static_cast<int>(KeyModifier::Shift));
-                window->setKey(Key::Tab, static_cast<int>(KeyModifier::Shift));
-                window->setKey(Key::Enter);
-                app->tick(1000);
-                window->setKey(Key::Tab, static_cast<int>(KeyModifier::Shift));
-                window->setKey(Key::Tab, static_cast<int>(KeyModifier::Shift));
-                window->setKey(Key::Enter);
             }
         }
 
@@ -130,16 +112,6 @@ namespace feather_tk
                 options.sort = FileBrowserSort::Time;
                 model->setOptions(options);
                 app->tick();
-
-                window->setCursorEnter(true);
-                window->setKey(Key::Tab);
-                window->setKey(Key::Tab);
-                window->setKey(Key::Enter);
-                window->setKey(Key::Down);
-                window->setKey(Key::Up);
-                window->setKey(Key::End);
-                window->setKey(Key::Home);
-                window->setKey(Key::Escape);
             }
         }
 
@@ -185,47 +157,6 @@ namespace feather_tk
                     {
                         cancel = true;
                     });
-
-                window->setCursorEnter(true);
-                window->setKey(Key::Tab);
-                window->setKey(Key::Enter);
-                window->setKey(Key::Enter);
-                window->setKey(Key::Enter);
-                window->setKey(Key::Tab);
-                window->setKey(Key::Enter);
-                window->setKey(Key::Enter);
-                window->setKey(Key::Tab);
-                window->setKey(Key::Enter);
-                window->setKey(Key::Tab);
-                window->setKey(Key::Enter);
-                window->setKey(Key::Tab);
-                window->setKey(Key::Escape);
-
-                window->setKey(Key::Tab, static_cast<int>(KeyModifier::Shift));
-                window->setKey(Key::Enter);
-                window->setKey(Key::Tab, static_cast<int>(KeyModifier::Shift));
-                window->setKey(Key::Enter);
-                window->setKey(Key::Tab, static_cast<int>(KeyModifier::Shift));
-                window->setKey(Key::Enter);
-                window->setKey(Key::Tab, static_cast<int>(KeyModifier::Shift));
-                window->setKey(Key::Down);
-                window->setKey(Key::Tab, static_cast<int>(KeyModifier::Shift));
-                window->setKey(Key::Down);
-                window->setKey(Key::Tab, static_cast<int>(KeyModifier::Shift));
-                window->setText("Filter");
-                window->setText("");
-                window->setKey(Key::Tab, static_cast<int>(KeyModifier::Shift));
-                window->setKey(Key::Enter);
-                window->setKey(Key::Enter);
-                window->setKey(Key::Enter);
-                window->setKey(Key::Tab, static_cast<int>(KeyModifier::Shift));
-                window->setKey(Key::Enter);
-                window->setKey(Key::Tab, static_cast<int>(KeyModifier::Shift));
-                window->setKey(Key::Tab, static_cast<int>(KeyModifier::Shift));
-                window->setKey(Key::Enter);
-                window->setKey(Key::Tab, static_cast<int>(KeyModifier::Shift));
-                window->setKey(Key::Tab, static_cast<int>(KeyModifier::Shift));
-                window->setKey(Key::Enter);
             }
         }
 
@@ -273,26 +204,6 @@ namespace feather_tk
                 fileBrowser->close();
                 app->tick();
                 FEATHER_TK_ASSERT(!fileBrowser->isOpen());
-
-                fileBrowser->open(window);
-                app->tick();
-                FEATHER_TK_ASSERT(fileBrowser->isOpen());
-                window->setKey(Key::Escape);
-                window->setKey(Key::Escape);
-                FEATHER_TK_ASSERT(!fileBrowser->isOpen());
-
-                fileBrowser->open(window);
-                app->tick();
-                FEATHER_TK_ASSERT(fileBrowser->isOpen());
-                window->setKey(Key::Tab, static_cast<int>(KeyModifier::Shift));
-                window->setKey(Key::Enter);
-                FEATHER_TK_ASSERT(!fileBrowser->isOpen());
-
-                fileBrowser->open(window);
-                app->tick();
-                window->setKey(Key::Tab, static_cast<int>(KeyModifier::Shift));
-                window->setKey(Key::Tab, static_cast<int>(KeyModifier::Shift));
-                window->setKey(Key::Enter);
             }
         }
     }

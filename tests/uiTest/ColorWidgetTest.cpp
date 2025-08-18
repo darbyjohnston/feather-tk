@@ -4,13 +4,12 @@
 
 #include <uiTest/ColorWidgetTest.h>
 
-#include <uiTest/App.h>
-#include <uiTest/Window.h>
-
+#include <feather-tk/ui/App.h>
 #include <feather-tk/ui/ColorPopup.h>
 #include <feather-tk/ui/ColorSwatch.h>
 #include <feather-tk/ui/ColorWidget.h>
 #include <feather-tk/ui/RowLayout.h>
+#include <feather-tk/ui/Window.h>
 
 #include <feather-tk/core/Assert.h>
 #include <feather-tk/core/Format.h>
@@ -69,28 +68,6 @@ namespace feather_tk
                 FEATHER_TK_ASSERT(SizeRole::Margin == widget->getSizeRole());
                 widget->setSizeRole(SizeRole::Swatch);
 
-                window->setCursorEnter(true);
-                Box2I g = widget->getGeometry();
-                V2I c = center(g);
-                window->setCursorPos(c);
-                window->setButton(0);
-                window->setKey(Key::Tab);
-                window->setKey(Key::Tab);
-                window->setKey(Key::Tab);
-                window->setKey(Key::Home);
-                window->setKey(Key::Tab);
-                window->setKey(Key::Tab);
-                window->setKey(Key::Home);
-                window->setKey(Key::Tab);
-                window->setKey(Key::Tab);
-                window->setKey(Key::Home);
-                window->setKey(Key::Tab);
-                window->setKey(Key::Tab);
-                window->setKey(Key::Home);
-                window->setKey(Key::Escape);
-                window->setKey(Key::Escape);
-                FEATHER_TK_ASSERT(Color4F(0.F, 0.F, 0.F, 0.F) == color);
-
                 auto popup = ColorPopup::create(context, color);
                 popup->setPopupRole(ColorRole::Red);
                 popup->setPopupRole(ColorRole::Red);
@@ -101,23 +78,6 @@ namespace feather_tk
                 popup->close();
                 app->tick();
                 FEATHER_TK_ASSERT(!popup->isOpen());
-
-                popup->open(window, widget->getGeometry());
-                app->tick();
-                FEATHER_TK_ASSERT(popup->isOpen());
-                window->setKey(Key::Escape);
-                window->setKey(Key::Escape);
-                FEATHER_TK_ASSERT(!popup->isOpen());
-
-                popup->open(window, widget->getGeometry());
-                app->tick();
-                FEATHER_TK_ASSERT(popup->isOpen());
-                g = window->getGeometry();
-                window->setCursorPos(V2I(g.w() - 1, g.h() - 1));
-                window->setButton(0);
-                popup->open(window, widget->getGeometry());
-                app->tick();
-                FEATHER_TK_ASSERT(popup->isOpen());
             }
         }
     }

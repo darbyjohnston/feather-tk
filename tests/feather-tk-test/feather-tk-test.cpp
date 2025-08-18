@@ -6,53 +6,53 @@
 
 #if defined(FEATHER_TK_UI_LIB)
 #include <uiTest/ActionTest.h>
-//#include <uiTest/AppTest.h>
-//#include <uiTest/BellowsTest.h>
-//#include <uiTest/ButtonGroupTest.h>
-//#include <uiTest/ButtonTest.h>
-//#include <uiTest/ColorWidgetTest.h>
-//#include <uiTest/ComboBoxTest.h>
-//#include <uiTest/ConfirmDialogTest.h>
-//#include <uiTest/DoubleEditTest.h>
-//#include <uiTest/DoubleEditSliderTest.h>
-//#include <uiTest/DoubleSliderTest.h>
+#include <uiTest/AppTest.h>
+#include <uiTest/BellowsTest.h>
+#include <uiTest/ButtonGroupTest.h>
+#include <uiTest/ButtonTest.h>
+#include <uiTest/ColorWidgetTest.h>
+#include <uiTest/ComboBoxTest.h>
+#include <uiTest/ConfirmDialogTest.h>
+#include <uiTest/DoubleEditTest.h>
+#include <uiTest/DoubleEditSliderTest.h>
+#include <uiTest/DoubleSliderTest.h>
 #include <uiTest/DoubleModelTest.h>
-//#include <uiTest/DragAndDropTest.h>
-//#include <uiTest/DrawUtilTest.h>
+#include <uiTest/DragAndDropTest.h>
+#include <uiTest/DrawUtilTest.h>
 #include <uiTest/EventTest.h>
-//#include <uiTest/FileBrowserTest.h>
-//#include <uiTest/FileEditTest.h>
-//#include <uiTest/FloatEditTest.h>
-//#include <uiTest/FloatEditSliderTest.h>
-//#include <uiTest/FloatSliderTest.h>
+#include <uiTest/FileBrowserTest.h>
+#include <uiTest/FileEditTest.h>
+#include <uiTest/FloatEditTest.h>
+#include <uiTest/FloatEditSliderTest.h>
+#include <uiTest/FloatSliderTest.h>
 #include <uiTest/FloatModelTest.h>
-//#include <uiTest/GridLayoutTest.h>
-//#include <uiTest/GroupBoxTest.h>
-//#include <uiTest/IWidgetTest.h>
-//#include <uiTest/IconTest.h>
-//#include <uiTest/IntEditTest.h>
-//#include <uiTest/IntEditSliderTest.h>
-//#include <uiTest/IntSliderTest.h>
+#include <uiTest/GridLayoutTest.h>
+#include <uiTest/GroupBoxTest.h>
+#include <uiTest/IWidgetTest.h>
+#include <uiTest/IconTest.h>
+#include <uiTest/IntEditTest.h>
+#include <uiTest/IntEditSliderTest.h>
+#include <uiTest/IntSliderTest.h>
 #include <uiTest/IntModelTest.h>
-//#include <uiTest/LabelTest.h>
+#include <uiTest/LabelTest.h>
 #include <uiTest/LayoutUtilTest.h>
-//#include <uiTest/LineEditTest.h>
-//#include <uiTest/ListWidgetTest.h>
-//#include <uiTest/MDIWidgetTest.h>
-//#include <uiTest/MenuBarTest.h>
-//#include <uiTest/MessageDialogTest.h>
-//#include <uiTest/PieChartTest.h>
-//#include <uiTest/ProgressDialogTest.h>
+#include <uiTest/LineEditTest.h>
+#include <uiTest/ListWidgetTest.h>
+#include <uiTest/MDIWidgetTest.h>
+#include <uiTest/MenuBarTest.h>
+#include <uiTest/MessageDialogTest.h>
+#include <uiTest/PieChartTest.h>
+#include <uiTest/ProgressDialogTest.h>
 #include <uiTest/RecentFilesModelTest.h>
-//#include <uiTest/RowLayoutTest.h>
-//#include <uiTest/ScrollAreaTest.h>
-//#include <uiTest/ScrollBarTest.h>
-//#include <uiTest/ScrollWidgetTest.h>
-//#include <uiTest/SearchBoxTest.h>
-//#include <uiTest/SplitterTest.h>
-//#include <uiTest/StackLayoutTest.h>
-//#include <uiTest/StyleTest.h>
-//#include <uiTest/TabWidgetTest.h>
+#include <uiTest/RowLayoutTest.h>
+#include <uiTest/ScrollAreaTest.h>
+#include <uiTest/ScrollBarTest.h>
+#include <uiTest/ScrollWidgetTest.h>
+#include <uiTest/SearchBoxTest.h>
+#include <uiTest/SplitterTest.h>
+#include <uiTest/StackLayoutTest.h>
+#include <uiTest/StyleTest.h>
+#include <uiTest/TabWidgetTest.h>
 #include <uiTest/WidgetOptionsTest.h>
 
 #if defined(FEATHER_TK_API_GL_4_1) || defined(FEATHER_TK_API_GLES_2)
@@ -197,7 +197,7 @@ namespace feather_tk
 #endif // FEATHER_TK_API_GL_4_1
 
             p.tests.push_back(ui_test::ActionTest::create(context));
-            /*p.tests.push_back(ui_test::BellowsTest::create(context));
+            p.tests.push_back(ui_test::BellowsTest::create(context));
             p.tests.push_back(ui_test::ButtonTest::create(context));
             p.tests.push_back(ui_test::ButtonGroupTest::create(context));
             p.tests.push_back(ui_test::ColorWidgetTest::create(context));
@@ -205,36 +205,36 @@ namespace feather_tk
             p.tests.push_back(ui_test::ConfirmDialogTest::create(context));
             p.tests.push_back(ui_test::DoubleEditTest::create(context));
             p.tests.push_back(ui_test::DoubleEditSliderTest::create(context));
-            p.tests.push_back(ui_test::DoubleSliderTest::create(context));*/
+            p.tests.push_back(ui_test::DoubleSliderTest::create(context));
             p.tests.push_back(ui_test::DoubleModelTest::create(context));
-            //p.tests.push_back(ui_test::DragAndDropTest::create(context));
-            //p.tests.push_back(ui_test::DrawUtilTest::create(context));
+            p.tests.push_back(ui_test::DragAndDropTest::create(context));
+            p.tests.push_back(ui_test::DrawUtilTest::create(context));
             p.tests.push_back(ui_test::EventTest::create(context));
-            /*p.tests.push_back(ui_test::FileBrowserTest::create(context));
+            p.tests.push_back(ui_test::FileBrowserTest::create(context));
             p.tests.push_back(ui_test::FileEditTest::create(context));
             p.tests.push_back(ui_test::FloatEditTest::create(context));
             p.tests.push_back(ui_test::FloatEditSliderTest::create(context));
-            p.tests.push_back(ui_test::FloatSliderTest::create(context));*/
+            p.tests.push_back(ui_test::FloatSliderTest::create(context));
             p.tests.push_back(ui_test::FloatModelTest::create(context));
-            /*p.tests.push_back(ui_test::GridLayoutTest::create(context));
+            p.tests.push_back(ui_test::GridLayoutTest::create(context));
             p.tests.push_back(ui_test::GroupBoxTest::create(context));
             p.tests.push_back(ui_test::IWidgetTest::create(context));
             p.tests.push_back(ui_test::IconTest::create(context));
             p.tests.push_back(ui_test::IntEditTest::create(context));
             p.tests.push_back(ui_test::IntEditSliderTest::create(context));
-            p.tests.push_back(ui_test::IntSliderTest::create(context));*/
+            p.tests.push_back(ui_test::IntSliderTest::create(context));
             p.tests.push_back(ui_test::IntModelTest::create(context));
-            //p.tests.push_back(ui_test::LabelTest::create(context));
+            p.tests.push_back(ui_test::LabelTest::create(context));
             p.tests.push_back(ui_test::LayoutUtilTest::create(context));
-            /*p.tests.push_back(ui_test::LineEditTest::create(context));
+            p.tests.push_back(ui_test::LineEditTest::create(context));
             p.tests.push_back(ui_test::ListWidgetTest::create(context));
             p.tests.push_back(ui_test::MDIWidgetTest::create(context));
             p.tests.push_back(ui_test::MenuBarTest::create(context));
             p.tests.push_back(ui_test::MessageDialogTest::create(context));
             p.tests.push_back(ui_test::PieChartTest::create(context));
-            p.tests.push_back(ui_test::ProgressDialogTest::create(context));*/
+            p.tests.push_back(ui_test::ProgressDialogTest::create(context));
             p.tests.push_back(ui_test::RecentFilesModelTest::create(context));
-            /*p.tests.push_back(ui_test::RowLayoutTest::create(context));
+            p.tests.push_back(ui_test::RowLayoutTest::create(context));
             p.tests.push_back(ui_test::ScrollAreaTest::create(context));
             p.tests.push_back(ui_test::ScrollBarTest::create(context));
             p.tests.push_back(ui_test::ScrollWidgetTest::create(context));
@@ -242,10 +242,10 @@ namespace feather_tk
             p.tests.push_back(ui_test::SplitterTest::create(context));
             p.tests.push_back(ui_test::StackLayoutTest::create(context));
             p.tests.push_back(ui_test::StyleTest::create(context));
-            p.tests.push_back(ui_test::TabWidgetTest::create(context));*/
+            p.tests.push_back(ui_test::TabWidgetTest::create(context));
             p.tests.push_back(ui_test::WidgetOptionsTest::create(context));
 
-            //p.tests.push_back(ui_test::AppTest::create(context));
+            p.tests.push_back(ui_test::AppTest::create(context));
 #endif // FEATHER_TK_UI_LIB
         }
 

@@ -4,11 +4,10 @@
 
 #include <uiTest/MessageDialogTest.h>
 
-#include <uiTest/App.h>
-#include <uiTest/Window.h>
-
+#include <feather-tk/ui/App.h>
 #include <feather-tk/ui/MessageDialog.h>
 #include <feather-tk/ui/DialogSystem.h>
+#include <feather-tk/ui/Window.h>
 
 #include <feather-tk/core/Assert.h>
 #include <feather-tk/core/Format.h>
@@ -45,12 +44,6 @@ namespace feather_tk
                 app->addWindow(window);
                 window->show();
                 app->tick();
-
-                window->setCursorEnter(true);
-                auto system = context->getSystem<DialogSystem>();
-                system->message("Message", "This is a message.", window);
-                app->tick();
-                window->setKey(Key::Enter);
             }
         }
     }

@@ -4,9 +4,6 @@
 
 #include <uiTest/ScrollBarTest.h>
 
-#include <uiTest/App.h>
-#include <uiTest/Window.h>
-
 #include <feather-tk/ui/ScrollBar.h>
 
 #include <feather-tk/core/Assert.h>
@@ -65,32 +62,6 @@ namespace feather_tk
             widget->setScrollPos(1000);
             widget->setScrollPos(1000);
             FEATHER_TK_ASSERT(1000 == widget->getScrollPos());
-
-            window->setCursorEnter(true);
-            Box2I g = widget->getGeometry();
-            V2I c = center(g);
-            window->setCursorPos(c);
-            switch (orientation)
-            {
-            case Orientation::Horizontal:
-                window->setButton(0, true);
-                window->setCursorPos(c + V2I(100, 0));
-                window->setButton(0, false);
-                window->setButton(0, true);
-                window->setCursorPos(c + V2I(-100, 0));
-                window->setButton(0, false);
-                break;
-            case Orientation::Vertical:
-                window->setButton(0, true);
-                window->setCursorPos(c + V2I(0, 100));
-                window->setButton(0, false);
-                window->setButton(0, true);
-                window->setCursorPos(c + V2I(0, -100));
-                window->setButton(0, false);
-                break;
-            default: break;
-            }
-            window->setCursorPos(V2I(0, 0));
 
             widget->setParent(nullptr);
         }

@@ -4,12 +4,11 @@
 
 #include <uiTest/ButtonGroupTest.h>
 
-#include <uiTest/App.h>
-#include <uiTest/Window.h>
-
+#include <feather-tk/ui/App.h>
 #include <feather-tk/ui/ButtonGroup.h>
 #include <feather-tk/ui/RowLayout.h>
 #include <feather-tk/ui/PushButton.h>
+#include <feather-tk/ui/Window.h>
 
 #include <feather-tk/core/Assert.h>
 #include <feather-tk/core/Format.h>
@@ -67,14 +66,6 @@ namespace feather_tk
                         clicked = value;
                     });
 
-                window->setCursorEnter(true);
-                window->setKey(Key::Tab);
-                window->setKey(Key::Enter);
-                FEATHER_TK_ASSERT(0 == clicked);
-                window->setKey(Key::Tab);
-                window->setKey(Key::Enter);
-                FEATHER_TK_ASSERT(1 == clicked);
-
                 group = ButtonGroup::create(context, ButtonGroupType::Check);
                 group->addButton(button0);
                 group->addButton(button1);
@@ -87,13 +78,6 @@ namespace feather_tk
                         clicked = index;
                         checked = value;
                     });
-
-                window->setKey(Key::Enter);
-                FEATHER_TK_ASSERT(1 == clicked);
-                FEATHER_TK_ASSERT(checked);
-                window->setKey(Key::Enter);
-                FEATHER_TK_ASSERT(!checked);
-                group->setChecked(0, true);
 
                 group = ButtonGroup::create(context, ButtonGroupType::Radio);
                 group->addButton(button0);
@@ -108,15 +92,6 @@ namespace feather_tk
                         checked = value;
                     });
 
-                window->setKey(Key::Enter);
-                FEATHER_TK_ASSERT(1 == clicked);
-                FEATHER_TK_ASSERT(checked);
-                window->setKey(Key::Tab);
-                window->setKey(Key::Enter);
-                FEATHER_TK_ASSERT(2 == clicked);
-                FEATHER_TK_ASSERT(checked);
-                group->setChecked(0, true);
-
                 group = ButtonGroup::create(context, ButtonGroupType::Toggle);
                 group->addButton(button0);
                 group->addButton(button1);
@@ -129,15 +104,6 @@ namespace feather_tk
                         clicked = index;
                         checked = value;
                     });
-
-                window->setKey(Key::Enter);
-                FEATHER_TK_ASSERT(2 == clicked);
-                FEATHER_TK_ASSERT(checked);
-                window->setKey(Key::Tab);
-                window->setKey(Key::Enter);
-                FEATHER_TK_ASSERT(0 == clicked);
-                FEATHER_TK_ASSERT(checked);
-                group->setChecked(0, true);
             }
         }
     }

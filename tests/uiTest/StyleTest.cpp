@@ -4,12 +4,11 @@
 
 #include <uiTest/StyleTest.h>
 
-#include <uiTest/App.h>
-#include <uiTest/Window.h>
-
+#include <feather-tk/ui/App.h>
 #include <feather-tk/ui/PushButton.h>
 #include <feather-tk/ui/RowLayout.h>
 #include <feather-tk/ui/Style.h>
+#include <feather-tk/ui/Window.h>
 
 #include <feather-tk/core/Assert.h>
 #include <feather-tk/core/Format.h>

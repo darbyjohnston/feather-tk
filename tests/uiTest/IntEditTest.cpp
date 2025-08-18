@@ -4,11 +4,10 @@
 
 #include <uiTest/IntEditTest.h>
 
-#include <uiTest/App.h>
-#include <uiTest/Window.h>
-
+#include <feather-tk/ui/App.h>
 #include <feather-tk/ui/IntEdit.h>
 #include <feather-tk/ui/RowLayout.h>
+#include <feather-tk/ui/Window.h>
 
 #include <feather-tk/core/Assert.h>
 #include <feather-tk/core/Format.h>
@@ -67,25 +66,6 @@ namespace feather_tk
                 edit->setFontRole(FontRole::Label);
                 FEATHER_TK_ASSERT(FontRole::Label == edit->getFontRole());
                 edit->setFontRole(FontRole::Mono);
-
-                window->setCursorEnter(true);
-                window->setCursorPos(center(edit->getGeometry()));
-                window->setKey(Key::Tab);
-                window->setKey(Key::A, static_cast<int>(KeyModifier::Control));
-                window->setKey(Key::Delete);
-                window->setText("1");
-                window->setKey(Key::Enter);
-                FEATHER_TK_ASSERT(1 == value);
-
-                window->setKey(Key::Up);
-                FEATHER_TK_ASSERT(3 == value);
-                window->setKey(Key::PageUp);
-                FEATHER_TK_ASSERT(6 == value);
-                window->setKey(Key::PageDown);
-                FEATHER_TK_ASSERT(3 == value);
-                window->setKey(Key::Down);
-                FEATHER_TK_ASSERT(1 == value);
-                window->setKey(Key::Escape);
             }
         }
     }

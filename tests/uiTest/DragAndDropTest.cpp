@@ -4,11 +4,10 @@
 
 #include <uiTest/DragAndDropTest.h>
 
-#include <uiTest/App.h>
-#include <uiTest/Window.h>
-
+#include <feather-tk/ui/App.h>
 #include <feather-tk/ui/RowLayout.h>
 #include <feather-tk/ui/Spacer.h>
+#include <feather-tk/ui/Window.h>
 
 #include <feather-tk/core/Assert.h>
 #include <feather-tk/core/Format.h>
@@ -173,27 +172,6 @@ namespace feather_tk
                 app->addWindow(window);
                 window->show();
                 app->tick();
-
-                window->setCursorEnter(true);
-                window->setCursorPos(center(dndWidget0->getGeometry()));
-                window->setButton(0, true);
-                window->setCursorPos(center(dndWidget1->getGeometry()));
-                window->setCursorPos(center(dndWidget1->getGeometry()));
-                window->setButton(0, false);
-                FEATHER_TK_ASSERT("Drag 0" == dndWidget1->getText());
-
-                window->setCursorPos(center(dndWidget0->getGeometry()));
-                window->setButton(0, true);
-                window->setCursorPos(center(spacer->getGeometry()));
-                window->setCursorPos(center(spacer->getGeometry()));
-                window->setButton(0, false);
-
-                window->setCursorPos(center(dndWidget0->getGeometry()));
-                window->setButton(0, true, 0);
-                window->setCursorPos(center(dndWidget1->getGeometry()));
-                window->setCursorPos(center(dndWidget1->getGeometry()));
-                window->hide();
-                window->show();
             }
         }
     }

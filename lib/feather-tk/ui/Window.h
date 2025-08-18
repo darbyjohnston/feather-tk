@@ -28,7 +28,7 @@ namespace feather_tk
             const std::shared_ptr<Context>&,
             const std::shared_ptr<App>&,
             const std::string& name,
-            const Size2I&);
+            const Size2I& = Size2I(1280, 960));
 
         //! Get the window ID.
         uint32_t getID() const;

@@ -4,12 +4,10 @@
 
 #include <uiTest/LineEditTest.h>
 
-#include <uiTest/App.h>
-#include <uiTest/Window.h>
-
-#include <feather-tk/ui/IClipboard.h>
+#include <feather-tk/ui/App.h>
 #include <feather-tk/ui/LineEdit.h>
 #include <feather-tk/ui/RowLayout.h>
+#include <feather-tk/ui/Window.h>
 
 #include <feather-tk/core/Assert.h>
 #include <feather-tk/core/Format.h>
@@ -75,56 +73,6 @@ namespace feather_tk
                 edit->setFontRole(FontRole::Mono);
                 FEATHER_TK_ASSERT(FontRole::Mono == edit->getFontRole());
                 edit->setFontRole(FontRole::Label);
-
-                window->setCursorEnter(true);
-                window->setKey(Key::Tab);
-                window->setText("T");
-                FEATHER_TK_ASSERT("T" == textChanged);
-                window->setText("e");
-                FEATHER_TK_ASSERT("Te" == textChanged);
-                window->setText("s");
-                FEATHER_TK_ASSERT("Tes" == textChanged);
-                window->setText("t");
-                FEATHER_TK_ASSERT("Test" == textChanged);
-                window->setKey(Key::Enter);
-                FEATHER_TK_ASSERT("Test" == text);
-
-                window->setKey(Key::A, static_cast<int>(KeyModifier::Control));
-                window->setKey(Key::C, static_cast<int>(KeyModifier::Control));
-                FEATHER_TK_ASSERT("Test" == window->getClipboard()->getText());
-                window->setKey(Key::X, static_cast<int>(KeyModifier::Control));
-                FEATHER_TK_ASSERT(textChanged.empty());
-                window->setKey(Key::V, static_cast<int>(KeyModifier::Control));
-                FEATHER_TK_ASSERT("Test" == textChanged);
-                window->setKey(Key::A, static_cast<int>(KeyModifier::Control));
-                window->setKey(Key::V, static_cast<int>(KeyModifier::Control));
-                FEATHER_TK_ASSERT("Test" == textChanged);
-
-                window->setKey(Key::Left, static_cast<int>(KeyModifier::Control));
-                window->setKey(Key::Right, static_cast<int>(KeyModifier::Control));
-                window->setKey(Key::Home, static_cast<int>(KeyModifier::Control));
-                window->setKey(Key::Delete, static_cast<int>(KeyModifier::Control));
-                FEATHER_TK_ASSERT("est" == textChanged);
-                window->setKey(Key::End, static_cast<int>(KeyModifier::Control));
-                window->setKey(Key::Backspace, static_cast<int>(KeyModifier::Control));
-                FEATHER_TK_ASSERT("es" == textChanged);
-                window->setKey(Key::A, static_cast<int>(KeyModifier::Control));
-                window->setKey(Key::Backspace, static_cast<int>(KeyModifier::Control));
-                FEATHER_TK_ASSERT(textChanged.empty());
-                window->setText("T");
-                window->setKey(Key::A, static_cast<int>(KeyModifier::Control));
-                window->setText("t");
-                FEATHER_TK_ASSERT("t" == textChanged);
-
-                window->setKey(Key::Escape, static_cast<int>(KeyModifier::Control));
-                FEATHER_TK_ASSERT(!edit->hasKeyFocus());
-
-                Box2I g = edit->getGeometry();
-                const V2I c = center(g);
-                window->setCursorPos(c);
-                window->setButton(0, true);
-                window->setCursorPos(V2I(g.max.x, c.y));
-                window->setButton(0, false);
 
                 edit->takeKeyFocus();
                 app->tick();

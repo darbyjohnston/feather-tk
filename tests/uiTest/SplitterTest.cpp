@@ -4,9 +4,6 @@
 
 #include <uiTest/SplitterTest.h>
 
-#include <uiTest/App.h>
-#include <uiTest/Window.h>
-
 #include <feather-tk/ui/Label.h>
 #include <feather-tk/ui/Splitter.h>
 
@@ -70,14 +67,6 @@ namespace feather_tk
             app->tick();
             splitter->setSplit(.5F);
             app->tick();
-
-            window->setCursorEnter(true);
-            Box2I g = splitter->getGeometry();
-            V2I c = center(g);
-            window->setCursorPos(c);
-            window->setButton(0, true);
-            window->setCursorPos(c + V2I(100, 100));
-            window->setButton(0, false);
 
             splitter->setParent(nullptr);
         }

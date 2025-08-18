@@ -1,104 +1,104 @@
 set(HEADERS
     ActionTest.h
-    #AppTest.h
-    #BellowsTest.h
-    #ButtonGroupTest.h
-    #ButtonTest.h
-    #ColorWidgetTest.h
-    #ComboBoxTest.h
-    #ConfirmDialogTest.h
-    #DoubleEditSliderTest.h
-    #DoubleEditTest.h
+    AppTest.h
+    BellowsTest.h
+    ButtonGroupTest.h
+    ButtonTest.h
+    ColorWidgetTest.h
+    ComboBoxTest.h
+    ConfirmDialogTest.h
+    DoubleEditSliderTest.h
+    DoubleEditTest.h
     DoubleModelTest.h
-    #DoubleSliderTest.h
+    DoubleSliderTest.h
     DragAndDropTest.h
-    #DrawUtilTest.h
+    DrawUtilTest.h
     EventTest.h
-    #FileBrowserTest.h
-    #FileEditTest.h
-    #FloatEditSliderTest.h
-    #FloatEditTest.h
+    FileBrowserTest.h
+    FileEditTest.h
+    FloatEditSliderTest.h
+    FloatEditTest.h
     FloatModelTest.h
-    #FloatSliderTest.h
-    #GridLayoutTest.h
-    #GroupBoxTest.h
-    #IWidgetTest.h
-    #IconTest.h
-    #IntEditSliderTest.h
-    #IntEditTest.h
+    FloatSliderTest.h
+    GridLayoutTest.h
+    GroupBoxTest.h
+    IWidgetTest.h
+    IconTest.h
+    IntEditSliderTest.h
+    IntEditTest.h
     IntModelTest.h
-    #IntSliderTest.h
-    #LabelTest.h
+    IntSliderTest.h
+    LabelTest.h
     LayoutUtilTest.h
-    #LineEditTest.h
-    #ListWidgetTest.h
-    #MDIWidgetTest.h
-    #MenuBarTest.h
-    #MessageDialogTest.h
-    #PieChartTest.h
-    #ProgressDialogTest.h
+    LineEditTest.h
+    ListWidgetTest.h
+    MDIWidgetTest.h
+    MenuBarTest.h
+    MessageDialogTest.h
+    PieChartTest.h
+    ProgressDialogTest.h
     RecentFilesModelTest.h
-    #RowLayoutTest.h
-    #ScrollAreaTest.h
-    #ScrollBarTest.h
-    #ScrollWidgetTest.h
-    #SearchBoxTest.h
-    #SplitterTest.h
-    #StackLayoutTest.h
-    #StyleTest.h
-    #TabWidgetTest.h
+    RowLayoutTest.h
+    ScrollAreaTest.h
+    ScrollBarTest.h
+    ScrollWidgetTest.h
+    SearchBoxTest.h
+    SplitterTest.h
+    StackLayoutTest.h
+    StyleTest.h
+    TabWidgetTest.h
     WidgetOptionsTest.h)
 set(PRIVATE_HEADERS)
 
 set(SOURCE
     ActionTest.cpp
-    #AppTest.cpp
-    #BellowsTest.cpp
-    #ButtonGroupTest.cpp
-    #ButtonTest.cpp
-    #ColorWidgetTest.cpp
-    #ComboBoxTest.cpp
-    #ConfirmDialogTest.cpp
-    #DoubleEditSliderTest.cpp
-    #DoubleEditTest.cpp
+    AppTest.cpp
+    BellowsTest.cpp
+    ButtonGroupTest.cpp
+    ButtonTest.cpp
+    ColorWidgetTest.cpp
+    ComboBoxTest.cpp
+    ConfirmDialogTest.cpp
+    DoubleEditSliderTest.cpp
+    DoubleEditTest.cpp
     DoubleModelTest.cpp
-    #DoubleSliderTest.cpp
-    #DragAndDropTest.cpp
-    #DrawUtilTest.cpp
+    DoubleSliderTest.cpp
+    DragAndDropTest.cpp
+    DrawUtilTest.cpp
     EventTest.cpp
-    #FileBrowserTest.cpp
-    #FileEditTest.cpp
-    #FloatEditSliderTest.cpp
-    #FloatEditTest.cpp
+    FileBrowserTest.cpp
+    FileEditTest.cpp
+    FloatEditSliderTest.cpp
+    FloatEditTest.cpp
     FloatModelTest.cpp
-    #FloatSliderTest.cpp
-    #GridLayoutTest.cpp
-    #GroupBoxTest.cpp
-    #IWidgetTest.cpp
-    #IconTest.cpp
-    #IntEditSliderTest.cpp
-    #IntEditTest.cpp
+    FloatSliderTest.cpp
+    GridLayoutTest.cpp
+    GroupBoxTest.cpp
+    IWidgetTest.cpp
+    IconTest.cpp
+    IntEditSliderTest.cpp
+    IntEditTest.cpp
     IntModelTest.cpp
-    #IntSliderTest.cpp
-    #LabelTest.cpp
+    IntSliderTest.cpp
+    LabelTest.cpp
     LayoutUtilTest.cpp
-    #LineEditTest.cpp
-    #ListWidgetTest.cpp
-    #MDIWidgetTest.cpp
-    #MenuBarTest.cpp
-    #MessageDialogTest.cpp
-    #PieChartTest.cpp
-    #ProgressDialogTest.cpp
+    LineEditTest.cpp
+    ListWidgetTest.cpp
+    MDIWidgetTest.cpp
+    MenuBarTest.cpp
+    MessageDialogTest.cpp
+    PieChartTest.cpp
+    ProgressDialogTest.cpp
     RecentFilesModelTest.cpp
-    #RowLayoutTest.cpp
-    #ScrollAreaTest.cpp
-    #ScrollBarTest.cpp
-    #ScrollWidgetTest.cpp
-    #SearchBoxTest.cpp
-    #SplitterTest.cpp
-    #StackLayoutTest.cpp
-    #StyleTest.cpp
-    #TabWidgetTest.cpp
+    RowLayoutTest.cpp
+    ScrollAreaTest.cpp
+    ScrollBarTest.cpp
+    ScrollWidgetTest.cpp
+    SearchBoxTest.cpp
+    SplitterTest.cpp
+    StackLayoutTest.cpp
+    StyleTest.cpp
+    TabWidgetTest.cpp
     WidgetOptionsTest.cpp)
 
 add_library(feather-tk-uiTest ${HEADERS} ${PRIVATE_HEADERS} ${SOURCE})

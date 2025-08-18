@@ -4,12 +4,11 @@
 
 #include <uiTest/BellowsTest.h>
 
-#include <uiTest/App.h>
-#include <uiTest/Window.h>
-
+#include <feather-tk/ui/App.h>
 #include <feather-tk/ui/Bellows.h>
 #include <feather-tk/ui/Label.h>
 #include <feather-tk/ui/RowLayout.h>
+#include <feather-tk/ui/Window.h>
 
 #include <feather-tk/core/Assert.h>
 #include <feather-tk/core/Format.h>
@@ -42,7 +41,10 @@ namespace feather_tk
                     argv,
                     "BellowsTest",
                     "Bellows test.");
-                auto window = Window::create(context, app, "BellowsTest");
+                auto window = Window::create(
+                    context,
+                    app,
+                    "BellowsTest");
                 auto layout = VerticalLayout::create(context, window);
                 layout->setMarginRole(SizeRole::MarginLarge);
                 app->addWindow(window);
@@ -60,19 +62,6 @@ namespace feather_tk
                 bellows->setOpen(true);
                 FEATHER_TK_ASSERT(bellows->isOpen());
                 bellows->setOpen(false);
-
-                window->setCursorEnter(true);
-                window->setKey(Key::Tab);
-                window->setKey(Key::Enter);
-                FEATHER_TK_ASSERT(bellows->isOpen());
-                window->setKey(Key::Enter);
-                FEATHER_TK_ASSERT(!bellows->isOpen());
-                window->setKey(Key::Escape);
-                window->setCursorPos(center(bellows->getGeometry()));
-                window->setButton(0);
-                FEATHER_TK_ASSERT(bellows->isOpen());
-                window->setButton(0);
-                FEATHER_TK_ASSERT(!bellows->isOpen());
 
                 bellows->hide();
                 app->tick();

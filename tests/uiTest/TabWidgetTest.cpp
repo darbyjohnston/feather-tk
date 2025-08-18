@@ -4,13 +4,12 @@
 
 #include <uiTest/TabWidgetTest.h>
 
-#include <uiTest/App.h>
-#include <uiTest/Window.h>
-
+#include <feather-tk/ui/App.h>
 #include <feather-tk/ui/Label.h>
 #include <feather-tk/ui/RowLayout.h>
 #include <feather-tk/ui/TabBar.h>
 #include <feather-tk/ui/TabWidget.h>
+#include <feather-tk/ui/Window.h>
 
 #include <feather-tk/core/Assert.h>
 #include <feather-tk/core/Format.h>
@@ -132,16 +131,6 @@ namespace feather_tk
                 widget->setCurrentTab(1);
                 FEATHER_TK_ASSERT(1 == widget->getCurrentTab());
                 app->tick();
-
-                window->setCursorEnter(true);
-                window->setKey(Key::Tab);
-                window->setKey(Key::Right);
-                window->setKey(Key::Left);
-                window->setKey(Key::End);
-                window->setKey(Key::Home);
-                window->setKey(Key::Enter);
-                FEATHER_TK_ASSERT(0 == widget->getCurrentTab());
-                window->setKey(Key::Escape);
             }
         }
     }
