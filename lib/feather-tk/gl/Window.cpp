@@ -171,6 +171,10 @@ namespace feather_tk
         Window::~Window()
         {
             FEATHER_TK_P();
+            if (p.sdlGLContext)
+            {
+                SDL_GL_DeleteContext(p.sdlGLContext);
+            }
             if (p.sdlWindow)
             {
                 SDL_DestroyWindow(p.sdlWindow);
