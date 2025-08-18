@@ -46,8 +46,6 @@ namespace feather_tk
         {
             FEATHER_TK_P();
 
-            std::cout << "Window 0!" << std::endl;
-
             p.context = context;
 
 #if defined(FEATHER_TK_API_GL_4_1)
@@ -77,7 +75,6 @@ namespace feather_tk
             {
                 sdlWindowFlags |= SDL_WINDOW_HIDDEN;
             }
-            std::cout << "Window 1!" << std::endl;
             p.sdlWindow = SDL_CreateWindow(
                 name.c_str(),
                 SDL_WINDOWPOS_UNDEFINED,
@@ -91,27 +88,22 @@ namespace feather_tk
                     arg(SDL_GetError()));
             }
 
-            std::cout << "Window 2!" << std::endl;
             p.sdlGLContext = SDL_GL_CreateContext(p.sdlWindow);
             if (!p.sdlGLContext)
             {
                 throw std::runtime_error(Format("Cannot create OpenGL context: {0}").
                     arg(SDL_GetError()));
             }
-            std::cout << "Window 3!" << std::endl;
             if (options & static_cast<int>(WindowOptions::DoubleBuffer))
             {
                 SDL_GL_SetSwapInterval(1);
             }
-            std::cout << "Window 4!" << std::endl;
             if (options & static_cast<int>(WindowOptions::MakeCurrent))
             {
                 makeCurrent();
             }
 
-            std::cout << "Window 5!" << std::endl;
             initGLAD();
-
 #if defined(FEATHER_TK_API_GL_4_1_Debug)
             GLint flags = 0;
             glGetIntegerv(GL_CONTEXT_FLAGS, &flags);
@@ -130,7 +122,6 @@ namespace feather_tk
             }
 #endif // FEATHER_TK_API_GL_4_1_Debug
 
-            std::cout << "Window 6!" << std::endl;
             std::string glVendor;
             std::string glRenderer;
             std::string glVersion;
@@ -148,10 +139,8 @@ namespace feather_tk
                 glVersion = std::string((const char*)glString);
                 glVersionMajor = getMajorVersion(glVersion);
             }
-            std::cout << "gl vendor: " << glVendor << std::endl;
-            std::cout << "gl renderer: " << glRenderer << std::endl;
-            std::cout << "gl version: " << glVersion << std::endl;
-            std::cout << "gl version major: " << glVersionMajor << std::endl;
+            //! \todo Shouldn't window creation fail if we didn't get the
+            //! requested OpenGL version?
 #if defined(FEATHER_TK_API_GL_4_1)
             if (glVersionMajor < 4)
 #elif defined(FEATHER_TK_API_GLES_2)
@@ -177,8 +166,6 @@ namespace feather_tk
                     arg(glRenderer).
                     arg(glVersion));
             }
-
-            std::cout << "Window 7!" << std::endl;
         }
         
         Window::~Window()

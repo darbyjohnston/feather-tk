@@ -36,7 +36,8 @@ jobs:
       run: |
         cd build
         cd feather-tk/src/feather-tk-build
-        xvfb-run ctest --verbose --output-on-failure -C Debug
+        xvfb-run ctest --verbose -C Debug
+        xvfb-run ctest --verbose --rerun-failed --output-on-failure -C Debug
     
     - name: Code coverage
       if: env.FEATHER_TK_GCOV == 'ON'
@@ -84,7 +85,8 @@ jobs:
       run: |
         cd build
         cd feather-tk/src/feather-tk-build
-        xvfb-run ctest --verbose --output-on-failure -C Debug
+        xvfb-run ctest --verbose -C Debug
+        xvfb-run ctest --verbose --rerun-failed --output-on-failure -C Debug
 
   macos-13-build:
     runs-on: macos-13
@@ -126,7 +128,8 @@ jobs:
         export DYLD_LIBRARY_PATH=$PWD/build/install/lib:$DYLD_LIBRARY_PATH
         cd build
         cd feather-tk/src/feather-tk-build
-        ctest --verbose --output-on-failure -C Debug
+        ctest --verbose -C Debug
+        ctest --verbose --rerun-failed --output-on-failure -C Debug
 
   macos-build:
     runs-on: macos-latest
@@ -168,7 +171,8 @@ jobs:
         export DYLD_LIBRARY_PATH=$PWD/build/install/lib:$DYLD_LIBRARY_PATH
         cd build
         cd feather-tk/src/feather-tk-build
-        ctest --verbose --output-on-failure -C Debug
+        ctest --verbose -C Debug
+        ctest --verbose --rerun-failed --output-on-failure -C Debug
 
   windows-build:
     runs-on: windows-latest
@@ -208,5 +212,6 @@ jobs:
       run: |
         cd build
         cd feather-tk\src\feather-tk-build
-        tests\feather-tk-test\Debug\feather-tk-test.exe OffscreenBufferTest -log
+        ctest --verbose -C Debug
+        ctest --verbose --rerun-failed --output-on-failure -C Debug
 
