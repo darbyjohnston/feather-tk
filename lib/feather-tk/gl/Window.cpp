@@ -47,10 +47,10 @@ namespace feather_tk
             p.context = context;
 
 #if defined(FEATHER_TK_API_GL_4_1)
-            SDL_GL_SetAttribute(SDL_GL_ACCELERATED_VISUAL, 1);
+            //SDL_GL_SetAttribute(SDL_GL_ACCELERATED_VISUAL, 1);
             SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 4);
             SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 1);
-            SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
+            //SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
 #elif defined(FEATHER_TK_API_GLES_2)
             SDL_GL_SetAttribute(SDL_GL_ACCELERATED_VISUAL, 1);
             SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 2);
