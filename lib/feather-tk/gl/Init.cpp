@@ -31,6 +31,7 @@ namespace feather_tk
 #elif defined(FEATHER_TK_API_GLES_2)
             r = gladLoadGLES2Loader((GLADloadproc)SDL_GL_GetProcAddress);
 #endif // FEATHER_TK_API_GL_4_1
+            std::cout << "initGLAD: " << r << std::endl;
             if (0 == r)
             {
                 throw std::runtime_error("Cannot initialize GLAD");
