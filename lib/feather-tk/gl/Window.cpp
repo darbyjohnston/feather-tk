@@ -11,6 +11,7 @@
 #include <feather-tk/core/Context.h>
 #include <feather-tk/core/Format.h>
 #include <feather-tk/core/LogSystem.h>
+#include <feather-tk/core/String.h>
 
 #include <SDL2/SDL.h>
 
@@ -108,20 +109,7 @@ namespace feather_tk
             }
 
             std::cout << "Window 5!" << std::endl;
-            int gladVersion = initGLAD();
-#if defined(FEATHER_TK_API_GL_4_1)
-            if (gladVersion < 4)
-            {
-                throw std::runtime_error(Format("Cannot initialize GLAD, got version: {0}").
-                    arg(gladVersion));
-            }
-#elif defined(FEATHER_TK_API_GLES_2)
-            if (gladVersion < 2)
-            {
-                throw std::runtime_error(Format("Cannot initialize GLAD, got version: {0}").
-                    arg(gladVersion));
-            }
-#endif // FEATHER_TK_API_GL_4_1
+            initGLAD();
 
 #if defined(FEATHER_TK_API_GL_4_1_Debug)
             GLint flags = 0;
@@ -142,23 +130,48 @@ namespace feather_tk
 #endif // FEATHER_TK_API_GL_4_1_Debug
 
             std::cout << "Window 6!" << std::endl;
+            std::string glVendor;
+            std::string glRenderer;
+            std::string glVersion;
+            int glVersionMajor = 0;
+            if (const GLubyte* glString = glGetString(GL_VENDOR))
+            {
+                glVendor = std::string((const char*)glString);
+            }
+            if (const GLubyte* glString = glGetString(GL_RENDERER))
+            {
+                glRenderer = std::string((const char*)glString);
+            }
+            if (const GLubyte* glString = glGetString(GL_VERSION))
+            {
+                glVersion = std::string((const char*)glString);
+                auto tmp = split(glVersion, ' ');
+                if (!tmp.empty())
+                {
+                    tmp = split(tmp[0], '.');
+                    if (!tmp.empty())
+                    {
+                        std::stringstream ss(tmp[0]);
+                        ss >> glVersionMajor;
+                    }
+                }
+            }
+            std::cout << "gl vendor: " << glVendor << std::endl;
+            std::cout << "gl renderer: " << glRenderer << std::endl;
+            std::cout << "gl version: " << glVersion << std::endl;
+            std::cout << "gl version major: " << glVersionMajor << std::endl;
+#if defined(FEATHER_TK_API_GL_4_1)
+            if (glVersionMajor < 4)
+#elif defined(FEATHER_TK_API_GLES_2)
+            if (glVersionMajor < 2)
+#endif // FEATHER_TK_API_GL_4_1
+            {
+                throw std::runtime_error(Format("Unsupported OpenGL version: {0}").
+                    arg(glVersionMajor));
+            }
+
             if (auto logSystem = context->getSystem<LogSystem>())
             {
-                std::string glVendor;
-                std::string glRenderer;
-                std::string glVersion;
-                if (const GLubyte* glString = glGetString(GL_VENDOR))
-                {
-                    glVendor = std::string((const char*)glString);
-                }
-                if (const GLubyte* glString = glGetString(GL_RENDERER))
-                {
-                    glRenderer = std::string((const char*)glString);
-                }
-                if (const GLubyte* glString = glGetString(GL_VERSION))
-                {
-                    glVersion = std::string((const char*)glString);
-                }
                 logSystem->print(
                     "feather_tk::gl::Window",
                     Format(
