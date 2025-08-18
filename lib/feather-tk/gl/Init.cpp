@@ -8,8 +8,11 @@
 #include <feather-tk/gl/System.h>
 
 #include <feather-tk/core/Context.h>
+#include <feather-tk/core/Format.h>
 
 #include <SDL2/SDL.h>
+
+#include <stdexcept>
 
 namespace feather_tk
 {
@@ -33,7 +36,7 @@ namespace feather_tk
 #endif // FEATHER_TK_API_GL_4_1
             if (0 == r)
             {
-                throw std::runtime_error("Cannot initialize GLAD");
+                throw std::runtime_error(Format("Cannot initialize GLAD: {0}").arg(r));
             }
         }
     }
