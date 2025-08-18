@@ -87,16 +87,6 @@ namespace feather_tk
 
         p.render = _createRender(context);
 
-        if (SDL_Window* sdlWindow = SDL_GetWindowFromID(p.window->getID()))
-        {
-            const int displayIndex = SDL_GetWindowDisplayIndex(sdlWindow);
-            float dDpi = 0.F;
-            float hDpi = 0.F;
-            float vDpi = 0.F;
-            SDL_GetDisplayDPI(displayIndex, &dDpi, &hDpi, &vDpi);
-            p.displayScale->setIfChanged(hDpi / getBaseDPI());
-        }
-
         _sizeUpdate();
 
         app->addWindow(std::dynamic_pointer_cast<Window>(shared_from_this()));
