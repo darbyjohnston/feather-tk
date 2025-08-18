@@ -6,6 +6,7 @@
 
 #include <feather-tk/ui/IconSystem.h>
 #include <feather-tk/ui/Init.h>
+#include <feather-tk/ui/Util.h>
 #include <feather-tk/ui/Window.h>
 
 #include <feather-tk/gl/Init.h>
@@ -117,7 +118,11 @@ namespace feather_tk
             p.colorStyle->setIfChanged(p.cmdLine.colorStyle->getValue());
         }
         p.customColorRoles = ObservableMap<ColorRole, Color4F>::create(feather_tk::getCustomColorRoles());
-        p.displayScale = ObservableValue<float>::create(0.F);
+        float dDpi = 0.F;
+        float hDpi = 0.F;
+        float vDpi = 0.F;
+        SDL_GetDisplayDPI(0, &dDpi, &hDpi, &vDpi);
+        p.displayScale = ObservableValue<float>::create(hDpi / getBaseDPI());
         if (p.cmdLine.displayScale->hasValue())
         {
             p.displayScale->setIfChanged(p.cmdLine.displayScale->getValue());

@@ -7,6 +7,7 @@
 #include <feather-tk/ui/App.h>
 #include <feather-tk/ui/IconSystem.h>
 #include <feather-tk/ui/Style.h>
+#include <feather-tk/ui/Util.h>
 
 #include <feather-tk/gl/GL.h>
 #include <feather-tk/gl/OffscreenBuffer.h>
@@ -93,12 +94,7 @@ namespace feather_tk
             float hDpi = 0.F;
             float vDpi = 0.F;
             SDL_GetDisplayDPI(displayIndex, &dDpi, &hDpi, &vDpi);
-#if defined(__APPLE__)
-            const float baseDpi = 72.F;
-#else
-            const float baseDpi = 96.F;
-#endif // __APPLE__
-            p.displayScale->setIfChanged(hDpi / baseDpi);
+            p.displayScale->setIfChanged(hDpi / getBaseDPI());
         }
 
         _sizeUpdate();

@@ -78,6 +78,7 @@ set(HEADERS
     ToolBar.h
     ToolButton.h
     Tooltip.h
+    Util.h
     WidgetOptions.h
     Window.h)
 set(PRIVATE_HEADERS
@@ -179,6 +180,7 @@ set(SOURCE
     ToolBar.cpp
     ToolButton.cpp
     Tooltip.cpp
+    Util.cpp
     WidgetOptions.cpp)
 if ("${feather_tk_API}" STREQUAL "GL_4_1" OR
     "${feather_tk_API}" STREQUAL "GL_4_1_Debug" OR
