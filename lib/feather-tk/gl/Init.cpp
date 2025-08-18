@@ -25,11 +25,16 @@ namespace feather_tk
 
         void initGLAD()
         {
+            int r = 0;
 #if defined(FEATHER_TK_API_GL_4_1)
-            gladLoaderLoadGL();
+            r = gladLoaderLoadGL();
 #elif defined(FEATHER_TK_API_GLES_2)
-            gladLoadGLES2Loader((GLADloadproc)SDL_GL_GetProcAddress);
+            r = gladLoadGLES2Loader((GLADloadproc)SDL_GL_GetProcAddress);
 #endif // FEATHER_TK_API_GL_4_1
+            if (0 == r)
+            {
+                throw std::runtime_error("Cannot initialize GLAD");
+            }
         }
     }
 }

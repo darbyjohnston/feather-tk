@@ -158,6 +158,8 @@ namespace feather_tk
                     arg(glRenderer).
                     arg(glVersion));
             }
+
+            std::cout << "Window 7!" << std::endl;
         }
         
         Window::~Window()
