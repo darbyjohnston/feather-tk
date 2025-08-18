@@ -25,7 +25,7 @@ namespace feather_tk
                 {
                     if (!tmp[i].empty() && std::isdigit(tmp[i][0]))
                     {
-                        tmp = split(tmp[0], '.');
+                        tmp = split(tmp[i], '.');
                         if (!tmp.empty())
                         {
                             std::stringstream ss(tmp[0]);
