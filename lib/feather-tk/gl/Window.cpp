@@ -6,6 +6,7 @@
 
 #include <feather-tk/gl/GL.h>
 #include <feather-tk/gl/Init.h>
+#include <feather-tk/gl/Util.h>
 
 #include <feather-tk/core/Box.h>
 #include <feather-tk/core/Context.h>
@@ -145,16 +146,7 @@ namespace feather_tk
             if (const GLubyte* glString = glGetString(GL_VERSION))
             {
                 glVersion = std::string((const char*)glString);
-                auto tmp = split(glVersion, ' ');
-                if (!tmp.empty())
-                {
-                    tmp = split(tmp[0], '.');
-                    if (!tmp.empty())
-                    {
-                        std::stringstream ss(tmp[0]);
-                        ss >> glVersionMajor;
-                    }
-                }
+                glVersionMajor = getMajorVersion(glVersion);
             }
             std::cout << "gl vendor: " << glVendor << std::endl;
             std::cout << "gl renderer: " << glRenderer << std::endl;

@@ -5,6 +5,7 @@ set(HEADERS
     ShaderTest.h
     TextureAtlasTest.h
     TextureTest.h
+    UtilTest.h
     WindowTest.h)
 set(PRIVATE_HEADERS)
 
@@ -15,6 +16,7 @@ set(SOURCE
     ShaderTest.cpp
     TextureAtlasTest.cpp
     TextureTest.cpp
+    UtilTest.cpp
     WindowTest.cpp)
 
 add_library(feather-tk-glTest ${HEADERS} ${PRIVATE_HEADERS} ${SOURCE})

@@ -6,10 +6,38 @@
 
 #include <feather-tk/gl/GL.h>
 
+#include <feather-tk/core/String.h>
+
+#include <cctype>
+#include <sstream>
+
 namespace feather_tk
 {
     namespace gl
     {
+        int getMajorVersion(const std::string& version)
+        {
+            int out = 0;
+            auto tmp = split(version, ' ');
+            if (!tmp.empty())
+            {
+                for (size_t i = 0; i < tmp.size(); ++i)
+                {
+                    if (!tmp[i].empty() && std::isdigit(tmp[i][0]))
+                    {
+                        tmp = split(tmp[0], '.');
+                        if (!tmp.empty())
+                        {
+                            std::stringstream ss(tmp[0]);
+                            ss >> out;
+                        }
+                        break;
+                    }
+                }
+            }
+            return out;
+        }
+
         unsigned int getReadPixelsFormat(ImageType value)
         {
             const std::array<GLenum, static_cast<std::size_t>(ImageType::Count)> data =

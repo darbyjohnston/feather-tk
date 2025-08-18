@@ -62,6 +62,7 @@
 #include <glTest/TextureTest.h>
 #include <glTest/RenderTest.h>
 #include <glTest/ShaderTest.h>
+#include <glTest/UtilTest.h>
 #include <glTest/WindowTest.h>
 #endif // FEATHER_TK_API_GL_4_1
 #endif // FEATHER_TK_UI_LIB
@@ -191,6 +192,7 @@ namespace feather_tk
             p.tests.push_back(gl_test::TextureTest::create(context));
             p.tests.push_back(gl_test::RenderTest::create(context));
             p.tests.push_back(gl_test::ShaderTest::create(context));
+            p.tests.push_back(gl_test::UtilTest::create(context));
             p.tests.push_back(gl_test::WindowTest::create(context));
 #endif // FEATHER_TK_API_GL_4_1
 

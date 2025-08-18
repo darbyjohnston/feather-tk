@@ -16,6 +16,9 @@ namespace feather_tk
         //! \name Utility
         ///@{
 
+        //! Get the major version number from an OpenGL version string.
+        int getMajorVersion(const std::string&);
+
         //! Get the glReadPixels format.
         unsigned int getReadPixelsFormat(ImageType);
 
