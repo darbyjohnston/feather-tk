@@ -127,8 +127,24 @@ namespace feather_tk
             }
 #endif // FEATHER_TK_API_GL_4_1_Debug
 
+            std::cout << "Window 6!" << std::endl;
             if (auto logSystem = context->getSystem<LogSystem>())
             {
+                std::string glVendor;
+                std::string glRenderer;
+                std::string glVersion;
+                if (const GLubyte* glString = glGetString(GL_VENDOR))
+                {
+                    glVendor = std::string((const char*)glString);
+                }
+                if (const GLubyte* glString = glGetString(GL_RENDERER))
+                {
+                    glRenderer = std::string((const char*)glString);
+                }
+                if (const GLubyte* glString = glGetString(GL_VERSION))
+                {
+                    glVersion = std::string((const char*)glString);
+                }
                 logSystem->print(
                     "feather_tk::gl::Window",
                     Format(
@@ -138,9 +154,9 @@ namespace feather_tk
                         "    OpenGL renderer: {2}\n"
                         "    OpenGL version: {3}").
                     arg(size).
-                    arg(glGetString(GL_VENDOR)).
-                    arg(glGetString(GL_RENDERER)).
-                    arg(glGetString(GL_VERSION)));
+                    arg(glVendor).
+                    arg(glRenderer).
+                    arg(glVersion));
             }
         }
         
