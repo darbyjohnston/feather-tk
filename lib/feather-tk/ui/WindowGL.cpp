@@ -490,4 +490,9 @@ namespace feather_tk
     {
         _p->window->makeCurrent();
     }
+
+    void Window::_doneCurrent()
+    {
+        _p->window->doneCurrent();
+    }
 }

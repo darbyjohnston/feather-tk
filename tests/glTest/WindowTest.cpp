@@ -51,6 +51,7 @@ namespace feather_tk
                 window->setFloatOnTop(false);
                 window->makeCurrent();
                 window->swap();
+                window->doneCurrent();
             }
         }
     }

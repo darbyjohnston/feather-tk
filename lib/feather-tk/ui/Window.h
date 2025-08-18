@@ -104,6 +104,7 @@ namespace feather_tk
             const std::shared_ptr<Style>&);
 
         void _makeCurrent();
+        void _doneCurrent();
 
     private:
         friend class App;

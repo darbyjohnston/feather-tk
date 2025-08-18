@@ -74,6 +74,9 @@ namespace feather_tk
             //! Make the OpenGL context current.
             void makeCurrent();
 
+            //! Finish using the OpenGL context.
+            void doneCurrent();
+
             //! Get which screen the window is on.
             int getScreen() const;
 

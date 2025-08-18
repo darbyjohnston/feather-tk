@@ -223,6 +223,12 @@ namespace feather_tk
             SDL_GL_MakeCurrent(p.sdlWindow, p.sdlGLContext);
         }
 
+        void Window::doneCurrent()
+        {
+            FEATHER_TK_P();
+            SDL_GL_MakeCurrent(p.sdlWindow, nullptr);
+        }
+
         int Window::getScreen() const
         {
             return 0;
