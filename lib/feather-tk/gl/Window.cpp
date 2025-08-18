@@ -87,7 +87,7 @@ namespace feather_tk
             }
 
             p.sdlGLContext = SDL_GL_CreateContext(p.sdlWindow);
-            if (!p.sdlWindow)
+            if (!p.sdlGLContext)
             {
                 throw std::runtime_error(Format("Cannot create OpenGL context: {0}").
                     arg(SDL_GetError()));
