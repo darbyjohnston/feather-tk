@@ -31,6 +31,23 @@ namespace feather_tk
         const std::chrono::milliseconds timeout(5);
     }
 
+    bool MonitorInfo::operator == (const MonitorInfo& other) const
+    {
+        return
+            name == other.name &&
+            size == other.size &&
+            refreshRate == other.refreshRate &&
+            dDpi == other.dDpi &&
+            hDpi == other.hDpi &&
+            vDpi == other.vDpi &&
+            bounds == other.bounds;
+    }
+
+    bool MonitorInfo::operator != (const MonitorInfo& other) const
+    {
+        return !(*this == other);
+    }
+
     FEATHER_TK_ENUM_IMPL(
         ColorStyle,
         "Dark",
@@ -55,6 +72,7 @@ namespace feather_tk
         };
         CmdLine cmdLine;
 
+        std::shared_ptr<ObservableList<MonitorInfo> > monitors;
         std::shared_ptr<FontSystem> fontSystem;
         std::shared_ptr<IconSystem> iconSystem;
         std::shared_ptr<Style> style;
@@ -110,6 +128,7 @@ namespace feather_tk
         uiInit(context);
         gl::init(context);
 
+        p.monitors = ObservableList<MonitorInfo>::create();
         p.fontSystem = context->getSystem<FontSystem>();
         p.iconSystem = context->getSystem<IconSystem>();
         p.style = Style::create(context);
@@ -139,6 +158,7 @@ namespace feather_tk
         p.clipboard = ObservableValue<std::string>::create();
         p.tooltipsEnabled = ObservableValue<bool>::create(true);
 
+        _monitorsUpdate();
         _styleUpdate();
 
         p.logTimer = Timer::create(context);
@@ -224,9 +244,9 @@ namespace feather_tk
         return _p->windows;
     }
 
-    int App::getScreenCount() const
+    std::shared_ptr<IObservableList<MonitorInfo> > App::observeMonitors() const
     {
-        return 1;
+        return _p->monitors;
     }
 
     const std::shared_ptr<FontSystem>& App::getFontSystem() const
@@ -519,6 +539,9 @@ namespace feather_tk
             {
                 switch (event.type)
                 {
+                case SDL_DISPLAYEVENT:
+                    _monitorsUpdate();
+                    break;
                 case SDL_WINDOWEVENT:
                     switch (event.window.event)
                     {
@@ -715,6 +738,46 @@ namespace feather_tk
                 event);
         }
         widget->tickEvent(visible, enabled, event);
+    }
+
+    void App::_monitorsUpdate()
+    {
+        FEATHER_TK_P();
+        std::vector<MonitorInfo> monitors;
+        const int displayCount = SDL_GetNumVideoDisplays();
+        for (int i = 0; i < displayCount; ++i)
+        {
+            MonitorInfo monitor;
+            monitor.name = SDL_GetDisplayName(i);
+            SDL_DisplayMode sdlDisplayMode;
+            SDL_GetCurrentDisplayMode(i, &sdlDisplayMode);
+            monitor.size.w = sdlDisplayMode.w;
+            monitor.size.h = sdlDisplayMode.h;
+            monitor.refreshRate = sdlDisplayMode.refresh_rate;
+            SDL_GetDisplayDPI(i, &monitor.dDpi, &monitor.hDpi, &monitor.vDpi);
+            SDL_Rect sdlRect;
+            SDL_GetDisplayBounds(i, &sdlRect);
+            monitor.bounds = Box2I(sdlRect.x, sdlRect.y, sdlRect.w, sdlRect.h);
+            monitors.push_back(monitor);
+        }
+        p.monitors->setIfChanged(monitors);
+
+        std::vector<std::string> lines;
+        for (int i = 0; i < monitors.size(); ++i)
+        {
+            lines.push_back(Format("Monitor: {0}").arg(monitors[i].name));
+            lines.push_back(Format("    Size: {0}").arg(monitors[i].size));
+            lines.push_back(Format("    Referesh rate: {0}").arg(monitors[i].refreshRate));
+            lines.push_back(Format("    DPI: {0}").arg(monitors[i].hDpi));
+            lines.push_back(Format("    Bounds: {0}").arg(monitors[i].bounds));
+        }
+        if (!lines.empty())
+        {
+            auto logSystem = _context->getSystem<LogSystem>();
+            logSystem->print(
+                "feather_tk::App",
+                join(lines, '\n'));
+        }
     }
 
     void App::_styleUpdate()

@@ -8,6 +8,7 @@
 
 #include <feather-tk/core/CmdLine.h>
 #include <feather-tk/core/IApp.h>
+#include <feather-tk/core/ObservableList.h>
 #include <feather-tk/core/ObservableMap.h>
 #include <feather-tk/core/ObservableValue.h>
 
@@ -20,6 +21,21 @@ namespace feather_tk
     class IconSystem;
     class TickEvent;
     class Window;
+
+    //! Monitor information.
+    struct MonitorInfo
+    {
+        std::string name;
+        Size2I      size;
+        int         refreshRate = 0;
+        float       dDpi = 0.F;
+        float       hDpi = 0.F;
+        float       vDpi = 0.F;
+        Box2I       bounds;
+
+        bool operator == (const MonitorInfo&) const;
+        bool operator != (const MonitorInfo&) const;
+    };
 
     //! Color style.
     enum ColorStyle
@@ -89,8 +105,8 @@ namespace feather_tk
         //! Get the windows.
         const std::list<std::shared_ptr<Window> >& getWindows() const;
 
-        //! Get the number of screens.
-        int getScreenCount() const;
+        //! Observe the monitors.
+        std::shared_ptr<IObservableList<MonitorInfo> > observeMonitors() const;
 
         //! Get the font system.
         const std::shared_ptr<FontSystem>& getFontSystem() const;
@@ -170,6 +186,7 @@ namespace feather_tk
             bool enabled,
             const TickEvent&);
 
+        void _monitorsUpdate();
         void _styleUpdate();
 
         void _log();
