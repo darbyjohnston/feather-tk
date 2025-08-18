@@ -4,7 +4,9 @@
 
 #pragma once
 
+#include <feather-tk/ui/App.h>
 #include <feather-tk/ui/Label.h>
+#include <feather-tk/ui/MainWindow.h>
 #include <feather-tk/ui/RowLayout.h>
 
 namespace feather_tk
@@ -92,6 +94,25 @@ namespace feather_tk
                 std::shared_ptr<VerticalLayout> _layout;
                 int _handle = 0;
                 int _dropTarget = -1;
+            };
+
+            class DndWindow : public MainWindow
+            {
+            protected:
+                void _init(
+                    const std::shared_ptr<Context>&,
+                    const std::shared_ptr<App>&);
+
+                DndWindow() = default;
+
+            public:
+                virtual ~DndWindow();
+
+                static std::shared_ptr<DndWindow> create(
+                    const std::shared_ptr<Context>&,
+                    const std::shared_ptr<App>&);
+
+                void _drop(const std::vector<std::string>&) override;
             };
         }
     }

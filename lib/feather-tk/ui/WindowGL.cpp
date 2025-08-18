@@ -77,7 +77,7 @@ namespace feather_tk
         p.fullScreen = ObservableValue<bool>::create(false);
         p.floatOnTop = ObservableValue<bool>::create(false);
         p.bufferType = ObservableValue<ImageType>::create(gl::offscreenColorDefault);
-        p.displayScale = ObservableValue<float>::create(0.F);
+        p.displayScale = ObservableValue<float>::create(1.F);
 
         p.window = gl::Window::create(
             context,
@@ -206,9 +206,7 @@ namespace feather_tk
 
     float Window::getDisplayScale() const
     {
-        FEATHER_TK_P();
-        const float ds = p.displayScale->get();
-        return ds > 0.F ? ds : getContentScale();
+        return _p->displayScale->get();
     }
 
     std::shared_ptr<IObservableValue<float> > Window::observeDisplayScale() const
@@ -333,7 +331,7 @@ namespace feather_tk
             SizeHintEvent sizeHintEvent(
                 fontSystem,
                 iconSystem,
-                getDisplayScale(),
+                p.displayScale->get(),
                 style);
             _sizeHintEventRecursive(shared_from_this(), sizeHintEvent);
 
@@ -365,7 +363,7 @@ namespace feather_tk
                 DrawEvent drawEvent(
                     fontSystem,
                     iconSystem,
-                    getDisplayScale(),
+                    p.displayScale->get(),
                     style,
                     p.render);
                 _drawEventRecursive(

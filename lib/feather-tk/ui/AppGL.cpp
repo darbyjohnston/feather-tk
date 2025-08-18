@@ -66,6 +66,7 @@ namespace feather_tk
         bool running = true;
         std::list<std::shared_ptr<Window> > windows;
         std::weak_ptr<Window> activeWindow;
+        std::vector<std::string> dropFiles;
         std::list<int> tickTimes;
         std::shared_ptr<Timer> logTimer;
     };
@@ -88,7 +89,7 @@ namespace feather_tk
         cmdLineOptionsTmp.push_back(p.cmdLine.exit);
         p.cmdLine.displayScale = CmdLineValueOption<float>::create(
             { "-displayScale", "-ds" },
-            "Set the display scale. A value of 0 sets the scale automatically.",
+            "Set the display scale.",
             "Style");
         cmdLineOptionsTmp.push_back(p.cmdLine.displayScale);
         p.cmdLine.colorStyle = CmdLineValueOption<ColorStyle>::create(
@@ -118,15 +119,23 @@ namespace feather_tk
             p.colorStyle->setIfChanged(p.cmdLine.colorStyle->getValue());
         }
         p.customColorRoles = ObservableMap<ColorRole, Color4F>::create(feather_tk::getCustomColorRoles());
+
+        float displayScale = 1.F;
         float dDpi = 0.F;
         float hDpi = 0.F;
         float vDpi = 0.F;
         SDL_GetDisplayDPI(0, &dDpi, &hDpi, &vDpi);
-        p.displayScale = ObservableValue<float>::create(hDpi / getBaseDPI());
+        displayScale = hDpi / getBaseDPI();
         if (p.cmdLine.displayScale->hasValue())
         {
-            p.displayScale->setIfChanged(p.cmdLine.displayScale->getValue());
+            displayScale = p.cmdLine.displayScale->getValue();
         }
+        auto logSystem = _context->getSystem<LogSystem>();
+        logSystem->print(
+            "feather_tk::App",
+            Format("Display scale: {0}").arg(displayScale));
+        p.displayScale = ObservableValue<float>::create(displayScale);
+
         p.clipboard = ObservableValue<std::string>::create();
         p.tooltipsEnabled = ObservableValue<bool>::create(true);
 
@@ -376,22 +385,22 @@ namespace feather_tk
             Key out = Key::Unknown;
             switch (value)
             {
-            case SDLK_RETURN: out = Key::Enter; break;
+            case SDLK_RETURN: out = Key::Return; break;
             case SDLK_ESCAPE: out = Key::Escape; break;
             case SDLK_BACKSPACE: out = Key::Backspace; break;
             case SDLK_TAB: out = Key::Tab; break;
             case SDLK_SPACE: out = Key::Space; break;
-            case SDLK_EXCLAIM: break;
-            case SDLK_QUOTEDBL: break;
-            case SDLK_HASH: break;
-            case SDLK_PERCENT: break;
-            case SDLK_DOLLAR: break;
-            case SDLK_AMPERSAND: break;
-            case SDLK_QUOTE: out = Key::Apostrophe; break;
-            case SDLK_LEFTPAREN: break;
-            case SDLK_RIGHTPAREN: break;
-            case SDLK_ASTERISK: break;
-            case SDLK_PLUS: break;
+            case SDLK_EXCLAIM: out = Key::Exclaim; break;
+            case SDLK_QUOTEDBL: out = Key::DoubleQuote; break;
+            case SDLK_HASH: out = Key::Hash; break;
+            case SDLK_PERCENT: out = Key::Percent; break;
+            case SDLK_DOLLAR: out = Key::Dollar; break;
+            case SDLK_AMPERSAND: out = Key::Ampersand; break;
+            case SDLK_QUOTE: out = Key::DoubleQuote; break;
+            case SDLK_LEFTPAREN: out = Key::LeftParen; break;
+            case SDLK_RIGHTPAREN: out = Key::RightParen; break;
+            case SDLK_ASTERISK: out = Key::Asterisk; break;
+            case SDLK_PLUS: out = Key::Plus; break;
             case SDLK_COMMA: out = Key::Comma; break;
             case SDLK_MINUS: out = Key::Minus; break;
             case SDLK_PERIOD: out = Key::Period; break;
@@ -406,20 +415,19 @@ namespace feather_tk
             case SDLK_7: out = Key::_7; break;
             case SDLK_8: out = Key::_8; break;
             case SDLK_9: out = Key::_9; break;
-            case SDLK_COLON: break;
+            case SDLK_COLON: out = Key::Colon; break;
             case SDLK_SEMICOLON: out = Key::Semicolon; break;
-            case SDLK_LESS: break;
-            case SDLK_EQUALS: out = Key::Equal; break;
-            case SDLK_GREATER: break;
-            case SDLK_QUESTION: break;
-            case SDLK_AT: break;
-
+            case SDLK_LESS: out = Key::Less; break;
+            case SDLK_EQUALS: out = Key::Equals; break;
+            case SDLK_GREATER: out = Key::Greater; break;
+            case SDLK_QUESTION: out = Key::Question; break;
+            case SDLK_AT: out = Key::At; break;
             case SDLK_LEFTBRACKET: out = Key::LeftBracket; break;
             case SDLK_BACKSLASH: out = Key::Backslash; break;
             case SDLK_RIGHTBRACKET: out = Key::RightBracket; break;
-            case SDLK_CARET: break;
-            case SDLK_UNDERSCORE: break;
-            case SDLK_BACKQUOTE: out = Key::GraveAccent; break;
+            case SDLK_CARET: out = Key::Caret; break;
+            case SDLK_UNDERSCORE: out = Key::Underscore;  break;
+            case SDLK_BACKQUOTE: out = Key::BackQuote; break;
             case SDLK_a: out = Key::A; break;
             case SDLK_b: out = Key::B; break;
             case SDLK_c: out = Key::C; break;
@@ -446,9 +454,7 @@ namespace feather_tk
             case SDLK_x: out = Key::X; break;
             case SDLK_y: out = Key::Y; break;
             case SDLK_z: out = Key::Z; break;
-
             case SDLK_CAPSLOCK: out = Key::CapsLock; break;
-
             case SDLK_F1: out = Key::F1; break;
             case SDLK_F2: out = Key::F2; break;
             case SDLK_F3: out = Key::F3; break;
@@ -461,7 +467,6 @@ namespace feather_tk
             case SDLK_F10: out = Key::F10; break;
             case SDLK_F11: out = Key::F11; break;
             case SDLK_F12: out = Key::F12; break;
-
             case SDLK_PRINTSCREEN: out = Key::PrintScreen; break;
             case SDLK_SCROLLLOCK: out = Key::ScrollLock; break;
             case SDLK_PAUSE: out = Key::Pause; break;
@@ -475,6 +480,7 @@ namespace feather_tk
             case SDLK_LEFT: out = Key::Left; break;
             case SDLK_DOWN: out = Key::Down; break;
             case SDLK_UP: out = Key::Up; break;
+            case SDLK_NUMLOCKCLEAR: out = Key::NumLock; break;
             }
             return out;
         }
@@ -576,6 +582,7 @@ namespace feather_tk
                         break;
                     }
                     break;
+
                 case SDL_MOUSEMOTION:
                     if (auto window = p.activeWindow.lock())
                     {
@@ -613,6 +620,7 @@ namespace feather_tk
                             fromSDL(static_cast<uint16_t>(SDL_GetModState())));
                     }
                     break;
+
                 case SDL_KEYDOWN:
                     if (auto window = p.activeWindow.lock())
                     {
@@ -637,8 +645,26 @@ namespace feather_tk
                         window->_text(event.text.text);
                     }
                     break;
+
                 case SDL_CLIPBOARDUPDATE:
                     p.clipboard->setIfChanged(SDL_GetClipboardText());
+                    break;
+
+                case SDL_DROPFILE:
+                    p.dropFiles.push_back(event.drop.file);
+                    break;
+                case SDL_DROPBEGIN:
+                    p.dropFiles.clear();
+                    break;
+                case SDL_DROPCOMPLETE:
+                    for (const auto& window : p.windows)
+                    {
+                        if (window->getID() == event.drop.windowID)
+                        {
+                            window->_drop(p.dropFiles);
+                            break;
+                        }
+                    }
                     break;
                 }
             }

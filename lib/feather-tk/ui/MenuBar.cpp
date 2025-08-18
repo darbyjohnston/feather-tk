@@ -189,7 +189,7 @@ namespace feather_tk
                     _setCurrent(static_cast<int>(p.buttons.size()) - 1);
                 }
                 break;
-            case Key::Enter:
+            case Key::Return:
                 if (p.current >= 0 && p.current < p.menus.size())
                 {
                     event.accept = true;

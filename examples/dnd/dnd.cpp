@@ -4,9 +4,7 @@
 
 #include "dnd.h"
 
-#include <feather-tk/ui/App.h>
 #include <feather-tk/ui/DrawUtil.h>
-#include <feather-tk/ui/MainWindow.h>
 #include <feather-tk/ui/ScrollWidget.h>
 
 #include <feather-tk/core/Format.h>
@@ -270,6 +268,33 @@ namespace feather_tk
                 }
                 return out;
             }
+
+            void DndWindow::_init(
+                const std::shared_ptr<Context>& context,
+                const std::shared_ptr<App>& app)
+            {
+                MainWindow::_init(context, app, "dnd", Size2I(1280, 960));
+            }
+
+            DndWindow::~DndWindow()
+            {}
+
+            std::shared_ptr<DndWindow> DndWindow::create(
+                const std::shared_ptr<Context>& context,
+                const std::shared_ptr<App>& app)
+            {
+                auto out = std::shared_ptr<DndWindow>(new DndWindow);
+                out->_init(context, app);
+                return out;
+            }
+
+            void DndWindow::_drop(const std::vector<std::string>& value)
+            {
+                for (size_t i = 0; i < value.size(); ++i)
+                {
+                    std::cout << Format("Drop {0}: {1}").arg(i).arg(value[i]).str() << std::endl;
+                }
+            }
         }
     }
 }
@@ -285,11 +310,7 @@ FEATHER_TK_MAIN()
             return app->getExit();
 
         // Create a window.
-        auto window = MainWindow::create(
-            context,
-            app,
-            "dnd",
-            Size2I(1280, 960));
+        auto window = examples::dnd::DndWindow::create(context, app);
 
         // Create a layout.
         auto layout = HorizontalLayout::create(context);

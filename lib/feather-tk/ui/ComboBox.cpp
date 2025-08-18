@@ -415,7 +415,7 @@ namespace feather_tk
                 event.accept = true;
                 _commit(static_cast<int>(p.items.size()) - 1);
                 break;
-            case Key::Enter:
+            case Key::Return:
                 event.accept = true;
                 _click();
                 break;

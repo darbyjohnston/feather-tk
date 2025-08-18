@@ -331,7 +331,7 @@ namespace feather_tk
                     _setCurrent(static_cast<int>(p.text.size()) - 1);
                 }
                 break;
-            case Key::Enter:
+            case Key::Return:
                 if (hasKeyFocus() && p.currentFocus >= 0 && p.currentFocus < p.buttons.size())
                 {
                     event.accept = true;

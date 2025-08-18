@@ -428,7 +428,7 @@ namespace feather_tk
                 takeKeyFocus();
                 _setCurrent(static_cast<int>(p.info.size()) - 1);
                 break;
-            case Key::Enter:
+            case Key::Return:
                 event.accept = true;
                 takeKeyFocus();
                 _doubleClick(p.current->get());

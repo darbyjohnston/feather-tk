@@ -721,7 +721,7 @@ namespace feather_tk
                     _textUpdate();
                 }
                 break;
-            case Key::Enter:
+            case Key::Return:
                 event.accept = true;
                 if (p.textCallback)
                 {

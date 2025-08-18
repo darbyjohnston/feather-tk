@@ -17,7 +17,7 @@ namespace feather_tk
     {
         std::shared_ptr<MenuBar> menuBar;
         std::map<std::string, std::shared_ptr<Menu> > menus;
-        std::vector<float> displayScales = { 0.F, 1.F, 1.5F, 2.F, 2.5F, 3.F, 3.5F, 4.F };
+        std::vector<float> displayScales = { 1.F, 1.5F, 2.F, 2.5F, 3.F, 3.5F, 4.F };
         std::vector<std::shared_ptr<Action> > displayScaleActions;
         std::map<ColorStyle, std::shared_ptr<Action> > colorStyleActions;
         std::shared_ptr<Action> tooltipsAction;
@@ -86,7 +86,7 @@ namespace feather_tk
         {
             const float displayScale = p.displayScales[i];
             auto action = Action::create(
-                0 == i ? "Automatic" : Format("{0}").arg(displayScale).str(),
+                Format("{0}").arg(displayScale).str(),
                 [this, displayScale](bool)
                 {
                     if (auto app = getApp())

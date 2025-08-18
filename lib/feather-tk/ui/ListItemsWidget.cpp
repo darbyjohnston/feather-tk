@@ -253,7 +253,7 @@ namespace feather_tk
         {
             switch (event.key)
             {
-            case Key::Enter:
+            case Key::Return:
             {
                 event.accept = true;
                 takeKeyFocus();
