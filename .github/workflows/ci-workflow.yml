@@ -208,6 +208,5 @@ jobs:
       run: |
         cd build
         cd feather-tk\src\feather-tk-build
-        #ctest --verbose --output-on-failure -C Debug
         tests/feather-tk-test/feather-tk-test OffscreenBufferTest -log
 
