@@ -15,7 +15,7 @@ if(@feather_tk_UI_LIB@)
         @feather_tk_API@ STREQUAL "GL_4_1_Debug" OR
         @feather_tk_API@ STREQUAL "GLES_2")
         find_dependency(OpenGL)
-        find_dependency(glfw3)
+        find_dependency(SDL2)
     endif()
     set(feather_tk_API @feather_tk_API@)
     add_definitions(-DFEATHER_TK_API_@feather_tk_API@)
