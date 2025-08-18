@@ -43,6 +43,7 @@ namespace feather_tk
             {
                 ColorTexture,
                 RenderBuffer,
+                Invalid,
                 Create,
                 Init
             };
@@ -57,6 +58,9 @@ namespace feather_tk
                     break;
                 case Error::RenderBuffer:
                     out = "Cannot create render buffer";
+                    break;
+                case Error::Invalid:
+                    out = "Invalid buffer configuration";
                     break;
                 case Error::Create:
                     out = "Cannot create frame buffer";
@@ -245,6 +249,11 @@ namespace feather_tk
                     p.size.h);
 #endif // FEATHER_TK_API_GL_4_1
                 glBindRenderbuffer(GL_RENDERBUFFER, 0);
+            }
+
+            if (!p.colorID && !p.depthStencilID)
+            {
+                throw std::runtime_error(getErrorLabel(Error::Invalid));
             }
 
             // Create the FBO.

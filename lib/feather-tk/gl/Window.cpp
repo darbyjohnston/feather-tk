@@ -44,6 +44,8 @@ namespace feather_tk
         {
             FEATHER_TK_P();
 
+            std::cout << "Window 0!" << std::endl;
+
             p.context = context;
 
 #if defined(FEATHER_TK_API_GL_4_1)
@@ -73,6 +75,7 @@ namespace feather_tk
             {
                 sdlWindowFlags |= SDL_WINDOW_HIDDEN;
             }
+            std::cout << "Window 1!" << std::endl;
             p.sdlWindow = SDL_CreateWindow(
                 name.c_str(),
                 SDL_WINDOWPOS_UNDEFINED,
@@ -86,21 +89,25 @@ namespace feather_tk
                     arg(SDL_GetError()));
             }
 
+            std::cout << "Window 2!" << std::endl;
             p.sdlGLContext = SDL_GL_CreateContext(p.sdlWindow);
             if (!p.sdlGLContext)
             {
                 throw std::runtime_error(Format("Cannot create OpenGL context: {0}").
                     arg(SDL_GetError()));
             }
+            std::cout << "Window 3!" << std::endl;
             if (options & static_cast<int>(WindowOptions::DoubleBuffer))
             {
                 SDL_GL_SetSwapInterval(1);
             }
+            std::cout << "Window 4!" << std::endl;
             if (options & static_cast<int>(WindowOptions::MakeCurrent))
             {
                 makeCurrent();
             }
 
+            std::cout << "Window 5!" << std::endl;
             initGLAD();
 #if defined(FEATHER_TK_API_GL_4_1_Debug)
             GLint flags = 0;
