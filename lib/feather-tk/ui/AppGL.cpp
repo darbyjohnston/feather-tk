@@ -534,12 +534,14 @@ namespace feather_tk
         auto t0 = std::chrono::steady_clock::now();
         while (p.running && !p.windows.empty())
         {
+            auto logSystem = _context->getSystem<LogSystem>();
             SDL_Event event;
             while (SDL_PollEvent(&event))
             {
                 switch (event.type)
                 {
                 case SDL_DISPLAYEVENT:
+                    logSystem->print("feather_tk::App", "SDL_DISPLAYEVENT");
                     _monitorsUpdate();
                     break;
                 case SDL_WINDOWEVENT:
@@ -674,12 +676,15 @@ namespace feather_tk
                     break;
 
                 case SDL_DROPFILE:
+                    logSystem->print("feather_tk::App", Format("SDL_DROPFILE: {0}").arg(event.drop.file));
                     p.dropFiles.push_back(event.drop.file);
                     break;
                 case SDL_DROPBEGIN:
+                    logSystem->print("feather_tk::App", "SDL_DROPBEGIN");
                     p.dropFiles.clear();
                     break;
                 case SDL_DROPCOMPLETE:
+                    logSystem->print("feather_tk::App", "SDL_DROPCOMPLETE");
                     for (const auto& window : p.windows)
                     {
                         if (window->getID() == event.drop.windowID)
