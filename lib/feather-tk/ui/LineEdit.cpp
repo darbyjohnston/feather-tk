@@ -5,6 +5,7 @@
 #include <feather-tk/ui/LineEdit.h>
 
 #include <feather-tk/ui/App.h>
+#include <feather-tk/ui/ClipboardSystem.h>
 #include <feather-tk/ui/DrawUtil.h>
 #include <feather-tk/ui/IWindow.h>
 #include <feather-tk/ui/LayoutUtil.h>
@@ -508,16 +509,14 @@ namespace feather_tk
                 {
                     if (p.selection.isValid())
                     {
-                        if (auto window = getWindow())
+                        if (auto context = getContext())
                         {
-                            if (auto app = window->getApp())
-                            {
-                                const auto selection = p.selection.getSorted();
-                                const std::string text = p.text.substr(
-                                    selection.first,
-                                    selection.second - selection.first);
-                                app->setClipboard(text);
-                            }
+                            const auto selection = p.selection.getSorted();
+                            const std::string text = p.text.substr(
+                                selection.first,
+                                selection.second - selection.first);
+                            auto clipboardSystem = context->getSystem<ClipboardSystem>();
+                            clipboardSystem->setText(text);
                         }
                     }
                 }
@@ -526,32 +525,30 @@ namespace feather_tk
                 event.accept = true;
                 if (event.modifiers & static_cast<int>(KeyModifier::Control))
                 {
-                    if (auto window = getWindow())
+                    if (auto context = getContext())
                     {
-                        if (auto app = window->getApp())
+                        auto clipboardSystem = context->getSystem<ClipboardSystem>();
+                        const std::string text = clipboardSystem->getText();
+                        if (p.selection.isValid())
                         {
-                            const std::string text = app->getClipboard();
-                            if (p.selection.isValid())
-                            {
-                                const auto selection = p.selection.getSorted();
-                                p.text.replace(
-                                    selection.first,
-                                    selection.second - selection.first,
-                                    text);
-                                p.selection.clear();
-                                p.cursorPos = selection.first + text.size();
-                            }
-                            else
-                            {
-                                p.text.insert(p.cursorPos, text);
-                                p.cursorPos += text.size();
-                            }
-                            if (p.textChangedCallback)
-                            {
-                                p.textChangedCallback(p.text);
-                            }
-                            _textUpdate();
+                            const auto selection = p.selection.getSorted();
+                            p.text.replace(
+                                selection.first,
+                                selection.second - selection.first,
+                                text);
+                            p.selection.clear();
+                            p.cursorPos = selection.first + text.size();
                         }
+                        else
+                        {
+                            p.text.insert(p.cursorPos, text);
+                            p.cursorPos += text.size();
+                        }
+                        if (p.textChangedCallback)
+                        {
+                            p.textChangedCallback(p.text);
+                        }
+                        _textUpdate();
                     }
                 }
                 break;
@@ -561,27 +558,25 @@ namespace feather_tk
                 {
                     if (p.selection.isValid())
                     {
-                        if (auto window = getWindow())
+                        if (auto context = getContext())
                         {
-                            if (auto app = window->getApp())
+                            const auto selection = p.selection.getSorted();
+                            const std::string text = p.text.substr(
+                                selection.first,
+                                selection.second - selection.first);
+                            auto clipboardSystem = context->getSystem<ClipboardSystem>();
+                            clipboardSystem->setText(text);
+                            p.text.replace(
+                                selection.first,
+                                selection.second - selection.first,
+                                "");
+                            p.selection.clear();
+                            p.cursorPos = selection.first;
+                            if (p.textChangedCallback)
                             {
-                                const auto selection = p.selection.getSorted();
-                                const std::string text = p.text.substr(
-                                    selection.first,
-                                    selection.second - selection.first);
-                                app->setClipboard(text);
-                                p.text.replace(
-                                    selection.first,
-                                    selection.second - selection.first,
-                                    "");
-                                p.selection.clear();
-                                p.cursorPos = selection.first;
-                                if (p.textChangedCallback)
-                                {
-                                    p.textChangedCallback(p.text);
-                                }
-                                _textUpdate();
+                                p.textChangedCallback(p.text);
                             }
+                            _textUpdate();
                         }
                     }
                 }

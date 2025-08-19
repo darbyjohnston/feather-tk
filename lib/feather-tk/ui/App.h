@@ -150,15 +150,6 @@ namespace feather_tk
         //! Get the display scale command line option.
         const std::shared_ptr<CmdLineValueOption<float> >& getDisplayScaleCmdLineOption() const;
 
-        //! Get the clipboard.
-        const std::string& getClipboard() const;
-
-        //! Observe the clipboard.
-        std::shared_ptr<IObservableValue<std::string> > observeClipboard() const;
-
-        //! Set the clipboard.
-        void setClipboard(const std::string&);
-
         //! Get whether tooltips are enabled.
         bool areTooltipsEnabled() const;
 

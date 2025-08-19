@@ -4,6 +4,7 @@
 
 #include <feather-tk/ui/Init.h>
 
+#include <feather-tk/ui/ClipboardSystem.h>
 #include <feather-tk/ui/DialogSystem.h>
 #include <feather-tk/ui/FileBrowser.h>
 #include <feather-tk/ui/IconSystem.h>
@@ -14,6 +15,10 @@ namespace feather_tk
 {
     void uiInit(const std::shared_ptr<Context>& context)
     {
+        if (!context->getSystem<ClipboardSystem>())
+        {
+            context->addSystem(ClipboardSystem::create(context));
+        }
         if (!context->getSystem<DialogSystem>())
         {
             context->addSystem(DialogSystem::create(context));

@@ -4,6 +4,7 @@ set(HEADERS
     Bellows.h
     ButtonGroup.h
     CheckBox.h
+    ClipboardSystem.h
     ColorPopup.h
     ColorSwatch.h
     ColorWidget.h
@@ -96,6 +97,7 @@ set(SOURCE
     BellowsButton.cpp
     ButtonGroup.cpp
     CheckBox.cpp
+    ClipboardSystem.cpp
     ColorPopup.cpp
     ColorSwatch.cpp
     ColorWidget.cpp

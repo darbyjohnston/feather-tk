@@ -4,6 +4,7 @@
 
 #include <feather-tk/ui/App.h>
 
+#include <feather-tk/ui/ClipboardSystem.h>
 #include <feather-tk/ui/IconSystem.h>
 #include <feather-tk/ui/Init.h>
 #include <feather-tk/ui/Util.h>
@@ -79,7 +80,6 @@ namespace feather_tk
         std::shared_ptr<ObservableValue<ColorStyle> > colorStyle;
         std::shared_ptr<ObservableMap<ColorRole, Color4F> > customColorRoles;
         std::shared_ptr<ObservableValue<float> > displayScale;
-        std::shared_ptr<ObservableValue<std::string> > clipboard;
         std::shared_ptr<ObservableValue<bool> > tooltipsEnabled;
         bool running = true;
         std::list<std::shared_ptr<Window> > windows;
@@ -155,7 +155,6 @@ namespace feather_tk
             Format("Display scale: {0}").arg(displayScale));
         p.displayScale = ObservableValue<float>::create(displayScale);
 
-        p.clipboard = ObservableValue<std::string>::create();
         p.tooltipsEnabled = ObservableValue<bool>::create(true);
 
         _monitorsUpdate();
@@ -333,21 +332,6 @@ namespace feather_tk
     const std::shared_ptr<CmdLineValueOption<float> >& App::getDisplayScaleCmdLineOption() const
     {
         return _p->cmdLine.displayScale;
-    }
-
-    const std::string& App::getClipboard() const
-    {
-        return _p->clipboard->get();
-    }
-
-    std::shared_ptr<IObservableValue<std::string> > App::observeClipboard() const
-    {
-        return _p->clipboard;
-    }
-
-    void App::setClipboard(const std::string& value)
-    {
-        _p->clipboard->setIfChanged(value);
     }
 
     bool App::areTooltipsEnabled() const
@@ -670,8 +654,11 @@ namespace feather_tk
                     break;
 
                 case SDL_CLIPBOARDUPDATE:
-                    p.clipboard->setIfChanged(SDL_GetClipboardText());
+                {
+                    const std::string text = SDL_GetClipboardText();
+                    _context->getSystem<ClipboardSystem>()->setText(text);
                     break;
+                }
 
                 case SDL_DROPFILE:
                     p.dropFiles.push_back(event.drop.file);
