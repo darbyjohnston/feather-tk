@@ -8,10 +8,6 @@ namespace feather_tk
 {
     float getBaseDPI()
     {
-#if defined(__APPLE__)
-        return 72.F;
-#else
         return 96.F;
-#endif // __APPLE__
     }
 }

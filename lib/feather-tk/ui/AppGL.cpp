@@ -145,7 +145,7 @@ namespace feather_tk
         float vDpi = 0.F;
         if (0 == SDL_GetDisplayDPI(0, &dDpi, &hDpi, &vDpi))
         {
-            p.defaultDisplayScale = hDpi / getBaseDPI();
+            p.defaultDisplayScale = static_cast<int>((hDpi / getBaseDPI()) / .5F) * .5F;
         }
         if (p.cmdLine.displayScale->hasValue())
         {
