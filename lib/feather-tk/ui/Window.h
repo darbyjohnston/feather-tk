@@ -46,7 +46,7 @@ namespace feather_tk
         std::shared_ptr<IObservableValue<bool> > observeFullScreen() const;
 
         //! Set whether the window is full screen.
-        void setFullScreen(bool, int screen = -1);
+        void setFullScreen(bool);
 
         //! Get which screen the window is on.
         int getScreen() const;
