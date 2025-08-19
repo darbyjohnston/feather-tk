@@ -570,12 +570,13 @@ namespace feather_tk
                         {
                             if (window->getID() == event.window.windowID)
                             {
-                                window->_sizeUpdate();
+                                window->_setDrawUpdate();
                                 break;
                             }
                         }
                         break;
                     case SDL_WINDOWEVENT_SIZE_CHANGED:
+                    case SDL_WINDOWEVENT_DISPLAY_CHANGED:
                         for (const auto& window : p.windows)
                         {
                             if (window->getID() == event.window.windowID)
