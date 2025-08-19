@@ -93,6 +93,7 @@ namespace feather_tk
     protected:
         virtual std::shared_ptr<IRender> _createRender(const std::shared_ptr<Context>&);
 
+        void _refresh();
         void _sizeUpdate();
 
         virtual void _update(

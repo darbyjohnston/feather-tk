@@ -298,6 +298,12 @@ namespace feather_tk
     {
         return gl::Render::create(context);
     }
+    
+    void Window::_refresh()
+    {
+        _setDrawUpdate();
+        _p->refresh = true;
+    }
 
     void Window::_sizeUpdate()
     {
