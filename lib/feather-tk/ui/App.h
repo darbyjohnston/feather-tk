@@ -138,6 +138,9 @@ namespace feather_tk
         //! Get the color style command line option.
         const std::shared_ptr<CmdLineValueOption<ColorStyle> >& getColorStyleCmdLineOption() const;
 
+        //! Get the default display scale.
+        float getDefaultDisplayScale() const;
+
         //! Get the display scale.
         float getDisplayScale() const;
 

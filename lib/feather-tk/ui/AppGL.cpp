@@ -79,6 +79,7 @@ namespace feather_tk
         std::shared_ptr<Style> style;
         std::shared_ptr<ObservableValue<ColorStyle> > colorStyle;
         std::shared_ptr<ObservableMap<ColorRole, Color4F> > customColorRoles;
+        float defaultDisplayScale = 1.F;
         std::shared_ptr<ObservableValue<float> > displayScale;
         std::shared_ptr<ObservableValue<bool> > tooltipsEnabled;
         bool running = true;
@@ -139,23 +140,22 @@ namespace feather_tk
         }
         p.customColorRoles = ObservableMap<ColorRole, Color4F>::create(feather_tk::getCustomColorRoles());
 
-        float displayScale = 1.F;
         float dDpi = 0.F;
         float hDpi = 0.F;
         float vDpi = 0.F;
         if (0 == SDL_GetDisplayDPI(0, &dDpi, &hDpi, &vDpi))
         {
-            displayScale = hDpi / getBaseDPI();
+            p.defaultDisplayScale = hDpi / getBaseDPI();
         }
         if (p.cmdLine.displayScale->hasValue())
         {
-            displayScale = p.cmdLine.displayScale->getValue();
+            p.defaultDisplayScale = p.cmdLine.displayScale->getValue();
         }
         auto logSystem = _context->getSystem<LogSystem>();
         logSystem->print(
             "feather_tk::App",
-            Format("Display scale: {0}").arg(displayScale));
-        p.displayScale = ObservableValue<float>::create(displayScale);
+            Format("Display scale: {0}").arg(p.defaultDisplayScale));
+        p.displayScale = ObservableValue<float>::create(p.defaultDisplayScale);
 
         p.tooltipsEnabled = ObservableValue<bool>::create(true);
 
@@ -313,6 +313,11 @@ namespace feather_tk
     const std::shared_ptr<CmdLineValueOption<ColorStyle> >& App::getColorStyleCmdLineOption() const
     {
         return _p->cmdLine.colorStyle;
+    }
+
+    float App::getDefaultDisplayScale() const
+    {
+        return _p->defaultDisplayScale;
     }
 
     float App::getDisplayScale() const
