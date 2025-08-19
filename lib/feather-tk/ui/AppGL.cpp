@@ -143,18 +143,18 @@ namespace feather_tk
         float dDpi = 0.F;
         float hDpi = 0.F;
         float vDpi = 0.F;
+        auto logSystem = _context->getSystem<LogSystem>();
         if (0 == SDL_GetDisplayDPI(0, &dDpi, &hDpi, &vDpi))
         {
             logSystem->print(
                 "feather_tk::App",
-                Format("Display DPI: {0}").arg(p.hDpi));
+                Format("Display DPI: {0}").arg(hDpi));
             p.defaultDisplayScale = static_cast<int>((hDpi / getBaseDPI()) / .5F) * .5F;
         }
         if (p.cmdLine.displayScale->hasValue())
         {
             p.defaultDisplayScale = p.cmdLine.displayScale->getValue();
         }
-        auto logSystem = _context->getSystem<LogSystem>();
         logSystem->print(
             "feather_tk::App",
             Format("Display scale: {0}").arg(p.defaultDisplayScale));
