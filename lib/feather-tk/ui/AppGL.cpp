@@ -566,6 +566,7 @@ namespace feather_tk
                         }
                         break;
                     case SDL_WINDOWEVENT_EXPOSED:
+                    case SDL_WINDOWEVENT_MOVED:
                         for (const auto& window : p.windows)
                         {
                             if (window->getID() == event.window.windowID)
