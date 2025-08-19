@@ -37,7 +37,7 @@ namespace feather_tk
                     argv,
                     "ListWidgetTest",
                     "List widget test.");
-                auto window = Window::create(context, app, "ListWidgetTest");
+                auto window = Window::create(context, "ListWidgetTest");
                 app->addWindow(window);
                 window->show();
                 app->tick();

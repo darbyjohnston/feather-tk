@@ -52,7 +52,7 @@ namespace feather_tk
                     argv,
                     "MDIWidgetTest",
                     "MDI widget test.");
-                auto window = Window::create(context, app, "MDIWidgetTest");
+                auto window = Window::create(context, "MDIWidgetTest");
                 app->addWindow(window);
                 window->show();
                 app->tick();

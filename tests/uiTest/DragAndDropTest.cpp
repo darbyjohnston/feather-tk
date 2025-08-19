@@ -163,7 +163,7 @@ namespace feather_tk
                     argv,
                     "DragAndDropTest",
                     "Drag and drop test.");
-                auto window = Window::create(context, app, "DragAndDropTest");
+                auto window = Window::create(context, "DragAndDropTest");
                 auto layout = HorizontalLayout::create(context, window);
                 auto dndWidget0 = DragAndDropWidget::create(context, "Drag 0", layout);
                 auto dndWidget1 = DragAndDropWidget::create(context, "Drag 1", layout);

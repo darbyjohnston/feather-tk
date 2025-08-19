@@ -54,13 +54,17 @@ void DialogsWindow::_init(
     menu->addAction(action);
     menu->setEnabled(action, false);
     menu->addDivider();
+    std::weak_ptr<App> appWeak(app);
     menu->addAction(Action::create(
         "Exit",
         Key::Q,
         static_cast<int>(commandKeyModifier),
-        [this]
+        [appWeak]
         {
-            getApp()->exit();
+            if (auto app = appWeak.lock())
+            {
+                app->exit();
+            }
         }));
 
     // Create the layout.

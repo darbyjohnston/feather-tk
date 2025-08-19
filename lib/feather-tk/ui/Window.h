@@ -14,7 +14,6 @@ namespace feather_tk
     protected:
         void _init(
             const std::shared_ptr<Context>&,
-            const std::shared_ptr<App>&,
             const std::string& name,
             const Size2I&);
 
@@ -26,7 +25,6 @@ namespace feather_tk
         //! Create a new window.
         static std::shared_ptr<Window> create(
             const std::shared_ptr<Context>&,
-            const std::shared_ptr<App>&,
             const std::string& name,
             const Size2I& = Size2I(1280, 960));
 
@@ -87,7 +85,6 @@ namespace feather_tk
 
         void setIcons(const std::vector<std::shared_ptr<Image> >&) override;
         std::shared_ptr<Image> screenshot(const Box2I& = Box2I(0, 0, -1, -1)) override;
-        void setCloseCallback(const std::function<void(void)>&) override;
 
         void setGeometry(const Box2I&) override;
         void setVisible(bool) override;

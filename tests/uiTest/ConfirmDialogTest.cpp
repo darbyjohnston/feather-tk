@@ -40,7 +40,7 @@ namespace feather_tk
                     argv,
                     "ConfirmDialogTest",
                     "Confirmation dialog test.");
-                auto window = Window::create(context, app, "ConfirmDialogTest");
+                auto window = Window::create(context, "ConfirmDialogTest");
                 app->addWindow(window);
                 window->show();
                 app->tick();

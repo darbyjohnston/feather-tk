@@ -41,7 +41,7 @@ namespace feather_tk
                     argv,
                     "MenuBarTest",
                     "Menu bar test.");
-                auto window = Window::create(context, app, "MenuBarTest");
+                auto window = Window::create(context, "MenuBarTest");
                 auto layout = VerticalLayout::create(context, window);
                 layout->setMarginRole(SizeRole::MarginLarge);
                 app->addWindow(window);

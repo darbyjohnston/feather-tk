@@ -40,7 +40,7 @@ namespace feather_tk
                     argv,
                     "GroupBoxTest",
                     "Group box test.");
-                auto window = Window::create(context, app, "GroupBoxTest");
+                auto window = Window::create(context, "GroupBoxTest");
                 auto layout = VerticalLayout::create(context, window);
                 layout->setMarginRole(SizeRole::MarginLarge);
                 app->addWindow(window);

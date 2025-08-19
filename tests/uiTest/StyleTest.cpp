@@ -54,7 +54,7 @@ namespace feather_tk
                     argv,
                     "StyleTest",
                     "Style test.");
-                auto window = Window::create(context, app, "StyleTest");
+                auto window = Window::create(context, "StyleTest");
                 auto layout = VerticalLayout::create(context, window);
                 layout->setMarginRole(SizeRole::MarginLarge);
                 auto button = PushButton::create(context, "Button", layout);

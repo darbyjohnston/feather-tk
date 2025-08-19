@@ -8,15 +8,12 @@
 
 namespace feather_tk
 {
-    class App;
-
     //! Base class for windows.
     class IWindow : public IWidget
     {
     protected:
         void _init(
             const std::shared_ptr<Context>&,
-            const std::shared_ptr<App>&,
             const std::string& objectName,
             const std::shared_ptr<IWidget>& parent);
 
@@ -24,9 +21,6 @@ namespace feather_tk
 
     public:
         virtual ~IWindow() = 0;
-
-        //! Get the application.
-        std::shared_ptr<App> getApp() const;
 
         //! Get the widget with key focus.
         std::shared_ptr<IWidget> getKeyFocus() const;
@@ -57,8 +51,11 @@ namespace feather_tk
         //! Capture a screenshot.
         virtual std::shared_ptr<Image> screenshot(const Box2I & = Box2I(0, 0, -1, -1));
 
+        //! Close the window.
+        virtual void close();
+
         //! Set the window close callback.
-        virtual void setCloseCallback(const std::function<void(void)>&);
+        void setCloseCallback(const std::function<void(void)>&);
 
         void setVisible(bool) override;
         void tickEvent(

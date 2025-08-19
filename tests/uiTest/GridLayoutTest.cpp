@@ -41,7 +41,7 @@ namespace feather_tk
                     argv,
                     "GridLayoutTest",
                     "Grid layout test.");
-                auto window = Window::create(context, app, "GridLayoutTest");
+                auto window = Window::create(context, "GridLayoutTest");
                 app->addWindow(window);
                 window->show();
                 app->tick();

@@ -225,9 +225,13 @@ namespace feather_tk
     void App::addWindow(const std::shared_ptr<Window>& window)
     {
         FEATHER_TK_P();
-        window->setDisplayScale(p.displayScale->get());
-        window->setTooltipsEnabled(p.tooltipsEnabled->get());
-        p.windows.push_back(window);
+        const auto i = std::find(p.windows.begin(), p.windows.end(), window);
+        if (i == p.windows.end())
+        {
+            window->setDisplayScale(p.displayScale->get());
+            window->setTooltipsEnabled(p.tooltipsEnabled->get());
+            p.windows.push_back(window);
+        }
     }
 
     void App::removeWindow(const std::shared_ptr<Window>& window)
@@ -548,7 +552,7 @@ namespace feather_tk
                         {
                             if (window->getID() == event.window.windowID)
                             {
-                                window->setVisible(true);
+                                window->setVisible(false);
                                 break;
                             }
                         }
@@ -586,7 +590,7 @@ namespace feather_tk
                         {
                             if (window->getID() == event.window.windowID)
                             {
-                                window->hide();
+                                window->close();
                                 break;
                             }
                         }

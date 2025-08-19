@@ -40,7 +40,7 @@ namespace feather_tk
                     argv,
                     "ComboBoxTest",
                     "Combo box test.");
-                auto window = Window::create(context, app, "ComboBoxTest");
+                auto window = Window::create(context, "ComboBoxTest");
                 auto layout = VerticalLayout::create(context, window);
                 layout->setMarginRole(SizeRole::MarginLarge);
                 app->addWindow(window);

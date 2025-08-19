@@ -42,9 +42,10 @@ namespace feather_tk
                     argv,
                     "ButtonTest",
                     "Button test.");
-                auto window = Window::create(context, app, "ButtonTest");
+                auto window = Window::create(context, "ButtonTest");
                 auto layout = VerticalLayout::create(context, window);
                 layout->setMarginRole(SizeRole::MarginLarge);
+                app->addWindow(window);
                 window->show();
                 app->tick();
 

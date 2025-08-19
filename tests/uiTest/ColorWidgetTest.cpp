@@ -42,7 +42,7 @@ namespace feather_tk
                     argv,
                     "ColorWidgetTest",
                     "Color widget test.");
-                auto window = Window::create(context, app, "ColorWidgetTest");
+                auto window = Window::create(context, "ColorWidgetTest");
                 auto layout = VerticalLayout::create(context, window);
                 layout->setMarginRole(SizeRole::MarginLarge);
                 app->addWindow(window);

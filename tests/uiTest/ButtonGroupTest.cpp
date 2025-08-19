@@ -41,7 +41,7 @@ namespace feather_tk
                     argv,
                     "ButtonGroupTest",
                     "Button group test.");
-                auto window = Window::create(context, app, "ButtonGroupTest");
+                auto window = Window::create(context, "ButtonGroupTest");
                 auto layout = VerticalLayout::create(context, window);
                 layout->setMarginRole(SizeRole::MarginLarge);
                 app->addWindow(window);

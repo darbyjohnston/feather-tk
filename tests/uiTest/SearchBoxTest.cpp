@@ -40,7 +40,7 @@ namespace feather_tk
                     argv,
                     "SearchBoxTest",
                     "Search box test.");
-                auto window = Window::create(context, app, "SearchBoxTest");
+                auto window = Window::create(context, "SearchBoxTest");
                 auto layout = VerticalLayout::create(context, window);
                 layout->setMarginRole(SizeRole::MarginLarge);
                 app->addWindow(window);

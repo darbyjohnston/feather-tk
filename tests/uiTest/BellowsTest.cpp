@@ -41,10 +41,7 @@ namespace feather_tk
                     argv,
                     "BellowsTest",
                     "Bellows test.");
-                auto window = Window::create(
-                    context,
-                    app,
-                    "BellowsTest");
+                auto window = Window::create(context, "BellowsTest");
                 auto layout = VerticalLayout::create(context, window);
                 layout->setMarginRole(SizeRole::MarginLarge);
                 app->addWindow(window);

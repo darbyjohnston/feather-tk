@@ -40,7 +40,7 @@ namespace feather_tk
                     argv,
                     "IntEditTest",
                     "Integer edit test.");
-                auto window = Window::create(context, app, "IntEditTest");
+                auto window = Window::create(context, "IntEditTest");
                 auto layout = VerticalLayout::create(context, window);
                 layout->setMarginRole(SizeRole::MarginLarge);
                 app->addWindow(window);

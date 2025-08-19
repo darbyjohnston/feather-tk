@@ -40,7 +40,7 @@ namespace feather_tk
                     argv,
                     "FloatEditTest",
                     "Float edit test.");
-                auto window = Window::create(context, app, "FloatEditTest");
+                auto window = Window::create(context, "FloatEditTest");
                 auto layout = VerticalLayout::create(context, window);
                 layout->setMarginRole(SizeRole::MarginLarge);
                 app->addWindow(window);

@@ -39,7 +39,7 @@ namespace feather_tk
                     argv,
                     "ProgressDialogTest",
                     "Progress dialog test.");
-                auto window = Window::create(context, app, "ProgressDialogTest");
+                auto window = Window::create(context, "ProgressDialogTest");
                 app->addWindow(window);
                 window->show();
                 app->tick();

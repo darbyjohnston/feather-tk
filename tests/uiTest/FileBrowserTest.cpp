@@ -56,7 +56,7 @@ namespace feather_tk
                     argv,
                     "FileBrowserTest",
                     "File browser test.");
-                auto window = Window::create(context, app, "FileBrowserTest");
+                auto window = Window::create(context, "FileBrowserTest");
                 app->addWindow(window);
                 window->show();
                 app->tick();
@@ -80,7 +80,7 @@ namespace feather_tk
                     argv,
                     "FileBrowserTest",
                     "File browser test.");
-                auto window = Window::create(context, app, "FileBrowserTest");
+                auto window = Window::create(context, "FileBrowserTest");
                 app->addWindow(window);
                 window->show();
                 app->tick();
@@ -126,7 +126,7 @@ namespace feather_tk
                     argv,
                     "FileBrowserTest",
                     "File browser test.");
-                auto window = Window::create(context, app, "FileBrowserTest");
+                auto window = Window::create(context, "FileBrowserTest");
                 app->addWindow(window);
                 window->show();
                 app->tick();
@@ -171,7 +171,7 @@ namespace feather_tk
                     argv,
                     "FileBrowserTest",
                     "File browser test.");
-                auto window = Window::create(context, app, "FileBrowserTest");
+                auto window = Window::create(context, "FileBrowserTest");
                 app->addWindow(window);
                 window->show();
                 app->tick();

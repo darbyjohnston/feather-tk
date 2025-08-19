@@ -40,7 +40,7 @@ namespace feather_tk
                     argv,
                     "DoubleSliderTest",
                     "Double slider test.");
-                auto window = Window::create(context, app, "DoubleSliderTest");
+                auto window = Window::create(context, "DoubleSliderTest");
                 auto layout = VerticalLayout::create(context, window);
                 layout->setMarginRole(SizeRole::MarginLarge);
                 app->addWindow(window);

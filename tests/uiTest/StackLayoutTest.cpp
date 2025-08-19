@@ -41,7 +41,7 @@ namespace feather_tk
                     argv,
                     "StackLayoutTest",
                     "Stack layout test.");
-                auto window = Window::create(context, app, "StackLayoutTest");
+                auto window = Window::create(context, "StackLayoutTest");
                 app->addWindow(window);
                 window->show();
                 app->tick();

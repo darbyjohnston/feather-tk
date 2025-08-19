@@ -12,7 +12,7 @@ namespace feather_tk
 {
     struct IWindow::Private
     {
-        std::weak_ptr<App> app;
+        std::function<void(void)> closeCallback;
 
         bool inside = false;
         V2I cursorPos;
@@ -46,13 +46,10 @@ namespace feather_tk
 
     void IWindow::_init(
         const std::shared_ptr<Context>& context,
-        const std::shared_ptr<App>& app,
         const std::string& objectName,
         const std::shared_ptr<IWidget>& parent)
     {
         IWidget::_init(context, objectName, parent);
-        FEATHER_TK_P();
-        p.app = app;
         setBackgroundRole(ColorRole::Window);
     }
 
@@ -62,11 +59,6 @@ namespace feather_tk
 
     IWindow::~IWindow()
     {}
-
-    std::shared_ptr<App> IWindow::getApp() const
-    {
-        return _p->app.lock();
-    }
 
     std::shared_ptr<IWidget> IWindow::getKeyFocus() const
     {
@@ -178,8 +170,20 @@ namespace feather_tk
         return nullptr;
     }
 
+    void IWindow::close()
+    {
+        FEATHER_TK_P();
+        hide();
+        if (p.closeCallback)
+        {
+            p.closeCallback();
+        }
+    }
+
     void IWindow::setCloseCallback(const std::function<void(void)>& value)
-    {}
+    {
+        _p->closeCallback = value;
+    }
 
     void IWindow::setVisible(bool value)
     {

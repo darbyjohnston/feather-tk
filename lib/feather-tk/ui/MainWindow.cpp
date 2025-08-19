@@ -37,18 +37,19 @@ namespace feather_tk
         const std::string& name,
         const Size2I& size)
     {
-        Window::_init(context, app, name, size);
+        Window::_init(context, name, size);
         FEATHER_TK_P();
 
         p.menuBar = MenuBar::create(context);
         auto fileMenu = Menu::create(context);
+        std::weak_ptr<App> appWeak(app);
         fileMenu->addAction(Action::create(
             "Exit",
             Key::Q,
             static_cast<int>(commandKeyModifier),
-            [this]
+            [appWeak]
             {
-                if (auto app = getApp())
+                if (auto app = appWeak.lock())
                 {
                     app->exit();
                 }
@@ -70,9 +71,9 @@ namespace feather_tk
         {
             auto action = Action::create(
                 getLabel(colorStyle),
-                [this, colorStyle]
+                [appWeak, colorStyle]
                 {
-                    if (auto app = getApp())
+                    if (auto app = appWeak.lock())
                     {
                         app->setColorStyle(colorStyle);
                     }
@@ -87,9 +88,9 @@ namespace feather_tk
             const float displayScale = p.displayScales[i];
             auto action = Action::create(
                 Format("{0}").arg(displayScale).str(),
-                [this, displayScale](bool)
+                [appWeak, displayScale](bool)
                 {
-                    if (auto app = getApp())
+                    if (auto app = appWeak.lock())
                     {
                         app->setDisplayScale(displayScale);
                     }
@@ -100,9 +101,9 @@ namespace feather_tk
 
         p.tooltipsAction = Action::create(
             "Tooltips",
-            [this](bool value)
+            [appWeak](bool value)
             {
-                if (auto app = getApp())
+                if (auto app = appWeak.lock())
                 {
                     app->setTooltipsEnabled(value);
                 }
@@ -154,6 +155,8 @@ namespace feather_tk
                 FEATHER_TK_P();
                 p.menus["Window"]->setChecked(p.tooltipsAction, value);
             });
+
+        app->addWindow(std::dynamic_pointer_cast<Window>(shared_from_this()));
     }
 
     MainWindow::MainWindow() :

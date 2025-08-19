@@ -84,7 +84,7 @@ namespace feather_tk
                     argv,
                     "DrawUtilTest",
                     "Draw utilities test.");
-                auto window = Window::create(context, app, "DrawUtilTest");
+                auto window = Window::create(context, "DrawUtilTest");
                 app->addWindow(window);
                 window->show();
                 app->tick();

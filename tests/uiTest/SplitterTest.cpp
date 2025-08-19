@@ -38,7 +38,7 @@ namespace feather_tk
                     argv,
                     "SplitterTest",
                     "Splitter test.");
-                auto window = Window::create(context, app, "SplitterTest");
+                auto window = Window::create(context, "SplitterTest");
                 app->addWindow(window);
                 window->show();
                 app->tick();

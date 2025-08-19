@@ -38,7 +38,7 @@ namespace feather_tk
                     argv,
                     "ScrollWidgetTest",
                     "Scroll widget test.");
-                auto window = Window::create(context, app, "ScrollWidgetTest");
+                auto window = Window::create(context, "ScrollWidgetTest");
                 app->addWindow(window);
                 window->show();
                 app->tick();

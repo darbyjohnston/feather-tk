@@ -4,7 +4,6 @@
 
 #include <feather-tk/ui/Window.h>
 
-#include <feather-tk/ui/App.h>
 #include <feather-tk/ui/IconSystem.h>
 #include <feather-tk/ui/Style.h>
 #include <feather-tk/ui/Util.h>
@@ -53,7 +52,6 @@ namespace feather_tk
         bool refresh = true;
         int modifiers = 0;
         std::shared_ptr<gl::Window> window;
-        std::function<void(void)> closeCallback;
 
         std::shared_ptr<gl::OffscreenBuffer> buffer;
         std::shared_ptr<IRender> render;
@@ -64,11 +62,10 @@ namespace feather_tk
 
     void Window::_init(
         const std::shared_ptr<Context>& context,
-        const std::shared_ptr<App>& app,
         const std::string& name,
         const Size2I& size)
     {
-        IWindow::_init(context, app, name, nullptr);
+        IWindow::_init(context, name, nullptr);
         FEATHER_TK_P();
 
         p.context = context;
@@ -89,7 +86,7 @@ namespace feather_tk
 
         _sizeUpdate();
 
-        app->addWindow(std::dynamic_pointer_cast<Window>(shared_from_this()));
+        setVisible(false);
     }
 
     Window::Window() :
@@ -106,12 +103,11 @@ namespace feather_tk
 
     std::shared_ptr<Window> Window::create(
         const std::shared_ptr<Context>& context,
-        const std::shared_ptr<App>& app,
         const std::string& name,
         const Size2I& size)
     {
         auto out = std::shared_ptr<Window>(new Window);
-        out->_init(context, app, name, size);
+        out->_init(context, name, size);
         return out;
     }
 
@@ -260,11 +256,6 @@ namespace feather_tk
             }
         }
         return out;
-    }
-
-    void Window::setCloseCallback(const std::function<void(void)>& value)
-    {
-        _p->closeCallback = value;
     }
 
     void Window::setGeometry(const Box2I& value)

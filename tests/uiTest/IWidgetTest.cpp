@@ -59,7 +59,7 @@ namespace feather_tk
                     argv,
                     "IWidgetTest",
                     "IWidget test.");
-                auto window = Window::create(context, app, "IWidgetTest");
+                auto window = Window::create(context, "IWidgetTest");
                 auto layout = VerticalLayout::create(context, window);
                 layout->setMarginRole(SizeRole::MarginLarge);
                 app->addWindow(window);

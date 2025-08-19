@@ -40,7 +40,7 @@ namespace feather_tk
                     argv,
                     "MessageDialogTest",
                     "Message dialog test.");
-                auto window = Window::create(context, app, "MessageDialogTest");
+                auto window = Window::create(context, "MessageDialogTest");
                 app->addWindow(window);
                 window->show();
                 app->tick();

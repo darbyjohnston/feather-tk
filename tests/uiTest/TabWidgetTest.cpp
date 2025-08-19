@@ -48,7 +48,7 @@ namespace feather_tk
                     argv,
                     "TabWidgetTest",
                     "Tab widget test.");
-                auto window = Window::create(context, app, "TabWidgetTest");
+                auto window = Window::create(context, "TabWidgetTest");
                 auto layout = VerticalLayout::create(context, window);
                 layout->setMarginRole(SizeRole::MarginLarge);
                 app->addWindow(window);
@@ -97,7 +97,7 @@ namespace feather_tk
                     argv,
                     "TabWidgetTest",
                     "Tab widget test.");
-                auto window = Window::create(context, app, "TabWidgetTest");
+                auto window = Window::create(context, "TabWidgetTest");
                 auto layout = VerticalLayout::create(context, window);
                 layout->setMarginRole(SizeRole::MarginLarge);
                 app->addWindow(window);

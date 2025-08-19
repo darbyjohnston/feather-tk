@@ -37,7 +37,7 @@ namespace feather_tk
                     argv,
                     "ScrollBarTest",
                     "Scroll bar test.");
-                auto window = Window::create(context, app, "ScrollBarTest");
+                auto window = Window::create(context, "ScrollBarTest");
                 auto layout = VerticalLayout::create(context, window);
                 layout->setMarginRole(SizeRole::MarginLarge);
                 app->addWindow(window);

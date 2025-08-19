@@ -40,7 +40,7 @@ namespace feather_tk
                     argv,
                     "DoubleEditTest",
                     "Double edit test.");
-                auto window = Window::create(context, app, "DoubleEditTest");
+                auto window = Window::create(context, "DoubleEditTest");
                 auto layout = VerticalLayout::create(context, window);
                 layout->setMarginRole(SizeRole::MarginLarge);
                 app->addWindow(window);
