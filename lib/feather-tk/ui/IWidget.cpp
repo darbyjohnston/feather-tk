@@ -419,7 +419,7 @@ namespace feather_tk
             event.button == _mousePressButton :
             true;
         const bool modifiers =
-            _mousePressModifiers != 0 ?
+            _mousePressModifiers != -1 ?
             event.modifiers == _mousePressModifiers :
             true;
         if (_mousePressEnabled && button && modifiers)
