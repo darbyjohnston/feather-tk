@@ -684,16 +684,32 @@ namespace feather_tk
                     p.dropFiles.clear();
                     break;
                 case SDL_DROPCOMPLETE:
+                {
                     logSystem->print("feather_tk::App", "SDL_DROPCOMPLETE");
+                    bool found = false;
                     for (const auto& window : p.windows)
                     {
                         if (window->getID() == event.drop.windowID)
                         {
+                            found = true;
                             window->_drop(p.dropFiles);
                             break;
                         }
                     }
+                    if (!found)
+                    {
+                        if (auto window = p.activeWindow.lock())
+                        {
+                            window->_drop(p.dropFiles);
+                        }
+                        else if (!p.windows.empty())
+                        {
+                            p.windows.front()->_drop(p.dropFiles);
+                        }
+                    }
                     break;
+                }
+                default: break;
                 }
             }
 
