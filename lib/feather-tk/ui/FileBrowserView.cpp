@@ -60,9 +60,9 @@ namespace feather_tk
 
         struct MouseData
         {
-            int hover = -1;
-            int pressed = -1;
-            int click = -1;
+            int hover = 0;
+            int pressed = 0;
+            int click = 0;
             std::chrono::steady_clock::time_point clickTime;
         };
         MouseData mouse;
@@ -245,7 +245,7 @@ namespace feather_tk
         }
 
         // Draw the mouse hover.
-        if (p.mouse.hover != -1)
+        if (p.mouse.hover != 0)
         {
             const Box2I g2 = move(getRect(p.mouse.hover), g.min);
             event.render->drawRect(
@@ -319,7 +319,7 @@ namespace feather_tk
     {
         IWidget::mouseLeaveEvent();
         FEATHER_TK_P();
-        int hover = -1;
+        int hover = 0;
         if (hover != p.mouse.hover)
         {
             p.mouse.hover = hover;
@@ -350,7 +350,7 @@ namespace feather_tk
             p.mouse.hover = hover;
             _setDrawUpdate();
         }
-        if (p.mouse.hover != -1)
+        if (p.mouse.hover != 0)
         {
             _setCurrent(p.mouse.hover);
             p.mouse.pressed = p.mouse.hover;
@@ -363,7 +363,7 @@ namespace feather_tk
         IWidget::mouseReleaseEvent(event);
         FEATHER_TK_P();
         const Box2I& g = getGeometry();
-        if (p.mouse.pressed != -1)
+        if (p.mouse.pressed != 0)
         {
             if (contains(getRect(p.mouse.pressed), event.pos - g.min))
             {
@@ -376,7 +376,7 @@ namespace feather_tk
                 p.mouse.click = p.mouse.pressed;
                 p.mouse.clickTime = now;
             }
-            p.mouse.pressed = -1;
+            p.mouse.pressed = 0;
             _setDrawUpdate();
         }
     }

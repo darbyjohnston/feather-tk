@@ -307,8 +307,8 @@ namespace feather_tk
         bool _parentsEnabled = true;
         bool _mouseHoverEnabled = false;
         bool _mousePressEnabled = false;
-        int _mousePressButton = -1;
-        int _mousePressModifiers = -1;
+        int _mousePressButton = 0;
+        int _mousePressModifiers = 0;
         bool _mouseInside = false;
         V2I _mousePos;
         bool _mousePress = false;
