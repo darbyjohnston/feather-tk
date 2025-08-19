@@ -53,8 +53,14 @@ namespace feather_tk
         //! Set the formatting text.
         void setFormat(const std::string&);
 
-        //! Set the lost focus callback.
+        //! Set the focus callback.
         void setFocusCallback(const std::function<void(bool)>&);
+
+        //! Select all.
+        void selectAll();
+
+        //! Clear the selection.
+        void selectNone();
 
         //! Get the font role.
         FontRole getFontRole() const;

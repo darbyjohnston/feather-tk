@@ -30,6 +30,7 @@ namespace feather_tk
             void setFirst(int);
             void setSecond(int);
 
+            void select(const SelectionPair&);
             void select(int first, int second);
             void clear();
 
@@ -72,17 +73,22 @@ namespace feather_tk
             _pair.second = value;
         }
 
-        void Selection::select(int first, int second)
+        void Selection::select(const SelectionPair& value)
         {
             if (-1 == _pair.first)
             {
-                _pair.first = first;
-                _pair.second = second;
+                _pair.first = value.first;
+                _pair.second = value.second;
             }
             else
             {
-                _pair.second = second;
+                _pair.second = value.second;
             }
+        }
+
+        void Selection::select(int first, int second)
+        {
+            select(SelectionPair(first, second));
         }
 
         void Selection::clear()
@@ -143,10 +149,12 @@ namespace feather_tk
 
     LineEdit::LineEdit() :
         _p(new Private)
-    {}
+    {
+    }
 
     LineEdit::~LineEdit()
-    {}
+    {
+    }
 
     std::shared_ptr<LineEdit> LineEdit::create(
         const std::shared_ptr<Context>& context,
@@ -204,6 +212,28 @@ namespace feather_tk
     void LineEdit::setFocusCallback(const std::function<void(bool)>& value)
     {
         _p->focusCallback = value;
+    }
+
+    void LineEdit::selectAll()
+    {
+        FEATHER_TK_P();
+        const SelectionPair select(0, static_cast<int>(p.text.size()));
+        if (select != p.selection.get())
+        {
+            p.selection.clear();
+            p.selection.select(select);
+            _setDrawUpdate();
+        }
+    }
+
+    void LineEdit::selectNone()
+    {
+        FEATHER_TK_P();
+        if (p.selection.isValid())
+        {
+            p.selection.clear();
+            _setDrawUpdate();
+        }
     }
 
     FontRole LineEdit::getFontRole() const
@@ -466,13 +496,7 @@ namespace feather_tk
     {
         IWidget::keyFocusEvent(value);
         FEATHER_TK_P();
-        if (value)
-        {
-            p.selection.clear();
-            p.selection.select(0, p.text.size());
-            _setDrawUpdate();
-        }
-        else
+        if (!value)
         {
             p.selection.clear();
             if (p.textCallback)
@@ -498,9 +522,7 @@ namespace feather_tk
                 event.accept = true;
                 if (event.modifiers & static_cast<int>(KeyModifier::Control))
                 {
-                    p.selection.clear();
-                    p.selection.select(0, p.text.size());
-                    _setDrawUpdate();
+                    selectAll();
                 }
                 break;
             case Key::C:
