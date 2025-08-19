@@ -280,7 +280,7 @@ namespace feather_tk
         void _setSizeHint(const Size2I&);
 
         void _setMouseHoverEnabled(bool);
-        void _setMousePressEnabled(bool, int button = -1, int modifiers = -1);
+        void _setMousePressEnabled(bool, int button = 0, int modifiers = 0);
         virtual void _releaseMouse();
         bool _isMouseInside() const;
         const V2I& _getMousePos() const;

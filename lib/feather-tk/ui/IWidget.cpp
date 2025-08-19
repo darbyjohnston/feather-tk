@@ -415,11 +415,11 @@ namespace feather_tk
     void IWidget::mousePressEvent(MouseClickEvent& event)
     {
         const bool button =
-            _mousePressButton != -1 ?
+            _mousePressButton != 0 ?
             event.button == _mousePressButton :
             true;
         const bool modifiers =
-            _mousePressModifiers != -1 ?
+            _mousePressModifiers != 0 ?
             event.modifiers == _mousePressModifiers :
             true;
         if (_mousePressEnabled && button && modifiers)
