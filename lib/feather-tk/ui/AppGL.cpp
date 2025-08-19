@@ -565,6 +565,16 @@ namespace feather_tk
                             }
                         }
                         break;
+                    case SDL_WINDOWEVENT_EXPOSED:
+                        for (const auto& window : p.windows)
+                        {
+                            if (window->getID() == event.window.windowID)
+                            {
+                                window->_setDrawUpdate();
+                                break;
+                            }
+                        }
+                        break;
                     case SDL_WINDOWEVENT_SIZE_CHANGED:
                         for (const auto& window : p.windows)
                         {
