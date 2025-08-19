@@ -239,7 +239,7 @@ namespace feather_tk
             return _p->fullScreen;
         }
 
-        void Window::setFullScreen(bool value, int screen)
+        void Window::setFullScreen(bool value)
         {
             FEATHER_TK_P();
             if (value == p.fullScreen)

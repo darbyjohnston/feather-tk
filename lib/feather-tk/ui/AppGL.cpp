@@ -143,8 +143,10 @@ namespace feather_tk
         float dDpi = 0.F;
         float hDpi = 0.F;
         float vDpi = 0.F;
-        SDL_GetDisplayDPI(0, &dDpi, &hDpi, &vDpi);
-        displayScale = hDpi / getBaseDPI();
+        if (0 == SDL_GetDisplayDPI(0, &dDpi, &hDpi, &vDpi))
+        {
+            displayScale = hDpi / getBaseDPI();
+        }
         if (p.cmdLine.displayScale->hasValue())
         {
             displayScale = p.cmdLine.displayScale->getValue();
@@ -518,12 +520,14 @@ namespace feather_tk
         auto t0 = std::chrono::steady_clock::now();
         while (p.running && !p.windows.empty())
         {
+            auto logSystem = _context->getSystem<LogSystem>();
             SDL_Event event;
             while (SDL_PollEvent(&event))
             {
                 switch (event.type)
                 {
                 case SDL_DISPLAYEVENT:
+                    logSystem->print("feather_tk::App", "SDL_DISPLAYEVENT");
                     _monitorsUpdate();
                     break;
                 case SDL_WINDOWEVENT:
@@ -661,21 +665,40 @@ namespace feather_tk
                 }
 
                 case SDL_DROPFILE:
+                    logSystem->print("feather_tk::App", Format("SDL_DROPFILE: {0}").arg(event.drop.file));
                     p.dropFiles.push_back(event.drop.file);
                     break;
                 case SDL_DROPBEGIN:
+                    logSystem->print("feather_tk::App", "SDL_DROPBEGIN");
                     p.dropFiles.clear();
                     break;
                 case SDL_DROPCOMPLETE:
+                {
+                    logSystem->print("feather_tk::App", "SDL_DROPCOMPLETE");
+                    bool found = false;
                     for (const auto& window : p.windows)
                     {
                         if (window->getID() == event.drop.windowID)
                         {
+                            found = true;
                             window->_drop(p.dropFiles);
                             break;
                         }
                     }
+                    if (!found)
+                    {
+                        if (auto window = p.activeWindow.lock())
+                        {
+                            window->_drop(p.dropFiles);
+                        }
+                        else if (!p.windows.empty())
+                        {
+                            p.windows.front()->_drop(p.dropFiles);
+                        }
+                    }
                     break;
+                }
+                default: break;
                 }
             }
 

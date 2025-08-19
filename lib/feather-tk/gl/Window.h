@@ -84,7 +84,7 @@ namespace feather_tk
             bool isFullScreen() const;
 
             //! Set whether the window is in full screen mode.
-            void setFullScreen(bool, int screen = -1);
+            void setFullScreen(bool);
 
             //! Get whether the window is floating on top.
             bool isFloatOnTop() const;
