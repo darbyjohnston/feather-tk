@@ -349,6 +349,8 @@ namespace feather_tk
             bufferOptions.color = p.bufferType->get();
             if (gl::doCreate(p.buffer, p.frameBufferSize, bufferOptions))
             {
+                std::cout << "size: " << p.size << std::endl;
+                std::cout << "frameBufferSize: " << p.frameBufferSize << std::endl;
                 p.buffer = gl::OffscreenBuffer::create(p.frameBufferSize, bufferOptions);
             }
 
