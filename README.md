@@ -135,24 +135,15 @@ Clone the repository:
 ```
 git clone https://github.com/darbyjohnston/feather-tk.git
 ```
-Run CMake:
+
+Run the super build script:
 ```
-cmake -S feather-tk/etc/SuperBuild -B Release -DCMAKE_INSTALL_PREFIX=$PWD/Release/install -DCMAKE_PREFIX_PATH=$PWD/Release/install -DCMAKE_BUILD_TYPE=Release
+sh feather-tk/SuperBuild.sh
 ```
-Start the build:
+
+Try running the `demo` example:
 ```
-cmake --build Release -j 4 --config Release
-```
-Try running the `simple` example:
-```
-Release/feather-tk/src/feather-tk-build/examples/simple/simple
-```
-For debug builds:
-```
-cmake -S feather-tk/etc/SuperBuild -B Debug -DCMAKE_INSTALL_PREFIX=$PWD/Debug/install -DCMAKE_PREFIX_PATH=$PWD/Debug/install -DCMAKE_BUILD_TYPE=Debug
-```
-```
-cmake --build Debug -j 4 --config Debug
+build-Release/examples/demo/demo
 ```
 
 
@@ -166,33 +157,15 @@ Clone the repository:
 ```
 git clone https://github.com/darbyjohnston/feather-tk.git
 ```
-Run CMake:
+
+Run the super build script:
 ```
-cmake -S feather-tk/etc/SuperBuild -B Release -DCMAKE_INSTALL_PREFIX=$PWD/Release/install -DCMAKE_PREFIX_PATH=$PWD/Release/install -DCMAKE_BUILD_TYPE=Release
-```
-Start the build:
-```
-cmake --build Release -j 4 --config Release
-```
-Try running the `simple` example:
-```
-Release/feather-tk/src/feather-tk-build/examples/simple/simple
-```
-For debug builds:
-```
-cmake -S feather-tk/etc/SuperBuild -B Debug -DCMAKE_INSTALL_PREFIX=$PWD/Debug/install -DCMAKE_PREFIX_PATH=$PWD/Debug/install -DCMAKE_BUILD_TYPE=Debug
-```
-```
-cmake --build Debug -j 4 --config Debug
+sh feather-tk/SuperBuild.sh
 ```
 
-The CMake variable "CMAKE_OSX_ARCHITECTURES" can be used to specify the build
-architecture:
+Try running the `demo` example:
 ```
--DCMAKE_OSX_ARCHITECTURES=x86_64
-```
-```
--DCMAKE_OSX_ARCHITECTURES=arm64
+build-Release/examples/demo/demo
 ```
 
 These aliases are convenient for switching between architectures:
@@ -215,23 +188,13 @@ Clone the repository:
 ```
 git clone https://github.com/darbyjohnston/feather-tk.git
 ```
-Run CMake:
+
+Run the super build script:
 ```
-cmake -S feather-tk\etc\SuperBuild -B Release -DCMAKE_INSTALL_PREFIX=%CD%\Release\install -DCMAKE_PREFIX_PATH=%CD%\Release\install -DCMAKE_BUILD_TYPE=Release
-```
-Start the build:
-```
-cmake --build Release -j 4 --config Release
-```
-Try running the `simple` example:
-```
-Release\feather-tk\src\feather-tk-build\examples\simple\Release\simple
-```
-For debug builds:
-```
-cmake -S feather-tk\etc\SuperBuild -B Debug -DCMAKE_INSTALL_PREFIX=%CD%\Debug\install -DCMAKE_PREFIX_PATH=%CD%\Debug\install -DCMAKE_BUILD_TYPE=Debug
-```
-```
-cmake --build Debug -j 4 --config Debug
+feather-tk\SuperBuild.bat
 ```
 
+Try running the `simple` example:
+```
+build-Release\examples\demo\Release\demo
+```
