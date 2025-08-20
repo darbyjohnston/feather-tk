@@ -25,15 +25,11 @@ if(WIN32 OR APPLE)
 endif()
 set(feather_tk_nfd ${feather_tk_nfd_DEFAULT} CACHE BOOL "Build support for native file dialogs")
 set(feather_tk_PYTHON OFF CACHE BOOL "Build support for Python")
-set(feather_tk_TESTS ON CACHE BOOL "Enable tests")
-set(feather_tk_EXAMPLES ON CACHE BOOL "Enable examples")
 if(APPLE)
     set(feather_tk_IGNORE_PREFIX_PATH_DEFAULT /opt/homebrew)
 endif()
 set(feather_tk_IGNORE_PREFIX_PATH ${feather_tk_IGNORE_PREFIX_PATH_DEFAULT} CACHE STRING "Ignore the given prefix path")
 set(feather_tk_TOOLS_INSTALL "bin" CACHE STRING "Destination where tools will be installed")
-set(feather_tk_GCOV FALSE CACHE BOOL "Enable gcov code coverage")
-set(feather_tk_GPROF FALSE CACHE BOOL "Enable gprof code profiling")
 
 #-------------------------------------------------------------------------------
 # Configuration
