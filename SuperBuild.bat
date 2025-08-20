@@ -1,22 +1,11 @@
 set BUILD_TYPE=%1
 IF "%BUILD_TYPE%"=="" set BUILD_TYPE=Release
 
-set JOBS=4
+set FEATHER_TK_API=GL_4_1
+set FEATHER_TK_NFD=OFF
+set FEATHER_TK_PYTHON=ON
+set FEATHER_TK_TESTS=ON
+set FEATHER_TK_EXAMPLES=ON
+set FEATHER_TK_GCOV=ON
 
-cmake ^
-    -S feather-tk\etc\SuperBuild ^
-    -B superbuild-%BUILD_TYPE% ^
-    -DCMAKE_INSTALL_PREFIX=%CD%\install-%BUILD_TYPE% ^
-    -DCMAKE_PREFIX_PATH=%CD%\install-%BUILD_TYPE% ^
-    -DCMAKE_BUILD_TYPE=%BUILD_TYPE%
-cmake --build superbuild-%BUILD_TYPE% -j %JOBS% --config %BUILD_TYPE%
-
-cmake ^
-    -S feather-tk ^
-    -B build-%BUILD_TYPE% ^
-    -DCMAKE_INSTALL_PREFIX=%CD%\install-%BUILD_TYPE% ^
-    -DCMAKE_PREFIX_PATH=%CD%\install-%BUILD_TYPE% ^
-    -DCMAKE_BUILD_TYPE=%BUILD_TYPE%
-cmake --build build-%BUILD_TYPE% -j %JOBS% --config %BUILD_TYPE%
-cmake --build build-%BUILD_TYPE% --config %BUILD_TYPE% --target INSTALL
-
+feather-tk\etc\Windows\windows-build-gha.bat %BUILD_TYPE%

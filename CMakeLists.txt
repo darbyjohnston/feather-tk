@@ -47,8 +47,31 @@ if(feather_tk_BUILD STREQUAL "SuperBuild")
     set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake/Modules)
 endif()
 
-set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_FIND_FRAMEWORK LAST)
+if(NOT CMAKE_CXX_STANDARD)
+    set(CMAKE_CXX_STANDARD 17)
+endif()
+
+if(NOT BUILD_SHARED_LIBS)
+    set(BUILD_SHARED_LIBS OFF)
+endif()
+
+if(NOT CMAKE_POSITION_INDEPENDENT_CODE)
+    set(CMAKE_POSITION_INDEPENDENT_CODE ON)
+endif()
+
+if(feather_tk_IGNORE_PREFIX_PATH)
+    set(CMAKE_IGNORE_PREFIX_PATH ${feather_tk_IGNORE_PREFIX_PATH})
+endif()
+
+if(MSVC)
+    set(CMAKE_MSVC_RUNTIME_LIBRARY MultiThreaded$<$<CONFIG:Debug>:Debug>DLL)
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /MP")
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} /MP")
+endif()
+
+if(APPLE)
+    set(CMAKE_FIND_FRAMEWORK LAST)
+endif()
 
 if(WIN32)
     #if(NOT WINDOWS_EXPORT_ALL_SYMBOLS)
@@ -66,17 +89,8 @@ else()
     set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
 endif()
 
-if(MSVC)
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /MP")
-    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} /MP")
-endif()
-
 if(feather_tk_UI_LIB)
     add_definitions(-DFEATHER_TK_UI_LIB)
-endif()
-
-if(feather_tk_IGNORE_PREFIX_PATH)
-    set(CMAKE_IGNORE_PREFIX_PATH ${feather_tk_IGNORE_PREFIX_PATH})
 endif()
 
 if(CMAKE_BUILD_TYPE MATCHES "^Debug$")
