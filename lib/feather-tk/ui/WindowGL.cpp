@@ -261,7 +261,6 @@ namespace feather_tk
     void Window::setGeometry(const Box2I& value)
     {
         IWindow::setGeometry(value);
-        std::cout << "Window::setGeometry: " << value << std::endl;
         for (const auto& child : getChildren())
         {
             child->setGeometry(value);
@@ -298,7 +297,6 @@ namespace feather_tk
     void Window::drawEvent(const Box2I& drawRect, const DrawEvent& event)
     {
         IWindow::drawEvent(drawRect, event);
-        std::cout << "Window::drawEvent: " << getGeometry() << std::endl;
     }
 
     std::shared_ptr<IRender> Window::_createRender(const std::shared_ptr<Context>& context)
@@ -357,8 +355,6 @@ namespace feather_tk
             bufferOptions.color = p.bufferType->get();
             if (gl::doCreate(p.buffer, p.frameBufferSize, bufferOptions))
             {
-                std::cout << "size: " << p.size << std::endl;
-                std::cout << "frameBufferSize: " << p.frameBufferSize << std::endl;
                 p.buffer = gl::OffscreenBuffer::create(p.frameBufferSize, bufferOptions);
             }
 
