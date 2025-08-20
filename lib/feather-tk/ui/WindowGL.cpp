@@ -261,6 +261,7 @@ namespace feather_tk
     void Window::setGeometry(const Box2I& value)
     {
         IWindow::setGeometry(value);
+        std::cout << "Window::setGeometry: " << value << std::endl;
         for (const auto& child : getChildren())
         {
             child->setGeometry(value);
@@ -283,7 +284,7 @@ namespace feather_tk
 
     void Window::sizeHintEvent(const SizeHintEvent& event)
     {
-        IWidget::sizeHintEvent(event);
+        IWindow::sizeHintEvent(event);
         Size2I sizeHint;
         for (const auto& child : getChildren())
         {
@@ -292,6 +293,12 @@ namespace feather_tk
             sizeHint.h = std::max(sizeHint.h, childSizeHint.h);
         }
         _setSizeHint(sizeHint);
+    }
+    
+    void Window::drawEvent(const Box2I& drawRect, const DrawEvent& event)
+    {
+        IWindow::drawEvent(drawRect, event);
+        std::cout << "Window::drawEvent: " << getGeometry() << std::endl;
     }
 
     std::shared_ptr<IRender> Window::_createRender(const std::shared_ptr<Context>& context)
@@ -323,7 +330,8 @@ namespace feather_tk
         const std::shared_ptr<Style>& style)
     {
         FEATHER_TK_P();
-        if (_hasSizeUpdate(shared_from_this()))
+        const bool sizeUpdate = _hasSizeUpdate(shared_from_this());
+        if (sizeUpdate)
         {
             SizeHintEvent sizeHintEvent(
                 fontSystem,
@@ -341,7 +349,7 @@ namespace feather_tk
         }
 
         const bool drawUpdate = _hasDrawUpdate(shared_from_this());
-        if (p.refresh || drawUpdate)
+        if (p.refresh || drawUpdate || sizeUpdate)
         {
             p.window->makeCurrent();
 
@@ -354,7 +362,7 @@ namespace feather_tk
                 p.buffer = gl::OffscreenBuffer::create(p.frameBufferSize, bufferOptions);
             }
 
-            if (p.buffer && drawUpdate)
+            if (p.buffer && (drawUpdate || sizeUpdate))
             {
                 gl::OffscreenBufferBinding bufferBinding(p.buffer);
                 p.render->begin(p.frameBufferSize);

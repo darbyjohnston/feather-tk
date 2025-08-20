@@ -89,6 +89,7 @@ namespace feather_tk
         void setGeometry(const Box2I&) override;
         void setVisible(bool) override;
         void sizeHintEvent(const SizeHintEvent&) override;
+        void drawEvent(const Box2I&, const DrawEvent&) override;
 
     protected:
         virtual std::shared_ptr<IRender> _createRender(const std::shared_ptr<Context>&);
