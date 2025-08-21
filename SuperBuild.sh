@@ -14,4 +14,4 @@ export FEATHER_TK_TESTS=ON
 export FEATHER_TK_EXAMPLES=ON
 export FEATHER_TK_GCOV=ON
 
-bash feather-tk/etc/Linux/linux-build-gha.sh $BUILD_TYPE
+feather-tk/etc/Linux/linux-build-gha.sh $BUILD_TYPE

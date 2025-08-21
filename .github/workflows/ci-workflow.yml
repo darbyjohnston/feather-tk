@@ -31,8 +31,7 @@ jobs:
         bash feather-tk/etc/Linux/linux-setup-gha.sh
 
     - name: Build
-      run: |
-        bash feather-tk/etc/Linux/linux-build-gha.sh Debug
+      run: bash feather-tk/etc/Linux/linux-build-gha.sh Debug
 
     - name: Run tests
       run: |
@@ -81,8 +80,7 @@ jobs:
         bash feather-tk/etc/Linux/linux-setup-gha.sh
 
     - name: Build
-      run: |
-        bash feather-tk/etc/Linux/linux-build-gha.sh Debug
+      run: bash feather-tk/etc/Linux/linux-build-gha.sh Debug
 
     - name: Run tests
       run: |
@@ -207,8 +205,7 @@ jobs:
 
     - name: Build
       shell: cmd
-      run: |
-        feather-tk\etc\Windows\windows-build-gha.bat Debug
+      run: feather-tk\etc\Windows\windows-build-gha.bat Debug
 
     - name: Run tests
       shell: cmd
