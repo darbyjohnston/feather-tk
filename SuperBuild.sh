@@ -9,9 +9,9 @@ fi
 
 export FEATHER_TK_API=GL_4_1
 export FEATHER_TK_NFD=OFF
-export FEATHER_TK_PYTHON=ON
+export FEATHER_TK_PYTHON=OFF
 export FEATHER_TK_TESTS=ON
 export FEATHER_TK_EXAMPLES=ON
-export FEATHER_TK_GCOV=ON
+export FEATHER_TK_GCOV=OFF
 
 feather-tk/etc/Linux/linux-build-gha.sh $BUILD_TYPE
