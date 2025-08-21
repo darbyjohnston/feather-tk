@@ -26,7 +26,7 @@ namespace feather_tk
     {
         struct Window::Private
         {
-            std::weak_ptr<Context> context;
+            std::weak_ptr<LogSystem> logSystem;
             SDL_Window* sdlWindow = nullptr;
             SDL_GLContext sdlGLContext = nullptr;
             V2I pos;
@@ -46,7 +46,7 @@ namespace feather_tk
         {
             FEATHER_TK_P();
 
-            p.context = context;
+            p.logSystem = context->getLogSystem();
 
 #if defined(FEATHER_TK_API_GL_4_1)
             SDL_GL_SetAttribute(SDL_GL_ACCELERATED_VISUAL, 1);
@@ -151,7 +151,7 @@ namespace feather_tk
                     arg(glVersionMajor));
             }
 
-            if (auto logSystem = context->getSystem<LogSystem>())
+            if (auto logSystem = p.logSystem.lock())
             {
                 logSystem->print(
                     "feather_tk::gl::Window",
@@ -220,13 +220,31 @@ namespace feather_tk
         void Window::makeCurrent()
         {
             FEATHER_TK_P();
-            SDL_GL_MakeCurrent(p.sdlWindow, p.sdlGLContext);
+            if (SDL_GL_MakeCurrent(p.sdlWindow, p.sdlGLContext) < 0)
+            {
+                if (auto logSystem = p.logSystem.lock())
+                {
+                    logSystem->print(
+                        "feather_tk::gl::Window",
+                        Format("Cannot make context current: {0}").arg(SDL_GetError()),
+                        LogType::Error);
+                }
+            }
         }
 
         void Window::doneCurrent()
         {
             FEATHER_TK_P();
-            SDL_GL_MakeCurrent(p.sdlWindow, nullptr);
+            if (SDL_GL_MakeCurrent(p.sdlWindow, nullptr) < 0)
+            {
+                if (auto logSystem = p.logSystem.lock())
+                {
+                    logSystem->print(
+                        "feather_tk::gl::Window",
+                        Format("Cannot make context done: {0}").arg(SDL_GetError()),
+                        LogType::Error);
+                }
+            }
         }
 
         int Window::getScreen() const
