@@ -6,9 +6,9 @@
 
 namespace feather_tk
 {
-    void IRender::_init(const std::shared_ptr<Context>& context)
+    void IRender::_init(const std::shared_ptr<LogSystem>& logSystem)
     {
-        _context = context;
+        _logSystem = logSystem;
     }
 
     IRender::~IRender()

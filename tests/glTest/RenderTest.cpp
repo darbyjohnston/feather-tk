@@ -60,7 +60,7 @@ namespace feather_tk
                 auto buffer = createBuffer(size);
                 OffscreenBufferBinding bufferBinding(buffer);
 
-                auto render = Render::create(context);
+                auto render = Render::create(context->getLogSystem());
                 render->begin(size);
                 FEATHER_TK_ASSERT(render->getRenderSize() == size);
 
@@ -92,7 +92,7 @@ namespace feather_tk
                 auto buffer = createBuffer(size);
                 OffscreenBufferBinding bufferBinding(buffer);
 
-                auto render = Render::create(context);
+                auto render = Render::create(context->getLogSystem());
                 render->begin(size);
                 
                 Box2F box(0, 0, size.w, size.h);

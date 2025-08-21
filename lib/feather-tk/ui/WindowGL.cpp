@@ -82,7 +82,7 @@ namespace feather_tk
             size,
             static_cast<int>(gl::WindowOptions::DoubleBuffer));
 
-        p.render = _createRender(context);
+        p.render = _createRender(context->getLogSystem());
 
         _sizeUpdate();
 
@@ -299,9 +299,9 @@ namespace feather_tk
         IWindow::drawEvent(drawRect, event);
     }
 
-    std::shared_ptr<IRender> Window::_createRender(const std::shared_ptr<Context>& context)
+    std::shared_ptr<IRender> Window::_createRender(const std::shared_ptr<LogSystem>& logSystem)
     {
-        return gl::Render::create(context);
+        return gl::Render::create(logSystem);
     }
     
     void Window::_refresh()

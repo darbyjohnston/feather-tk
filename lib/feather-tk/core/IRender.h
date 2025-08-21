@@ -15,7 +15,7 @@
 
 namespace feather_tk
 {
-    class Context;
+    class LogSystem;
 
     //! \name Rendering
     ///@{
@@ -26,7 +26,7 @@ namespace feather_tk
         FEATHER_TK_NON_COPYABLE(IRender);
 
     protected:
-        void _init(const std::shared_ptr<Context>&);
+        void _init(const std::shared_ptr<LogSystem>&);
 
         IRender() = default;
 
@@ -178,7 +178,7 @@ namespace feather_tk
             const ImageOptions& = ImageOptions());
 
     protected:
-        std::weak_ptr<Context> _context;
+        std::weak_ptr<LogSystem> _logSystem;
     };
         
     ///@}

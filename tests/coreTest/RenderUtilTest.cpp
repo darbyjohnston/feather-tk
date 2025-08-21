@@ -5,6 +5,7 @@
 #include <coreTest/RenderUtilTest.h>
 
 #include <feather-tk/core/Assert.h>
+#include <feather-tk/core/Context.h>
 #include <feather-tk/core/IRender.h>
 #include <feather-tk/core/RenderUtil.h>
 
@@ -35,7 +36,7 @@ namespace feather_tk
                 virtual ~Render() {}
 
                 static std::shared_ptr<Render> create(
-                    const std::shared_ptr<Context>&);
+                    const std::shared_ptr<LogSystem>&);
 
                 void begin(
                     const Size2I&,
@@ -106,10 +107,10 @@ namespace feather_tk
                 M44F _transform;
             };
 
-            std::shared_ptr<Render> Render::create(const std::shared_ptr<Context>& context)
+            std::shared_ptr<Render> Render::create(const std::shared_ptr<LogSystem>& logSystem)
             {
                 auto out = std::shared_ptr<Render>(new Render);
-                out->_init(context);
+                out->_init(logSystem);
                 return out;
             }
 
@@ -181,8 +182,9 @@ namespace feather_tk
         {
             if (auto context = _context.lock())
             {
+                auto logSystem = context->getLogSystem();
                 {
-                    auto render = Render::create(context);
+                    auto render = Render::create(logSystem);
                     const Size2I a(1280, 960);
                     render->begin(a);
                     {
@@ -194,7 +196,7 @@ namespace feather_tk
                     FEATHER_TK_ASSERT(a == render->getRenderSize());
                 }
                 {
-                    auto render = Render::create(context);
+                    auto render = Render::create(logSystem);
                     const Box2I a(0, 0, 1280, 960);
                     render->setViewport(a);
                     {
@@ -206,7 +208,7 @@ namespace feather_tk
                     FEATHER_TK_ASSERT(a == render->getViewport());
                 }
                 {
-                    auto render = Render::create(context);
+                    auto render = Render::create(logSystem);
                     render->setClipRectEnabled(true);
                     {
                         ClipRectEnabledState state(render);
@@ -216,7 +218,7 @@ namespace feather_tk
                     FEATHER_TK_ASSERT(render->getClipRectEnabled());
                 }
                 {
-                    auto render = Render::create(context);
+                    auto render = Render::create(logSystem);
                     const Box2I a(0, 0, 1280, 960);
                     render->setClipRect(a);
                     {
@@ -228,7 +230,7 @@ namespace feather_tk
                     FEATHER_TK_ASSERT(a == render->getClipRect());
                 }
                 {
-                    auto render = Render::create(context);
+                    auto render = Render::create(logSystem);
                     const M44F a = translate(V3F(1.F, 1.F, 1.F));
                     render->setTransform(a);
                     {

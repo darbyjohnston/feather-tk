@@ -16,33 +16,23 @@ namespace feather_tk
         {
             const int pboSizeMin = 1024;
             const size_t statsAverageCount = 10;
+            const size_t statsTimer = 600; // 60Hz * 10 seconds
         }
 
         void Render::_init(
-            const std::shared_ptr<Context>& context,
+            const std::shared_ptr<LogSystem>& logSystem,
             const std::shared_ptr<TextureCache>& textureCache)
         {
-            IRender::_init(context);
+            IRender::_init(logSystem);
             FEATHER_TK_P();
+
+            p.logSystem = logSystem;
 
             p.textureCache = textureCache;
             if (!p.textureCache)
             {
                 p.textureCache = std::make_shared<TextureCache>();
             }
-            
-            p.logTimer = Timer::create(context);
-            p.logTimer->setRepeating(true);
-            auto weak = std::weak_ptr<Render>(std::dynamic_pointer_cast<Render>(shared_from_this()));
-            p.logTimer->start(
-                std::chrono::seconds(10),
-                [this]
-                {
-                    if (_p->options.log)
-                    {
-                        _log();
-                    }
-                });
         }
 
         Render::Render() :
@@ -53,11 +43,11 @@ namespace feather_tk
         {}
 
         std::shared_ptr<Render> Render::create(
-            const std::shared_ptr<Context>& context,
+            const std::shared_ptr<LogSystem>& logSystem,
             const std::shared_ptr<TextureCache>& textureCache)
         {
             auto out = std::shared_ptr<Render>(new Render);
-            out->_init(context, textureCache);
+            out->_init(logSystem, textureCache);
             return out;
         }
 
@@ -175,6 +165,15 @@ namespace feather_tk
             while (p.statsList.size() > statsAverageCount)
             {
                 p.statsList.pop_front();
+            }
+            p.statsCounter = p.statsCounter + 1;
+            if (p.statsCounter > statsTimer)
+            {
+                p.statsCounter = 0;
+                if (p.options.log)
+                {
+                    _log();
+                }
             }
         }
 
@@ -526,9 +525,9 @@ namespace feather_tk
         void Render::_log()
         {
             FEATHER_TK_P();
-            if (auto context = _context.lock())
+            if (auto logSystem = p.logSystem.lock())
             {
-                auto logSystem = context->getSystem<LogSystem>();
+                
                 Private::Stats average;
                 const size_t size = p.statsList.size();
                 if (size)

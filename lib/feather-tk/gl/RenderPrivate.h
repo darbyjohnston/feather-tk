@@ -9,8 +9,6 @@
 #include <feather-tk/gl/Shader.h>
 #include <feather-tk/gl/TextureAtlas.h>
 
-#include <feather-tk/core/Timer.h>
-
 #include <chrono>
 #include <list>
 #include <map>
@@ -29,6 +27,8 @@ namespace feather_tk
 
         struct Render::Private
         {
+            std::weak_ptr<LogSystem> logSystem;
+
             Size2I size;
             RenderOptions options;
             Box2I viewport;
@@ -54,7 +54,7 @@ namespace feather_tk
             };
             Stats stats;
             std::list<Stats> statsList;
-            std::shared_ptr<Timer> logTimer;
+            size_t statsCounter = 0;
         };
     }
 }

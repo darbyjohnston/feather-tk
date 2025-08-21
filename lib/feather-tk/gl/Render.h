@@ -28,7 +28,7 @@ namespace feather_tk
         {
         protected:
             void _init(
-                const std::shared_ptr<Context>&,
+                const std::shared_ptr<LogSystem>&,
                 const std::shared_ptr<TextureCache>&);
 
             Render();
@@ -38,7 +38,7 @@ namespace feather_tk
 
             //! Create a new renderer.
             static std::shared_ptr<Render> create(
-                const std::shared_ptr<Context>&,
+                const std::shared_ptr<LogSystem>& = nullptr,
                 const std::shared_ptr<TextureCache>& = nullptr);
 
             //! Get a shader.
