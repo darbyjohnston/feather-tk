@@ -13,5 +13,7 @@ export FEATHER_TK_PYTHON=OFF
 export FEATHER_TK_TESTS=ON
 export FEATHER_TK_EXAMPLES=ON
 export FEATHER_TK_GCOV=OFF
+export CMAKE_OSX_DEPLOYMENT_TARGET: 14
+export CMAKE_OSX_ARCHITECTURES: arm64
 
 sh feather-tk/etc/macOS/macos-build-gha.sh $BUILD_TYPE
