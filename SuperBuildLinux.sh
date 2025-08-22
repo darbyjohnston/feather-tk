@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 set -x
 
@@ -14,4 +14,4 @@ export FEATHER_TK_TESTS=ON
 export FEATHER_TK_EXAMPLES=ON
 export FEATHER_TK_GCOV=OFF
 
-feather-tk/etc/Linux/linux-build-gha.sh $BUILD_TYPE
+sh feather-tk/etc/Linux/linux-build-gha.sh $BUILD_TYPE

@@ -28,10 +28,10 @@ jobs:
         echo "$PWD/install-Debug/bin" >> $GITHUB_PATH
         echo "LD_LIBRARY_PATH=$PWD/install-Debug/lib:$LD_LIBRARY_PATH" >> $GITHUB_ENV
         echo "PYTHONPATH=$PWD/install-Debug/lib:$PYTHONPATH" >> $GITHUB_ENV
-        bash feather-tk/etc/Linux/linux-setup-gha.sh
+        sh feather-tk/etc/Linux/linux-setup-gha.sh
 
     - name: Build
-      run: bash feather-tk/etc/Linux/linux-build-gha.sh Debug
+      run: sh feather-tk/etc/Linux/linux-build-gha.sh Debug
 
     - name: Run tests
       run: |
@@ -43,7 +43,7 @@ jobs:
       if: env.FEATHER_TK_GCOV == 'ON'
       run: |
         cd build-Debug
-        bash ../feather-tk/etc/Linux/lcov.sh
+        sh ../feather-tk/etc/Linux/lcov.sh
 
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v4
@@ -77,10 +77,10 @@ jobs:
         echo "$PWD/install-Debug/bin" >> $GITHUB_PATH
         echo "LD_LIBRARY_PATH=$PWD/install-Debug/lib:$LD_LIBRARY_PATH" >> $GITHUB_ENV
         echo "PYTHONPATH=$PWD/install-Debug/lib:$PYTHONPATH" >> $GITHUB_ENV
-        bash feather-tk/etc/Linux/linux-setup-gha.sh
+        sh feather-tk/etc/Linux/linux-setup-gha.sh
 
     - name: Build
-      run: bash feather-tk/etc/Linux/linux-build-gha.sh Debug
+      run: sh feather-tk/etc/Linux/linux-build-gha.sh Debug
 
     - name: Run tests
       run: |
@@ -122,7 +122,7 @@ jobs:
     - name: Build
       run: |
         export DYLD_LIBRARY_PATH=$PWD/install-Debug/lib:$DYLD_LIBRARY_PATH
-        bash feather-tk/etc/macOS/macos-build-gha.sh Debug
+        sh feather-tk/etc/macOS/macos-build-gha.sh Debug
 
     - name: Run tests
       run: |
@@ -165,7 +165,7 @@ jobs:
     - name: Build
       run: |
         export DYLD_LIBRARY_PATH=$PWD/install-Debug/lib:$DYLD_LIBRARY_PATH
-        bash feather-tk/etc/macOS/macos-build-gha.sh Debug
+        sh feather-tk/etc/macOS/macos-build-gha.sh Debug
 
     - name: Run tests
       run: |
