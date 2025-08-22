@@ -98,10 +98,6 @@ namespace feather_tk
             {
                 SDL_GL_SetSwapInterval(1);
             }
-            if (options & static_cast<int>(WindowOptions::MakeCurrent))
-            {
-                makeCurrent();
-            }
 
             initGLAD();
 #if defined(FEATHER_TK_API_GL_4_1_Debug)
@@ -165,6 +161,11 @@ namespace feather_tk
                     arg(glVendor).
                     arg(glRenderer).
                     arg(glVersion));
+            }
+
+            if (!(options & static_cast<int>(WindowOptions::MakeCurrent)))
+            {
+                doneCurrent();
             }
         }
         
