@@ -103,7 +103,7 @@ namespace feather_tk
             const std::shared_ptr<Style>&);
 
         void _makeCurrent();
-        void _doneCurrent();
+        void _clearCurrent();
 
     private:
         friend class App;

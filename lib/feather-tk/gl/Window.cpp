@@ -165,7 +165,7 @@ namespace feather_tk
 
             if (!(options & static_cast<int>(WindowOptions::MakeCurrent)))
             {
-                doneCurrent();
+                clearCurrent();
             }
         }
         
@@ -233,7 +233,7 @@ namespace feather_tk
             }
         }
 
-        void Window::doneCurrent()
+        void Window::clearCurrent()
         {
             FEATHER_TK_P();
             if (SDL_GL_MakeCurrent(p.sdlWindow, nullptr) < 0)

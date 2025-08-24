@@ -482,8 +482,6 @@ namespace feather_tk
 #endif // FEATHER_TK_API_GL_4_1
 
             p.window->swap();
-            //! \todo Is this necessary?
-            //p.window->doneCurrent();
 
             p.refresh = false;
         }
@@ -494,8 +492,8 @@ namespace feather_tk
         _p->window->makeCurrent();
     }
 
-    void Window::_doneCurrent()
+    void Window::_clearCurrent()
     {
-        _p->window->doneCurrent();
+        _p->window->clearCurrent();
     }
 }

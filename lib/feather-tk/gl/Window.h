@@ -71,11 +71,11 @@ namespace feather_tk
             //! Window icons are not supported on macOS.
             void setIcons(const std::vector<std::shared_ptr<Image> >&);
 
-            //! Make the OpenGL context current.
+            //! Make this the current OpenGL context.
             void makeCurrent();
 
-            //! Finish using the OpenGL context.
-            void doneCurrent();
+            //! Clear the current OpenGL context.
+            void clearCurrent();
 
             //! Get which screen the window is on.
             int getScreen() const;
