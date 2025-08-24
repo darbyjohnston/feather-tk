@@ -312,9 +312,12 @@ namespace feather_tk
 
     void IWidget::takeKeyFocus()
     {
-        if (auto window = getWindow())
+        if (_enabled)
         {
-            window->setKeyFocus(shared_from_this());
+            if (auto window = getWindow())
+            {
+                window->setKeyFocus(shared_from_this());
+            }
         }
     }
 
