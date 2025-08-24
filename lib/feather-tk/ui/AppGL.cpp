@@ -188,7 +188,8 @@ namespace feather_tk
 
     std::shared_ptr<App> App::create(
         const std::shared_ptr<Context>& context,
-        int argc, char** argv,
+        int argc,
+        char** argv,
         const std::string& name,
         const std::string& summary,
         const std::vector<std::shared_ptr<ICmdLineArg> >& cmdLineArgs,
@@ -201,7 +202,8 @@ namespace feather_tk
 
     std::shared_ptr<App> App::create(
         const std::shared_ptr<Context>& context,
-        int argc, wchar_t* argv[],
+        int argc,
+        wchar_t* argv[],
         const std::string& name,
         const std::string& summary,
         const std::vector<std::shared_ptr<ICmdLineArg> >& cmdLineArgs,
@@ -499,6 +501,23 @@ namespace feather_tk
             case SDLK_DOWN: out = Key::Down; break;
             case SDLK_UP: out = Key::Up; break;
             case SDLK_NUMLOCKCLEAR: out = Key::NumLock; break;
+            case SDLK_KP_DIVIDE: Key::KeypadDivide; break;
+            case SDLK_KP_MULTIPLY: Key::KeypadMulitply; break;
+            case SDLK_KP_MINUS: Key::KeypadMinus; break;
+            case SDLK_KP_PLUS: Key::KeypadPlus; break;
+            case SDLK_KP_ENTER: Key::KeypadEnter; break;
+            case SDLK_KP_1: Key::Keypad_1; break;
+            case SDLK_KP_2: Key::Keypad_2; break;
+            case SDLK_KP_3: Key::Keypad_3; break;
+            case SDLK_KP_4: Key::Keypad_4; break;
+            case SDLK_KP_5: Key::Keypad_5; break;
+            case SDLK_KP_6: Key::Keypad_6; break;
+            case SDLK_KP_7: Key::Keypad_7; break;
+            case SDLK_KP_8: Key::Keypad_8; break;
+            case SDLK_KP_9: Key::Keypad_9; break;
+            case SDLK_KP_0: Key::Keypad_0; break;
+            case SDLK_KP_PERIOD: Key::KeypadPeriod; break;
+            case SDLK_KP_EQUALS: Key::KeypadEquals; break;
             }
             return out;
         }
