@@ -292,10 +292,10 @@ namespace feather_tk
         switch (p.orientation)
         {
         case Orientation::Horizontal:
-            out = std::max(0, p.scrollSize - g.w() - 1);
+            out = std::max(0, p.scrollSize - g.w());
             break;
         case Orientation::Vertical:
-            out = std::max(0, p.scrollSize - g.h() - 1);
+            out = std::max(0, p.scrollSize - g.h());
             break;
         default: break;
         }
