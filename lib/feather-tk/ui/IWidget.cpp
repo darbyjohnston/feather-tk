@@ -312,7 +312,7 @@ namespace feather_tk
 
     void IWidget::takeKeyFocus()
     {
-        if (_enabled)
+        if (isEnabled())
         {
             if (auto window = getWindow())
             {
