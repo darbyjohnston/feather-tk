@@ -250,7 +250,8 @@ namespace feather_tk
         {
             for (const auto& i : p.actionToButton)
             {
-                if (shortcut == i.first->getShortcut() &&
+                if (i.first->isEnabled() &&
+                    shortcut == i.first->getShortcut() &&
                     modifiers == i.first->getShortcutModifiers())
                 {
                     if (i.first->isCheckable())
@@ -270,10 +271,13 @@ namespace feather_tk
         {
             for (const auto& subMenu : p.subMenus)
             {
-                out = subMenu->shortcut(shortcut, modifiers);
-                if (out)
+                if (subMenu->isEnabled())
                 {
-                    break;
+                    if (subMenu->shortcut(shortcut, modifiers))
+                    {
+                        out = true;
+                        break;
+                    }
                 }
             }
         }

@@ -126,7 +126,11 @@ namespace feather_tk
         {
             if (menu->isEnabled())
             {
-                out |= menu->shortcut(shortcut, modifiers);
+                if (menu->shortcut(shortcut, modifiers))
+                {
+                    out = true;
+                    break;
+                }
             }
         }
         return out;
