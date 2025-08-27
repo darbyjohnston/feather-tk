@@ -155,7 +155,7 @@ namespace feather_tk
         {
             p.defaultDisplayScale = p.cmdLine.displayScale->getValue();
         }
-        if (0.F == p.defaultDisplayScale)
+        if (p.defaultDisplayScale < 1.F)
         {
             p.defaultDisplayScale = 1.F;
         }
