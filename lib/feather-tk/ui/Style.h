@@ -29,6 +29,7 @@ namespace feather_tk
         SpacingTool,
         Icon,
         Border,
+        BorderFocus,
         LabelPad,
         ScrollArea,
         Slider,

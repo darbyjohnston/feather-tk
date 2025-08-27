@@ -17,6 +17,7 @@ namespace feather_tk
             std::optional<float> displayScale;
             int margin = 0;
             int border = 0;
+            int borderFocus = 0;
             int pad = 0;
             FontInfo fontInfo;
             FontMetrics fontMetrics;
@@ -28,8 +29,9 @@ namespace feather_tk
         {
             Box2I g;
             Box2I g2;
-            TriMesh2F mesh;
+            TriMesh2F background;
             TriMesh2F border;
+            TriMesh2F borderFocus;
             std::vector<std::shared_ptr<Glyph> > glyphs;
         };
         std::optional<DrawData> draw;
@@ -117,6 +119,7 @@ namespace feather_tk
             p.size.displayScale = event.displayScale;
             p.size.margin = event.style->getSizeRole(SizeRole::MarginInside, event.displayScale);
             p.size.border = event.style->getSizeRole(SizeRole::Border, event.displayScale);
+            p.size.borderFocus = event.style->getSizeRole(SizeRole::BorderFocus, event.displayScale);
             p.size.pad = event.style->getSizeRole(SizeRole::LabelPad, event.displayScale);
             p.size.fontInfo = event.style->getFontRole(_fontRole, event.displayScale);
             p.size.fontMetrics = event.fontSystem->getMetrics(p.size.fontInfo);
@@ -137,8 +140,8 @@ namespace feather_tk
         }
         sizeHint = margin(
             sizeHint,
-            p.size.margin + p.size.pad + p.size.border,
-            p.size.margin + p.size.border);
+            p.size.margin + p.size.pad + p.size.borderFocus,
+            p.size.margin + p.size.borderFocus);
         _setSizeHint(sizeHint);
     }
 
@@ -165,12 +168,13 @@ namespace feather_tk
             p.draw->g = getGeometry();
             p.draw->g2 = margin(
                 p.draw->g,
-                -(p.size.margin + p.size.pad + p.size.border),
-                -(p.size.margin + p.size.border),
-                -(p.size.margin + p.size.pad + p.size.border),
-                -(p.size.margin + p.size.border));
-            p.draw->mesh = rect(p.draw->g);
+                -(p.size.margin + p.size.pad + p.size.borderFocus),
+                -(p.size.margin + p.size.borderFocus),
+                -(p.size.margin + p.size.pad + p.size.borderFocus),
+                -(p.size.margin + p.size.borderFocus));
+            p.draw->background = rect(p.draw->g);
             p.draw->border = border(p.draw->g, p.size.border);
+            p.draw->borderFocus = border(p.draw->g, p.size.borderFocus);
         }
 
         // Draw the background.
@@ -178,26 +182,35 @@ namespace feather_tk
         if (colorRole != ColorRole::None)
         {
             event.render->drawMesh(
-                p.draw->mesh,
+                p.draw->background,
                 event.style->getColorRole(colorRole));
         }
 
         // Draw the focus and border.
-        event.render->drawMesh(
-            p.draw->border,
-            event.style->getColorRole(hasKeyFocus() ? ColorRole::KeyFocus : ColorRole::Border));
+        if (hasKeyFocus())
+        {
+            event.render->drawMesh(
+                p.draw->borderFocus,
+                event.style->getColorRole(ColorRole::KeyFocus));
+        }
+        else
+        {
+            event.render->drawMesh(
+                p.draw->border,
+                event.style->getColorRole(ColorRole::Border));
+        }
 
         // Draw the mouse states.
         if (_isMousePressed())
         {
             event.render->drawMesh(
-                p.draw->mesh,
+                p.draw->background,
                 event.style->getColorRole(ColorRole::Pressed));
         }
         else if (_isMouseInside())
         {
             event.render->drawMesh(
-                p.draw->mesh,
+                p.draw->background,
                 event.style->getColorRole(ColorRole::Hover));
         }
 

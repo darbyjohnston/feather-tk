@@ -116,6 +116,7 @@ namespace feather_tk
             std::optional<float> displayScale;
             int margin = 0;
             int border = 0;
+            int borderFocus = 0;
             FontInfo fontInfo;
             FontMetrics fontMetrics;
             Size2I textSize;
@@ -128,6 +129,7 @@ namespace feather_tk
             Box2I g2;
             Box2I g3;
             TriMesh2F border;
+            TriMesh2F borderFocus;
             std::vector<std::shared_ptr<Glyph> > glyphs;
             std::vector<Box2I> glyphsBox;
         };
@@ -342,6 +344,7 @@ namespace feather_tk
             p.size.displayScale = event.displayScale;
             p.size.margin = event.style->getSizeRole(SizeRole::MarginInside, event.displayScale);
             p.size.border = event.style->getSizeRole(SizeRole::Border, event.displayScale);
+            p.size.borderFocus = event.style->getSizeRole(SizeRole::BorderFocus, event.displayScale);
             p.size.fontInfo = event.style->getFontRole(p.fontRole, event.displayScale);
             p.size.fontMetrics = event.fontSystem->getMetrics(p.size.fontInfo);
             p.size.textSize = event.fontSystem->getSize(p.text, p.size.fontInfo);
@@ -352,8 +355,8 @@ namespace feather_tk
         Size2I sizeHint(p.size.formatSize.w, p.size.fontMetrics.lineHeight);
         sizeHint = margin(
             sizeHint,
-            p.size.margin * 2 + p.size.border,
-            p.size.margin + p.size.border);
+            p.size.margin * 2 + p.size.borderFocus,
+            p.size.margin + p.size.borderFocus);
         _setSizeHint(sizeHint);
     }
 
@@ -378,20 +381,30 @@ namespace feather_tk
         {
             p.draw = Private::DrawData();
             const Box2I g = align(getGeometry(), getSizeHint(), getHAlign(), getVAlign());
-            p.draw->g2 = margin(g, -p.size.border);
+            p.draw->g2 = margin(g, -p.size.borderFocus);
             p.draw->g3 = margin(
                 p.draw->g2,
                 -p.size.margin * 2,
                 -p.size.margin);
             p.draw->border = border(g, p.size.border);
+            p.draw->borderFocus = border(g, p.size.borderFocus);
         }
 
         const bool enabled = isEnabled();
 
         // Draw the focus and border.
-        event.render->drawMesh(
-            p.draw->border,
-            event.style->getColorRole(hasKeyFocus() ? ColorRole::KeyFocus : p.borderRole));
+        if (hasKeyFocus())
+        {
+            event.render->drawMesh(
+                p.draw->borderFocus,
+                event.style->getColorRole(ColorRole::KeyFocus));
+        }
+        else
+        {
+            event.render->drawMesh(
+                p.draw->border,
+                event.style->getColorRole(p.borderRole));
+        }
 
         // Draw the background.
         event.render->drawRect(

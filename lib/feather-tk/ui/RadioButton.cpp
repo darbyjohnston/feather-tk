@@ -18,6 +18,7 @@ namespace feather_tk
             int margin = 0;
             int spacing = 0;
             int border = 0;
+            int borderFocus = 0;
             int pad = 0;
             FontInfo fontInfo;
             FontMetrics fontMetrics;
@@ -32,7 +33,7 @@ namespace feather_tk
             Box2I g2;
             Box2I g3;
             Box2I g4;
-            TriMesh2F border;
+            TriMesh2F borderFocus;
             TriMesh2F button0;
             TriMesh2F button1;
             std::vector<std::shared_ptr<Glyph> > glyphs;
@@ -125,6 +126,7 @@ namespace feather_tk
             p.size.margin = event.style->getSizeRole(SizeRole::MarginInside, event.displayScale);
             p.size.spacing = event.style->getSizeRole(SizeRole::SpacingSmall, event.displayScale);
             p.size.border = event.style->getSizeRole(SizeRole::Border, event.displayScale);
+            p.size.borderFocus = event.style->getSizeRole(SizeRole::BorderFocus, event.displayScale);
             p.size.pad = event.style->getSizeRole(SizeRole::LabelPad, event.displayScale);
             p.size.fontInfo = event.style->getFontRole(_fontRole, event.displayScale);
             p.size.fontMetrics = event.fontSystem->getMetrics(p.size.fontInfo);
@@ -138,7 +140,7 @@ namespace feather_tk
         sizeHint.w += p.size.spacing;
         sizeHint.w += p.size.textSize.w + p.size.pad * 2;
         sizeHint.h = p.size.fontMetrics.lineHeight;
-        sizeHint = margin(sizeHint, p.size.margin + p.size.border);
+        sizeHint = margin(sizeHint, p.size.margin + p.size.borderFocus);
         _setSizeHint(sizeHint);
     }
 
@@ -163,13 +165,13 @@ namespace feather_tk
         {
             p.draw = Private::DrawData();
             p.draw->g = getGeometry();
-            p.draw->g2 = margin(p.draw->g, -(p.size.margin + p.size.border));
+            p.draw->g2 = margin(p.draw->g, -(p.size.margin + p.size.borderFocus));
             p.draw->g3 = Box2I(
                 p.draw->g2.x(),
                 p.draw->g2.y() + p.draw->g2.h() / 2 - p.size.diameter / 2,
                 p.size.diameter,
                 p.size.diameter);
-            p.draw->border = border(p.draw->g, p.size.border);
+            p.draw->borderFocus = border(p.draw->g, p.size.borderFocus);
             p.draw->button0 = circle(center(p.draw->g3), p.size.diameter / 2);
             p.draw->button1 = circle(center(p.draw->g3), p.size.diameter / 2 - p.size.border);
         }
@@ -178,7 +180,7 @@ namespace feather_tk
         if (hasKeyFocus())
         {
             event.render->drawMesh(
-                p.draw->border,
+                p.draw->borderFocus,
                 event.style->getColorRole(ColorRole::KeyFocus));
         }
 

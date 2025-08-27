@@ -24,8 +24,10 @@ namespace feather_tk
         "SpacingSmall",
         "SpacingLarge",
         "SpacingTool",
+        "Icon",
         "Border",
         "BorderFocus",
+        "LabelPad",
         "ScrollArea",
         "Slider",
         "Handle",
@@ -48,6 +50,7 @@ namespace feather_tk
         out[SizeRole::SpacingTool] = 2;
         out[SizeRole::Icon] = 20;
         out[SizeRole::Border] = 1;
+        out[SizeRole::BorderFocus] = 2;
         out[SizeRole::LabelPad] = 4;
         out[SizeRole::ScrollArea] = 200;
         out[SizeRole::Slider] = 100;

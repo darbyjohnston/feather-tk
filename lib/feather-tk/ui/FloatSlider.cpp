@@ -23,6 +23,7 @@ namespace feather_tk
             int size = 0;
             int margin = 0;
             int border = 0;
+            int borderFocus = 0;
             int handle = 0;
             FontMetrics fontMetrics;
         };
@@ -30,9 +31,10 @@ namespace feather_tk
 
         struct DrawData
         {
-            TriMesh2F border;
-            Box2I background;
+            Box2I g;
             Box2I margin;
+            TriMesh2F border;
+            TriMesh2F borderFocus;
         };
         std::optional<DrawData> draw;
     };
@@ -187,6 +189,7 @@ namespace feather_tk
             p.size.size = event.style->getSizeRole(SizeRole::Slider, event.displayScale);
             p.size.margin = event.style->getSizeRole(SizeRole::MarginInside, event.displayScale);
             p.size.border = event.style->getSizeRole(SizeRole::Border, event.displayScale);
+            p.size.borderFocus = event.style->getSizeRole(SizeRole::BorderFocus, event.displayScale);
             p.size.handle = event.style->getSizeRole(SizeRole::Handle, event.displayScale);
             auto fontInfo = event.style->getFontRole(FontRole::Label, event.displayScale);
             p.size.fontMetrics = event.fontSystem->getMetrics(fontInfo);
@@ -194,7 +197,7 @@ namespace feather_tk
         }
 
         Size2I sizeHint(p.size.size, p.size.fontMetrics.lineHeight);
-        sizeHint = margin(sizeHint, p.size.border * 2);
+        sizeHint = margin(sizeHint, p.size.borderFocus * 2);
         _setSizeHint(sizeHint);
     }
 
@@ -218,19 +221,33 @@ namespace feather_tk
         if (!p.draw.has_value())
         {
             p.draw = Private::DrawData();
-            const Box2I& g = getGeometry();
-            p.draw->border = border(g, p.size.border);
-            p.draw->background = margin(g, -p.size.border);
-            p.draw->margin = margin(p.draw->background, -p.size.margin);
+            p.draw->g = getGeometry();
+            p.draw->margin = margin(p.draw->g, -(p.size.margin + p.size.borderFocus));
+            p.draw->border = border(p.draw->g, p.size.border);
+            p.draw->borderFocus = border(p.draw->g, p.size.borderFocus);
         }
 
         // Draw the background.
         event.render->drawRect(
-            p.draw->background,
+            p.draw->g,
             event.style->getColorRole(ColorRole::Base));
 
+        // Draw the focus and border.
+        if (hasKeyFocus())
+        {
+            event.render->drawMesh(
+                p.draw->borderFocus,
+                event.style->getColorRole(ColorRole::KeyFocus));
+        }
+        else
+        {
+            event.render->drawMesh(
+                p.draw->border,
+                event.style->getColorRole(ColorRole::Border));
+        }
+
         // Draw the handle.
-        const Box2I g = _getSliderGeometry();
+        const Box2I g2 = _getSliderGeometry();
         int pos = 0;
         if (p.model)
         {
@@ -238,9 +255,9 @@ namespace feather_tk
         }
         const Box2I handle(
             pos - p.size.handle / 2,
-            g.y(),
+            g2.y(),
             p.size.handle,
-            g.h());
+            g2.h());
         event.render->drawRect(
             handle,
             event.style->getColorRole(ColorRole::Button));
@@ -259,11 +276,6 @@ namespace feather_tk
         event.render->drawMesh(
             border(handle, p.size.border),
             event.style->getColorRole(ColorRole::Border));
-
-        // Draw the focus and border.
-        event.render->drawMesh(
-            p.draw->border,
-            event.style->getColorRole(hasKeyFocus() ? ColorRole::KeyFocus : ColorRole::Border));
     }
 
     void FloatSlider::mouseEnterEvent(MouseEnterEvent& event)

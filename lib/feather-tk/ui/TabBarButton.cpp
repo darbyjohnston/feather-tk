@@ -18,7 +18,7 @@ namespace feather_tk
         {
             std::optional<float> displayScale = 0.F;
             int margin = 0;
-            int border = 0;
+            int borderFocus = 0;
             int pad = 0;
             FontInfo fontInfo;
             FontMetrics fontMetrics;
@@ -30,7 +30,7 @@ namespace feather_tk
         {
             Box2I g;
             Box2I g2;
-            TriMesh2F border;
+            TriMesh2F borderFocus;
             std::vector<std::shared_ptr<Glyph> > glyphs;
         };
         std::optional<DrawData> draw;
@@ -97,7 +97,7 @@ namespace feather_tk
         {
             p.size.displayScale = event.displayScale;
             p.size.margin = event.style->getSizeRole(SizeRole::MarginInside, event.displayScale);
-            p.size.border = event.style->getSizeRole(SizeRole::Border, event.displayScale);
+            p.size.borderFocus = event.style->getSizeRole(SizeRole::BorderFocus, event.displayScale);
             p.size.pad = event.style->getSizeRole(SizeRole::LabelPad, event.displayScale);
             p.size.fontInfo = event.style->getFontRole(FontRole::Label, event.displayScale);
             p.size.fontMetrics = event.fontSystem->getMetrics(p.size.fontInfo);
@@ -108,7 +108,7 @@ namespace feather_tk
         Size2I sizeHint(
             p.size.textSize.w + p.size.pad * 2,
             p.size.fontMetrics.lineHeight);
-        sizeHint = margin(sizeHint, p.size.margin + p.size.border);
+        sizeHint = margin(sizeHint, p.size.margin + p.size.borderFocus);
         _setSizeHint(sizeHint);
     }
 
@@ -131,8 +131,8 @@ namespace feather_tk
         {
             p.draw = Private::DrawData();
             p.draw->g = getGeometry();
-            p.draw->g2 = margin(p.draw->g, -(p.size.margin + p.size.border));
-            p.draw->border = border(p.draw->g, p.size.border);
+            p.draw->g2 = margin(p.draw->g, -(p.size.margin + p.size.borderFocus));
+            p.draw->borderFocus = border(p.draw->g, p.size.borderFocus);
         }
 
         // Draw the background.
@@ -148,7 +148,7 @@ namespace feather_tk
         if (p.current)
         {
             event.render->drawMesh(
-                p.draw->border,
+                p.draw->borderFocus,
                 event.style->getColorRole(ColorRole::KeyFocus));
         }
 
