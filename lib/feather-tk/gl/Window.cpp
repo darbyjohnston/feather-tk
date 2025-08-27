@@ -49,8 +49,8 @@ namespace feather_tk
             p.logSystem = context->getLogSystem();
 
             SDL_GL_SetAttribute(SDL_GL_ACCELERATED_VISUAL, 1);
-            SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER,
-                options & static_cast<int>(WindowOptions::DoubleBuffer));
+            const bool doubleBuffer = options & static_cast<int>(WindowOptions::DoubleBuffer);
+            SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, doubleBuffer);
 #if defined(FEATHER_TK_API_GL_4_1)
             SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 4);
             SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 1);
