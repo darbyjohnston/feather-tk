@@ -48,21 +48,18 @@ namespace feather_tk
 
             p.logSystem = context->getLogSystem();
 
-#if defined(FEATHER_TK_API_GL_4_1)
             SDL_GL_SetAttribute(SDL_GL_ACCELERATED_VISUAL, 1);
+            SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER,
+                options & static_cast<int>(WindowOptions::DoubleBuffer));
+#if defined(FEATHER_TK_API_GL_4_1)
             SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 4);
             SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 1);
             SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
 #elif defined(FEATHER_TK_API_GLES_2)
-            SDL_GL_SetAttribute(SDL_GL_ACCELERATED_VISUAL, 1);
             SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 2);
             SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 0);
             SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_ES);
 #endif // FEATHER_TK_API_GL_4_1
-            if (options & static_cast<int>(WindowOptions::DoubleBuffer))
-            {
-                SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
-            }
             uint32_t sdlWindowFlags =
                 SDL_WINDOW_OPENGL |
                 SDL_WINDOW_RESIZABLE |
