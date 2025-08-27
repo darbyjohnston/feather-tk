@@ -155,6 +155,10 @@ namespace feather_tk
         {
             p.defaultDisplayScale = p.cmdLine.displayScale->getValue();
         }
+        if (0.F == p.defaultDisplayScale)
+        {
+            p.defaultDisplayScale = 1.F;
+        }
         logSystem->print(
             "feather_tk::App",
             Format("Display scale: {0}").arg(p.defaultDisplayScale));
@@ -752,6 +756,11 @@ namespace feather_tk
                     }
                     break;
                 }
+
+                case SDL_QUIT:
+                    exit();
+                    break;
+
                 default: break;
                 }
             }
