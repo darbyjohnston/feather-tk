@@ -37,8 +37,8 @@ if(APPLE)
 endif()
 set(feather_tk_IGNORE_PREFIX_PATH ${feather_tk_IGNORE_PREFIX_PATH_DEFAULT} CACHE STRING "Ignore the given prefix path")
 set(feather_tk_BUILD "default" CACHE STRING "Build configuration: 'default', 'SuperBuild', 'vcpkg'")
-set(feather_tk_GCOV FALSE CACHE BOOL "Enable gcov code coverage")
-set(feather_tk_GPROF FALSE CACHE BOOL "Enable gprof code profiling")
+set(feather_tk_GCOV OFF CACHE BOOL "Enable gcov code coverage")
+set(feather_tk_GPROF OFF CACHE BOOL "Enable gprof code profiling")
 
 #-------------------------------------------------------------------------------
 # Configuration
