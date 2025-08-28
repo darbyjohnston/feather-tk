@@ -54,7 +54,13 @@ namespace feather_tk
 #if defined(FEATHER_TK_API_GL_4_1)
             SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 4);
             SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 1);
-            SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
+            const int glProfile =
+#if defined(__APPLE__)
+                SDL_GL_CONTEXT_PROFILE_CORE;
+#else // __APPLE__
+                SDL_GL_CONTEXT_PROFILE_COMPATIBILITY;
+#endif // __APPLE__
+            SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, glProfile);
 #elif defined(FEATHER_TK_API_GLES_2)
             SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 2);
             SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 0);
