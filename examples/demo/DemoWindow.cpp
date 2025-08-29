@@ -81,7 +81,7 @@ void DemoWindow::_init(
     auto icon = Image::create(iconSize, ImageType::RGBA_U8);
     for (int y = 0; y < iconSize.h; ++y)
     {
-        uint8_t* iconP = icon->getData() + iconSize.w * (iconSize.h - 1 - y) * 4;
+        uint8_t* iconP = icon->getData() + iconSize.w * y * 4;
         for (int x = 0; x < iconSize.w; ++x)
         {
             const float v = y / static_cast<float>(iconSize.h - 1);
