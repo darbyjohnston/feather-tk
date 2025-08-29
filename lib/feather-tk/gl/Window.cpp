@@ -223,8 +223,16 @@ namespace feather_tk
             if (info.type == ImageType::RGBA_U8 &&
                 1 == info.layout.alignment)
             {
+                auto flipped = Image::create(info);
+                for (int y = 0; y < info.size.h; ++y)
+                {
+                    memcpy(
+                        flipped->getData() + (info.size.h - 1 - y) * info.size.w * 4,
+                        icon->getData() + y * info.size.w * 4,
+                        info.size.w * 4);
+                }
                 if (SDL_Surface* sdlSurface = SDL_CreateRGBSurfaceFrom(
-                    icon->getData(),
+                    flipped->getData(),
                     info.size.w,
                     info.size.h,
                     32,
