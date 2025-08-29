@@ -228,11 +228,11 @@ namespace feather_tk
                     info.size.w,
                     info.size.h,
                     32,
-                    info.size.w * info.size.h * 4,
-                    0,
-                    0,
-                    0,
-                    0))
+                    info.size.w * 4,
+                    0x000000ff,
+                    0x0000ff00,
+                    0x00ff0000,
+                    0xff000000))
                 {
                     SDL_SetWindowIcon(_p->sdlWindow, sdlSurface);
                     SDL_FreeSurface(sdlSurface);

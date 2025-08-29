@@ -76,6 +76,22 @@ void DemoWindow::_init(
     hLayout = HorizontalLayout::create(context, layout);
     groupBox = GroupBox::create(context, "Image Widgets", hLayout);
     ImageWidgets::create(context, groupBox);
+
+    const Size2I iconSize(128, 128);
+    auto icon = Image::create(iconSize, ImageType::RGBA_U8);
+    uint8_t* iconP = icon->getData();
+    for (int y = 0; y < iconSize.h; ++y)
+    {
+        for (int x = 0; x < iconSize.w; ++x)
+        {
+            const float v = y / static_cast<float>(iconSize.h - 1);
+            *iconP++ = v * 255;
+            *iconP++ = v * 255;
+            *iconP++ = v * 255;
+            *iconP++ = 255;
+        }
+    }
+    setIcon(icon);
 }
 
 DemoWindow::~DemoWindow()
