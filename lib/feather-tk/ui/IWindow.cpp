@@ -162,7 +162,7 @@ namespace feather_tk
         }
     }
 
-    void IWindow::setIcons(const std::vector<std::shared_ptr<Image> >&)
+    void IWindow::setIcon(const std::shared_ptr<Image>&)
     {}
 
     std::shared_ptr<Image> IWindow::screenshot(const Box2I&)

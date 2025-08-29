@@ -63,13 +63,13 @@ namespace feather_tk
             //! Hide the window.
             void hide();
 
-            //! Set the window icons.
+            //! Set the window icons
             //! 
             //! Icon images should be of type ImageType::RGBA_U8, with no
             //! mirroring, memory alignment of one, and LSB memory endian.
             //!
             //! Window icons are not supported on macOS.
-            void setIcons(const std::vector<std::shared_ptr<Image> >&);
+            void setIcon(const std::shared_ptr<Image>&);
 
             //! Make this the current OpenGL context.
             void makeCurrent();

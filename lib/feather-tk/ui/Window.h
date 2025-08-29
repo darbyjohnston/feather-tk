@@ -83,7 +83,7 @@ namespace feather_tk
         //! automatically.
         void setDisplayScale(float);
 
-        void setIcons(const std::vector<std::shared_ptr<Image> >&) override;
+        void setIcon(const std::shared_ptr<Image>&) override;
         std::shared_ptr<Image> screenshot(const Box2I& = Box2I(0, 0, -1, -1)) override;
 
         void setGeometry(const Box2I&) override;

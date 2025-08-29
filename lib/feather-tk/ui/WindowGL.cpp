@@ -220,9 +220,9 @@ namespace feather_tk
         }
     }
 
-    void Window::setIcons(const std::vector<std::shared_ptr<Image> >& images)
+    void Window::setIcon(const std::shared_ptr<Image>& icon)
     {
-        _p->window->setIcons(images);
+        _p->window->setIcon(icon);
     }
 
     std::shared_ptr<Image> Window::screenshot(const Box2I& rect)

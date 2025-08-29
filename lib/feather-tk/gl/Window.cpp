@@ -217,8 +217,27 @@ namespace feather_tk
             SDL_HideWindow(_p->sdlWindow);
         }
 
-        void Window::setIcons(const std::vector<std::shared_ptr<Image> >& icons)
+        void Window::setIcon(const std::shared_ptr<Image>& icon)
         {
+            const ImageInfo& info = icon->getInfo();
+            if (info.type == ImageType::RGBA_U8 &&
+                1 == info.layout.alignment)
+            {
+                if (SDL_Surface* sdlSurface = SDL_CreateRGBSurfaceFrom(
+                    icon->getData(),
+                    info.size.w,
+                    info.size.h,
+                    32,
+                    info.size.w * info.size.h * 4,
+                    0,
+                    0,
+                    0,
+                    0))
+                {
+                    SDL_SetWindowIcon(_p->sdlWindow, sdlSurface);
+                    SDL_FreeSurface(sdlSurface);
+                }
+            }
         }
 
         void Window::makeCurrent()

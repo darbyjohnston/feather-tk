@@ -40,13 +40,13 @@ namespace feather_tk
         //! Set whether tooltips are enabled.
         void setTooltipsEnabled(bool);
 
-        //! Set the window icons.
+        //! Set the window icon.
         //! 
         //! Icon images should be of type ImageType::RGBA_U8, with no
         //! mirroring, memory alignment of one, and LSB memory endian.
         //!
         //! Window icons are not supported on macOS.
-        virtual void setIcons(const std::vector<std::shared_ptr<Image> >&);
+        virtual void setIcon(const std::shared_ptr<Image>&);
 
         //! Capture a screenshot.
         virtual std::shared_ptr<Image> screenshot(const Box2I & = Box2I(0, 0, -1, -1));
