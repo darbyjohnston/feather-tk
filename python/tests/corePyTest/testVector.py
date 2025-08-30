@@ -2,7 +2,7 @@
 # Copyright (c) 2024 Darby Johnston
 # All rights reserved.
 
-import ftk
+import featherTkPy as ftk
 
 import unittest
 
