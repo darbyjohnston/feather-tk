@@ -4,12 +4,12 @@
 
 #pragma once
 
-#include <ftk/ui/IWidget.h>
+#include <feather-tk/ui/IWidget.h>
 
-#include <ftk/gl/OffscreenBuffer.h>
-#include <ftk/gl/Shader.h>
+#include <feather-tk/gl/OffscreenBuffer.h>
+#include <feather-tk/gl/Shader.h>
 
-#include <ftk/core/Timer.h>
+#include <feather-tk/core/Timer.h>
 
 using namespace ftk;
 

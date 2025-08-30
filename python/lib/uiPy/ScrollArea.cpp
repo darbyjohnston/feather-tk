@@ -4,7 +4,7 @@
 
 #include <uiPy/ScrollArea.h>
 
-#include <ftk/ui/ScrollArea.h>
+#include <feather-tk/ui/ScrollArea.h>
 
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>

@@ -4,10 +4,10 @@
 
 #pragma once
 
-#include <ftk/ui/App.h>
-#include <ftk/ui/Label.h>
-#include <ftk/ui/MainWindow.h>
-#include <ftk/ui/RowLayout.h>
+#include <feather-tk/ui/App.h>
+#include <feather-tk/ui/Label.h>
+#include <feather-tk/ui/MainWindow.h>
+#include <feather-tk/ui/RowLayout.h>
 
 namespace ftk
 {

@@ -4,9 +4,9 @@
 
 #include <uiPy/FileBrowser.h>
 
-#include <ftk/ui/FileBrowser.h>
-#include <ftk/ui/IWindow.h>
-#include <ftk/ui/RecentFilesModel.h>
+#include <feather-tk/ui/FileBrowser.h>
+#include <feather-tk/ui/IWindow.h>
+#include <feather-tk/ui/RecentFilesModel.h>
 
 #include <pybind11/pybind11.h>
 #include <pybind11/functional.h>

@@ -4,7 +4,7 @@
 
 #include <uiPy/ColorWidget.h>
 
-#include <ftk/ui/ColorWidget.h>
+#include <feather-tk/ui/ColorWidget.h>
 
 #include <pybind11/pybind11.h>
 #include <pybind11/functional.h>

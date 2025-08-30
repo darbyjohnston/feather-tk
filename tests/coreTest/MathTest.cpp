@@ -4,9 +4,9 @@
 
 #include <coreTest/MathTest.h>
 
-#include <ftk/core/Assert.h>
-#include <ftk/core/Format.h>
-#include <ftk/core/Math.h>
+#include <feather-tk/core/Assert.h>
+#include <feather-tk/core/Format.h>
+#include <feather-tk/core/Math.h>
 
 namespace ftk
 {

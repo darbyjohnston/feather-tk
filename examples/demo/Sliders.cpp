@@ -4,9 +4,9 @@
 
 #include "Sliders.h"
 
-#include <ftk/ui/DoubleEditSlider.h>
-#include <ftk/ui/FloatEditSlider.h>
-#include <ftk/ui/IntEditSlider.h>
+#include <feather-tk/ui/DoubleEditSlider.h>
+#include <feather-tk/ui/FloatEditSlider.h>
+#include <feather-tk/ui/IntEditSlider.h>
 
 void Sliders::_init(
     const std::shared_ptr<Context>& context,

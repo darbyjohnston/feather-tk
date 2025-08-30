@@ -4,7 +4,7 @@
 
 #include <uiPy/ButtonGroup.h>
 
-#include <ftk/ui/ButtonGroup.h>
+#include <feather-tk/ui/ButtonGroup.h>
 
 #include <pybind11/pybind11.h>
 #include <pybind11/functional.h>

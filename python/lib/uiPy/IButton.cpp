@@ -4,7 +4,7 @@
 
 #include <uiPy/IButton.h>
 
-#include <ftk/ui/IButton.h>
+#include <feather-tk/ui/IButton.h>
 
 #include <pybind11/pybind11.h>
 #include <pybind11/functional.h>

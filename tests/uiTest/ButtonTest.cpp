@@ -4,15 +4,15 @@
 
 #include <uiTest/ButtonTest.h>
 
-#include <ftk/ui/CheckBox.h>
-#include <ftk/ui/PushButton.h>
-#include <ftk/ui/ToolButton.h>
-#include <ftk/ui/Tooltip.h>
-#include <ftk/ui/Window.h>
+#include <feather-tk/ui/CheckBox.h>
+#include <feather-tk/ui/PushButton.h>
+#include <feather-tk/ui/ToolButton.h>
+#include <feather-tk/ui/Tooltip.h>
+#include <feather-tk/ui/Window.h>
 
-#include <ftk/core/Assert.h>
-#include <ftk/core/Format.h>
-#include <ftk/core/Time.h>
+#include <feather-tk/core/Assert.h>
+#include <feather-tk/core/Format.h>
+#include <feather-tk/core/Time.h>
 
 namespace ftk
 {

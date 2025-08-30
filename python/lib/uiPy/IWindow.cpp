@@ -4,7 +4,7 @@
 
 #include <uiPy/IWindow.h>
 
-#include <ftk/ui/IWindow.h>
+#include <feather-tk/ui/IWindow.h>
 
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>

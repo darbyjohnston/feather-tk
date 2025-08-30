@@ -4,14 +4,14 @@
 
 #include <uiTest/ButtonGroupTest.h>
 
-#include <ftk/ui/App.h>
-#include <ftk/ui/ButtonGroup.h>
-#include <ftk/ui/RowLayout.h>
-#include <ftk/ui/PushButton.h>
-#include <ftk/ui/Window.h>
+#include <feather-tk/ui/App.h>
+#include <feather-tk/ui/ButtonGroup.h>
+#include <feather-tk/ui/RowLayout.h>
+#include <feather-tk/ui/PushButton.h>
+#include <feather-tk/ui/Window.h>
 
-#include <ftk/core/Assert.h>
-#include <ftk/core/Format.h>
+#include <feather-tk/core/Assert.h>
+#include <feather-tk/core/Format.h>
 
 namespace ftk
 {

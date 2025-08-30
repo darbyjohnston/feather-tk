@@ -2,15 +2,15 @@
 // Copyright (c) 2024-2025 Darby Johnston
 // All rights reserved.
 
-#include <ftk/ui/App.h>
-#include <ftk/ui/Divider.h>
-#include <ftk/ui/Label.h>
-#include <ftk/ui/MainWindow.h>
-#include <ftk/ui/PushButton.h>
-#include <ftk/ui/RowLayout.h>
-#include <ftk/ui/StackLayout.h>
+#include <feather-tk/ui/App.h>
+#include <feather-tk/ui/Divider.h>
+#include <feather-tk/ui/Label.h>
+#include <feather-tk/ui/MainWindow.h>
+#include <feather-tk/ui/PushButton.h>
+#include <feather-tk/ui/RowLayout.h>
+#include <feather-tk/ui/StackLayout.h>
 
-#include <ftk/core/Format.h>
+#include <feather-tk/core/Format.h>
 
 using namespace ftk;
 

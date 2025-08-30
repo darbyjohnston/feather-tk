@@ -4,7 +4,7 @@
 
 #include <uiPy/ScrollWidget.h>
 
-#include <ftk/ui/ScrollWidget.h>
+#include <feather-tk/ui/ScrollWidget.h>
 
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>

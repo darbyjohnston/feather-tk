@@ -4,8 +4,8 @@
 
 #include <coreTest/RangeTest.h>
 
-#include <ftk/core/Assert.h>
-#include <ftk/core/Range.h>
+#include <feather-tk/core/Assert.h>
+#include <feather-tk/core/Range.h>
 
 #include <sstream>
 

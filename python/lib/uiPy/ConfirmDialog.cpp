@@ -4,8 +4,8 @@
 
 #include <uiPy/ConfirmDialog.h>
 
-#include <ftk/ui/ConfirmDialog.h>
-#include <ftk/ui/Window.h>
+#include <feather-tk/ui/ConfirmDialog.h>
+#include <feather-tk/ui/Window.h>
 
 #include <pybind11/pybind11.h>
 #include <pybind11/functional.h>

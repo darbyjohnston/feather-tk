@@ -4,9 +4,9 @@
 
 #include <uiPy/Window.h>
 
-#include <ftk/ui/App.h>
-#include <ftk/ui/MainWindow.h>
-#include <ftk/ui/MenuBar.h>
+#include <feather-tk/ui/App.h>
+#include <feather-tk/ui/MainWindow.h>
+#include <feather-tk/ui/MenuBar.h>
 
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>

@@ -4,14 +4,14 @@
 
 #include <uiTest/MDIWidgetTest.h>
 
-#include <ftk/ui/App.h>
-#include <ftk/ui/Label.h>
-#include <ftk/ui/MDICanvas.h>
-#include <ftk/ui/MDIWidget.h>
-#include <ftk/ui/Window.h>
+#include <feather-tk/ui/App.h>
+#include <feather-tk/ui/Label.h>
+#include <feather-tk/ui/MDICanvas.h>
+#include <feather-tk/ui/MDIWidget.h>
+#include <feather-tk/ui/Window.h>
 
-#include <ftk/core/Assert.h>
-#include <ftk/core/Format.h>
+#include <feather-tk/core/Assert.h>
+#include <feather-tk/core/Format.h>
 
 namespace ftk
 {

@@ -4,10 +4,10 @@
 
 #include "ImageWidgets.h"
 
-#include <ftk/ui/ImageWidget.h>
-#include <ftk/ui/SvgWidget.h>
+#include <feather-tk/ui/ImageWidget.h>
+#include <feather-tk/ui/SvgWidget.h>
 
-#include <ftk/core/ImageIO.h>
+#include <feather-tk/core/ImageIO.h>
 
 namespace ftk_resource
 {

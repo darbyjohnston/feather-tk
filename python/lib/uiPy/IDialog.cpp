@@ -4,8 +4,8 @@
 
 #include <uiPy/IDialog.h>
 
-#include <ftk/ui/IDialog.h>
-#include <ftk/ui/Window.h>
+#include <feather-tk/ui/IDialog.h>
+#include <feather-tk/ui/Window.h>
 
 #include <pybind11/pybind11.h>
 #include <pybind11/functional.h>

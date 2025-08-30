@@ -4,7 +4,7 @@
 
 #include <corePy/Vector.h>
 
-#include <ftk/core/Vector.h>
+#include <feather-tk/core/Vector.h>
 
 #include <pybind11/pybind11.h>
 #include <pybind11/operators.h>

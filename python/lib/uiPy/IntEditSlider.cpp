@@ -4,7 +4,7 @@
 
 #include <uiPy/IntEditSlider.h>
 
-#include <ftk/ui/IntEditSlider.h>
+#include <feather-tk/ui/IntEditSlider.h>
 
 #include <pybind11/pybind11.h>
 #include <pybind11/functional.h>

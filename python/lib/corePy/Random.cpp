@@ -4,7 +4,7 @@
 
 #include <corePy/Random.h>
 
-#include <ftk/core/Random.h>
+#include <feather-tk/core/Random.h>
 
 #include <pybind11/pybind11.h>
 

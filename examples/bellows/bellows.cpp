@@ -2,16 +2,16 @@
 // Copyright (c) 2024-2025 Darby Johnston
 // All rights reserved.
 
-#include <ftk/ui/App.h>
-#include <ftk/ui/Bellows.h>
-#include <ftk/ui/CheckBox.h>
-#include <ftk/ui/MainWindow.h>
-#include <ftk/ui/PushButton.h>
-#include <ftk/ui/RowLayout.h>
-#include <ftk/ui/ScrollWidget.h>
-#include <ftk/ui/ToolButton.h>
+#include <feather-tk/ui/App.h>
+#include <feather-tk/ui/Bellows.h>
+#include <feather-tk/ui/CheckBox.h>
+#include <feather-tk/ui/MainWindow.h>
+#include <feather-tk/ui/PushButton.h>
+#include <feather-tk/ui/RowLayout.h>
+#include <feather-tk/ui/ScrollWidget.h>
+#include <feather-tk/ui/ToolButton.h>
 
-#include <ftk/core/Format.h>
+#include <feather-tk/core/Format.h>
 
 using namespace ftk;
 

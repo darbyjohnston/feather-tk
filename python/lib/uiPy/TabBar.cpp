@@ -4,7 +4,7 @@
 
 #include <uiPy/TabBar.h>
 
-#include <ftk/ui/TabBar.h>
+#include <feather-tk/ui/TabBar.h>
 
 #include <pybind11/pybind11.h>
 #include <pybind11/functional.h>

@@ -4,10 +4,10 @@
 
 #include <glTest/WindowTest.h>
 
-#include <ftk/gl/Window.h>
+#include <feather-tk/gl/Window.h>
 
-#include <ftk/core/Assert.h>
-#include <ftk/core/Format.h>
+#include <feather-tk/core/Assert.h>
+#include <feather-tk/core/Format.h>
 
 using namespace ftk::gl;
 

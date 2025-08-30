@@ -4,8 +4,8 @@
 
 #include <coreTest/CommandTest.h>
 
-#include <ftk/core/Assert.h>
-#include <ftk/core/Command.h>
+#include <feather-tk/core/Assert.h>
+#include <feather-tk/core/Command.h>
 
 namespace ftk
 {

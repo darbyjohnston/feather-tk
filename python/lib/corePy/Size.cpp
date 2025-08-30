@@ -4,7 +4,7 @@
 
 #include <corePy/Size.h>
 
-#include <ftk/core/Size.h>
+#include <feather-tk/core/Size.h>
 
 #include <pybind11/pybind11.h>
 #include <pybind11/operators.h>

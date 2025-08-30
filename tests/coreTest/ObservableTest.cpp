@@ -4,10 +4,10 @@
 
 #include <coreTest/ObservableTest.h>
 
-#include <ftk/core/Assert.h>
-#include <ftk/core/ObservableList.h>
-#include <ftk/core/ObservableMap.h>
-#include <ftk/core/ObservableValue.h>
+#include <feather-tk/core/Assert.h>
+#include <feather-tk/core/ObservableList.h>
+#include <feather-tk/core/ObservableMap.h>
+#include <feather-tk/core/ObservableValue.h>
 
 namespace ftk
 {

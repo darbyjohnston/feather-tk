@@ -4,7 +4,7 @@
 
 #include <uiPy/DoubleEditSlider.h>
 
-#include <ftk/ui/DoubleEditSlider.h>
+#include <feather-tk/ui/DoubleEditSlider.h>
 
 #include <pybind11/pybind11.h>
 #include <pybind11/functional.h>

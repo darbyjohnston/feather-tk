@@ -4,10 +4,10 @@
 
 #include <coreTest/FontSystemTest.h>
 
-#include <ftk/core/Assert.h>
-#include <ftk/core/Context.h>
-#include <ftk/core/FontSystem.h>
-#include <ftk/core/Format.h>
+#include <feather-tk/core/Assert.h>
+#include <feather-tk/core/Context.h>
+#include <feather-tk/core/FontSystem.h>
+#include <feather-tk/core/Format.h>
 
 namespace ftk
 {

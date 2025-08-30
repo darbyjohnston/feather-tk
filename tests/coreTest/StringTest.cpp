@@ -4,8 +4,8 @@
 
 #include <coreTest/StringTest.h>
 
-#include <ftk/core/Assert.h>
-#include <ftk/core/String.h>
+#include <feather-tk/core/Assert.h>
+#include <feather-tk/core/String.h>
 
 namespace ftk
 {

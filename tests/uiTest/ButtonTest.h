@@ -6,9 +6,9 @@
 
 #include <testLib/ITest.h>
 
-#include <ftk/ui/App.h>
-#include <ftk/ui/IButton.h>
-#include <ftk/ui/RowLayout.h>
+#include <feather-tk/ui/App.h>
+#include <feather-tk/ui/IButton.h>
+#include <feather-tk/ui/RowLayout.h>
 
 namespace ftk
 {

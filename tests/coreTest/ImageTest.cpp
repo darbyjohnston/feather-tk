@@ -4,9 +4,9 @@
 
 #include <coreTest/ImageTest.h>
 
-#include <ftk/core/Assert.h>
-#include <ftk/core/Format.h>
-#include <ftk/core/Image.h>
+#include <feather-tk/core/Assert.h>
+#include <feather-tk/core/Format.h>
+#include <feather-tk/core/Image.h>
 
 namespace ftk
 {

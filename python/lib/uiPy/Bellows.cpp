@@ -4,7 +4,7 @@
 
 #include <uiPy/Bellows.h>
 
-#include <ftk/ui/Bellows.h>
+#include <feather-tk/ui/Bellows.h>
 
 #include <pybind11/pybind11.h>
 #include <pybind11/functional.h>

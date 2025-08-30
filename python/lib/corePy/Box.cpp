@@ -4,7 +4,7 @@
 
 #include <corePy/Box.h>
 
-#include <ftk/core/Box.h>
+#include <feather-tk/core/Box.h>
 
 #include <pybind11/pybind11.h>
 #include <pybind11/operators.h>

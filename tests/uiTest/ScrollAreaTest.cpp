@@ -4,10 +4,10 @@
 
 #include <uiTest/ScrollAreaTest.h>
 
-#include <ftk/ui/ScrollArea.h>
+#include <feather-tk/ui/ScrollArea.h>
 
-#include <ftk/core/Assert.h>
-#include <ftk/core/Format.h>
+#include <feather-tk/core/Assert.h>
+#include <feather-tk/core/Format.h>
 
 namespace ftk
 {

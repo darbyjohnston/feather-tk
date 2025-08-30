@@ -4,10 +4,10 @@
 
 #include <coreTest/SystemTest.h>
 
-#include <ftk/core/Assert.h>
-#include <ftk/core/Context.h>
-#include <ftk/core/ISystem.h>
-#include <ftk/core/LogSystem.h>
+#include <feather-tk/core/Assert.h>
+#include <feather-tk/core/Context.h>
+#include <feather-tk/core/ISystem.h>
+#include <feather-tk/core/LogSystem.h>
 
 namespace ftk
 {

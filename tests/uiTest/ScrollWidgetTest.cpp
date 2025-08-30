@@ -4,11 +4,11 @@
 
 #include <uiTest/ScrollWidgetTest.h>
 
-#include <ftk/ui/GridLayout.h>
-#include <ftk/ui/Label.h>
+#include <feather-tk/ui/GridLayout.h>
+#include <feather-tk/ui/Label.h>
 
-#include <ftk/core/Assert.h>
-#include <ftk/core/Format.h>
+#include <feather-tk/core/Assert.h>
+#include <feather-tk/core/Format.h>
 
 namespace ftk
 {

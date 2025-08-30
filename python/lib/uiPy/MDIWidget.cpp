@@ -4,7 +4,7 @@
 
 #include <uiPy/MDIWidget.h>
 
-#include <ftk/ui/MDIWidget.h>
+#include <feather-tk/ui/MDIWidget.h>
 
 #include <pybind11/pybind11.h>
 #include <pybind11/functional.h>

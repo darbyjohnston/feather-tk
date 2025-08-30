@@ -4,9 +4,9 @@
 
 #include <glTest/UtilTest.h>
 
-#include <ftk/gl/Util.h>
+#include <feather-tk/gl/Util.h>
 
-#include <ftk/core/Assert.h>
+#include <feather-tk/core/Assert.h>
 
 using namespace ftk::gl;
 

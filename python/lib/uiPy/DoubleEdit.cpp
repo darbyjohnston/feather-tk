@@ -4,7 +4,7 @@
 
 #include <uiPy/DoubleEdit.h>
 
-#include <ftk/ui/DoubleEdit.h>
+#include <feather-tk/ui/DoubleEdit.h>
 
 #include <pybind11/pybind11.h>
 #include <pybind11/functional.h>

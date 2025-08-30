@@ -4,7 +4,7 @@
 
 #include <uiPy/ColorSwatch.h>
 
-#include <ftk/ui/ColorSwatch.h>
+#include <feather-tk/ui/ColorSwatch.h>
 
 #include <pybind11/pybind11.h>
 #include <pybind11/functional.h>

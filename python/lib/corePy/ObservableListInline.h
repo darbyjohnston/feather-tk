@@ -2,7 +2,7 @@
 // Copyright (c) 2024-2025 Darby Johnston
 // All rights reserved.
 
-#include <ftk/core/ObservableList.h>
+#include <feather-tk/core/ObservableList.h>
 
 namespace ftk
 {

@@ -35,17 +35,17 @@ if(@ftk_UI_LIB@)
     endif()
 endif()
 
-include("${CMAKE_CURRENT_LIST_DIR}/ftk-resourceTargets.cmake")
-include("${CMAKE_CURRENT_LIST_DIR}/ftk-resourceLibTargets.cmake")
-include("${CMAKE_CURRENT_LIST_DIR}/ftk-coreTargets.cmake")
+include("${CMAKE_CURRENT_LIST_DIR}/feather-tk-resourceTargets.cmake")
+include("${CMAKE_CURRENT_LIST_DIR}/feather-tk-resourceLibTargets.cmake")
+include("${CMAKE_CURRENT_LIST_DIR}/feather-tk-coreTargets.cmake")
 if(@ftk_UI_LIB@)
-    include("${CMAKE_CURRENT_LIST_DIR}/gladTargets.cmake")
+    include("${CMAKE_CURRENT_LIST_DIR}/feather-tk-gladTargets.cmake")
     if(@ftk_API@ STREQUAL "GL_4_1" OR
         @ftk_API@ STREQUAL "GL_4_1_Debug" OR
         @ftk_API@ STREQUAL "GLES_2")
-        include("${CMAKE_CURRENT_LIST_DIR}/ftk-glTargets.cmake")
+        include("${CMAKE_CURRENT_LIST_DIR}/feather-tk-glTargets.cmake")
     endif()
-    include("${CMAKE_CURRENT_LIST_DIR}/ftk-uiTargets.cmake")
+    include("${CMAKE_CURRENT_LIST_DIR}/feather-tk-uiTargets.cmake")
 endif()
 
 # \todo Is this the correct way to add the include directory?

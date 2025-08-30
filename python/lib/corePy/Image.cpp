@@ -4,7 +4,7 @@
 
 #include <corePy/Image.h>
 
-#include <ftk/core/Image.h>
+#include <feather-tk/core/Image.h>
 
 #include <pybind11/pybind11.h>
 #include <pybind11/operators.h>

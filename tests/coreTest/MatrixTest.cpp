@@ -4,8 +4,8 @@
 
 #include <coreTest/MatrixTest.h>
 
-#include <ftk/core/Assert.h>
-#include <ftk/core/Matrix.h>
+#include <feather-tk/core/Assert.h>
+#include <feather-tk/core/Matrix.h>
 
 #include <sstream>
 

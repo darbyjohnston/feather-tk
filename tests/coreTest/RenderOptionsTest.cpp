@@ -4,9 +4,9 @@
 
 #include <coreTest/RenderOptionsTest.h>
 
-#include <ftk/core/Assert.h>
-#include <ftk/core/Format.h>
-#include <ftk/core/RenderOptions.h>
+#include <feather-tk/core/Assert.h>
+#include <feather-tk/core/Format.h>
+#include <feather-tk/core/RenderOptions.h>
 
 namespace ftk
 {

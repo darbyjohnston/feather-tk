@@ -4,7 +4,7 @@
 
 #include <uiPy/GroupBox.h>
 
-#include <ftk/ui/GroupBox.h>
+#include <feather-tk/ui/GroupBox.h>
 
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>

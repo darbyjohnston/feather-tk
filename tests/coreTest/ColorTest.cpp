@@ -4,9 +4,9 @@
 
 #include <coreTest/ColorTest.h>
 
-#include <ftk/core/Assert.h>
-#include <ftk/core/Color.h>
-#include <ftk/core/Format.h>
+#include <feather-tk/core/Assert.h>
+#include <feather-tk/core/Color.h>
+#include <feather-tk/core/Format.h>
 
 #include <sstream>
 

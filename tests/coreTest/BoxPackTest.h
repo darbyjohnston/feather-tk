@@ -6,7 +6,7 @@
 
 #include <testLib/ITest.h>
 
-#include <ftk/core/BoxPack.h>
+#include <feather-tk/core/BoxPack.h>
 
 namespace ftk
 {

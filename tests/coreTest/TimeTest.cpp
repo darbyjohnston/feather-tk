@@ -4,8 +4,8 @@
 
 #include <coreTest/TimeTest.h>
 
-#include <ftk/core/Assert.h>
-#include <ftk/core/Time.h>
+#include <feather-tk/core/Assert.h>
+#include <feather-tk/core/Time.h>
 
 namespace ftk
 {

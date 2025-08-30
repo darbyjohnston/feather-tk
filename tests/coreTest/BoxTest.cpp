@@ -4,8 +4,8 @@
 
 #include <coreTest/BoxTest.h>
 
-#include <ftk/core/Assert.h>
-#include <ftk/core/Box.h>
+#include <feather-tk/core/Assert.h>
+#include <feather-tk/core/Box.h>
 
 #include <sstream>
 

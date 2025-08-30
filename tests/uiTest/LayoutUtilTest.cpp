@@ -4,10 +4,10 @@
 
 #include <uiTest/LayoutUtilTest.h>
 
-#include <ftk/ui/LayoutUtil.h>
+#include <feather-tk/ui/LayoutUtil.h>
 
-#include <ftk/core/Assert.h>
-#include <ftk/core/Format.h>
+#include <feather-tk/core/Assert.h>
+#include <feather-tk/core/Format.h>
 
 namespace ftk
 {

@@ -4,9 +4,9 @@
 
 #include <coreTest/OSTest.h>
 
-#include <ftk/core/Assert.h>
-#include <ftk/core/OS.h>
-#include <ftk/core/String.h>
+#include <feather-tk/core/Assert.h>
+#include <feather-tk/core/OS.h>
+#include <feather-tk/core/String.h>
 
 namespace ftk
 {

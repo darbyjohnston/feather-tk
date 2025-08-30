@@ -4,7 +4,7 @@
 
 #include <corePy/Memory.h>
 
-#include <ftk/core/Memory.h>
+#include <feather-tk/core/Memory.h>
 
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>

@@ -4,10 +4,10 @@
 
 #include <coreTest/ImageIOTest.h>
 
-#include <ftk/core/Assert.h>
-#include <ftk/core/Context.h>
-#include <ftk/core/Format.h>
-#include <ftk/core/ImageIO.h>
+#include <feather-tk/core/Assert.h>
+#include <feather-tk/core/Context.h>
+#include <feather-tk/core/Format.h>
+#include <feather-tk/core/ImageIO.h>
 
 namespace ftk
 {

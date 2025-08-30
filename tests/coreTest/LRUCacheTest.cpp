@@ -4,9 +4,9 @@
 
 #include <coreTest/LRUCacheTest.h>
 
-#include <ftk/core/Assert.h>
-#include <ftk/core/Format.h>
-#include <ftk/core/LRUCache.h>
+#include <feather-tk/core/Assert.h>
+#include <feather-tk/core/Format.h>
+#include <feather-tk/core/LRUCache.h>
 
 namespace ftk
 {

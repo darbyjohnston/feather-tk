@@ -4,9 +4,9 @@
 
 #include <corePy/IApp.h>
 
-#include <ftk/core/CmdLine.h>
-#include <ftk/core/Context.h>
-#include <ftk/core/IApp.h>
+#include <feather-tk/core/CmdLine.h>
+#include <feather-tk/core/Context.h>
+#include <feather-tk/core/IApp.h>
 
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>

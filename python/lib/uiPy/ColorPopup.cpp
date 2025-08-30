@@ -4,7 +4,7 @@
 
 #include <uiPy/ColorPopup.h>
 
-#include <ftk/ui/ColorPopup.h>
+#include <feather-tk/ui/ColorPopup.h>
 
 #include <pybind11/pybind11.h>
 #include <pybind11/functional.h>

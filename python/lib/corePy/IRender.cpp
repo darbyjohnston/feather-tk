@@ -4,7 +4,7 @@
 
 #include <corePy/IRender.h>
 
-#include <ftk/core/IRender.h>
+#include <feather-tk/core/IRender.h>
 
 #include <pybind11/pybind11.h>
 #include <pybind11/operators.h>

@@ -4,7 +4,7 @@
 
 #include <corePy/String.h>
 
-#include <ftk/core/String.h>
+#include <feather-tk/core/String.h>
 
 #include <pybind11/pybind11.h>
 #include <pybind11/operators.h>

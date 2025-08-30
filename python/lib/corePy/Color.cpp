@@ -4,7 +4,7 @@
 
 #include <corePy/Color.h>
 
-#include <ftk/core/Color.h>
+#include <feather-tk/core/Color.h>
 
 #include <pybind11/pybind11.h>
 #include <pybind11/operators.h>

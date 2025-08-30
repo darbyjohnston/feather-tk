@@ -4,8 +4,8 @@
 
 #include <uiPy/ProgressDialog.h>
 
-#include <ftk/ui/ProgressDialog.h>
-#include <ftk/ui/Window.h>
+#include <feather-tk/ui/ProgressDialog.h>
+#include <feather-tk/ui/Window.h>
 
 #include <pybind11/pybind11.h>
 #include <pybind11/functional.h>

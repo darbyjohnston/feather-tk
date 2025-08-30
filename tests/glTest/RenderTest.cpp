@@ -4,13 +4,13 @@
 
 #include <glTest/RenderTest.h>
 
-#include <ftk/gl/OffscreenBuffer.h>
-#include <ftk/gl/Render.h>
-#include <ftk/gl/Window.h>
+#include <feather-tk/gl/OffscreenBuffer.h>
+#include <feather-tk/gl/Render.h>
+#include <feather-tk/gl/Window.h>
 
-#include <ftk/core/Assert.h>
-#include <ftk/core/Context.h>
-#include <ftk/core/FontSystem.h>
+#include <feather-tk/core/Assert.h>
+#include <feather-tk/core/Context.h>
+#include <feather-tk/core/FontSystem.h>
 
 using namespace ftk::gl;
 

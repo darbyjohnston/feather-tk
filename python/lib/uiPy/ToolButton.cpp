@@ -4,7 +4,7 @@
 
 #include <uiPy/ToolButton.h>
 
-#include <ftk/ui/ToolButton.h>
+#include <feather-tk/ui/ToolButton.h>
 
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>

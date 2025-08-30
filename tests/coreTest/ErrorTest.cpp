@@ -4,8 +4,8 @@
 
 #include <coreTest/ErrorTest.h>
 
-#include <ftk/core/Assert.h>
-#include <ftk/core/Error.h>
+#include <feather-tk/core/Assert.h>
+#include <feather-tk/core/Error.h>
 
 namespace ftk
 {

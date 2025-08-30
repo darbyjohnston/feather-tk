@@ -4,8 +4,8 @@
 
 #include <coreTest/RandomTest.h>
 
-#include <ftk/core/Assert.h>
-#include <ftk/core/Random.h>
+#include <feather-tk/core/Assert.h>
+#include <feather-tk/core/Random.h>
 
 #include <sstream>
 

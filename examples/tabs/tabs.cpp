@@ -2,14 +2,14 @@
 // Copyright (c) 2024-2025 Darby Johnston
 // All rights reserved.
 
-#include <ftk/ui/App.h>
-#include <ftk/ui/Label.h>
-#include <ftk/ui/MainWindow.h>
-#include <ftk/ui/ScrollWidget.h>
-#include <ftk/ui/TabWidget.h>
+#include <feather-tk/ui/App.h>
+#include <feather-tk/ui/Label.h>
+#include <feather-tk/ui/MainWindow.h>
+#include <feather-tk/ui/ScrollWidget.h>
+#include <feather-tk/ui/TabWidget.h>
 
-#include <ftk/core/Format.h>
-#include <ftk/core/String.h>
+#include <feather-tk/core/Format.h>
+#include <feather-tk/core/String.h>
 
 using namespace ftk;
 

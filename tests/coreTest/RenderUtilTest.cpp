@@ -4,10 +4,10 @@
 
 #include <coreTest/RenderUtilTest.h>
 
-#include <ftk/core/Assert.h>
-#include <ftk/core/Context.h>
-#include <ftk/core/IRender.h>
-#include <ftk/core/RenderUtil.h>
+#include <feather-tk/core/Assert.h>
+#include <feather-tk/core/Context.h>
+#include <feather-tk/core/IRender.h>
+#include <feather-tk/core/RenderUtil.h>
 
 #include <iostream>
 

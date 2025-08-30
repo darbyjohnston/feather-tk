@@ -4,7 +4,7 @@
 
 #include <uiPy/IntEdit.h>
 
-#include <ftk/ui/IntEdit.h>
+#include <feather-tk/ui/IntEdit.h>
 
 #include <pybind11/pybind11.h>
 #include <pybind11/functional.h>

@@ -4,7 +4,7 @@
 
 #include <uiPy/IconSystem.h>
 
-#include <ftk/ui/IconSystem.h>
+#include <feather-tk/ui/IconSystem.h>
 
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>

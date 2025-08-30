@@ -4,8 +4,8 @@
 
 #include <coreTest/SizeTest.h>
 
-#include <ftk/core/Assert.h>
-#include <ftk/core/Size.h>
+#include <feather-tk/core/Assert.h>
+#include <feather-tk/core/Size.h>
 
 #include <sstream>
 

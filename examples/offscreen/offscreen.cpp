@@ -4,15 +4,15 @@
 
 #include "offscreen.h"
 
-#include <ftk/ui/App.h>
-#include <ftk/ui/MainWindow.h>
+#include <feather-tk/ui/App.h>
+#include <feather-tk/ui/MainWindow.h>
 
-#include <ftk/gl/GL.h>
-#include <ftk/gl/Mesh.h>
+#include <feather-tk/gl/GL.h>
+#include <feather-tk/gl/Mesh.h>
 
-#include <ftk/core/Format.h>
-#include <ftk/core/Matrix.h>
-#include <ftk/core/RenderUtil.h>
+#include <feather-tk/core/Format.h>
+#include <feather-tk/core/Matrix.h>
+#include <feather-tk/core/RenderUtil.h>
 
 void OffscreenWidget::_init(
     const std::shared_ptr<Context>& context,

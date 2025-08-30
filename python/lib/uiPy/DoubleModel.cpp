@@ -4,9 +4,9 @@
 
 #include <uiPy/DoubleModel.h>
 
-#include <ftk/ui/DoubleModel.h>
+#include <feather-tk/ui/DoubleModel.h>
 
-#include <ftk/core/Context.h>
+#include <feather-tk/core/Context.h>
 
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>

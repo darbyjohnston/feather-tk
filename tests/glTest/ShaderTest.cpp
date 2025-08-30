@@ -4,11 +4,11 @@
 
 #include <glTest/ShaderTest.h>
 
-#include <ftk/gl/Shader.h>
-#include <ftk/gl/Window.h>
+#include <feather-tk/gl/Shader.h>
+#include <feather-tk/gl/Window.h>
 
-#include <ftk/core/Assert.h>
-#include <ftk/core/Format.h>
+#include <feather-tk/core/Assert.h>
+#include <feather-tk/core/Format.h>
 
 using namespace ftk::gl;
 

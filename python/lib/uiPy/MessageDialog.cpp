@@ -4,8 +4,8 @@
 
 #include <uiPy/MessageDialog.h>
 
-#include <ftk/ui/MessageDialog.h>
-#include <ftk/ui/Window.h>
+#include <feather-tk/ui/MessageDialog.h>
+#include <feather-tk/ui/Window.h>
 
 #include <pybind11/pybind11.h>
 #include <pybind11/functional.h>

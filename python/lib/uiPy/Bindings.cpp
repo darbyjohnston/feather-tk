@@ -61,9 +61,9 @@
 #include <uiPy/WidgetOptions.h>
 #include <uiPy/Window.h>
 
-#include <ftk/ui/Init.h>
+#include <feather-tk/ui/Init.h>
 
-#include <ftk/core/Context.h>
+#include <feather-tk/core/Context.h>
 
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>

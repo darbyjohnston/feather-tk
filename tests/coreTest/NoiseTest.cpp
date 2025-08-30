@@ -4,9 +4,9 @@
 
 #include <coreTest/NoiseTest.h>
 
-#include <ftk/core/Assert.h>
-#include <ftk/core/Math.h>
-#include <ftk/core/Noise.h>
+#include <feather-tk/core/Assert.h>
+#include <feather-tk/core/Math.h>
+#include <feather-tk/core/Noise.h>
 
 #include <iostream>
 

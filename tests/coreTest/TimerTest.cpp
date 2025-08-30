@@ -4,10 +4,10 @@
 
 #include <coreTest/TimerTest.h>
 
-#include <ftk/core/Assert.h>
-#include <ftk/core/Context.h>
-#include <ftk/core/Time.h>
-#include <ftk/core/Timer.h>
+#include <feather-tk/core/Assert.h>
+#include <feather-tk/core/Context.h>
+#include <feather-tk/core/Time.h>
+#include <feather-tk/core/Timer.h>
 
 #include <iostream>
 

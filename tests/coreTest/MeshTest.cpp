@@ -4,8 +4,8 @@
 
 #include <coreTest/MeshTest.h>
 
-#include <ftk/core/Assert.h>
-#include <ftk/core/Mesh.h>
+#include <feather-tk/core/Assert.h>
+#include <feather-tk/core/Mesh.h>
 
 namespace ftk
 {

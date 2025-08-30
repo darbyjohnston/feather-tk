@@ -4,8 +4,8 @@
 
 #include <corePy/Context.h>
 
-#include <ftk/core/Context.h>
-#include <ftk/core/ISystem.h>
+#include <feather-tk/core/Context.h>
+#include <feather-tk/core/ISystem.h>
 
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>

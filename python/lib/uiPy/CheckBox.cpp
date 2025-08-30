@@ -4,7 +4,7 @@
 
 #include <uiPy/CheckBox.h>
 
-#include <ftk/ui/CheckBox.h>
+#include <feather-tk/ui/CheckBox.h>
 
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>

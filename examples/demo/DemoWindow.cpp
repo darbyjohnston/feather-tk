@@ -13,14 +13,14 @@
 #include "Popups.h"
 #include "Sliders.h"
 
-#include <ftk/ui/FileBrowser.h>
-#include <ftk/ui/GroupBox.h>
-#include <ftk/ui/Menu.h>
-#include <ftk/ui/MenuBar.h>
-#include <ftk/ui/RowLayout.h>
-#include <ftk/ui/ScrollWidget.h>
+#include <feather-tk/ui/FileBrowser.h>
+#include <feather-tk/ui/GroupBox.h>
+#include <feather-tk/ui/Menu.h>
+#include <feather-tk/ui/MenuBar.h>
+#include <feather-tk/ui/RowLayout.h>
+#include <feather-tk/ui/ScrollWidget.h>
 
-#include <ftk/core/ImageIO.h>
+#include <feather-tk/core/ImageIO.h>
 
 void DemoWindow::_init(
     const std::shared_ptr<Context>& context,

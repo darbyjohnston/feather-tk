@@ -4,7 +4,7 @@
 
 #include <uiPy/Style.h>
 
-#include <ftk/ui/Style.h>
+#include <feather-tk/ui/Style.h>
 
 #include <pybind11/pybind11.h>
 

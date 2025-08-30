@@ -4,15 +4,15 @@
 
 #include <uiTest/TabWidgetTest.h>
 
-#include <ftk/ui/App.h>
-#include <ftk/ui/Label.h>
-#include <ftk/ui/RowLayout.h>
-#include <ftk/ui/TabBar.h>
-#include <ftk/ui/TabWidget.h>
-#include <ftk/ui/Window.h>
+#include <feather-tk/ui/App.h>
+#include <feather-tk/ui/Label.h>
+#include <feather-tk/ui/RowLayout.h>
+#include <feather-tk/ui/TabBar.h>
+#include <feather-tk/ui/TabWidget.h>
+#include <feather-tk/ui/Window.h>
 
-#include <ftk/core/Assert.h>
-#include <ftk/core/Format.h>
+#include <feather-tk/core/Assert.h>
+#include <feather-tk/core/Format.h>
 
 namespace ftk
 {

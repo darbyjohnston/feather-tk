@@ -4,9 +4,9 @@
 
 #include <uiPy/FloatModel.h>
 
-#include <ftk/ui/FloatModel.h>
+#include <feather-tk/ui/FloatModel.h>
 
-#include <ftk/core/Context.h>
+#include <feather-tk/core/Context.h>
 
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>

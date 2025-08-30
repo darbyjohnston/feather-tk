@@ -4,7 +4,7 @@
 
 #include <uiPy/RowLayout.h>
 
-#include <ftk/ui/RowLayout.h>
+#include <feather-tk/ui/RowLayout.h>
 
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>

@@ -4,9 +4,9 @@
 
 #include <coreTest/FileIOTest.h>
 
-#include <ftk/core/Assert.h>
-#include <ftk/core/FileIO.h>
-#include <ftk/core/Format.h>
+#include <feather-tk/core/Assert.h>
+#include <feather-tk/core/FileIO.h>
+#include <feather-tk/core/Format.h>
 
 #include <limits>
 

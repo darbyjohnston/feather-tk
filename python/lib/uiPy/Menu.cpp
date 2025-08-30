@@ -4,7 +4,7 @@
 
 #include <uiPy/Menu.h>
 
-#include <ftk/ui/Menu.h>
+#include <feather-tk/ui/Menu.h>
 
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>

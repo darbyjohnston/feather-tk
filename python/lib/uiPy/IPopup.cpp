@@ -4,7 +4,7 @@
 
 #include <uiPy/IPopup.h>
 
-#include <ftk/ui/IPopup.h>
+#include <feather-tk/ui/IPopup.h>
 
 #include <pybind11/pybind11.h>
 #include <pybind11/functional.h>

@@ -4,7 +4,7 @@
 
 #include <uiPy/RadioButton.h>
 
-#include <ftk/ui/RadioButton.h>
+#include <feather-tk/ui/RadioButton.h>
 
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>

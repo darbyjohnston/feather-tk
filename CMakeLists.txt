@@ -170,8 +170,8 @@ endif()
 #-------------------------------------------------------------------------------
 # Subdirectories
 
-add_subdirectory(bin/ftk-resource)
-add_subdirectory(lib/ftk)
+add_subdirectory(bin/feather-tk-resource)
+add_subdirectory(lib/feather-tk)
 if(ftk_UI_LIB AND ftk_PYTHON)
     add_subdirectory(python)
 endif()
@@ -184,19 +184,19 @@ endif()
 
 install(
     FILES LICENSE.txt
-    DESTINATION share/ftk)
+    DESTINATION share/feather-tk)
 
 if(ftk_BUILD STREQUAL "SuperBuild")
     install(
         FILES cmake/Modules/FindZLIB.cmake
-        DESTINATION share/ftk)
+        DESTINATION share/feather-tk)
     install(
         FILES cmake/Modules/FindPNG.cmake
-        DESTINATION share/ftk)
+        DESTINATION share/feather-tk)
     if(ftk_UI_LIB)
         install(
             FILES cmake/Modules/Findnfd.cmake
-            DESTINATION share/ftk)
+            DESTINATION share/feather-tk)
     endif()
 endif()
 include(CMakePackageConfigHelpers)
@@ -204,8 +204,8 @@ set(INCLUDE_INSTALL_DIR include)
 configure_package_config_file(
     feather-tkConfig.cmake.in
     ${CMAKE_CURRENT_BINARY_DIR}/feather-tkConfig.cmake
-    INSTALL_DESTINATION share/ftk
+    INSTALL_DESTINATION share/feather-tk
     PATH_VARS INCLUDE_INSTALL_DIR)
 install(
     FILES ${CMAKE_CURRENT_BINARY_DIR}/feather-tkConfig.cmake
-    DESTINATION share/ftk)
+    DESTINATION share/feather-tk)

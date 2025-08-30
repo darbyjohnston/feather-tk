@@ -4,8 +4,8 @@
 
 #include <corePy/Timer.h>
 
-#include <ftk/core/Context.h>
-#include <ftk/core/Timer.h>
+#include <feather-tk/core/Context.h>
+#include <feather-tk/core/Timer.h>
 
 #include <pybind11/pybind11.h>
 #include <pybind11/chrono.h>

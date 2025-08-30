@@ -4,7 +4,7 @@
 
 #include <uiPy/FloatEdit.h>
 
-#include <ftk/ui/FloatEdit.h>
+#include <feather-tk/ui/FloatEdit.h>
 
 #include <pybind11/pybind11.h>
 #include <pybind11/functional.h>

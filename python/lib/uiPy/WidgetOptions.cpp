@@ -4,7 +4,7 @@
 
 #include <uiPy/WidgetOptions.h>
 
-#include <ftk/ui/IWidget.h>
+#include <feather-tk/ui/IWidget.h>
 
 #include <pybind11/pybind11.h>
 

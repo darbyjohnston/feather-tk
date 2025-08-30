@@ -4,7 +4,7 @@
 
 #include <corePy/OS.h>
 
-#include <ftk/core/OS.h>
+#include <feather-tk/core/OS.h>
 
 #include <pybind11/pybind11.h>
 

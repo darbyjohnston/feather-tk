@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include <ftk/ui/IWidget.h>
+#include <feather-tk/ui/IWidget.h>
 
 namespace ftk
 {

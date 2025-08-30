@@ -4,7 +4,7 @@
 
 #include <corePy/Range.h>
 
-#include <ftk/core/Range.h>
+#include <feather-tk/core/Range.h>
 
 #include <pybind11/pybind11.h>
 #include <pybind11/operators.h>

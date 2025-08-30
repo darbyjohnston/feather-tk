@@ -4,10 +4,10 @@
 
 #include <uiTest/EventTest.h>
 
-#include <ftk/ui/Event.h>
+#include <feather-tk/ui/Event.h>
 
-#include <ftk/core/Assert.h>
-#include <ftk/core/Format.h>
+#include <feather-tk/core/Assert.h>
+#include <feather-tk/core/Format.h>
 
 namespace ftk
 {

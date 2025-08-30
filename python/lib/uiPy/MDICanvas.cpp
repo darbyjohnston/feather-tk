@@ -4,7 +4,7 @@
 
 #include <uiPy/MDICanvas.h>
 
-#include <ftk/ui/MDICanvas.h>
+#include <feather-tk/ui/MDICanvas.h>
 
 #include <pybind11/pybind11.h>
 #include <pybind11/functional.h>

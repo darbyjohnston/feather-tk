@@ -6,10 +6,10 @@
 
 #include "Window.h"
 
-#include <ftk/ui/DialogSystem.h>
-#include <ftk/ui/FileBrowser.h>
+#include <feather-tk/ui/DialogSystem.h>
+#include <feather-tk/ui/FileBrowser.h>
 
-#include <ftk/core/FileIO.h>
+#include <feather-tk/core/FileIO.h>
 
 using namespace ftk;
 

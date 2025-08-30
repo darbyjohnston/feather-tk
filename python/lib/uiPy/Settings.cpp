@@ -4,9 +4,9 @@
 
 #include <uiPy/Settings.h>
 
-#include <ftk/ui/Settings.h>
+#include <feather-tk/ui/Settings.h>
 
-#include <ftk/core/Context.h>
+#include <feather-tk/core/Context.h>
 
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>

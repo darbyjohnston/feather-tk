@@ -4,11 +4,11 @@
 
 #include <uiTest/SplitterTest.h>
 
-#include <ftk/ui/Label.h>
-#include <ftk/ui/Splitter.h>
+#include <feather-tk/ui/Label.h>
+#include <feather-tk/ui/Splitter.h>
 
-#include <ftk/core/Assert.h>
-#include <ftk/core/Format.h>
+#include <feather-tk/core/Assert.h>
+#include <feather-tk/core/Format.h>
 
 namespace ftk
 {

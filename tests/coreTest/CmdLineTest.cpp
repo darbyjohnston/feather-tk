@@ -4,9 +4,9 @@
 
 #include <coreTest/CmdLineTest.h>
 
-#include <ftk/core/CmdLine.h>
+#include <feather-tk/core/CmdLine.h>
 
-#include <ftk/core/Assert.h>
+#include <feather-tk/core/Assert.h>
 
 namespace ftk
 {

@@ -4,7 +4,7 @@
 
 #include <uiPy/GridLayout.h>
 
-#include <ftk/ui/GridLayout.h>
+#include <feather-tk/ui/GridLayout.h>
 
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>

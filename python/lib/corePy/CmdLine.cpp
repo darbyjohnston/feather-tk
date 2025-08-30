@@ -4,7 +4,7 @@
 
 #include <corePy/CmdLine.h>
 
-#include <ftk/core/CmdLine.h>
+#include <feather-tk/core/CmdLine.h>
 
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>

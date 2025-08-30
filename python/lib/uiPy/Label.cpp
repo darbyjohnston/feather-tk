@@ -4,7 +4,7 @@
 
 #include <uiPy/Label.h>
 
-#include <ftk/ui/Label.h>
+#include <feather-tk/ui/Label.h>
 
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
