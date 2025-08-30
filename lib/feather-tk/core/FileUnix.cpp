@@ -2,7 +2,7 @@
 // Copyright (c) 2024-2025 Darby Johnston
 // All rights reserved.
 
-#include <ftk/core/File.h>
+#include <feather-tk/core/File.h>
 
 #if defined(__APPLE__)
 #include <ApplicationServices/ApplicationServices.h>
