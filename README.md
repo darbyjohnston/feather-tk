@@ -138,7 +138,7 @@ git clone https://github.com/darbyjohnston/feather-tk.git
 
 Run the super build script:
 ```
-sh feather-tk/SuperBuildLinux.sh
+sh feather-tk/SuperBuild_Linux.sh
 ```
 
 Try running the `demo` example:
@@ -160,7 +160,7 @@ git clone https://github.com/darbyjohnston/feather-tk.git
 
 Run the super build script:
 ```
-sh feather-tk/SuperBuildmacOS.sh
+sh feather-tk/SuperBuild_macOS.sh
 ```
 
 Try running the `demo` example:
