@@ -202,10 +202,10 @@ endif()
 include(CMakePackageConfigHelpers)
 set(INCLUDE_INSTALL_DIR include)
 configure_package_config_file(
-    ftkConfig.cmake.in
-    ${CMAKE_CURRENT_BINARY_DIR}/ftkConfig.cmake
+    feather-tkConfig.cmake.in
+    ${CMAKE_CURRENT_BINARY_DIR}/feather-tkConfig.cmake
     INSTALL_DESTINATION share/ftk
     PATH_VARS INCLUDE_INSTALL_DIR)
 install(
-    FILES ${CMAKE_CURRENT_BINARY_DIR}/ftkConfig.cmake
+    FILES ${CMAKE_CURRENT_BINARY_DIR}/feather-tkConfig.cmake
     DESTINATION share/ftk)
