@@ -4,21 +4,21 @@
 
 #include <uiTest/FileEditTest.h>
 
-#include <feather-tk/ui/App.h>
-#include <feather-tk/ui/FileBrowser.h>
-#include <feather-tk/ui/FileEdit.h>
-#include <feather-tk/ui/RowLayout.h>
-#include <feather-tk/ui/Window.h>
+#include <ftk/ui/App.h>
+#include <ftk/ui/FileBrowser.h>
+#include <ftk/ui/FileEdit.h>
+#include <ftk/ui/RowLayout.h>
+#include <ftk/ui/Window.h>
 
-#include <feather-tk/core/Assert.h>
-#include <feather-tk/core/Format.h>
+#include <ftk/core/Assert.h>
+#include <ftk/core/Format.h>
 
-namespace feather_tk
+namespace ftk
 {
     namespace ui_test
     {
         FileEditTest::FileEditTest(const std::shared_ptr<Context>& context) :
-            ITest(context, "feather_tk::ui_test::FileEditTest")
+            ITest(context, "ftk::ui_test::FileEditTest")
         {}
 
         FileEditTest::~FileEditTest()
@@ -52,7 +52,7 @@ namespace feather_tk
                 std::filesystem::path path = std::filesystem::current_path();
                 edit->setPath(path);
                 edit->setPath(path);
-                FEATHER_TK_ASSERT(path == edit->getPath());
+                FTK_ASSERT(path == edit->getPath());
                 edit->setCallback(
                     [&path](const std::filesystem::path& value)
                     {
@@ -61,7 +61,7 @@ namespace feather_tk
 
                 auto system = context->getSystem<FileBrowserSystem>();
                 system->setNativeFileDialog(false);
-                FEATHER_TK_ASSERT(!system->isNativeFileDialog());
+                FTK_ASSERT(!system->isNativeFileDialog());
             }
         }
     }

@@ -6,7 +6,7 @@
 
 #include <testLib/ITest.h>
 
-namespace feather_tk
+namespace ftk
 {
     namespace ui_test
     {

@@ -4,17 +4,17 @@
 
 #include <coreTest/RandomTest.h>
 
-#include <feather-tk/core/Assert.h>
-#include <feather-tk/core/Random.h>
+#include <ftk/core/Assert.h>
+#include <ftk/core/Random.h>
 
 #include <sstream>
 
-namespace feather_tk
+namespace ftk
 {
     namespace core_test
     {
         RandomTest::RandomTest(const std::shared_ptr<Context>& context) :
-            ITest(context, "feather_tk::core_test::RandomTest")
+            ITest(context, "ftk::core_test::RandomTest")
         {}
 
         RandomTest::~RandomTest()

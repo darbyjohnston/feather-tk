@@ -4,22 +4,22 @@
 
 #include <uiTest/ColorWidgetTest.h>
 
-#include <feather-tk/ui/App.h>
-#include <feather-tk/ui/ColorPopup.h>
-#include <feather-tk/ui/ColorSwatch.h>
-#include <feather-tk/ui/ColorWidget.h>
-#include <feather-tk/ui/RowLayout.h>
-#include <feather-tk/ui/Window.h>
+#include <ftk/ui/App.h>
+#include <ftk/ui/ColorPopup.h>
+#include <ftk/ui/ColorSwatch.h>
+#include <ftk/ui/ColorWidget.h>
+#include <ftk/ui/RowLayout.h>
+#include <ftk/ui/Window.h>
 
-#include <feather-tk/core/Assert.h>
-#include <feather-tk/core/Format.h>
+#include <ftk/core/Assert.h>
+#include <ftk/core/Format.h>
 
-namespace feather_tk
+namespace ftk
 {
     namespace ui_test
     {
         ColorWidgetTest::ColorWidgetTest(const std::shared_ptr<Context>& context) :
-            ITest(context, "feather_tk::ui_test::ColorWidgetTest")
+            ITest(context, "ftk::ui_test::ColorWidgetTest")
         {}
 
         ColorWidgetTest::~ColorWidgetTest()
@@ -53,11 +53,11 @@ namespace feather_tk
                 Color4F color(1.F, 1.F, 1.F, 1.F);
                 widget->setColor(color);
                 widget->setColor(color);
-                FEATHER_TK_ASSERT(color == widget->getColor());
-                FEATHER_TK_ASSERT(!widget->isEditable());
+                FTK_ASSERT(color == widget->getColor());
+                FTK_ASSERT(!widget->isEditable());
                 widget->setEditable(true);
                 widget->setEditable(true);
-                FEATHER_TK_ASSERT(widget->isEditable());
+                FTK_ASSERT(widget->isEditable());
                 widget->setColorCallback(
                     [&color](const Color4F& value)
                     {
@@ -65,19 +65,19 @@ namespace feather_tk
                     });
                 widget->setSizeRole(SizeRole::Margin);
                 widget->setSizeRole(SizeRole::Margin);
-                FEATHER_TK_ASSERT(SizeRole::Margin == widget->getSizeRole());
+                FTK_ASSERT(SizeRole::Margin == widget->getSizeRole());
                 widget->setSizeRole(SizeRole::Swatch);
 
                 auto popup = ColorPopup::create(context, color);
                 popup->setPopupRole(ColorRole::Red);
                 popup->setPopupRole(ColorRole::Red);
-                FEATHER_TK_ASSERT(ColorRole::Red == popup->getPopupRole());
+                FTK_ASSERT(ColorRole::Red == popup->getPopupRole());
                 popup->open(window, widget->getGeometry());
                 app->tick();
-                FEATHER_TK_ASSERT(popup->isOpen());
+                FTK_ASSERT(popup->isOpen());
                 popup->close();
                 app->tick();
-                FEATHER_TK_ASSERT(!popup->isOpen());
+                FTK_ASSERT(!popup->isOpen());
             }
         }
     }

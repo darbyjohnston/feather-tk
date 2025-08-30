@@ -4,14 +4,14 @@
 
 #include <uiPy/GroupBox.h>
 
-#include <feather-tk/ui/GroupBox.h>
+#include <ftk/ui/GroupBox.h>
 
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
 
 namespace py = pybind11;
 
-namespace feather_tk
+namespace ftk
 {
     void groupBox(py::module_& m)
     {

@@ -4,17 +4,17 @@
 
 #include <uiTest/LayoutUtilTest.h>
 
-#include <feather-tk/ui/LayoutUtil.h>
+#include <ftk/ui/LayoutUtil.h>
 
-#include <feather-tk/core/Assert.h>
-#include <feather-tk/core/Format.h>
+#include <ftk/core/Assert.h>
+#include <ftk/core/Format.h>
 
-namespace feather_tk
+namespace ftk
 {
     namespace ui_test
     {
         LayoutUtilTest::LayoutUtilTest(const std::shared_ptr<Context>& context) :
-            ITest(context, "feather_tk::ui_test::LayoutUtilTest")
+            ITest(context, "ftk::ui_test::LayoutUtilTest")
         {}
 
         LayoutUtilTest::~LayoutUtilTest()

@@ -2,7 +2,7 @@
 # Copyright (c) 2024 Darby Johnston
 # All rights reserved.
 
-import feather_tk as ftk
+import ftk
 
 import sys
 
@@ -18,11 +18,11 @@ class DialogsWindow(ftk.MainWindow):
         # Message dialog.
         button = ftk.PushButton(context, "Message Dialog", layout)
         button.setClickedCallback(
-            lambda: context.getSystemByName("feather_tk::DialogSystem").message("Message", "Hello world!", window))
+            lambda: context.getSystemByName("ftk::DialogSystem").message("Message", "Hello world!", window))
 
         # Confirmation dialog.
         button = ftk.PushButton(context, "Confirmation Dialog", layout)
-        button.setClickedCallback(lambda: context.getSystemByName("feather_tk::DialogSystem").
+        button.setClickedCallback(lambda: context.getSystemByName("ftk::DialogSystem").
             confirm("Confirm", "Hello world?", window, lambda ok: print("Hellow world:", ok)))
 
         # Progress dialog.
@@ -62,7 +62,7 @@ if app.getExit() != 0:
     sys.exit(1)
 
 # Disable the native file dialog.
-context.getSystemByName("feather_tk::FileBrowserSystem").nativeFileDialog = False
+context.getSystemByName("ftk::FileBrowserSystem").nativeFileDialog = False
 
 # Create a window.
 window = DialogsWindow(context, app, "dialogs", ftk.Size2I(1280, 960))

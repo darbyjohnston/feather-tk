@@ -4,7 +4,7 @@
 
 #include <uiPy/ButtonGroup.h>
 
-#include <feather-tk/ui/ButtonGroup.h>
+#include <ftk/ui/ButtonGroup.h>
 
 #include <pybind11/pybind11.h>
 #include <pybind11/functional.h>
@@ -12,7 +12,7 @@
 
 namespace py = pybind11;
 
-namespace feather_tk
+namespace ftk
 {
     void buttonGroup(py::module_& m)
     {

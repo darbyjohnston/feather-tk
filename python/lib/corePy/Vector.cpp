@@ -4,7 +4,7 @@
 
 #include <corePy/Vector.h>
 
-#include <feather-tk/core/Vector.h>
+#include <ftk/core/Vector.h>
 
 #include <pybind11/pybind11.h>
 #include <pybind11/operators.h>
@@ -14,7 +14,7 @@
 
 namespace py = pybind11;
 
-namespace feather_tk
+namespace ftk
 {
     void vector(py::module_& m)
     {

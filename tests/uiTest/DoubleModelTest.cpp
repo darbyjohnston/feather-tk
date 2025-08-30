@@ -4,18 +4,18 @@
 
 #include <uiTest/DoubleModelTest.h>
 
-#include <feather-tk/ui/DoubleModel.h>
+#include <ftk/ui/DoubleModel.h>
 
-#include <feather-tk/core/Assert.h>
-#include <feather-tk/core/Format.h>
-#include <feather-tk/core/Math.h>
+#include <ftk/core/Assert.h>
+#include <ftk/core/Format.h>
+#include <ftk/core/Math.h>
 
-namespace feather_tk
+namespace ftk
 {
     namespace ui_test
     {
         DoubleModelTest::DoubleModelTest(const std::shared_ptr<Context>& context) :
-            ITest(context, "feather_tk::ui_test::DoubleModelTest")
+            ITest(context, "ftk::ui_test::DoubleModelTest")
         {}
 
         DoubleModelTest::~DoubleModelTest()
@@ -56,35 +56,35 @@ namespace feather_tk
                     });
 
                 model->setValue(0.9);
-                FEATHER_TK_ASSERT(0.9 == model->getValue());
-                FEATHER_TK_ASSERT(0.9 == value);
+                FTK_ASSERT(0.9 == model->getValue());
+                FTK_ASSERT(0.9 == value);
 
                 model->setRange(RangeD(0.0, 0.5));
-                FEATHER_TK_ASSERT(RangeD(0.0, 0.5) == model->getRange());
-                FEATHER_TK_ASSERT(RangeD(0.0, 0.5) == range);
-                FEATHER_TK_ASSERT(0.5 == value);
+                FTK_ASSERT(RangeD(0.0, 0.5) == model->getRange());
+                FTK_ASSERT(RangeD(0.0, 0.5) == range);
+                FTK_ASSERT(0.5 == value);
 
                 model->setStep(0.2);
-                FEATHER_TK_ASSERT(0.2 == model->getStep());
+                FTK_ASSERT(0.2 == model->getStep());
                 model->decrementStep();
-                FEATHER_TK_ASSERT(fuzzyCompare(0.3, value));
+                FTK_ASSERT(fuzzyCompare(0.3, value));
                 model->incrementStep();
-                FEATHER_TK_ASSERT(fuzzyCompare(0.5, value));
+                FTK_ASSERT(fuzzyCompare(0.5, value));
 
                 model->setLargeStep(0.3);
-                FEATHER_TK_ASSERT(0.3 == model->getLargeStep());
+                FTK_ASSERT(0.3 == model->getLargeStep());
                 model->decrementLargeStep();
-                FEATHER_TK_ASSERT(fuzzyCompare(0.2, value));
+                FTK_ASSERT(fuzzyCompare(0.2, value));
                 model->incrementLargeStep();
-                FEATHER_TK_ASSERT(fuzzyCompare(0.5, value));
+                FTK_ASSERT(fuzzyCompare(0.5, value));
 
                 model->setDefaultValue(0.0);
-                FEATHER_TK_ASSERT(0.0 == model->getDefaultValue());
-                FEATHER_TK_ASSERT(hasDefaultValue);
+                FTK_ASSERT(0.0 == model->getDefaultValue());
+                FTK_ASSERT(hasDefaultValue);
                 model->setDefaultValue();
-                FEATHER_TK_ASSERT(0.0 == value);
+                FTK_ASSERT(0.0 == value);
                 model->clearDefaultValue();
-                FEATHER_TK_ASSERT(!hasDefaultValue);
+                FTK_ASSERT(!hasDefaultValue);
             }
         }
     }

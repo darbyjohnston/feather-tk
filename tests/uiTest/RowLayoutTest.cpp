@@ -4,18 +4,18 @@
 
 #include <uiTest/RowLayoutTest.h>
 
-#include <feather-tk/ui/Label.h>
-#include <feather-tk/ui/Spacer.h>
+#include <ftk/ui/Label.h>
+#include <ftk/ui/Spacer.h>
 
-#include <feather-tk/core/Assert.h>
-#include <feather-tk/core/Format.h>
+#include <ftk/core/Assert.h>
+#include <ftk/core/Format.h>
 
-namespace feather_tk
+namespace ftk
 {
     namespace ui_test
     {
         RowLayoutTest::RowLayoutTest(const std::shared_ptr<Context>& context) :
-            ITest(context, "feather_tk::ui_test::RowLayoutTest")
+            ITest(context, "ftk::ui_test::RowLayoutTest")
         {}
 
         RowLayoutTest::~RowLayoutTest()
@@ -47,11 +47,11 @@ namespace feather_tk
                 layout->setSpacingRole(SizeRole::None);
                 layout->setSpacingRole(SizeRole::None);
                 layout->setSpacingRole(SizeRole::Spacing);
-                FEATHER_TK_ASSERT(SizeRole::Spacing == layout->getSpacingRole());
+                FTK_ASSERT(SizeRole::Spacing == layout->getSpacingRole());
                 layout->setMarginRole(SizeRole::Margin);
                 layout->setMarginRole(SizeRole::Margin);
                 layout->setMarginRole(SizeRole::None);
-                FEATHER_TK_ASSERT(SizeRole::None == layout->getMarginRole());
+                FTK_ASSERT(SizeRole::None == layout->getMarginRole());
                 _test(context, app, window, layout, Orientation::Horizontal);
                 layout->setParent(nullptr);
                 layout.reset();
@@ -74,7 +74,7 @@ namespace feather_tk
             auto spacer = Spacer::create(context, orientation, layout);
             spacer->setSpacingRole(SizeRole::SpacingLarge);
             spacer->setSpacingRole(SizeRole::SpacingLarge);
-            FEATHER_TK_ASSERT(SizeRole::SpacingLarge == spacer->getSpacingRole());
+            FTK_ASSERT(SizeRole::SpacingLarge == spacer->getSpacingRole());
             auto label1 = Label::create(context, "Label 1", layout);
             app->tick();
 
@@ -86,13 +86,13 @@ namespace feather_tk
                 label0->setStretch(Stretch::Fixed, Stretch::Fixed);
                 label0->setStretch(Stretch::Fixed, Stretch::Fixed);
                 label0->setStretch(Stretch::Expanding);
-                FEATHER_TK_ASSERT(Stretch::Expanding == label0->getHStretch());
+                FTK_ASSERT(Stretch::Expanding == label0->getHStretch());
                 app->tick();
                 label0->setHAlign(HAlign::Right);
                 label0->setHAlign(HAlign::Right);
                 label0->setAlign(HAlign::Center, VAlign::Center);
                 label0->setAlign(HAlign::Center, VAlign::Center);
-                FEATHER_TK_ASSERT(HAlign::Center == label0->getHAlign());
+                FTK_ASSERT(HAlign::Center == label0->getHAlign());
                 app->tick();
                 label0->setHAlign(HAlign::Left);
                 label1->setHAlign(HAlign::Right);
@@ -103,13 +103,13 @@ namespace feather_tk
                 label0->setStretch(Stretch::Fixed, Stretch::Fixed);
                 label0->setStretch(Stretch::Fixed, Stretch::Fixed);
                 label0->setStretch(Stretch::Expanding);
-                FEATHER_TK_ASSERT(Stretch::Expanding == label0->getVStretch());
+                FTK_ASSERT(Stretch::Expanding == label0->getVStretch());
                 app->tick();
                 label0->setVAlign(VAlign::Bottom);
                 label0->setVAlign(VAlign::Bottom);
                 label0->setAlign(HAlign::Center, VAlign::Center);
                 label0->setAlign(HAlign::Center, VAlign::Center);
-                FEATHER_TK_ASSERT(VAlign::Center == label0->getVAlign());
+                FTK_ASSERT(VAlign::Center == label0->getVAlign());
                 app->tick();
                 label0->setVAlign(VAlign::Top);
                 label1->setVAlign(VAlign::Bottom);
@@ -121,23 +121,23 @@ namespace feather_tk
             label0->hide();
             label0->hide();
             app->tick();
-            FEATHER_TK_ASSERT(!label0->isVisible());
-            FEATHER_TK_ASSERT(!label0->isVisible(false));
-            FEATHER_TK_ASSERT(label0->isClipped());
+            FTK_ASSERT(!label0->isVisible());
+            FTK_ASSERT(!label0->isVisible(false));
+            FTK_ASSERT(label0->isClipped());
             label0->show();
             app->tick();
 
             label0->setParent(nullptr);
             app->tick();
             auto children = layout->getChildren();
-            FEATHER_TK_ASSERT(2 == children.size());
-            FEATHER_TK_ASSERT(spacer == children.front());
+            FTK_ASSERT(2 == children.size());
+            FTK_ASSERT(spacer == children.front());
             label0->setParent(layout);
             app->tick();
             children = layout->getChildren();
-            FEATHER_TK_ASSERT(3 == children.size());
-            FEATHER_TK_ASSERT(spacer == children.front());
-            FEATHER_TK_ASSERT(label0 == children.back());
+            FTK_ASSERT(3 == children.size());
+            FTK_ASSERT(spacer == children.front());
+            FTK_ASSERT(label0 == children.back());
             label0->setParent(nullptr);
             app->tick();
 
@@ -145,7 +145,7 @@ namespace feather_tk
             spacer->setParent(nullptr);
             app->tick();
             children = layout->getChildren();
-            FEATHER_TK_ASSERT(children.empty());
+            FTK_ASSERT(children.empty());
         }
     }
 }

@@ -4,17 +4,17 @@
 
 #include <uiTest/ListWidgetTest.h>
 
-#include <feather-tk/ui/ListWidget.h>
+#include <ftk/ui/ListWidget.h>
 
-#include <feather-tk/core/Assert.h>
-#include <feather-tk/core/Format.h>
+#include <ftk/core/Assert.h>
+#include <ftk/core/Format.h>
 
-namespace feather_tk
+namespace ftk
 {
     namespace ui_test
     {
         ListWidgetTest::ListWidgetTest(const std::shared_ptr<Context>& context) :
-            ITest(context, "feather_tk::ui_test::ListWidgetTest")
+            ITest(context, "ftk::ui_test::ListWidgetTest")
         {}
 
         ListWidgetTest::~ListWidgetTest()
@@ -64,17 +64,17 @@ namespace feather_tk
             };
             widget->setItems(items);
             widget->setItems(items);
-            FEATHER_TK_ASSERT(items == widget->getItems());
+            FTK_ASSERT(items == widget->getItems());
             app->tick();
             items.push_back(ListItem("Item 4"));
             widget->setItems(items);
             app->tick();
             widget->setSearch("4");
             widget->setSearch("4");
-            FEATHER_TK_ASSERT("4" == widget->getSearch());
+            FTK_ASSERT("4" == widget->getSearch());
             app->tick();
             widget->clearSearch();
-            FEATHER_TK_ASSERT(widget->getSearch().empty());
+            FTK_ASSERT(widget->getSearch().empty());
             app->tick();
         }
     }

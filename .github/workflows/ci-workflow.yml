@@ -7,12 +7,12 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      FEATHER_TK_API: GL_4_1
-      FEATHER_TK_NFD: OFF
-      FEATHER_TK_PYTHON: ON
-      FEATHER_TK_TESTS: ON
-      FEATHER_TK_EXAMPLES: ON
-      FEATHER_TK_GCOV: ON
+      FTK_API: GL_4_1
+      FTK_NFD: OFF
+      FTK_PYTHON: ON
+      FTK_TESTS: ON
+      FTK_EXAMPLES: ON
+      FTK_GCOV: ON
 
     steps:
     - uses: actions/checkout@v4
@@ -40,7 +40,7 @@ jobs:
         xvfb-run ctest --verbose --rerun-failed --output-on-failure -C Debug
     
     - name: Code coverage
-      if: env.FEATHER_TK_GCOV == 'ON'
+      if: env.FTK_GCOV == 'ON'
       run: |
         cd build-Debug
         sh ../feather-tk/etc/Linux/lcov.sh
@@ -56,12 +56,12 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      FEATHER_TK_API: GLES_2
-      FEATHER_TK_NFD: OFF
-      FEATHER_TK_PYTHON: ON
-      FEATHER_TK_TESTS: ON
-      FEATHER_TK_EXAMPLES: ON
-      FEATHER_TK_GCOV: OFF
+      FTK_API: GLES_2
+      FTK_NFD: OFF
+      FTK_PYTHON: ON
+      FTK_TESTS: ON
+      FTK_EXAMPLES: ON
+      FTK_GCOV: OFF
 
     steps:
     - uses: actions/checkout@v4
@@ -92,12 +92,12 @@ jobs:
     runs-on: macos-13
 
     env:
-      FEATHER_TK_API: GL_4_1
-      FEATHER_TK_NFD: OFF
-      FEATHER_TK_PYTHON: ON
-      FEATHER_TK_TESTS: ON
-      FEATHER_TK_EXAMPLES: OFF
-      FEATHER_TK_GCOV: OFF
+      FTK_API: GL_4_1
+      FTK_NFD: OFF
+      FTK_PYTHON: ON
+      FTK_TESTS: ON
+      FTK_EXAMPLES: OFF
+      FTK_GCOV: OFF
       CMAKE_OSX_DEPLOYMENT_TARGET: 10.15
       CMAKE_OSX_ARCHITECTURES: x86_64
 
@@ -135,12 +135,12 @@ jobs:
     runs-on: macos-latest
 
     env:
-      FEATHER_TK_API: GL_4_1
-      FEATHER_TK_NFD: OFF
-      FEATHER_TK_PYTHON: ON
-      FEATHER_TK_TESTS: ON
-      FEATHER_TK_EXAMPLES: OFF
-      FEATHER_TK_GCOV: OFF
+      FTK_API: GL_4_1
+      FTK_NFD: OFF
+      FTK_PYTHON: ON
+      FTK_TESTS: ON
+      FTK_EXAMPLES: OFF
+      FTK_GCOV: OFF
       CMAKE_OSX_DEPLOYMENT_TARGET: 14
       CMAKE_OSX_ARCHITECTURES: arm64
 
@@ -178,12 +178,12 @@ jobs:
     runs-on: windows-latest
 
     env:
-      FEATHER_TK_API: GL_4_1
-      FEATHER_TK_NFD: OFF
-      FEATHER_TK_PYTHON: ON
-      FEATHER_TK_TESTS: ON
-      FEATHER_TK_EXAMPLES: OFF
-      FEATHER_TK_GCOV: OFF
+      FTK_API: GL_4_1
+      FTK_NFD: OFF
+      FTK_PYTHON: ON
+      FTK_TESTS: ON
+      FTK_EXAMPLES: OFF
+      FTK_GCOV: OFF
 
     steps:
     - uses: actions/checkout@v4

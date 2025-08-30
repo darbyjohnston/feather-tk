@@ -4,20 +4,20 @@
 
 #include <glTest/OffscreenBufferTest.h>
 
-#include <feather-tk/gl/OffscreenBuffer.h>
-#include <feather-tk/gl/Window.h>
+#include <ftk/gl/OffscreenBuffer.h>
+#include <ftk/gl/Window.h>
 
-#include <feather-tk/core/Assert.h>
-#include <feather-tk/core/Format.h>
+#include <ftk/core/Assert.h>
+#include <ftk/core/Format.h>
 
-using namespace feather_tk::gl;
+using namespace ftk::gl;
 
-namespace feather_tk
+namespace ftk
 {
     namespace gl_test
     {
         OffscreenBufferTest::OffscreenBufferTest(const std::shared_ptr<Context>& context) :
-            ITest(context, "feather_tk::gl_test::OffscreenBufferTest")
+            ITest(context, "ftk::gl_test::OffscreenBufferTest")
         {}
 
         OffscreenBufferTest::~OffscreenBufferTest()
@@ -52,9 +52,9 @@ namespace feather_tk
         
         void OffscreenBufferTest::_enums()
         {
-            FEATHER_TK_TEST_ENUM(OffscreenDepth);
-            FEATHER_TK_TEST_ENUM(OffscreenStencil);
-            FEATHER_TK_TEST_ENUM(OffscreenSampling);
+            FTK_TEST_ENUM(OffscreenDepth);
+            FTK_TEST_ENUM(OffscreenStencil);
+            FTK_TEST_ENUM(OffscreenSampling);
         }
         
         void OffscreenBufferTest::_members()
@@ -122,14 +122,14 @@ namespace feather_tk
                             arg(options.stencil).
                             arg(options.sampling));
                         auto offscreen = OffscreenBuffer::create(size, options);
-                        FEATHER_TK_ASSERT(size == offscreen->getSize());
-                        FEATHER_TK_ASSERT(size.w == offscreen->getWidth());
-                        FEATHER_TK_ASSERT(size.h == offscreen->getHeight());
-                        FEATHER_TK_ASSERT(options == offscreen->getOptions());
-                        FEATHER_TK_ASSERT(offscreen->getID());
+                        FTK_ASSERT(size == offscreen->getSize());
+                        FTK_ASSERT(size.w == offscreen->getWidth());
+                        FTK_ASSERT(size.h == offscreen->getHeight());
+                        FTK_ASSERT(options == offscreen->getOptions());
+                        FTK_ASSERT(offscreen->getID());
                         if (options.color != ImageType::None)
                         {
-                            FEATHER_TK_ASSERT(offscreen->getColorID());
+                            FTK_ASSERT(offscreen->getColorID());
                             offscreen->bind();
                         }
                     }
@@ -152,17 +152,17 @@ namespace feather_tk
                 OffscreenBufferOptions options;
                 options.color = offscreenColorDefault;
                 bool create = doCreate(buffer, size, options);
-                FEATHER_TK_ASSERT(create);
+                FTK_ASSERT(create);
                 buffer = OffscreenBuffer::create(size, options);
 
                 size = Size2I(1280, 960);
                 create = doCreate(buffer, size, options);
-                FEATHER_TK_ASSERT(create);
+                FTK_ASSERT(create);
                 buffer = OffscreenBuffer::create(size, options);
                 
                 options.depth = offscreenDepthDefault;
                 create = doCreate(buffer, size, options);
-                FEATHER_TK_ASSERT(create);
+                FTK_ASSERT(create);
                 buffer = OffscreenBuffer::create(size, options);
             }
         }
@@ -171,9 +171,9 @@ namespace feather_tk
         {
             const OffscreenBufferOptions a;
             OffscreenBufferOptions b;
-            FEATHER_TK_ASSERT(a == b);
+            FTK_ASSERT(a == b);
             b.color = offscreenColorDefault;
-            FEATHER_TK_ASSERT(a != b);
+            FTK_ASSERT(a != b);
         }
     }
 }

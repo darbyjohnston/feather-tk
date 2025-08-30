@@ -4,15 +4,15 @@
 
 #include <coreTest/StringTest.h>
 
-#include <feather-tk/core/Assert.h>
-#include <feather-tk/core/String.h>
+#include <ftk/core/Assert.h>
+#include <ftk/core/String.h>
 
-namespace feather_tk
+namespace ftk
 {
     namespace core_test
     {
         StringTest::StringTest(const std::shared_ptr<Context>& context) :
-            ITest(context, "feather_tk::core_test::StringTest")
+            ITest(context, "ftk::core_test::StringTest")
         {}
 
         StringTest::~StringTest()
@@ -36,67 +36,67 @@ namespace feather_tk
         void StringTest::_split()
         {
             {
-                FEATHER_TK_ASSERT(
+                FTK_ASSERT(
                     split("a,b,c", ',') ==
                     std::vector<std::string>({ "a", "b", "c" }));
-                FEATHER_TK_ASSERT(
+                FTK_ASSERT(
                     split("a,,c", ',', SplitOptions::DiscardEmpty) ==
                     std::vector<std::string>({ "a", "c" }));
-                FEATHER_TK_ASSERT(
+                FTK_ASSERT(
                     split("a,,c", ',', SplitOptions::KeepEmpty) ==
                     std::vector<std::string>({ "a", "", "c" }));
             }
             {
-                FEATHER_TK_ASSERT(
+                FTK_ASSERT(
                     split("a,b.c", { ',', '.' } ) ==
                     std::vector<std::string>({ "a", "b", "c" }));
-                FEATHER_TK_ASSERT(
+                FTK_ASSERT(
                     split("a,.c", { ',', '.' }, SplitOptions::DiscardEmpty) ==
                     std::vector<std::string>({ "a", "c" }));
-                FEATHER_TK_ASSERT(
+                FTK_ASSERT(
                     split("a,.c", { ',', '.' }, SplitOptions::KeepEmpty) ==
                     std::vector<std::string>({ "a", "", "c" }));
             }
             {
-                FEATHER_TK_ASSERT(join({ "a", "b", "c" }, ',') == "a,b,c");
-                FEATHER_TK_ASSERT(join({ "a", "b", "c" }, ",.") == "a,.b,.c");
+                FTK_ASSERT(join({ "a", "b", "c" }, ',') == "a,b,c");
+                FTK_ASSERT(join({ "a", "b", "c" }, ",.") == "a,.b,.c");
             }
         }
         
         void StringTest::_format()
         {
             {
-                FEATHER_TK_ASSERT(toUpper("abc") == "ABC");
-                FEATHER_TK_ASSERT(toLower("ABC") == "abc");
+                FTK_ASSERT(toUpper("abc") == "ABC");
+                FTK_ASSERT(toLower("ABC") == "abc");
             }
             {
                 std::string s = "abc";
                 removeTrailingNewlines(s);
-                FEATHER_TK_ASSERT("abc" == s);
+                FTK_ASSERT("abc" == s);
                 s = "abc\n";
                 removeTrailingNewlines(s);
-                FEATHER_TK_ASSERT("abc" == s);
+                FTK_ASSERT("abc" == s);
                 s = "abc\n\r";
                 removeTrailingNewlines(s);
-                FEATHER_TK_ASSERT("abc" == s);
+                FTK_ASSERT("abc" == s);
             }
             {
                 const std::string s("abcdef");
-                FEATHER_TK_ASSERT("abcdef" == elide(s, 6));
-                FEATHER_TK_ASSERT("abc..." == elide(s, 3));
-                FEATHER_TK_ASSERT("..." == elide(s, 0));
+                FTK_ASSERT("abcdef" == elide(s, 6));
+                FTK_ASSERT("abc..." == elide(s, 3));
+                FTK_ASSERT("..." == elide(s, 0));
             }
         }
         
         void StringTest::_compare()
         {
             {
-                FEATHER_TK_ASSERT(!compare("abc", "ABC", CaseCompare::Sensitive));
-                FEATHER_TK_ASSERT(compare("abc", "ABC", CaseCompare::Insensitive));
+                FTK_ASSERT(!compare("abc", "ABC", CaseCompare::Sensitive));
+                FTK_ASSERT(compare("abc", "ABC", CaseCompare::Insensitive));
             }
             {
-                FEATHER_TK_ASSERT(!contains("abc", "AB", CaseCompare::Sensitive));
-                FEATHER_TK_ASSERT(contains("abc", "AB", CaseCompare::Insensitive));
+                FTK_ASSERT(!contains("abc", "AB", CaseCompare::Sensitive));
+                FTK_ASSERT(contains("abc", "AB", CaseCompare::Insensitive));
             }
         }
         
@@ -105,7 +105,7 @@ namespace feather_tk
             {
                 const std::string s("abc");
                 const std::wstring w = toWide(s);
-                FEATHER_TK_ASSERT(s == fromWide(w));
+                FTK_ASSERT(s == fromWide(w));
             }
         }
 

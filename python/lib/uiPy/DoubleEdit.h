@@ -6,7 +6,7 @@
 
 #include <pybind11/pybind11.h>
 
-namespace feather_tk
+namespace ftk
 {
     void doubleEdit(pybind11::module_&);
 }

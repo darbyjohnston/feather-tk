@@ -4,20 +4,20 @@
 
 #include <uiTest/LineEditTest.h>
 
-#include <feather-tk/ui/App.h>
-#include <feather-tk/ui/LineEdit.h>
-#include <feather-tk/ui/RowLayout.h>
-#include <feather-tk/ui/Window.h>
+#include <ftk/ui/App.h>
+#include <ftk/ui/LineEdit.h>
+#include <ftk/ui/RowLayout.h>
+#include <ftk/ui/Window.h>
 
-#include <feather-tk/core/Assert.h>
-#include <feather-tk/core/Format.h>
+#include <ftk/core/Assert.h>
+#include <ftk/core/Format.h>
 
-namespace feather_tk
+namespace ftk
 {
     namespace ui_test
     {
         LineEditTest::LineEditTest(const std::shared_ptr<Context>& context) :
-            ITest(context, "feather_tk::ui_test::LineEditTest")
+            ITest(context, "ftk::ui_test::LineEditTest")
         {}
 
         LineEditTest::~LineEditTest()
@@ -62,16 +62,16 @@ namespace feather_tk
                     });
                 edit->setText("Test");
                 edit->setText("Test");
-                FEATHER_TK_ASSERT("Test" == edit->getText());
+                FTK_ASSERT("Test" == edit->getText());
                 edit->clearText();
-                FEATHER_TK_ASSERT(edit->getText().empty());
+                FTK_ASSERT(edit->getText().empty());
                 edit->setFormat("00.00");
                 edit->setFormat("00.00");
-                FEATHER_TK_ASSERT("00.00" == edit->getFormat());
+                FTK_ASSERT("00.00" == edit->getFormat());
                 edit->setFormat("");
                 edit->setFontRole(FontRole::Mono);
                 edit->setFontRole(FontRole::Mono);
-                FEATHER_TK_ASSERT(FontRole::Mono == edit->getFontRole());
+                FTK_ASSERT(FontRole::Mono == edit->getFontRole());
                 edit->setFontRole(FontRole::Label);
 
                 edit->takeKeyFocus();
@@ -80,7 +80,7 @@ namespace feather_tk
                 app->tick();
                 edit->show();
                 app->tick();
-                FEATHER_TK_ASSERT(!edit->hasKeyFocus());
+                FTK_ASSERT(!edit->hasKeyFocus());
 
                 edit->takeKeyFocus();
                 app->tick();
@@ -88,7 +88,7 @@ namespace feather_tk
                 app->tick();
                 edit->setEnabled(true);
                 app->tick();
-                FEATHER_TK_ASSERT(!edit->hasKeyFocus());
+                FTK_ASSERT(!edit->hasKeyFocus());
             }
         }
     }

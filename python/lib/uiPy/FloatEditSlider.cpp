@@ -4,7 +4,7 @@
 
 #include <uiPy/FloatEditSlider.h>
 
-#include <feather-tk/ui/FloatEditSlider.h>
+#include <ftk/ui/FloatEditSlider.h>
 
 #include <pybind11/pybind11.h>
 #include <pybind11/functional.h>
@@ -12,7 +12,7 @@
 
 namespace py = pybind11;
 
-namespace feather_tk
+namespace ftk
 {
     void floatEditSlider(py::module_& m)
     {

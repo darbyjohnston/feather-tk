@@ -4,17 +4,17 @@
 
 #include <uiTest/ActionTest.h>
 
-#include <feather-tk/ui/Action.h>
+#include <ftk/ui/Action.h>
 
-#include <feather-tk/core/Assert.h>
-#include <feather-tk/core/Format.h>
+#include <ftk/core/Assert.h>
+#include <ftk/core/Format.h>
 
-namespace feather_tk
+namespace ftk
 {
     namespace ui_test
     {
         ActionTest::ActionTest(const std::shared_ptr<Context>& context) :
-            ITest(context, "feather_tk::ui_test::ActionTest")
+            ITest(context, "ftk::ui_test::ActionTest")
         {}
 
         ActionTest::~ActionTest()
@@ -32,15 +32,15 @@ namespace feather_tk
                 auto a = Action::create(
                     "Test",
                     [] {});
-                FEATHER_TK_ASSERT("Test" == a->getText());
+                FTK_ASSERT("Test" == a->getText());
             }
             {
                 auto a = Action::create(
                     "Test",
                     "Icon",
                     [] {});
-                FEATHER_TK_ASSERT("Test" == a->getText());
-                FEATHER_TK_ASSERT("Icon" == a->getIcon());
+                FTK_ASSERT("Test" == a->getText());
+                FTK_ASSERT("Icon" == a->getIcon());
             }
             {
                 auto a = Action::create(
@@ -48,9 +48,9 @@ namespace feather_tk
                     Key::T,
                     static_cast<int>(KeyModifier::Control),
                     [] {});
-                FEATHER_TK_ASSERT("Test" == a->getText());
-                FEATHER_TK_ASSERT(Key::T == a->getShortcut());
-                FEATHER_TK_ASSERT(static_cast<int>(KeyModifier::Control) == a->getShortcutModifiers());
+                FTK_ASSERT("Test" == a->getText());
+                FTK_ASSERT(Key::T == a->getShortcut());
+                FTK_ASSERT(static_cast<int>(KeyModifier::Control) == a->getShortcutModifiers());
             }
             {
                 auto a = Action::create(
@@ -59,24 +59,24 @@ namespace feather_tk
                     Key::T,
                     static_cast<int>(KeyModifier::Control),
                     [] {});
-                FEATHER_TK_ASSERT("Test" == a->getText());
-                FEATHER_TK_ASSERT("Icon" == a->getIcon());
-                FEATHER_TK_ASSERT(Key::T == a->getShortcut());
-                FEATHER_TK_ASSERT(static_cast<int>(KeyModifier::Control) == a->getShortcutModifiers());
+                FTK_ASSERT("Test" == a->getText());
+                FTK_ASSERT("Icon" == a->getIcon());
+                FTK_ASSERT(Key::T == a->getShortcut());
+                FTK_ASSERT(static_cast<int>(KeyModifier::Control) == a->getShortcutModifiers());
             }
             {
                 auto a = Action::create(
                     "Test",
                     [](bool) {});
-                FEATHER_TK_ASSERT("Test" == a->getText());
+                FTK_ASSERT("Test" == a->getText());
             }
             {
                 auto a = Action::create(
                     "Test",
                     "Icon",
                     [](bool) {});
-                FEATHER_TK_ASSERT("Test" == a->getText());
-                FEATHER_TK_ASSERT("Icon" == a->getIcon());
+                FTK_ASSERT("Test" == a->getText());
+                FTK_ASSERT("Icon" == a->getIcon());
             }
             {
                 auto a = Action::create(
@@ -84,9 +84,9 @@ namespace feather_tk
                     Key::T,
                     static_cast<int>(KeyModifier::Control),
                     [](bool) {});
-                FEATHER_TK_ASSERT("Test" == a->getText());
-                FEATHER_TK_ASSERT(Key::T == a->getShortcut());
-                FEATHER_TK_ASSERT(static_cast<int>(KeyModifier::Control) == a->getShortcutModifiers());
+                FTK_ASSERT("Test" == a->getText());
+                FTK_ASSERT(Key::T == a->getShortcut());
+                FTK_ASSERT(static_cast<int>(KeyModifier::Control) == a->getShortcutModifiers());
             }
             {
                 auto a = Action::create(
@@ -95,10 +95,10 @@ namespace feather_tk
                     Key::T,
                     static_cast<int>(KeyModifier::Control),
                     [](bool) {});
-                FEATHER_TK_ASSERT("Test" == a->getText());
-                FEATHER_TK_ASSERT("Icon" == a->getIcon());
-                FEATHER_TK_ASSERT(Key::T == a->getShortcut());
-                FEATHER_TK_ASSERT(static_cast<int>(KeyModifier::Control) == a->getShortcutModifiers());
+                FTK_ASSERT("Test" == a->getText());
+                FTK_ASSERT("Icon" == a->getIcon());
+                FTK_ASSERT(Key::T == a->getShortcut());
+                FTK_ASSERT(static_cast<int>(KeyModifier::Control) == a->getShortcutModifiers());
             }
         }
     }

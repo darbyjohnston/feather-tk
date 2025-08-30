@@ -4,7 +4,7 @@
 
 #include <uiPy/MDIWidget.h>
 
-#include <feather-tk/ui/MDIWidget.h>
+#include <ftk/ui/MDIWidget.h>
 
 #include <pybind11/pybind11.h>
 #include <pybind11/functional.h>
@@ -12,7 +12,7 @@
 
 namespace py = pybind11;
 
-namespace feather_tk
+namespace ftk
 {
     void mdiWidget(py::module_& m)
     {

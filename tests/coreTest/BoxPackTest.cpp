@@ -4,17 +4,17 @@
 
 #include <coreTest/BoxPackTest.h>
 
-#include <feather-tk/core/Assert.h>
-#include <feather-tk/core/Format.h>
+#include <ftk/core/Assert.h>
+#include <ftk/core/Format.h>
 
 #include <sstream>
 
-namespace feather_tk
+namespace ftk
 {
     namespace core_test
     {
         BoxPackTest::BoxPackTest(const std::shared_ptr<Context>& context) :
-            ITest(context, "feather_tk::core_test::BoxPackTest")
+            ITest(context, "ftk::core_test::BoxPackTest")
         {}
 
         BoxPackTest::~BoxPackTest()
@@ -31,17 +31,17 @@ namespace feather_tk
             {
                 auto pack = BoxPack::create(Size2I(100, 100));
                 auto node = pack->insert(Size2I(100, 100));
-                FEATHER_TK_ASSERT(node);
+                FTK_ASSERT(node);
                 node = pack->insert(Size2I(100, 100));
-                FEATHER_TK_ASSERT(node);
+                FTK_ASSERT(node);
                 _printPack(pack);
             }
             {
                 auto pack = BoxPack::create(Size2I(100, 100));
                 auto node = pack->insert(Size2I(50, 100));
-                FEATHER_TK_ASSERT(node);
+                FTK_ASSERT(node);
                 node = pack->insert(Size2I(50, 100));
-                FEATHER_TK_ASSERT(node);
+                FTK_ASSERT(node);
                 _printPack(pack);
             }
             {
@@ -49,7 +49,7 @@ namespace feather_tk
                 for (size_t i = 0; i < 5; ++i)
                 {
                     auto node = pack->insert(Size2I(50, 50));
-                    FEATHER_TK_ASSERT(node);
+                    FTK_ASSERT(node);
                 }
                 _printPack(pack);
             }
@@ -58,7 +58,7 @@ namespace feather_tk
                 for (size_t i = 0; i < 5; ++i)
                 {
                     auto node = pack->insert(Size2I(50, 50));
-                    FEATHER_TK_ASSERT(node);
+                    FTK_ASSERT(node);
                 }
                 _printPack(pack);
             }

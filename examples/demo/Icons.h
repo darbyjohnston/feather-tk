@@ -4,9 +4,9 @@
 
 #pragma once
 
-#include <feather-tk/ui/GridLayout.h>
+#include <ftk/ui/GridLayout.h>
 
-using namespace feather_tk;
+using namespace ftk;
 
 class Icons : public IWidget
 {

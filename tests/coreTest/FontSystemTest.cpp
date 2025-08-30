@@ -4,17 +4,17 @@
 
 #include <coreTest/FontSystemTest.h>
 
-#include <feather-tk/core/Assert.h>
-#include <feather-tk/core/Context.h>
-#include <feather-tk/core/FontSystem.h>
-#include <feather-tk/core/Format.h>
+#include <ftk/core/Assert.h>
+#include <ftk/core/Context.h>
+#include <ftk/core/FontSystem.h>
+#include <ftk/core/Format.h>
 
-namespace feather_tk
+namespace ftk
 {
     namespace core_test
     {
         FontSystemTest::FontSystemTest(const std::shared_ptr<Context>& context) :
-            ITest(context, "feather_tk::core_test::FontSystemTest")
+            ITest(context, "ftk::core_test::FontSystemTest")
         {}
 
         FontSystemTest::~FontSystemTest()
@@ -31,16 +31,16 @@ namespace feather_tk
             {
                 const FontInfo a;
                 const FontInfo b("NotoSans-Bold", 16);
-                FEATHER_TK_ASSERT(a == a);
-                FEATHER_TK_ASSERT(a != b);
+                FTK_ASSERT(a == a);
+                FTK_ASSERT(a != b);
             }
             {
                 const GlyphInfo a;
                 const FontInfo fontInfo("NotoSans-Bold", 16);
                 const GlyphInfo b(1, fontInfo);
-                FEATHER_TK_ASSERT(a == a);
-                FEATHER_TK_ASSERT(a != b);
-                FEATHER_TK_ASSERT(a < b);
+                FTK_ASSERT(a == a);
+                FTK_ASSERT(a != b);
+                FTK_ASSERT(a < b);
             }
             if (auto context = _context.lock())
             {
@@ -73,7 +73,7 @@ namespace feather_tk
                 try
                 {
                     fontSystem->addFont("", nullptr, 0);
-                    FEATHER_TK_ASSERT(false);
+                    FTK_ASSERT(false);
                 }
                 catch (const std::exception&)
                 {}

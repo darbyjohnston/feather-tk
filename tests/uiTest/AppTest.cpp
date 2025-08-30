@@ -4,21 +4,21 @@
 
 #include <uiTest/AppTest.h>
 
-#include <feather-tk/ui/App.h>
-#include <feather-tk/ui/Window.h>
+#include <ftk/ui/App.h>
+#include <ftk/ui/Window.h>
 
-#include <feather-tk/ui/PushButton.h>
-#include <feather-tk/ui/RowLayout.h>
+#include <ftk/ui/PushButton.h>
+#include <ftk/ui/RowLayout.h>
 
-#include <feather-tk/core/Assert.h>
-#include <feather-tk/core/Format.h>
+#include <ftk/core/Assert.h>
+#include <ftk/core/Format.h>
 
-namespace feather_tk
+namespace ftk
 {
     namespace ui_test
     {
         AppTest::AppTest(const std::shared_ptr<Context>& context) :
-            ITest(context, "feather_tk::ui_test::AppTest")
+            ITest(context, "ftk::ui_test::AppTest")
         {}
 
         AppTest::~AppTest()
@@ -41,16 +41,16 @@ namespace feather_tk
                     auto app = App::create(
                         context,
                         argv,
-                        "feather_tk::ui_test::App",
+                        "ftk::ui_test::App",
                         "Test UI application");
                     r = app->getExit();
                     if (0 == r)
                     {
-                        auto window = Window::create(context, "feather_tk::ui_test::App");
+                        auto window = Window::create(context, "ftk::ui_test::App");
                         auto layout = VerticalLayout::create(context, window);
                         auto button = PushButton::create(context, "Button", layout);
                         app->addWindow(window);
-                        FEATHER_TK_ASSERT(app->getWindows().front() == window);
+                        FTK_ASSERT(app->getWindows().front() == window);
                         window->show();
                         window->setSize(Size2I(1920, 1080));
 
@@ -69,7 +69,7 @@ namespace feather_tk
                 catch (const std::exception&)
                 {}
             }
-            FEATHER_TK_ASSERT(0 == r);
+            FTK_ASSERT(0 == r);
         }
     }
 }

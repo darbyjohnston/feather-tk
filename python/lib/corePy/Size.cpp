@@ -4,7 +4,7 @@
 
 #include <corePy/Size.h>
 
-#include <feather-tk/core/Size.h>
+#include <ftk/core/Size.h>
 
 #include <pybind11/pybind11.h>
 #include <pybind11/operators.h>
@@ -14,7 +14,7 @@
 
 namespace py = pybind11;
 
-namespace feather_tk
+namespace ftk
 {
     void size(py::module_& m)
     {

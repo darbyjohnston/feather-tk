@@ -4,20 +4,20 @@
 
 #include <uiTest/IntSliderTest.h>
 
-#include <feather-tk/ui/App.h>
-#include <feather-tk/ui/IntSlider.h>
-#include <feather-tk/ui/RowLayout.h>
-#include <feather-tk/ui/Window.h>
+#include <ftk/ui/App.h>
+#include <ftk/ui/IntSlider.h>
+#include <ftk/ui/RowLayout.h>
+#include <ftk/ui/Window.h>
 
-#include <feather-tk/core/Assert.h>
-#include <feather-tk/core/Format.h>
+#include <ftk/core/Assert.h>
+#include <ftk/core/Format.h>
 
-namespace feather_tk
+namespace ftk
 {
     namespace ui_test
     {
         IntSliderTest::IntSliderTest(const std::shared_ptr<Context>& context) :
-            ITest(context, "feather_tk::ui_test::IntSliderTest")
+            ITest(context, "ftk::ui_test::IntSliderTest")
         {}
 
         IntSliderTest::~IntSliderTest()
@@ -48,21 +48,21 @@ namespace feather_tk
                 app->tick();
 
                 auto slider = IntSlider::create(context, layout);
-                FEATHER_TK_ASSERT(slider->getModel());
+                FTK_ASSERT(slider->getModel());
                 int value = 0;
                 slider->setCallback([&value](int v) { value = v; });
                 slider->setValue(11);
                 app->tick();
-                FEATHER_TK_ASSERT(11 == slider->getValue());
-                FEATHER_TK_ASSERT(11 == value);
+                FTK_ASSERT(11 == slider->getValue());
+                FTK_ASSERT(11 == value);
                 slider->setRange(0, 10);
                 app->tick();
-                FEATHER_TK_ASSERT(RangeI(0, 10) == slider->getRange());
-                FEATHER_TK_ASSERT(10 == value);
+                FTK_ASSERT(RangeI(0, 10) == slider->getRange());
+                FTK_ASSERT(10 == value);
                 slider->setStep(2);
-                FEATHER_TK_ASSERT(2 == slider->getStep());
+                FTK_ASSERT(2 == slider->getStep());
                 slider->setLargeStep(3);
-                FEATHER_TK_ASSERT(3 == slider->getLargeStep());
+                FTK_ASSERT(3 == slider->getLargeStep());
             }
         }
     }

@@ -4,7 +4,7 @@
 
 #include <uiPy/IntSlider.h>
 
-#include <feather-tk/ui/IntSlider.h>
+#include <ftk/ui/IntSlider.h>
 
 #include <pybind11/pybind11.h>
 #include <pybind11/functional.h>
@@ -12,7 +12,7 @@
 
 namespace py = pybind11;
 
-namespace feather_tk
+namespace ftk
 {
     void intSlider(py::module_& m)
     {

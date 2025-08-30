@@ -4,21 +4,21 @@
 
 #include <uiTest/IconTest.h>
 
-#include <feather-tk/ui/App.h>
-#include <feather-tk/ui/Icon.h>
-#include <feather-tk/ui/RowLayout.h>
-#include <feather-tk/ui/Window.h>
+#include <ftk/ui/App.h>
+#include <ftk/ui/Icon.h>
+#include <ftk/ui/RowLayout.h>
+#include <ftk/ui/Window.h>
 
-#include <feather-tk/core/Assert.h>
-#include <feather-tk/core/Format.h>
-#include <feather-tk/core/Time.h>
+#include <ftk/core/Assert.h>
+#include <ftk/core/Format.h>
+#include <ftk/core/Time.h>
 
-namespace feather_tk
+namespace ftk
 {
     namespace ui_test
     {
         IconTest::IconTest(const std::shared_ptr<Context>& context) :
-            ITest(context, "feather_tk::ui_test::IconTest")
+            ITest(context, "ftk::ui_test::IconTest")
         {}
 
         IconTest::~IconTest()
@@ -51,12 +51,12 @@ namespace feather_tk
                 auto widget = Icon::create(context, "PlaybackForward", layout);
                 widget->setIcon("PlaybackStop");
                 widget->setIcon("PlaybackStop");
-                FEATHER_TK_ASSERT("PlaybackStop" == widget->getIcon());
+                FTK_ASSERT("PlaybackStop" == widget->getIcon());
                 widget->setIcon("PlaybackForward");
                 widget->setIcon("PlaybackForward");
                 widget->setMarginRole(SizeRole::Margin);
                 widget->setMarginRole(SizeRole::Margin);
-                FEATHER_TK_ASSERT(SizeRole::Margin == widget->getMarginRole());
+                FTK_ASSERT(SizeRole::Margin == widget->getMarginRole());
                 widget->setMarginRole(SizeRole::None);
 
                 widget->setEnabled(false);

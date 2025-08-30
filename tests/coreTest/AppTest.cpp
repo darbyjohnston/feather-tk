@@ -4,17 +4,17 @@
 
 #include <coreTest/AppTest.h>
 
-#include <feather-tk/core/IApp.h>
-#include <feather-tk/core/CmdLine.h>
+#include <ftk/core/IApp.h>
+#include <ftk/core/CmdLine.h>
 
-#include <feather-tk/core/Assert.h>
+#include <ftk/core/Assert.h>
 
-namespace feather_tk
+namespace ftk
 {
     namespace core_test
     {
         AppTest::AppTest(const std::shared_ptr<Context>& context) :
-            ITest(context, "feather_tk::app_test::AppTest")
+            ITest(context, "ftk::app_test::AppTest")
         {}
 
         AppTest::~AppTest()
@@ -70,7 +70,7 @@ namespace feather_tk
                 IApp::_init(
                     context,
                     argv,
-                    "feather_tk::app_test::App",
+                    "ftk::app_test::App",
                     "Test application",
                     { _arg },
                     { _option });
@@ -103,8 +103,8 @@ namespace feather_tk
                 argv[1][0] = 'b';
                 argv[1][1] = 0;
                 auto r = convert(2, argv);
-                FEATHER_TK_ASSERT("a" == r[0]);
-                FEATHER_TK_ASSERT("b" == r[1]);
+                FTK_ASSERT("a" == r[0]);
+                FTK_ASSERT("b" == r[1]);
                 delete [] argv[0];
                 delete [] argv[1];
             }
@@ -117,8 +117,8 @@ namespace feather_tk
                 argv[1][0] = L'b';
                 argv[1][1] = 0;
                 auto r = convert(2, argv);
-                FEATHER_TK_ASSERT("a" == r[0]);
-                FEATHER_TK_ASSERT("b" == r[1]);
+                FTK_ASSERT("a" == r[0]);
+                FTK_ASSERT("b" == r[1]);
                 delete [] argv[0];
                 delete [] argv[1];
             }
@@ -134,8 +134,8 @@ namespace feather_tk
                 std::vector<std::string> argv = { "app", "arg", "-option", "42" };
                 auto app = App::create(context, argv);
                 app->run();
-                FEATHER_TK_ASSERT("arg" == app->getArg());
-                FEATHER_TK_ASSERT(42 == app->getOption());
+                FTK_ASSERT("arg" == app->getArg());
+                FTK_ASSERT(42 == app->getOption());
             }
             if (auto context = _context.lock())
             {

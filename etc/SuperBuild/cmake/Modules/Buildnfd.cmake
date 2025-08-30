@@ -4,7 +4,7 @@ set(nfd_GIT_REPOSITORY "https://github.com/btzy/nativefiledialog-extended.git")
 set(nfd_GIT_TAG "v1.2.1")
 
 set(nfd_ARGS
-    ${feather_tk_DEPS_ARGS}
+    ${ftk_DEPS_ARGS}
     -DNFD_USE_ALLOWEDCONTENTTYPES_IF_AVAILABLE=OFF
     -DNFD_BUILD_TESTS=OFF)
 

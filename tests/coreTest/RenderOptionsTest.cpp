@@ -4,16 +4,16 @@
 
 #include <coreTest/RenderOptionsTest.h>
 
-#include <feather-tk/core/Assert.h>
-#include <feather-tk/core/Format.h>
-#include <feather-tk/core/RenderOptions.h>
+#include <ftk/core/Assert.h>
+#include <ftk/core/Format.h>
+#include <ftk/core/RenderOptions.h>
 
-namespace feather_tk
+namespace ftk
 {
     namespace core_test
     {
         RenderOptionsTest::RenderOptionsTest(const std::shared_ptr<Context>& context) :
-            ITest(context, "feather_tk::core_test::RenderOptionsTest")
+            ITest(context, "ftk::core_test::RenderOptionsTest")
         {}
 
         RenderOptionsTest::~RenderOptionsTest()
@@ -33,9 +33,9 @@ namespace feather_tk
         
         void RenderOptionsTest::_enums()
         {
-            FEATHER_TK_TEST_ENUM(InputVideoLevels);
-            FEATHER_TK_TEST_ENUM(AlphaBlend);
-            FEATHER_TK_TEST_ENUM(ImageFilter);
+            FTK_TEST_ENUM(InputVideoLevels);
+            FTK_TEST_ENUM(AlphaBlend);
+            FTK_TEST_ENUM(ImageFilter);
         }
         
         void RenderOptionsTest::_operators()
@@ -43,16 +43,16 @@ namespace feather_tk
             {
                 const ImageFilters a;
                 ImageFilters b;
-                FEATHER_TK_ASSERT(a == b);
+                FTK_ASSERT(a == b);
                 b.minify = ImageFilter::Nearest;
-                FEATHER_TK_ASSERT(a != b);
+                FTK_ASSERT(a != b);
             }
             {
                 const ImageOptions a;
                 ImageOptions b;
-                FEATHER_TK_ASSERT(a == b);
+                FTK_ASSERT(a == b);
                 b.cache = false;
-                FEATHER_TK_ASSERT(a != b);
+                FTK_ASSERT(a != b);
             }
         }
     }

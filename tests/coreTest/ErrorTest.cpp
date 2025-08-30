@@ -4,15 +4,15 @@
 
 #include <coreTest/ErrorTest.h>
 
-#include <feather-tk/core/Assert.h>
-#include <feather-tk/core/Error.h>
+#include <ftk/core/Assert.h>
+#include <ftk/core/Error.h>
 
-namespace feather_tk
+namespace ftk
 {
     namespace core_test
     {
         ErrorTest::ErrorTest(const std::shared_ptr<Context>& context) :
-            ITest(context, "feather_tk::core_test::ErrorTest")
+            ITest(context, "ftk::core_test::ErrorTest")
         {}
 
         ErrorTest::~ErrorTest()

@@ -4,20 +4,20 @@
 
 #include <uiTest/ComboBoxTest.h>
 
-#include <feather-tk/ui/App.h>
-#include <feather-tk/ui/ComboBox.h>
-#include <feather-tk/ui/RowLayout.h>
-#include <feather-tk/ui/Window.h>
+#include <ftk/ui/App.h>
+#include <ftk/ui/ComboBox.h>
+#include <ftk/ui/RowLayout.h>
+#include <ftk/ui/Window.h>
 
-#include <feather-tk/core/Assert.h>
-#include <feather-tk/core/Format.h>
+#include <ftk/core/Assert.h>
+#include <ftk/core/Format.h>
 
-namespace feather_tk
+namespace ftk
 {
     namespace ui_test
     {
         ComboBoxTest::ComboBoxTest(const std::shared_ptr<Context>& context) :
-            ITest(context, "feather_tk::ui_test::ComboBoxTest")
+            ITest(context, "ftk::ui_test::ComboBoxTest")
         {}
 
         ComboBoxTest::~ComboBoxTest()
@@ -54,14 +54,14 @@ namespace feather_tk
                     ComboBoxItem("Reverse", "PlaybackReverse")
                 };
                 auto widget = ComboBox::create(context, items, layout);
-                FEATHER_TK_ASSERT(items[0] != ComboBoxItem());
+                FTK_ASSERT(items[0] != ComboBoxItem());
                 widget->setItems(items);
                 widget->setItems(items);
-                FEATHER_TK_ASSERT(items == widget->getItems());
-                FEATHER_TK_ASSERT(0 == widget->getCurrentIndex());
+                FTK_ASSERT(items == widget->getItems());
+                FTK_ASSERT(0 == widget->getCurrentIndex());
                 widget->setCurrentIndex(1);
                 widget->setCurrentIndex(1);
-                FEATHER_TK_ASSERT(1 == widget->getCurrentIndex());
+                FTK_ASSERT(1 == widget->getCurrentIndex());
                 int index = -1;
                 widget->setIndexCallback(
                     [&index](int value)
@@ -76,7 +76,7 @@ namespace feather_tk
                     });
                 widget->setFontRole(FontRole::Mono);
                 widget->setFontRole(FontRole::Mono);
-                FEATHER_TK_ASSERT(FontRole::Mono == widget->getFontRole());
+                FTK_ASSERT(FontRole::Mono == widget->getFontRole());
                 widget->setFontRole(FontRole::Label);
 
                 app->setDisplayScale(2.F);

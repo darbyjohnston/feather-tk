@@ -4,9 +4,9 @@
 
 #pragma once
 
-#include <feather-tk/ui/IWidget.h>
+#include <ftk/ui/IWidget.h>
 
-namespace feather_tk
+namespace ftk
 {
     namespace examples
     {
@@ -29,7 +29,7 @@ namespace feather_tk
                     const std::shared_ptr<IWidget>& parent = nullptr);
 
             private:
-                FEATHER_TK_PRIVATE();
+                FTK_PRIVATE();
             };
         }
     }

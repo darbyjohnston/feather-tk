@@ -4,14 +4,14 @@
 
 #include <uiPy/RadioButton.h>
 
-#include <feather-tk/ui/RadioButton.h>
+#include <ftk/ui/RadioButton.h>
 
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
 
 namespace py = pybind11;
 
-namespace feather_tk
+namespace ftk
 {
     void radioButton(py::module_& m)
     {

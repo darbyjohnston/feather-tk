@@ -4,22 +4,22 @@
 
 #include <uiTest/ButtonTest.h>
 
-#include <feather-tk/ui/CheckBox.h>
-#include <feather-tk/ui/PushButton.h>
-#include <feather-tk/ui/ToolButton.h>
-#include <feather-tk/ui/Tooltip.h>
-#include <feather-tk/ui/Window.h>
+#include <ftk/ui/CheckBox.h>
+#include <ftk/ui/PushButton.h>
+#include <ftk/ui/ToolButton.h>
+#include <ftk/ui/Tooltip.h>
+#include <ftk/ui/Window.h>
 
-#include <feather-tk/core/Assert.h>
-#include <feather-tk/core/Format.h>
-#include <feather-tk/core/Time.h>
+#include <ftk/core/Assert.h>
+#include <ftk/core/Format.h>
+#include <ftk/core/Time.h>
 
-namespace feather_tk
+namespace ftk
 {
     namespace ui_test
     {
         ButtonTest::ButtonTest(const std::shared_ptr<Context>& context) :
-            ITest(context, "feather_tk::ui_test::ButtonTest")
+            ITest(context, "ftk::ui_test::ButtonTest")
         {}
 
         ButtonTest::~ButtonTest()
@@ -68,7 +68,7 @@ namespace feather_tk
                 _test(app, window, layout, button);
                 std::string tooltip = "This is a tooltip";
                 button->setTooltip(tooltip);
-                FEATHER_TK_ASSERT(tooltip == button->getTooltip());
+                FTK_ASSERT(tooltip == button->getTooltip());
                 button->setParent(nullptr);
                 button.reset();
             }
@@ -80,51 +80,51 @@ namespace feather_tk
             const std::shared_ptr<VerticalLayout>& layout,
             const std::shared_ptr<IButton>& button)
         {
-            FEATHER_TK_ASSERT(button->getParent().lock());
-            FEATHER_TK_ASSERT(button->getParentT<Window>());
-            FEATHER_TK_ASSERT(button->getWindow());
+            FTK_ASSERT(button->getParent().lock());
+            FTK_ASSERT(button->getParentT<Window>());
+            FTK_ASSERT(button->getWindow());
 
             std::string text = "Playback";
             button->setText(text);
             button->setText(text);
-            FEATHER_TK_ASSERT(text == button->getText());
+            FTK_ASSERT(text == button->getText());
 
             FontRole fontRole = FontRole::Mono;
             button->setFontRole(fontRole);
             button->setFontRole(fontRole);
-            FEATHER_TK_ASSERT(fontRole == button->getFontRole());
+            FTK_ASSERT(fontRole == button->getFontRole());
 
             button->setCheckable(true);
             button->setCheckable(true);
-            FEATHER_TK_ASSERT(button->isCheckable());
+            FTK_ASSERT(button->isCheckable());
             button->setChecked(true);
             button->setChecked(true);
-            FEATHER_TK_ASSERT(button->isChecked());
+            FTK_ASSERT(button->isChecked());
             button->setCheckable(false);
-            FEATHER_TK_ASSERT(!button->isChecked());
+            FTK_ASSERT(!button->isChecked());
             button->setCheckable(true);
 
             std::string icon = "PlaybackForward";
             button->setIcon(icon);
             button->setIcon(icon);
-            FEATHER_TK_ASSERT(icon == button->getIcon());
+            FTK_ASSERT(icon == button->getIcon());
             icon = "PlaybackStop";
             button->setCheckedIcon(icon);
             button->setCheckedIcon(icon);
-            FEATHER_TK_ASSERT(icon == button->getCheckedIcon());
+            FTK_ASSERT(icon == button->getCheckedIcon());
 
             ColorRole colorRole = ColorRole::Red;
             button->setBackgroundRole(colorRole);
             button->setBackgroundRole(colorRole);
-            FEATHER_TK_ASSERT(colorRole == button->getBackgroundRole());
+            FTK_ASSERT(colorRole == button->getBackgroundRole());
             colorRole = ColorRole::Green;
             button->setButtonRole(colorRole);
             button->setButtonRole(colorRole);
-            FEATHER_TK_ASSERT(colorRole == button->getButtonRole());
+            FTK_ASSERT(colorRole == button->getButtonRole());
             colorRole = ColorRole::Blue;
             button->setCheckedRole(colorRole);
             button->setCheckedRole(colorRole);
-            FEATHER_TK_ASSERT(colorRole == button->getCheckedRole());
+            FTK_ASSERT(colorRole == button->getCheckedRole());
 
             button->hide();
             button->hide();
@@ -144,7 +144,7 @@ namespace feather_tk
             button->setPressedCallback([&pressed] { pressed = true; });
             int clicks = 0;
             button->setRepeatClick(true);
-            FEATHER_TK_ASSERT(button->hasRepeatClick());
+            FTK_ASSERT(button->hasRepeatClick());
             button->setClickedCallback([&clicks] { ++clicks; });
             bool checked = false;
             button->setCheckedCallback([&checked](bool value) { checked = value; });

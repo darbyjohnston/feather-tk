@@ -4,17 +4,17 @@
 
 #include <uiTest/ScrollAreaTest.h>
 
-#include <feather-tk/ui/ScrollArea.h>
+#include <ftk/ui/ScrollArea.h>
 
-#include <feather-tk/core/Assert.h>
-#include <feather-tk/core/Format.h>
+#include <ftk/core/Assert.h>
+#include <ftk/core/Format.h>
 
-namespace feather_tk
+namespace ftk
 {
     namespace ui_test
     {
         ScrollAreaTest::ScrollAreaTest(const std::shared_ptr<Context>& context) :
-            ITest(context, "feather_tk::ui_test::ScrollAreaTest")
+            ITest(context, "ftk::ui_test::ScrollAreaTest")
         {}
 
         ScrollAreaTest::~ScrollAreaTest()
@@ -33,7 +33,7 @@ namespace feather_tk
         
         void ScrollAreaTest::_enums()
         {
-            FEATHER_TK_TEST_ENUM(ScrollType);
+            FTK_TEST_ENUM(ScrollType);
         }
     }
 }

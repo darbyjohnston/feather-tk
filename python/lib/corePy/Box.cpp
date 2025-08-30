@@ -4,14 +4,14 @@
 
 #include <corePy/Box.h>
 
-#include <feather-tk/core/Box.h>
+#include <ftk/core/Box.h>
 
 #include <pybind11/pybind11.h>
 #include <pybind11/operators.h>
 
 namespace py = pybind11;
 
-namespace feather_tk
+namespace ftk
 {
     void box(py::module_& m)
     {

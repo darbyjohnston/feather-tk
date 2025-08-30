@@ -4,8 +4,8 @@
 
 #include "Popups.h"
 
-#include <feather-tk/ui/ComboBox.h>
-#include <feather-tk/ui/ColorSwatch.h>
+#include <ftk/ui/ComboBox.h>
+#include <ftk/ui/ColorSwatch.h>
 
 void Popups::_init(
     const std::shared_ptr<Context>& context,

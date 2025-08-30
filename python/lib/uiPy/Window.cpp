@@ -4,15 +4,15 @@
 
 #include <uiPy/Window.h>
 
-#include <feather-tk/ui/App.h>
-#include <feather-tk/ui/Window.h>
+#include <ftk/ui/App.h>
+#include <ftk/ui/Window.h>
 
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
 
 namespace py = pybind11;
 
-namespace feather_tk
+namespace ftk
 {
     class PyWindow : public Window
     {

@@ -4,9 +4,9 @@
 
 #pragma once
 
-#include <feather-tk/ui/FormLayout.h>
+#include <ftk/ui/FormLayout.h>
 
-using namespace feather_tk;
+using namespace ftk;
 
 class Popups : public IWidget
 {

@@ -4,17 +4,17 @@
 
 #include <coreTest/MatrixTest.h>
 
-#include <feather-tk/core/Assert.h>
-#include <feather-tk/core/Matrix.h>
+#include <ftk/core/Assert.h>
+#include <ftk/core/Matrix.h>
 
 #include <sstream>
 
-namespace feather_tk
+namespace ftk
 {
     namespace core_test
     {
         MatrixTest::MatrixTest(const std::shared_ptr<Context>& context) :
-            ITest(context, "feather_tk::core_test::MatrixTest")
+            ITest(context, "ftk::core_test::MatrixTest")
         {}
 
         MatrixTest::~MatrixTest()
@@ -38,46 +38,46 @@ namespace feather_tk
         {
             {
                 const Matrix<2, 2, float> m;
-                FEATHER_TK_ASSERT(0.F == m.get(0, 0));
-                FEATHER_TK_ASSERT(m.data());
+                FTK_ASSERT(0.F == m.get(0, 0));
+                FTK_ASSERT(m.data());
             }
             {
                 Matrix<2, 2, float> m;
-                FEATHER_TK_ASSERT(0.F == m.get(0, 0));
+                FTK_ASSERT(0.F == m.get(0, 0));
                 m.set(0, 0, 1.F);
-                FEATHER_TK_ASSERT(1.F == m.get(0, 0));
-                FEATHER_TK_ASSERT(m.data());
+                FTK_ASSERT(1.F == m.get(0, 0));
+                FTK_ASSERT(m.data());
             }
             {
                 const M33F m;
-                FEATHER_TK_ASSERT(1.F == m.get(0, 0));
-                FEATHER_TK_ASSERT(m.data());
+                FTK_ASSERT(1.F == m.get(0, 0));
+                FTK_ASSERT(m.data());
             }
             {
                 M33F m;
-                FEATHER_TK_ASSERT(1.F == m.get(0, 0));
+                FTK_ASSERT(1.F == m.get(0, 0));
                 m.set(0, 0, 0.F);
-                FEATHER_TK_ASSERT(0.F == m.get(0, 0));
-                FEATHER_TK_ASSERT(m.data());
+                FTK_ASSERT(0.F == m.get(0, 0));
+                FTK_ASSERT(m.data());
             }
             {
                 const M33F m(
                     1.F, 2.F, 3.F,
                     4.F, 5.F, 6.F,
                     7.F, 8.F, 9.F);
-                FEATHER_TK_ASSERT(9.F == m.get(2, 2));
+                FTK_ASSERT(9.F == m.get(2, 2));
             }
             {
                 const M44F m;
-                FEATHER_TK_ASSERT(1.F == m.get(0, 0));
-                FEATHER_TK_ASSERT(m.data());
+                FTK_ASSERT(1.F == m.get(0, 0));
+                FTK_ASSERT(m.data());
             }
             {
                 M44F m;
-                FEATHER_TK_ASSERT(1.F == m.get(0, 0));
+                FTK_ASSERT(1.F == m.get(0, 0));
                 m.set(0, 0, 0.F);
-                FEATHER_TK_ASSERT(0.F == m.get(0, 0));
-                FEATHER_TK_ASSERT(m.data());
+                FTK_ASSERT(0.F == m.get(0, 0));
+                FTK_ASSERT(m.data());
             }
             {
                 const M44F m(
@@ -85,7 +85,7 @@ namespace feather_tk
                     5.F, 6.F, 7.F, 8.F,
                     9.F, 10.F, 11.F, 12.F,
                     13.F, 14.F, 15.F, 16.F);
-                FEATHER_TK_ASSERT(16.F == m.get(3, 3));
+                FTK_ASSERT(16.F == m.get(3, 3));
             }
         }
 
@@ -105,43 +105,43 @@ namespace feather_tk
             {
                 const auto m33 = translate(V2F(-1.F, -2.F));
                 const auto v2 = V2F(1.F, 2.f) * m33;
-                FEATHER_TK_ASSERT(v2 == V2F(0.F, 0.F));
+                FTK_ASSERT(v2 == V2F(0.F, 0.F));
             }
             {
                 const auto m44 = translate(V3F(-1.F, -2.F, -3.F));
                 const auto v3 = V3F(1.F, 2.F, 3.F) * m44;
-                FEATHER_TK_ASSERT(v3 == V3F(0.F, 0.F, 0.F));
+                FTK_ASSERT(v3 == V3F(0.F, 0.F, 0.F));
             }
             {
                 const auto m44 = rotateX(90.F);
                 const auto v4 = V4F(0.F, 0.F, 1.F) * m44;
-                FEATHER_TK_ASSERT(fuzzyCompare(v4.x, 0.F));
-                FEATHER_TK_ASSERT(fuzzyCompare(v4.y, -1.F));
-                FEATHER_TK_ASSERT(fuzzyCompare(v4.z, 0.F));
-                FEATHER_TK_ASSERT(fuzzyCompare(v4.w, 1.F));
+                FTK_ASSERT(fuzzyCompare(v4.x, 0.F));
+                FTK_ASSERT(fuzzyCompare(v4.y, -1.F));
+                FTK_ASSERT(fuzzyCompare(v4.z, 0.F));
+                FTK_ASSERT(fuzzyCompare(v4.w, 1.F));
             }
             {
                 const auto m44 = rotateY(90.F);
                 const auto v4 = V4F(1.F, 0.F, 0.F) * m44;
-                FEATHER_TK_ASSERT(fuzzyCompare(v4.x, 0.F));
-                FEATHER_TK_ASSERT(fuzzyCompare(v4.y, 0.F));
-                FEATHER_TK_ASSERT(fuzzyCompare(v4.z, -1.F));
-                FEATHER_TK_ASSERT(fuzzyCompare(v4.w, 1.F));
+                FTK_ASSERT(fuzzyCompare(v4.x, 0.F));
+                FTK_ASSERT(fuzzyCompare(v4.y, 0.F));
+                FTK_ASSERT(fuzzyCompare(v4.z, -1.F));
+                FTK_ASSERT(fuzzyCompare(v4.w, 1.F));
             }
             {
                 const auto m44 = rotateZ(90.F);
                 const auto v4 = V4F(1.F, 0.F, 0.F) * m44;
-                FEATHER_TK_ASSERT(fuzzyCompare(v4.x, 0.F));
-                FEATHER_TK_ASSERT(fuzzyCompare(v4.y, -1.F));
-                FEATHER_TK_ASSERT(fuzzyCompare(v4.z, 0.F));
-                FEATHER_TK_ASSERT(fuzzyCompare(v4.w, 1.F));
+                FTK_ASSERT(fuzzyCompare(v4.x, 0.F));
+                FTK_ASSERT(fuzzyCompare(v4.y, -1.F));
+                FTK_ASSERT(fuzzyCompare(v4.z, 0.F));
+                FTK_ASSERT(fuzzyCompare(v4.w, 1.F));
             }
             {
                 M44F a;
                 M44F b;
-                FEATHER_TK_ASSERT(a == b);
+                FTK_ASSERT(a == b);
                 b.set(0, 0, 0.F);
-                FEATHER_TK_ASSERT(a != b);                
+                FTK_ASSERT(a != b);                
             }
         }
         
@@ -153,7 +153,7 @@ namespace feather_tk
                 to_json(json, m);
                 M33F m1;
                 from_json(json, m1);
-                FEATHER_TK_ASSERT(m == m1);
+                FTK_ASSERT(m == m1);
             }
             {
                 const M44F m;
@@ -161,7 +161,7 @@ namespace feather_tk
                 to_json(json, m);
                 M44F m1;
                 from_json(json, m1);
-                FEATHER_TK_ASSERT(m == m1);
+                FTK_ASSERT(m == m1);
             }
             {
                 const M33F m;
@@ -169,7 +169,7 @@ namespace feather_tk
                 ss << m;
                 M33F m1;
                 ss >> m1;
-                FEATHER_TK_ASSERT(m == m1);
+                FTK_ASSERT(m == m1);
             }
             {
                 const M44F m;
@@ -177,7 +177,7 @@ namespace feather_tk
                 ss << m;
                 M44F m1;
                 ss >> m1;
-                FEATHER_TK_ASSERT(m == m1);
+                FTK_ASSERT(m == m1);
             }
         }
     }

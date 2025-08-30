@@ -4,7 +4,7 @@ set(ZLIB_GIT_REPOSITORY "https://github.com/madler/zlib.git")
 set(ZLIB_GIT_TAG "v1.3.1")
 
 set(ZLIB_ARGS
-    ${feather_tk_DEPS_ARGS}
+    ${ftk_DEPS_ARGS}
     -DSKIP_INSTALL_FILES=ON
     -DCMAKE_POSITION_INDEPENDENT_CODE=ON)
 

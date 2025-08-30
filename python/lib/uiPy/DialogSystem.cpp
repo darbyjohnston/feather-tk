@@ -4,8 +4,8 @@
 
 #include <uiPy/DialogSystem.h>
 
-#include <feather-tk/ui/DialogSystem.h>
-#include <feather-tk/ui/Window.h>
+#include <ftk/ui/DialogSystem.h>
+#include <ftk/ui/Window.h>
 
 #include <pybind11/pybind11.h>
 #include <pybind11/functional.h>
@@ -13,7 +13,7 @@
 
 namespace py = pybind11;
 
-namespace feather_tk
+namespace ftk
 {
     void dialogSystem(py::module_& m)
     {

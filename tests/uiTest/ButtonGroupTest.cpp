@@ -4,21 +4,21 @@
 
 #include <uiTest/ButtonGroupTest.h>
 
-#include <feather-tk/ui/App.h>
-#include <feather-tk/ui/ButtonGroup.h>
-#include <feather-tk/ui/RowLayout.h>
-#include <feather-tk/ui/PushButton.h>
-#include <feather-tk/ui/Window.h>
+#include <ftk/ui/App.h>
+#include <ftk/ui/ButtonGroup.h>
+#include <ftk/ui/RowLayout.h>
+#include <ftk/ui/PushButton.h>
+#include <ftk/ui/Window.h>
 
-#include <feather-tk/core/Assert.h>
-#include <feather-tk/core/Format.h>
+#include <ftk/core/Assert.h>
+#include <ftk/core/Format.h>
 
-namespace feather_tk
+namespace ftk
 {
     namespace ui_test
     {
         ButtonGroupTest::ButtonGroupTest(const std::shared_ptr<Context>& context) :
-            ITest(context, "feather_tk::ui_test::ButtonGroupTest")
+            ITest(context, "ftk::ui_test::ButtonGroupTest")
         {}
 
         ButtonGroupTest::~ButtonGroupTest()
@@ -53,9 +53,9 @@ namespace feather_tk
                 auto button2 = PushButton::create(context, "Button 0", layout);
                 auto group = ButtonGroup::create(context, ButtonGroupType::Click);
                 group->addButton(button0);
-                FEATHER_TK_ASSERT(!group->getButtons().empty());
+                FTK_ASSERT(!group->getButtons().empty());
                 group->clearButtons();
-                FEATHER_TK_ASSERT(group->getButtons().empty());
+                FTK_ASSERT(group->getButtons().empty());
                 group->addButton(button0);
                 group->addButton(button1);
                 group->addButton(button2);

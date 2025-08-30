@@ -4,20 +4,20 @@
 
 #include <uiTest/PieChartTest.h>
 
-#include <feather-tk/ui/App.h>
-#include <feather-tk/ui/PieChart.h>
-#include <feather-tk/ui/RowLayout.h>
-#include <feather-tk/ui/Window.h>
+#include <ftk/ui/App.h>
+#include <ftk/ui/PieChart.h>
+#include <ftk/ui/RowLayout.h>
+#include <ftk/ui/Window.h>
 
-#include <feather-tk/core/Assert.h>
-#include <feather-tk/core/Format.h>
+#include <ftk/core/Assert.h>
+#include <ftk/core/Format.h>
 
-namespace feather_tk
+namespace ftk
 {
     namespace ui_test
     {
         PieChartTest::PieChartTest(const std::shared_ptr<Context>& context) :
-            ITest(context, "feather_tk::ui_test::PieChartTest")
+            ITest(context, "ftk::ui_test::PieChartTest")
         {}
 
         PieChartTest::~PieChartTest()
@@ -35,8 +35,8 @@ namespace feather_tk
                 PieChartData a;
                 PieChartData b;
                 b.percentage = 50.F;
-                FEATHER_TK_ASSERT(a == a);
-                FEATHER_TK_ASSERT(a != b);
+                FTK_ASSERT(a == a);
+                FTK_ASSERT(a != b);
             }
             if (auto context = _context.lock())
             {
@@ -61,11 +61,11 @@ namespace feather_tk
                 data.push_back(PieChartData(10.F, Color4F(.8F, 1.F, 0.F)));
                 widget->setData(data);
                 widget->setData(data);
-                FEATHER_TK_ASSERT(data == widget->getData());
+                FTK_ASSERT(data == widget->getData());
                 app->tick();
                 widget->setSizeMult(2);
                 widget->setSizeMult(2);
-                FEATHER_TK_ASSERT(2 == widget->getSizeMult());
+                FTK_ASSERT(2 == widget->getSizeMult());
                 app->tick();
             }
         }

@@ -2,20 +2,20 @@
 // Copyright (c) 2024-2025 Darby Johnston
 // All rights reserved.
 
-#include <feather-tk/ui/App.h>
-#include <feather-tk/ui/Action.h>
-#include <feather-tk/ui/ComboBox.h>
-#include <feather-tk/ui/ColorSwatch.h>
-#include <feather-tk/ui/Divider.h>
-#include <feather-tk/ui/GroupBox.h>
-#include <feather-tk/ui/MainWindow.h>
-#include <feather-tk/ui/MenuBar.h>
-#include <feather-tk/ui/RowLayout.h>
-#include <feather-tk/ui/ScrollWidget.h>
+#include <ftk/ui/App.h>
+#include <ftk/ui/Action.h>
+#include <ftk/ui/ComboBox.h>
+#include <ftk/ui/ColorSwatch.h>
+#include <ftk/ui/Divider.h>
+#include <ftk/ui/GroupBox.h>
+#include <ftk/ui/MainWindow.h>
+#include <ftk/ui/MenuBar.h>
+#include <ftk/ui/RowLayout.h>
+#include <ftk/ui/ScrollWidget.h>
 
-using namespace feather_tk;
+using namespace ftk;
 
-FEATHER_TK_MAIN()
+FTK_MAIN()
 {
     try
     {

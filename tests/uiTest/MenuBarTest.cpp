@@ -4,21 +4,21 @@
 
 #include <uiTest/MenuBarTest.h>
 
-#include <feather-tk/ui/App.h>
-#include <feather-tk/ui/MenuBar.h>
-#include <feather-tk/ui/RowLayout.h>
-#include <feather-tk/ui/Window.h>
+#include <ftk/ui/App.h>
+#include <ftk/ui/MenuBar.h>
+#include <ftk/ui/RowLayout.h>
+#include <ftk/ui/Window.h>
 
-#include <feather-tk/core/Assert.h>
-#include <feather-tk/core/Format.h>
-#include <feather-tk/core/Time.h>
+#include <ftk/core/Assert.h>
+#include <ftk/core/Format.h>
+#include <ftk/core/Time.h>
 
-namespace feather_tk
+namespace ftk
 {
     namespace ui_test
     {
         MenuBarTest::MenuBarTest(const std::shared_ptr<Context>& context) :
-            ITest(context, "feather_tk::ui_test::MenuBarTest")
+            ITest(context, "ftk::ui_test::MenuBarTest")
         {}
 
         MenuBarTest::~MenuBarTest()
@@ -93,11 +93,11 @@ namespace feather_tk
                 app->tick();
 
                 menuBar->shortcut(Key::_4, static_cast<int>(KeyModifier::Control));
-                FEATHER_TK_ASSERT(action4);
+                FTK_ASSERT(action4);
                 menuBar->shortcut(Key::_5, static_cast<int>(KeyModifier::Control));
-                FEATHER_TK_ASSERT(action5);
+                FTK_ASSERT(action5);
                 menuBar->shortcut(Key::_5, static_cast<int>(KeyModifier::Control));
-                FEATHER_TK_ASSERT(!action5);
+                FTK_ASSERT(!action5);
 
                 app->setDisplayScale(2.F);
                 app->tick();

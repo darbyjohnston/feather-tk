@@ -2,7 +2,7 @@
 # Copyright (c) 2024 Darby Johnston
 # All rights reserved.
 
-import feather_tk as ftk
+import ftk
 
 import sys
 
@@ -27,7 +27,7 @@ window.setWidget(scrollWidget)
 
 # Create icons.
 row = 0
-for name in context.getSystemByName("feather_tk::IconSystem").names:
+for name in context.getSystemByName("ftk::IconSystem").names:
     icon = ftk.Icon(context, name, layout)
     layout.setGridPos(icon, row, 0)
     label = ftk.Label(context, name, layout)

@@ -4,14 +4,14 @@
 
 #include <uiPy/MenuBar.h>
 
-#include <feather-tk/ui/MenuBar.h>
+#include <ftk/ui/MenuBar.h>
 
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
 
 namespace py = pybind11;
 
-namespace feather_tk
+namespace ftk
 {
     void menuBar(py::module_& m)
     {

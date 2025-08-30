@@ -4,7 +4,7 @@ set(SDL2_GIT_REPOSITORY "https://github.com/libsdl-org/SDL.git")
 set(SDL2_GIT_TAG "release-2.32.8")
 
 set(SDL2_ARGS
-    ${feather_tk_DEPS_ARGS}
+    ${ftk_DEPS_ARGS}
     -DSDL_ARTS=OFF
     -DSDL_DIRECTX=OFF
     -DSDL_HAPTIC=OFF

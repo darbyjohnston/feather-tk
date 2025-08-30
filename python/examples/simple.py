@@ -2,7 +2,8 @@
 # Copyright (c) 2024 Darby Johnston
 # All rights reserved.
 
-import feather_tk as ftk
+import ftk
+
 import sys
 
 # Create the context and application.

@@ -4,12 +4,12 @@
 
 #include "App.h"
 
-FEATHER_TK_MAIN()
+FTK_MAIN()
 {
     try
     {
-        auto context = feather_tk::Context::create();
-        auto app = feather_tk::examples::textedit::App::create(context, feather_tk::convert(argc, argv));
+        auto context = ftk::Context::create();
+        auto app = ftk::examples::textedit::App::create(context, ftk::convert(argc, argv));
         if (app->getExit() != 0)
             return app->getExit();
         app->run();

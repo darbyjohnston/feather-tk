@@ -4,8 +4,8 @@
 
 #include <uiPy/IWidgetPopup.h>
 
-#include <feather-tk/ui/IWidgetPopup.h>
-#include <feather-tk/ui/IWindow.h>
+#include <ftk/ui/IWidgetPopup.h>
+#include <ftk/ui/IWindow.h>
 
 #include <pybind11/pybind11.h>
 #include <pybind11/functional.h>
@@ -13,7 +13,7 @@
 
 namespace py = pybind11;
 
-namespace feather_tk
+namespace ftk
 {
     void iWidgetPopup(py::module_& m)
     {

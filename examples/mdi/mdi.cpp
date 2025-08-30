@@ -2,19 +2,19 @@
 // Copyright (c) 2024-2025 Darby Johnston
 // All rights reserved.
 
-#include <feather-tk/ui/App.h>
-#include <feather-tk/ui/ColorWidget.h>
-#include <feather-tk/ui/MDICanvas.h>
-#include <feather-tk/ui/MDIWidget.h>
-#include <feather-tk/ui/MainWindow.h>
-#include <feather-tk/ui/ScrollWidget.h>
+#include <ftk/ui/App.h>
+#include <ftk/ui/ColorWidget.h>
+#include <ftk/ui/MDICanvas.h>
+#include <ftk/ui/MDIWidget.h>
+#include <ftk/ui/MainWindow.h>
+#include <ftk/ui/ScrollWidget.h>
 
-#include <feather-tk/core/Format.h>
-#include <feather-tk/core/Random.h>
+#include <ftk/core/Format.h>
+#include <ftk/core/Random.h>
 
-using namespace feather_tk;
+using namespace ftk;
 
-FEATHER_TK_MAIN()
+FTK_MAIN()
 {
     try
     {

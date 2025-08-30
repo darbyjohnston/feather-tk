@@ -4,7 +4,7 @@
 
 #include <uiPy/Bellows.h>
 
-#include <feather-tk/ui/Bellows.h>
+#include <ftk/ui/Bellows.h>
 
 #include <pybind11/pybind11.h>
 #include <pybind11/functional.h>
@@ -12,7 +12,7 @@
 
 namespace py = pybind11;
 
-namespace feather_tk
+namespace ftk
 {
     void bellows(py::module_& m)
     {

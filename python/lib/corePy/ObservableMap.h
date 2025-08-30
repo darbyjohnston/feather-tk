@@ -6,7 +6,7 @@
 
 #include <pybind11/pybind11.h>
 
-namespace feather_tk
+namespace ftk
 {
     template<typename T, typename U>
     void observableMap(pybind11::module_&, const std::string& type);

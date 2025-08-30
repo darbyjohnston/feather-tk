@@ -4,17 +4,17 @@
 
 #include <uiTest/ScrollBarTest.h>
 
-#include <feather-tk/ui/ScrollBar.h>
+#include <ftk/ui/ScrollBar.h>
 
-#include <feather-tk/core/Assert.h>
-#include <feather-tk/core/Format.h>
+#include <ftk/core/Assert.h>
+#include <ftk/core/Format.h>
 
-namespace feather_tk
+namespace ftk
 {
     namespace ui_test
     {
         ScrollBarTest::ScrollBarTest(const std::shared_ptr<Context>& context) :
-            ITest(context, "feather_tk::ui_test::ScrollBarTest")
+            ITest(context, "ftk::ui_test::ScrollBarTest")
         {}
 
         ScrollBarTest::~ScrollBarTest()
@@ -58,10 +58,10 @@ namespace feather_tk
             auto widget = ScrollBar::create(context, orientation, layout);
             widget->setScrollSize(10000);
             widget->setScrollSize(10000);
-            FEATHER_TK_ASSERT(10000 == widget->getScrollSize());
+            FTK_ASSERT(10000 == widget->getScrollSize());
             widget->setScrollPos(1000);
             widget->setScrollPos(1000);
-            FEATHER_TK_ASSERT(1000 == widget->getScrollPos());
+            FTK_ASSERT(1000 == widget->getScrollPos());
 
             widget->setParent(nullptr);
         }

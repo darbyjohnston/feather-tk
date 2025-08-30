@@ -4,17 +4,17 @@
 
 #include <uiTest/IntModelTest.h>
 
-#include <feather-tk/ui/IntModel.h>
+#include <ftk/ui/IntModel.h>
 
-#include <feather-tk/core/Assert.h>
-#include <feather-tk/core/Format.h>
+#include <ftk/core/Assert.h>
+#include <ftk/core/Format.h>
 
-namespace feather_tk
+namespace ftk
 {
     namespace ui_test
     {
         IntModelTest::IntModelTest(const std::shared_ptr<Context>& context) :
-            ITest(context, "feather_tk::ui_test::IntModelTest")
+            ITest(context, "ftk::ui_test::IntModelTest")
         {}
 
         IntModelTest::~IntModelTest()
@@ -55,35 +55,35 @@ namespace feather_tk
                     });
 
                 model->setValue(11);
-                FEATHER_TK_ASSERT(11 == model->getValue());
-                FEATHER_TK_ASSERT(11 == value);
+                FTK_ASSERT(11 == model->getValue());
+                FTK_ASSERT(11 == value);
 
                 model->setRange(RangeI(0, 10));
-                FEATHER_TK_ASSERT(RangeI(0, 10) == model->getRange());
-                FEATHER_TK_ASSERT(RangeI(0, 10) == range);
-                FEATHER_TK_ASSERT(10 == value);
+                FTK_ASSERT(RangeI(0, 10) == model->getRange());
+                FTK_ASSERT(RangeI(0, 10) == range);
+                FTK_ASSERT(10 == value);
 
                 model->setStep(2);
-                FEATHER_TK_ASSERT(2 == model->getStep());
+                FTK_ASSERT(2 == model->getStep());
                 model->decrementStep();
-                FEATHER_TK_ASSERT(8 == value);
+                FTK_ASSERT(8 == value);
                 model->incrementStep();
-                FEATHER_TK_ASSERT(10 == value);
+                FTK_ASSERT(10 == value);
 
                 model->setLargeStep(5);
-                FEATHER_TK_ASSERT(5 == model->getLargeStep());
+                FTK_ASSERT(5 == model->getLargeStep());
                 model->decrementLargeStep();
-                FEATHER_TK_ASSERT(5 == value);
+                FTK_ASSERT(5 == value);
                 model->incrementLargeStep();
-                FEATHER_TK_ASSERT(10 == value);
+                FTK_ASSERT(10 == value);
 
                 model->setDefaultValue(0);
-                FEATHER_TK_ASSERT(0 == model->getDefaultValue());
-                FEATHER_TK_ASSERT(hasDefaultValue);
+                FTK_ASSERT(0 == model->getDefaultValue());
+                FTK_ASSERT(hasDefaultValue);
                 model->setDefaultValue();
-                FEATHER_TK_ASSERT(0 == value);
+                FTK_ASSERT(0 == value);
                 model->clearDefaultValue();
-                FEATHER_TK_ASSERT(!hasDefaultValue);
+                FTK_ASSERT(!hasDefaultValue);
             }
         }
     }

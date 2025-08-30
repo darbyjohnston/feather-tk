@@ -4,12 +4,12 @@
 
 #pragma once
 
-#include <feather-tk/ui/App.h>
-#include <feather-tk/ui/Window.h>
+#include <ftk/ui/App.h>
+#include <ftk/ui/Window.h>
 
 #include <testLib/ITest.h>
 
-namespace feather_tk
+namespace ftk
 {
     namespace ui_test
     {

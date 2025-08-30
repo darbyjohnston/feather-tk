@@ -4,14 +4,12 @@
 
 #include "dnd.h"
 
-#include <feather-tk/ui/DrawUtil.h>
-#include <feather-tk/ui/ScrollWidget.h>
+#include <ftk/ui/DrawUtil.h>
+#include <ftk/ui/ScrollWidget.h>
 
-#include <feather-tk/core/Format.h>
+#include <ftk/core/Format.h>
 
-using namespace feather_tk;
-
-namespace feather_tk
+namespace ftk
 {
     namespace examples
     {
@@ -34,7 +32,7 @@ namespace feather_tk
                 int number,
                 const std::shared_ptr<IWidget>& parent)
             {
-                IWidget::_init(context, "feather_tk::examples::dnd::DragWidget", parent);
+                IWidget::_init(context, "ftk::examples::dnd::DragWidget", parent);
 
                 _setMouseHoverEnabled(true);
                 _setMousePressEnabled(true);
@@ -103,7 +101,7 @@ namespace feather_tk
                 IWidget::mouseMoveEvent(event);
                 if (_isMousePressed())
                 {
-                    const float length = feather_tk::length(event.pos - _getMousePressPos());
+                    const float length = ftk::length(event.pos - _getMousePressPos());
                     if (length > _dragLength)
                     {
                         event.dndData = std::make_shared<DragAndDropData>(
@@ -133,7 +131,7 @@ namespace feather_tk
                 const std::shared_ptr<Context>& context,
                 const std::shared_ptr<IWidget>& parent)
             {
-                IWidget::_init(context, "feather_tk::examples::dnd::ContainerWidget", parent);
+                IWidget::_init(context, "ftk::examples::dnd::ContainerWidget", parent);
 
                 _layout = VerticalLayout::create(context, shared_from_this());
                 _layout->setSpacingRole(SizeRole::None);
@@ -299,7 +297,9 @@ namespace feather_tk
     }
 }
 
-FEATHER_TK_MAIN()
+using namespace ftk;
+
+FTK_MAIN()
 {
     try
     {

@@ -4,14 +4,14 @@
 
 #include <uiPy/GridLayout.h>
 
-#include <feather-tk/ui/GridLayout.h>
+#include <ftk/ui/GridLayout.h>
 
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
 
 namespace py = pybind11;
 
-namespace feather_tk
+namespace ftk
 {
     void gridLayout(py::module_& m)
     {

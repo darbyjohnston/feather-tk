@@ -4,20 +4,20 @@
 
 #include <uiTest/FloatSliderTest.h>
 
-#include <feather-tk/ui/App.h>
-#include <feather-tk/ui/FloatSlider.h>
-#include <feather-tk/ui/RowLayout.h>
-#include <feather-tk/ui/Window.h>
+#include <ftk/ui/App.h>
+#include <ftk/ui/FloatSlider.h>
+#include <ftk/ui/RowLayout.h>
+#include <ftk/ui/Window.h>
 
-#include <feather-tk/core/Assert.h>
-#include <feather-tk/core/Format.h>
+#include <ftk/core/Assert.h>
+#include <ftk/core/Format.h>
 
-namespace feather_tk
+namespace ftk
 {
     namespace ui_test
     {
         FloatSliderTest::FloatSliderTest(const std::shared_ptr<Context>& context) :
-            ITest(context, "feather_tk::ui_test::FloatSliderTest")
+            ITest(context, "ftk::ui_test::FloatSliderTest")
         {}
 
         FloatSliderTest::~FloatSliderTest()
@@ -48,21 +48,21 @@ namespace feather_tk
                 app->tick();
 
                 auto slider = FloatSlider::create(context, layout);
-                FEATHER_TK_ASSERT(slider->getModel());
+                FTK_ASSERT(slider->getModel());
                 float value = 0.F;
                 slider->setCallback([&value](float v) { value = v; });
                 slider->setValue(.9F);
                 app->tick();
-                FEATHER_TK_ASSERT(.9F == slider->getValue());
-                FEATHER_TK_ASSERT(.9F == value);
+                FTK_ASSERT(.9F == slider->getValue());
+                FTK_ASSERT(.9F == value);
                 slider->setRange(0.F, .5F);
                 app->tick();
-                FEATHER_TK_ASSERT(RangeF(0.F, .5F) == slider->getRange());
-                FEATHER_TK_ASSERT(.5F == value);
+                FTK_ASSERT(RangeF(0.F, .5F) == slider->getRange());
+                FTK_ASSERT(.5F == value);
                 slider->setStep(.2F);
-                FEATHER_TK_ASSERT(.2F == slider->getStep());
+                FTK_ASSERT(.2F == slider->getStep());
                 slider->setLargeStep(.3F);
-                FEATHER_TK_ASSERT(.3F == slider->getLargeStep());
+                FTK_ASSERT(.3F == slider->getLargeStep());
             }
         }
     }

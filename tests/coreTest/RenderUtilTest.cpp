@@ -4,19 +4,19 @@
 
 #include <coreTest/RenderUtilTest.h>
 
-#include <feather-tk/core/Assert.h>
-#include <feather-tk/core/Context.h>
-#include <feather-tk/core/IRender.h>
-#include <feather-tk/core/RenderUtil.h>
+#include <ftk/core/Assert.h>
+#include <ftk/core/Context.h>
+#include <ftk/core/IRender.h>
+#include <ftk/core/RenderUtil.h>
 
 #include <iostream>
 
-namespace feather_tk
+namespace ftk
 {
     namespace core_test
     {
         RenderUtilTest::RenderUtilTest(const std::shared_ptr<Context>& context) :
-            ITest(context, "feather_tk::core_test::RenderUtilTest")
+            ITest(context, "ftk::core_test::RenderUtilTest")
         {}
 
         RenderUtilTest::~RenderUtilTest()
@@ -191,9 +191,9 @@ namespace feather_tk
                         RenderSizeState state(render);
                         const Size2I b(1920, 1080);
                         render->setRenderSize(b);
-                        FEATHER_TK_ASSERT(b == render->getRenderSize());
+                        FTK_ASSERT(b == render->getRenderSize());
                     }
-                    FEATHER_TK_ASSERT(a == render->getRenderSize());
+                    FTK_ASSERT(a == render->getRenderSize());
                 }
                 {
                     auto render = Render::create(logSystem);
@@ -203,9 +203,9 @@ namespace feather_tk
                         ViewportState state(render);
                         const Box2I b(0, 0, 640, 480);
                         render->setViewport(b);
-                        FEATHER_TK_ASSERT(b == render->getViewport());
+                        FTK_ASSERT(b == render->getViewport());
                     }
-                    FEATHER_TK_ASSERT(a == render->getViewport());
+                    FTK_ASSERT(a == render->getViewport());
                 }
                 {
                     auto render = Render::create(logSystem);
@@ -213,9 +213,9 @@ namespace feather_tk
                     {
                         ClipRectEnabledState state(render);
                         render->setClipRectEnabled(false);
-                        FEATHER_TK_ASSERT(!render->getClipRectEnabled());
+                        FTK_ASSERT(!render->getClipRectEnabled());
                     }
-                    FEATHER_TK_ASSERT(render->getClipRectEnabled());
+                    FTK_ASSERT(render->getClipRectEnabled());
                 }
                 {
                     auto render = Render::create(logSystem);
@@ -225,9 +225,9 @@ namespace feather_tk
                         ClipRectState state(render);
                         const Box2I b(0, 0, 640, 480);
                         render->setClipRect(b);
-                        FEATHER_TK_ASSERT(b == render->getClipRect());
+                        FTK_ASSERT(b == render->getClipRect());
                     }
-                    FEATHER_TK_ASSERT(a == render->getClipRect());
+                    FTK_ASSERT(a == render->getClipRect());
                 }
                 {
                     auto render = Render::create(logSystem);
@@ -237,9 +237,9 @@ namespace feather_tk
                         TransformState state(render);
                         const M44F b = scale(V3F(2.F, 2.F, 2.F));
                         render->setTransform(b);
-                        FEATHER_TK_ASSERT(b == render->getTransform());
+                        FTK_ASSERT(b == render->getTransform());
                     }
-                    FEATHER_TK_ASSERT(a == render->getTransform());
+                    FTK_ASSERT(a == render->getTransform());
                 }
             }
         }

@@ -4,20 +4,20 @@
 
 #include <glTest/TextureTest.h>
 
-#include <feather-tk/gl/Texture.h>
-#include <feather-tk/gl/Window.h>
+#include <ftk/gl/Texture.h>
+#include <ftk/gl/Window.h>
 
-#include <feather-tk/core/Assert.h>
-#include <feather-tk/core/Format.h>
+#include <ftk/core/Assert.h>
+#include <ftk/core/Format.h>
 
-using namespace feather_tk::gl;
+using namespace ftk::gl;
 
-namespace feather_tk
+namespace ftk
 {
     namespace gl_test
     {
         TextureTest::TextureTest(const std::shared_ptr<Context>& context) :
-            ITest(context, "feather_tk::gl_test::TextureTest")
+            ITest(context, "ftk::gl_test::TextureTest")
         {}
 
         TextureTest::~TextureTest()
@@ -93,14 +93,14 @@ namespace feather_tk
                             arg(data.options.filters.magnify).
                             arg(data.options.pbo));
                         auto texture = Texture::create(data.info, data.options);
-                        FEATHER_TK_ASSERT(data.info == texture->getInfo());
-                        FEATHER_TK_ASSERT(data.info.size == texture->getSize());
-                        FEATHER_TK_ASSERT(data.info.size.w == texture->getWidth());
-                        FEATHER_TK_ASSERT(data.info.size.h == texture->getHeight());
-                        FEATHER_TK_ASSERT(data.info.type == texture->getType());
+                        FTK_ASSERT(data.info == texture->getInfo());
+                        FTK_ASSERT(data.info.size == texture->getSize());
+                        FTK_ASSERT(data.info.size.w == texture->getWidth());
+                        FTK_ASSERT(data.info.size.h == texture->getHeight());
+                        FTK_ASSERT(data.info.type == texture->getType());
                         if (data.info.type != ImageType::None)
                         {
-                            FEATHER_TK_ASSERT(texture->getID());
+                            FTK_ASSERT(texture->getID());
                             auto image = Image::create(data.info);
                             texture->copy(image);
                             texture->copy(image, 0, 0);
@@ -129,9 +129,9 @@ namespace feather_tk
             {
                 const TextureOptions a;
                 TextureOptions b;
-                FEATHER_TK_ASSERT(a == b);
+                FTK_ASSERT(a == b);
                 b.pbo = true;
-                FEATHER_TK_ASSERT(a != b);
+                FTK_ASSERT(a != b);
             }
         }
     }

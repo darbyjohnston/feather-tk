@@ -22,7 +22,7 @@ set(SOURCE
     main.cpp)
 
 add_executable(demo ${HEADERS} ${SOURCE})
-target_link_libraries(demo feather-tk-ui)
+target_link_libraries(demo ftk-ui)
 set_target_properties(demo PROPERTIES FOLDER examples)
 
 add_test(NAME demo COMMAND demo -exit -log)

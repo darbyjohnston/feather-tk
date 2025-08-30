@@ -4,18 +4,18 @@
 
 #include <uiTest/SplitterTest.h>
 
-#include <feather-tk/ui/Label.h>
-#include <feather-tk/ui/Splitter.h>
+#include <ftk/ui/Label.h>
+#include <ftk/ui/Splitter.h>
 
-#include <feather-tk/core/Assert.h>
-#include <feather-tk/core/Format.h>
+#include <ftk/core/Assert.h>
+#include <ftk/core/Format.h>
 
-namespace feather_tk
+namespace ftk
 {
     namespace ui_test
     {
         SplitterTest::SplitterTest(const std::shared_ptr<Context>& context) :
-            ITest(context, "feather_tk::ui_test::SplitterTest")
+            ITest(context, "ftk::ui_test::SplitterTest")
         {}
 
         SplitterTest::~SplitterTest()
@@ -57,7 +57,7 @@ namespace feather_tk
             float split = .9F;
             splitter->setSplit(split);
             splitter->setSplit(split);
-            FEATHER_TK_ASSERT(split == splitter->getSplit());
+            FTK_ASSERT(split == splitter->getSplit());
             app->tick();
 
             auto label0 = Label::create(context, "Label 0", splitter);

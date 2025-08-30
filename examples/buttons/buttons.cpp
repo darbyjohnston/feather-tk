@@ -2,22 +2,22 @@
 // Copyright (c) 2024-2025 Darby Johnston
 // All rights reserved.
 
-#include <feather-tk/ui/App.h>
-#include <feather-tk/ui/ButtonGroup.h>
-#include <feather-tk/ui/CheckBox.h>
-#include <feather-tk/ui/GroupBox.h>
-#include <feather-tk/ui/MainWindow.h>
-#include <feather-tk/ui/PushButton.h>
-#include <feather-tk/ui/RadioButton.h>
-#include <feather-tk/ui/RowLayout.h>
-#include <feather-tk/ui/ScrollWidget.h>
-#include <feather-tk/ui/ToolButton.h>
+#include <ftk/ui/App.h>
+#include <ftk/ui/ButtonGroup.h>
+#include <ftk/ui/CheckBox.h>
+#include <ftk/ui/GroupBox.h>
+#include <ftk/ui/MainWindow.h>
+#include <ftk/ui/PushButton.h>
+#include <ftk/ui/RadioButton.h>
+#include <ftk/ui/RowLayout.h>
+#include <ftk/ui/ScrollWidget.h>
+#include <ftk/ui/ToolButton.h>
 
-#include <feather-tk/core/Format.h>
+#include <ftk/core/Format.h>
 
-using namespace feather_tk;
+using namespace ftk;
 
-FEATHER_TK_MAIN()
+FTK_MAIN()
 {
     try
     {

@@ -4,8 +4,8 @@
 
 #include <uiPy/ConfirmDialog.h>
 
-#include <feather-tk/ui/ConfirmDialog.h>
-#include <feather-tk/ui/Window.h>
+#include <ftk/ui/ConfirmDialog.h>
+#include <ftk/ui/Window.h>
 
 #include <pybind11/pybind11.h>
 #include <pybind11/functional.h>
@@ -13,7 +13,7 @@
 
 namespace py = pybind11;
 
-namespace feather_tk
+namespace ftk
 {
     void confirmDialog(py::module_& m)
     {

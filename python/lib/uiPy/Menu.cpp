@@ -4,14 +4,14 @@
 
 #include <uiPy/Menu.h>
 
-#include <feather-tk/ui/Menu.h>
+#include <ftk/ui/Menu.h>
 
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
 
 namespace py = pybind11;
 
-namespace feather_tk
+namespace ftk
 {
     void menu(py::module_& m)
     {

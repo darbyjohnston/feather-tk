@@ -4,15 +4,15 @@
 
 #include <coreTest/TimeTest.h>
 
-#include <feather-tk/core/Assert.h>
-#include <feather-tk/core/Time.h>
+#include <ftk/core/Assert.h>
+#include <ftk/core/Time.h>
 
-namespace feather_tk
+namespace ftk
 {
     namespace core_test
     {
         TimeTest::TimeTest(const std::shared_ptr<Context>& context) :
-            ITest(context, "feather_tk::core_test::TimeTest")
+            ITest(context, "ftk::core_test::TimeTest")
         {}
 
         TimeTest::~TimeTest()
@@ -40,9 +40,9 @@ namespace feather_tk
 
         void TimeTest::_rational()
         {
-            FEATHER_TK_ASSERT(toRational(24.0) == std::make_pair(24, 1));
-            FEATHER_TK_ASSERT(toRational(24.5) == std::make_pair(24, 1));
-            FEATHER_TK_ASSERT(toRational(30.0) == std::make_pair(30, 1));
+            FTK_ASSERT(toRational(24.0) == std::make_pair(24, 1));
+            FTK_ASSERT(toRational(24.5) == std::make_pair(24, 1));
+            FTK_ASSERT(toRational(30.0) == std::make_pair(30, 1));
         }
     }
 }

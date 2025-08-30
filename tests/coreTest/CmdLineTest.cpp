@@ -4,16 +4,16 @@
 
 #include <coreTest/CmdLineTest.h>
 
-#include <feather-tk/core/CmdLine.h>
+#include <ftk/core/CmdLine.h>
 
-#include <feather-tk/core/Assert.h>
+#include <ftk/core/Assert.h>
 
-namespace feather_tk
+namespace ftk
 {
     namespace core_test
     {
         CmdLineTest::CmdLineTest(const std::shared_ptr<Context>& context) :
-            ITest(context, "feather_tk::app_test::CmdLineTest")
+            ITest(context, "ftk::app_test::CmdLineTest")
         {}
 
         CmdLineTest::~CmdLineTest()
@@ -44,8 +44,8 @@ namespace feather_tk
                 "This is a flag option");
             _print(flagCmdLineOption->getHelp());
             flagCmdLineOption->parse(argv);
-            FEATHER_TK_ASSERT(flagCmdLineOption->found());
-            FEATHER_TK_ASSERT(!flagCmdLineOption->getMatchedName().empty());
+            FTK_ASSERT(flagCmdLineOption->found());
+            FTK_ASSERT(!flagCmdLineOption->getMatchedName().empty());
 
             auto boolCmdLineOption = CmdLineValueOption<bool>::create(
                 { "-boolOption" },
@@ -55,7 +55,7 @@ namespace feather_tk
                 join({ "0", "1" }, ", "));
             _print(boolCmdLineOption->getHelp());
             boolCmdLineOption->parse(argv);
-            FEATHER_TK_ASSERT(boolCmdLineOption->getValue());
+            FTK_ASSERT(boolCmdLineOption->getValue());
 
             auto intCmdLineOption = CmdLineValueOption<int>::create(
                 { "-intOption" },
@@ -64,50 +64,50 @@ namespace feather_tk
                 0);
             _print(intCmdLineOption->getHelp());
             intCmdLineOption->parse(argv);
-            FEATHER_TK_ASSERT(10 == intCmdLineOption->getValue());
+            FTK_ASSERT(10 == intCmdLineOption->getValue());
 
             auto intCmdLineArg = CmdLineValueArg<int>::create(
                 "int",
                 "This is an integer argument");
-            FEATHER_TK_ASSERT(!intCmdLineArg->getName().empty());
-            FEATHER_TK_ASSERT(!intCmdLineArg->isOptional());
+            FTK_ASSERT(!intCmdLineArg->getName().empty());
+            FTK_ASSERT(!intCmdLineArg->isOptional());
             _print(intCmdLineArg->getHelp());
             intCmdLineArg->parse(argv);
-            FEATHER_TK_ASSERT(100 == intCmdLineArg->getValue());
+            FTK_ASSERT(100 == intCmdLineArg->getValue());
 
             auto stringCmdLineArg = CmdLineValueArg<std::string>::create(
                 "string",
                 "This is a string argument");
-            FEATHER_TK_ASSERT(!stringCmdLineArg->getName().empty());
-            FEATHER_TK_ASSERT(!stringCmdLineArg->isOptional());
+            FTK_ASSERT(!stringCmdLineArg->getName().empty());
+            FTK_ASSERT(!stringCmdLineArg->isOptional());
             _print(stringCmdLineArg->getHelp());
             stringCmdLineArg->parse(argv);
-            FEATHER_TK_ASSERT("string" == stringCmdLineArg->getValue());
+            FTK_ASSERT("string" == stringCmdLineArg->getValue());
 
             auto listCmdLineArg = CmdLineListArg<std::string>::create(
                 "list",
                 "This is a list argument");
-            FEATHER_TK_ASSERT(!listCmdLineArg->getName().empty());
-            FEATHER_TK_ASSERT(!listCmdLineArg->isOptional());
+            FTK_ASSERT(!listCmdLineArg->getName().empty());
+            FTK_ASSERT(!listCmdLineArg->isOptional());
             _print(listCmdLineArg->getHelp());
             listCmdLineArg->parse(argv);
             const std::vector<std::string>& list = listCmdLineArg->getList();
-            FEATHER_TK_ASSERT(3 == list.size());
-            FEATHER_TK_ASSERT("list0" == list[0]);
-            FEATHER_TK_ASSERT("list1" == list[1]);
-            FEATHER_TK_ASSERT("list2" == list[2]);
+            FTK_ASSERT(3 == list.size());
+            FTK_ASSERT("list0" == list[0]);
+            FTK_ASSERT("list1" == list[1]);
+            FTK_ASSERT("list2" == list[2]);
 
             try
             {
                 intCmdLineArg->parse(argv);
-                FEATHER_TK_ASSERT(false);
+                FTK_ASSERT(false);
             }
             catch (const std::exception&)
             {}
             try
             {
                 stringCmdLineArg->parse(argv);
-                FEATHER_TK_ASSERT(false);
+                FTK_ASSERT(false);
             }
             catch (const std::exception&)
             {}
@@ -115,7 +115,7 @@ namespace feather_tk
             try
             {
                 intCmdLineOption->parse(argv);
-                FEATHER_TK_ASSERT(false);
+                FTK_ASSERT(false);
             }
             catch (const std::exception&)
             {}

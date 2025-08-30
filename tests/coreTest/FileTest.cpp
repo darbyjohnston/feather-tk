@@ -4,16 +4,16 @@
 
 #include <coreTest/FileTest.h>
 
-#include <feather-tk/core/Assert.h>
-#include <feather-tk/core/File.h>
-#include <feather-tk/core/Format.h>
+#include <ftk/core/Assert.h>
+#include <ftk/core/File.h>
+#include <ftk/core/Format.h>
 
-namespace feather_tk
+namespace ftk
 {
     namespace core_test
     {
         FileTest::FileTest(const std::shared_ptr<Context>& context) :
-            ITest(context, "feather_tk::core_test::FileTest")
+            ITest(context, "ftk::core_test::FileTest")
         {}
 
         FileTest::~FileTest()
@@ -35,74 +35,74 @@ namespace feather_tk
 
         void FileTest::_util()
         {
-            FEATHER_TK_ASSERT(!isDotFile(""));
-            FEATHER_TK_ASSERT(!isDotFile("login"));
-            FEATHER_TK_ASSERT(isDotFile(".login"));
-            FEATHER_TK_ASSERT(isDotFile("."));
-            FEATHER_TK_ASSERT(isDotFile(".."));
+            FTK_ASSERT(!isDotFile(""));
+            FTK_ASSERT(!isDotFile("login"));
+            FTK_ASSERT(isDotFile(".login"));
+            FTK_ASSERT(isDotFile("."));
+            FTK_ASSERT(isDotFile(".."));
         }
 
         void FileTest::_split()
         {
             {
                 const std::vector<std::string> pieces = split("");
-                FEATHER_TK_ASSERT(pieces.empty());
+                FTK_ASSERT(pieces.empty());
             }
             {
                 const std::vector<std::string> pieces = split("/");
-                FEATHER_TK_ASSERT(1 == pieces.size());
-                FEATHER_TK_ASSERT("/" == pieces[0]);
+                FTK_ASSERT(1 == pieces.size());
+                FTK_ASSERT("/" == pieces[0]);
             }
             {
                 const std::vector<std::string> pieces = split("a");
-                FEATHER_TK_ASSERT(1 == pieces.size());
-                FEATHER_TK_ASSERT("a" == pieces[0]);
+                FTK_ASSERT(1 == pieces.size());
+                FTK_ASSERT("a" == pieces[0]);
             }
             {
                 const std::vector<std::string> pieces = split("/a");
-                FEATHER_TK_ASSERT(2 == pieces.size());
-                FEATHER_TK_ASSERT("/" == pieces[0]);
-                FEATHER_TK_ASSERT("a" == pieces[1]);
+                FTK_ASSERT(2 == pieces.size());
+                FTK_ASSERT("/" == pieces[0]);
+                FTK_ASSERT("a" == pieces[1]);
             }
             {
                 const std::vector<std::string> pieces = split("/a/b/c");
-                FEATHER_TK_ASSERT(4 == pieces.size());
-                FEATHER_TK_ASSERT("/" == pieces[0]);
-                FEATHER_TK_ASSERT("a" == pieces[1]);
-                FEATHER_TK_ASSERT("b" == pieces[2]);
-                FEATHER_TK_ASSERT("c" == pieces[3]);
+                FTK_ASSERT(4 == pieces.size());
+                FTK_ASSERT("/" == pieces[0]);
+                FTK_ASSERT("a" == pieces[1]);
+                FTK_ASSERT("b" == pieces[2]);
+                FTK_ASSERT("c" == pieces[3]);
             }
             {
                 const std::vector<std::string> pieces = split("/a/b/c/");
-                FEATHER_TK_ASSERT(4 == pieces.size());
-                FEATHER_TK_ASSERT("/" == pieces[0]);
-                FEATHER_TK_ASSERT("a" == pieces[1]);
-                FEATHER_TK_ASSERT("b" == pieces[2]);
-                FEATHER_TK_ASSERT("c" == pieces[3]);
+                FTK_ASSERT(4 == pieces.size());
+                FTK_ASSERT("/" == pieces[0]);
+                FTK_ASSERT("a" == pieces[1]);
+                FTK_ASSERT("b" == pieces[2]);
+                FTK_ASSERT("c" == pieces[3]);
             }
             {
                 const std::vector<std::string> pieces = split("a/b/c/");
-                FEATHER_TK_ASSERT(3 == pieces.size());
-                FEATHER_TK_ASSERT("a" == pieces[0]);
-                FEATHER_TK_ASSERT("b" == pieces[1]);
-                FEATHER_TK_ASSERT("c" == pieces[2]);
+                FTK_ASSERT(3 == pieces.size());
+                FTK_ASSERT("a" == pieces[0]);
+                FTK_ASSERT("b" == pieces[1]);
+                FTK_ASSERT("c" == pieces[2]);
             }
 #if defined(_WINDOWS)
             {
                 const std::vector<std::string> pieces = split("c:");
-                FEATHER_TK_ASSERT(1 == pieces.size());
-                FEATHER_TK_ASSERT("c:" == pieces[0]);
+                FTK_ASSERT(1 == pieces.size());
+                FTK_ASSERT("c:" == pieces[0]);
             }
             {
                 const std::vector<std::string> pieces = split("c:\\");
-                FEATHER_TK_ASSERT(1 == pieces.size());
-                FEATHER_TK_ASSERT("c:\\" == pieces[0]);
+                FTK_ASSERT(1 == pieces.size());
+                FTK_ASSERT("c:\\" == pieces[0]);
             }
             {
                 const std::vector<std::string> pieces = split("c:\\a");
-                FEATHER_TK_ASSERT(2 == pieces.size());
-                FEATHER_TK_ASSERT("c:\\" == pieces[0]);
-                FEATHER_TK_ASSERT("a" == pieces[1]);
+                FTK_ASSERT(2 == pieces.size());
+                FTK_ASSERT("c:\\" == pieces[0]);
+                FTK_ASSERT("a" == pieces[1]);
             }
 #endif // _WINDOWS
         }

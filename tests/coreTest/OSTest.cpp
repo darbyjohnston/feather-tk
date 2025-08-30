@@ -4,16 +4,16 @@
 
 #include <coreTest/OSTest.h>
 
-#include <feather-tk/core/Assert.h>
-#include <feather-tk/core/OS.h>
-#include <feather-tk/core/String.h>
+#include <ftk/core/Assert.h>
+#include <ftk/core/OS.h>
+#include <ftk/core/String.h>
 
-namespace feather_tk
+namespace ftk
 {
     namespace core_test
     {
         OSTest::OSTest(const std::shared_ptr<Context>& context) :
-            ITest(context, "feather_tk::core_test::OSTest")
+            ITest(context, "ftk::core_test::OSTest")
         {}
 
         OSTest::~OSTest()
@@ -32,22 +32,22 @@ namespace feather_tk
         
         void OSTest::_env()
         {
-            setEnv("FEATHER_TK_OSTEST_ENV", "ABC");
+            setEnv("FTK_OSTEST_ENV", "ABC");
             std::string s;
-            FEATHER_TK_ASSERT(getEnv("FEATHER_TK_OSTEST_ENV", s));
-            FEATHER_TK_ASSERT("ABC" == s);
-            setEnv("FEATHER_TK_OSTEST_ENV", "123");
+            FTK_ASSERT(getEnv("FTK_OSTEST_ENV", s));
+            FTK_ASSERT("ABC" == s);
+            setEnv("FTK_OSTEST_ENV", "123");
             int i = 0;
-            FEATHER_TK_ASSERT(getEnv("FEATHER_TK_OSTEST_ENV", i));
-            FEATHER_TK_ASSERT(123 == i);
-            setEnv("FEATHER_TK_OSTEST_ENV", join({ "A", "B", "C" }, envListSeparator));
+            FTK_ASSERT(getEnv("FTK_OSTEST_ENV", i));
+            FTK_ASSERT(123 == i);
+            setEnv("FTK_OSTEST_ENV", join({ "A", "B", "C" }, envListSeparator));
             std::vector<std::string> l;
-            FEATHER_TK_ASSERT(getEnv("FEATHER_TK_OSTEST_ENV", l));
-            FEATHER_TK_ASSERT(std::vector<std::string>({ "A", "B", "C" }) == l);
-            delEnv("FEATHER_TK_OSTEST_ENV");
-            FEATHER_TK_ASSERT(!getEnv("FEATHER_TK_OSTEST_ENV", s));
-            FEATHER_TK_ASSERT(!getEnv("FEATHER_TK_OSTEST_ENV", i));
-            FEATHER_TK_ASSERT(!getEnv("FEATHER_TK_OSTEST_ENV", l));
+            FTK_ASSERT(getEnv("FTK_OSTEST_ENV", l));
+            FTK_ASSERT(std::vector<std::string>({ "A", "B", "C" }) == l);
+            delEnv("FTK_OSTEST_ENV");
+            FTK_ASSERT(!getEnv("FTK_OSTEST_ENV", s));
+            FTK_ASSERT(!getEnv("FTK_OSTEST_ENV", i));
+            FTK_ASSERT(!getEnv("FTK_OSTEST_ENV", l));
         }
     }
 }

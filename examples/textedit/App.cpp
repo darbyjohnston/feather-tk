@@ -6,14 +6,14 @@
 
 #include "Window.h"
 
-#include <feather-tk/ui/DialogSystem.h>
-#include <feather-tk/ui/FileBrowser.h>
+#include <ftk/ui/DialogSystem.h>
+#include <ftk/ui/FileBrowser.h>
 
-#include <feather-tk/core/FileIO.h>
+#include <ftk/core/FileIO.h>
 
-using namespace feather_tk;
+using namespace ftk;
 
-namespace feather_tk
+namespace ftk
 {
     namespace examples
     {
@@ -28,7 +28,7 @@ namespace feather_tk
                     "Input path.",
                     true);
 
-                feather_tk::App::_init(
+                ftk::App::_init(
                     context,
                     argv,
                     "textedit",

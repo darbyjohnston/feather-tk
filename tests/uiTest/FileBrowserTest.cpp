@@ -4,22 +4,22 @@
 
 #include <uiTest/FileBrowserTest.h>
 
-#include <feather-tk/ui/App.h>
-#include <feather-tk/ui/FileBrowserPrivate.h>
-#include <feather-tk/ui/RecentFilesModel.h>
-#include <feather-tk/ui/RowLayout.h>
-#include <feather-tk/ui/Window.h>
+#include <ftk/ui/App.h>
+#include <ftk/ui/FileBrowserPrivate.h>
+#include <ftk/ui/RecentFilesModel.h>
+#include <ftk/ui/RowLayout.h>
+#include <ftk/ui/Window.h>
 
-#include <feather-tk/core/Assert.h>
-#include <feather-tk/core/Format.h>
-#include <feather-tk/core/Time.h>
+#include <ftk/core/Assert.h>
+#include <ftk/core/Format.h>
+#include <ftk/core/Time.h>
 
-namespace feather_tk
+namespace ftk
 {
     namespace ui_test
     {
         FileBrowserTest::FileBrowserTest(const std::shared_ptr<Context>& context) :
-            ITest(context, "feather_tk::ui_test::FileBrowserTest")
+            ITest(context, "ftk::ui_test::FileBrowserTest")
         {}
 
         FileBrowserTest::~FileBrowserTest()
@@ -42,7 +42,7 @@ namespace feather_tk
 
         void FileBrowserTest::_enums()
         {
-            FEATHER_TK_TEST_ENUM(FileBrowserSort);
+            FTK_TEST_ENUM(FileBrowserSort);
         }
 
         void FileBrowserTest::_shortcuts()
@@ -90,13 +90,13 @@ namespace feather_tk
                 std::filesystem::path path = std::filesystem::current_path();
                 model->setPath(path);
                 model->setPath(path);
-                FEATHER_TK_ASSERT(path == model->getPath());
+                FTK_ASSERT(path == model->getPath());
                 view->reload();
                 FileBrowserOptions options;
                 options.reverseSort = true;
                 model->setOptions(options);
                 model->setOptions(options);
-                FEATHER_TK_ASSERT(options == model->getOptions());
+                FTK_ASSERT(options == model->getOptions());
                 view->setCallback(
                     [&path](const std::filesystem::path& value)
                     {
@@ -143,7 +143,7 @@ namespace feather_tk
                 options.reverseSort = true;
                 model->setOptions(options);
                 model->setOptions(options);
-                FEATHER_TK_ASSERT(options == model->getOptions());
+                FTK_ASSERT(options == model->getOptions());
                 auto recentFilesModel = RecentFilesModel::create(context);
                 fileBrowserWidget->setRecentFilesModel(recentFilesModel);
                 fileBrowserWidget->setCallback(
@@ -182,10 +182,10 @@ namespace feather_tk
                 FileBrowserOptions options;
                 options.reverseSort = true;
                 model->setOptions(options);
-                FEATHER_TK_ASSERT(model->getOptions() == options);
+                FTK_ASSERT(model->getOptions() == options);
                 auto recentFilesModel = RecentFilesModel::create(context);
                 fileBrowser->setRecentFilesModel(recentFilesModel);
-                FEATHER_TK_ASSERT(recentFilesModel == fileBrowser->getRecentFilesModel());
+                FTK_ASSERT(recentFilesModel == fileBrowser->getRecentFilesModel());
                 fileBrowser->setCallback(
                     [&path](const std::filesystem::path& value)
                     {
@@ -200,10 +200,10 @@ namespace feather_tk
 
                 fileBrowser->open(window);
                 app->tick();
-                FEATHER_TK_ASSERT(fileBrowser->isOpen());
+                FTK_ASSERT(fileBrowser->isOpen());
                 fileBrowser->close();
                 app->tick();
-                FEATHER_TK_ASSERT(!fileBrowser->isOpen());
+                FTK_ASSERT(!fileBrowser->isOpen());
             }
         }
     }

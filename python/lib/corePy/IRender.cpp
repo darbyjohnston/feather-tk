@@ -4,7 +4,7 @@
 
 #include <corePy/IRender.h>
 
-#include <feather-tk/core/IRender.h>
+#include <ftk/core/IRender.h>
 
 #include <pybind11/pybind11.h>
 #include <pybind11/operators.h>
@@ -12,7 +12,7 @@
 
 namespace py = pybind11;
 
-namespace feather_tk
+namespace ftk
 {
     void iRender(py::module_& m)
     {

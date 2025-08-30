@@ -4,20 +4,20 @@
 
 #include <uiTest/IntEditTest.h>
 
-#include <feather-tk/ui/App.h>
-#include <feather-tk/ui/IntEdit.h>
-#include <feather-tk/ui/RowLayout.h>
-#include <feather-tk/ui/Window.h>
+#include <ftk/ui/App.h>
+#include <ftk/ui/IntEdit.h>
+#include <ftk/ui/RowLayout.h>
+#include <ftk/ui/Window.h>
 
-#include <feather-tk/core/Assert.h>
-#include <feather-tk/core/Format.h>
+#include <ftk/core/Assert.h>
+#include <ftk/core/Format.h>
 
-namespace feather_tk
+namespace ftk
 {
     namespace ui_test
     {
         IntEditTest::IntEditTest(const std::shared_ptr<Context>& context) :
-            ITest(context, "feather_tk::ui_test::IntEditTest")
+            ITest(context, "ftk::ui_test::IntEditTest")
         {}
 
         IntEditTest::~IntEditTest()
@@ -48,23 +48,23 @@ namespace feather_tk
                 app->tick();
 
                 auto edit = IntEdit::create(context, layout);
-                FEATHER_TK_ASSERT(edit->getModel());
+                FTK_ASSERT(edit->getModel());
                 int value = 0;
                 edit->setCallback([&value](int v) { value = v; });
                 edit->setValue(11);
                 app->tick();
-                FEATHER_TK_ASSERT(11 == edit->getValue());
-                FEATHER_TK_ASSERT(11 == value);
+                FTK_ASSERT(11 == edit->getValue());
+                FTK_ASSERT(11 == value);
                 edit->setRange(0, 10);
                 app->tick();
-                FEATHER_TK_ASSERT(RangeI(0, 10) == edit->getRange());
-                FEATHER_TK_ASSERT(10 == value);
+                FTK_ASSERT(RangeI(0, 10) == edit->getRange());
+                FTK_ASSERT(10 == value);
                 edit->setStep(2);
-                FEATHER_TK_ASSERT(2 == edit->getStep());
+                FTK_ASSERT(2 == edit->getStep());
                 edit->setLargeStep(3);
-                FEATHER_TK_ASSERT(3 == edit->getLargeStep());
+                FTK_ASSERT(3 == edit->getLargeStep());
                 edit->setFontRole(FontRole::Label);
-                FEATHER_TK_ASSERT(FontRole::Label == edit->getFontRole());
+                FTK_ASSERT(FontRole::Label == edit->getFontRole());
                 edit->setFontRole(FontRole::Mono);
             }
         }

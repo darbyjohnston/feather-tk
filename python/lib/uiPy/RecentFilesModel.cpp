@@ -4,9 +4,9 @@
 
 #include <uiPy/RecentFilesModel.h>
 
-#include <feather-tk/ui/RecentFilesModel.h>
+#include <ftk/ui/RecentFilesModel.h>
 
-#include <feather-tk/core/Context.h>
+#include <ftk/core/Context.h>
 
 #include <pybind11/pybind11.h>
 #include <pybind11/functional.h>
@@ -14,7 +14,7 @@
 
 namespace py = pybind11;
 
-namespace feather_tk
+namespace ftk
 {
     void recentFilesModel(py::module_& m)
     {

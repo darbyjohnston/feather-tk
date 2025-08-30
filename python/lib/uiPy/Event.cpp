@@ -4,15 +4,15 @@
 
 #include <uiPy/Event.h>
 
-#include <feather-tk/ui/Event.h>
-#include <feather-tk/ui/IWidget.h>
+#include <ftk/ui/Event.h>
+#include <ftk/ui/IWidget.h>
 
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
 
 namespace py = pybind11;
 
-namespace feather_tk
+namespace ftk
 {
     void event(py::module_& m)
     {

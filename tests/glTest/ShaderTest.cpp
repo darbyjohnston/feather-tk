@@ -4,20 +4,20 @@
 
 #include <glTest/ShaderTest.h>
 
-#include <feather-tk/gl/Shader.h>
-#include <feather-tk/gl/Window.h>
+#include <ftk/gl/Shader.h>
+#include <ftk/gl/Window.h>
 
-#include <feather-tk/core/Assert.h>
-#include <feather-tk/core/Format.h>
+#include <ftk/core/Assert.h>
+#include <ftk/core/Format.h>
 
-using namespace feather_tk::gl;
+using namespace ftk::gl;
 
-namespace feather_tk
+namespace ftk
 {
     namespace gl_test
     {
         ShaderTest::ShaderTest(const std::shared_ptr<Context>& context) :
-            ITest(context, "feather_tk::gl_test::ShaderTest")
+            ITest(context, "ftk::gl_test::ShaderTest")
         {}
 
         ShaderTest::~ShaderTest()
@@ -44,7 +44,7 @@ namespace feather_tk
 
         namespace
         {
-#if defined(FEATHER_TK_API_GL_4_1)
+#if defined(FTK_API_GL_4_1)
             std::string vertexSource = 
                 "#version 410\n"
                 "\n"
@@ -77,7 +77,7 @@ namespace feather_tk
                 "\n"
                 "    outColor = vec4(1.0, 0.0, 0.0, 1.0);\n"
                 "}\n";
-#elif defined(FEATHER_TK_API_GLES_2)
+#elif defined(FTK_API_GLES_2)
             std::string vertexSource =
                 "precision mediump float;\n"
                 "\n"
@@ -108,7 +108,7 @@ namespace feather_tk
                 "\n"
                 "    gl_FragColor = vec4(1.0, 0.0, 0.0, 1.0);\n"
                 "}\n";
-#endif // FEATHER_TK_API_GL_4_1
+#endif // FTK_API_GL_4_1
         }
                
         void ShaderTest::run()
@@ -118,9 +118,9 @@ namespace feather_tk
                 auto window = createWindow(context);
 
                 auto shader = Shader::create(vertexSource, fragmentSource);
-                FEATHER_TK_ASSERT(vertexSource == shader->getVertexSource());
-                FEATHER_TK_ASSERT(fragmentSource == shader->getFragmentSource());
-                FEATHER_TK_ASSERT(shader->getProgram());
+                FTK_ASSERT(vertexSource == shader->getVertexSource());
+                FTK_ASSERT(fragmentSource == shader->getFragmentSource());
+                FTK_ASSERT(shader->getProgram());
                 shader->bind();
                 shader->setUniform("i", 1);
                 shader->setUniform("f", 1.F);
@@ -143,14 +143,14 @@ namespace feather_tk
                 try
                 {
                     auto shader = Shader::create("!", "!");
-                    FEATHER_TK_ASSERT(false);
+                    FTK_ASSERT(false);
                 }
                 catch (const std::exception&)
                 {}
                 try
                 {
                     auto shader = Shader::create(vertexSource, "!");
-                    FEATHER_TK_ASSERT(false);
+                    FTK_ASSERT(false);
                 }
                 catch (const std::exception&)
                 {}

@@ -4,21 +4,21 @@
 
 #include <uiTest/StackLayoutTest.h>
 
-#include <feather-tk/ui/App.h>
-#include <feather-tk/ui/Divider.h>
-#include <feather-tk/ui/StackLayout.h>
-#include <feather-tk/ui/Spacer.h>
-#include <feather-tk/ui/Window.h>
+#include <ftk/ui/App.h>
+#include <ftk/ui/Divider.h>
+#include <ftk/ui/StackLayout.h>
+#include <ftk/ui/Spacer.h>
+#include <ftk/ui/Window.h>
 
-#include <feather-tk/core/Assert.h>
-#include <feather-tk/core/Format.h>
+#include <ftk/core/Assert.h>
+#include <ftk/core/Format.h>
 
-namespace feather_tk
+namespace ftk
 {
     namespace ui_test
     {
         StackLayoutTest::StackLayoutTest(const std::shared_ptr<Context>& context) :
-            ITest(context, "feather_tk::ui_test::StackLayoutTest")
+            ITest(context, "ftk::ui_test::StackLayoutTest")
         {}
 
         StackLayoutTest::~StackLayoutTest()
@@ -50,35 +50,35 @@ namespace feather_tk
                 layout->setMarginRole(SizeRole::Margin);
                 layout->setMarginRole(SizeRole::Margin);
                 layout->setMarginRole(SizeRole::None);
-                FEATHER_TK_ASSERT(SizeRole::None == layout->getMarginRole());
+                FTK_ASSERT(SizeRole::None == layout->getMarginRole());
 
                 auto spacer0 = Spacer::create(context, Orientation::Horizontal, layout);
                 auto spacer1 = Spacer::create(context, Orientation::Horizontal, layout);
                 auto spacer2 = Spacer::create(context, Orientation::Horizontal, layout);
                 app->tick();
-                FEATHER_TK_ASSERT(0 == layout->getCurrentIndex());
-                FEATHER_TK_ASSERT(spacer0->isVisible());
-                FEATHER_TK_ASSERT(!spacer1->isVisible());
-                FEATHER_TK_ASSERT(!spacer2->isVisible());
+                FTK_ASSERT(0 == layout->getCurrentIndex());
+                FTK_ASSERT(spacer0->isVisible());
+                FTK_ASSERT(!spacer1->isVisible());
+                FTK_ASSERT(!spacer2->isVisible());
 
                 layout->setCurrentIndex(1);
                 app->tick();
-                FEATHER_TK_ASSERT(!spacer0->isVisible());
-                FEATHER_TK_ASSERT(spacer1->isVisible());
-                FEATHER_TK_ASSERT(!spacer2->isVisible());
+                FTK_ASSERT(!spacer0->isVisible());
+                FTK_ASSERT(spacer1->isVisible());
+                FTK_ASSERT(!spacer2->isVisible());
 
                 layout->setCurrentWidget(spacer2);
                 app->tick();
-                FEATHER_TK_ASSERT(2 == layout->getCurrentIndex());
-                FEATHER_TK_ASSERT(!spacer0->isVisible());
-                FEATHER_TK_ASSERT(!spacer1->isVisible());
-                FEATHER_TK_ASSERT(spacer2->isVisible());
+                FTK_ASSERT(2 == layout->getCurrentIndex());
+                FTK_ASSERT(!spacer0->isVisible());
+                FTK_ASSERT(!spacer1->isVisible());
+                FTK_ASSERT(spacer2->isVisible());
 
                 spacer2->setParent(nullptr);
                 app->tick();
-                FEATHER_TK_ASSERT(1 == layout->getCurrentIndex());
-                FEATHER_TK_ASSERT(!spacer0->isVisible());
-                FEATHER_TK_ASSERT(spacer1->isVisible());
+                FTK_ASSERT(1 == layout->getCurrentIndex());
+                FTK_ASSERT(!spacer0->isVisible());
+                FTK_ASSERT(spacer1->isVisible());
             }
         }
     }

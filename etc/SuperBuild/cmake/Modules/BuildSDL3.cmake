@@ -4,7 +4,7 @@ set(SDL3_GIT_REPOSITORY "https://github.com/libsdl-org/SDL.git")
 set(SDL3_GIT_TAG "preview-3.1.6")
 
 set(SDL3_ARGS
-    ${feather_tk_DEPS_ARGS}
+    ${ftk_DEPS_ARGS}
     -DSDL_STATIC=ON
     -DSDL_DUMMYVIDEO=OFF
     -DSDL_OPENGL=OFF

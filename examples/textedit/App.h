@@ -4,15 +4,15 @@
 
 #pragma once
 
-#include <feather-tk/ui/App.h>
-#include <feather-tk/ui/Style.h>
+#include <ftk/ui/App.h>
+#include <ftk/ui/Style.h>
 
-#include <feather-tk/core/CmdLine.h>
-#include <feather-tk/core/ObservableValue.h>
+#include <ftk/core/CmdLine.h>
+#include <ftk/core/ObservableValue.h>
 
 #include <filesystem>
 
-namespace feather_tk
+namespace ftk
 {
     namespace examples
     {
@@ -20,7 +20,7 @@ namespace feather_tk
         {
             class Window;
 
-            class App : public feather_tk::App
+            class App : public ftk::App
             {
             protected:
                 void _init(

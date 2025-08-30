@@ -4,7 +4,7 @@
 
 #include <uiPy/IPopup.h>
 
-#include <feather-tk/ui/IPopup.h>
+#include <ftk/ui/IPopup.h>
 
 #include <pybind11/pybind11.h>
 #include <pybind11/functional.h>
@@ -12,7 +12,7 @@
 
 namespace py = pybind11;
 
-namespace feather_tk
+namespace ftk
 {
     void iPopup(py::module_& m)
     {

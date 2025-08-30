@@ -4,12 +4,12 @@
 
 #pragma once
 
-#include <feather-tk/ui/App.h>
-#include <feather-tk/ui/Label.h>
-#include <feather-tk/ui/MainWindow.h>
-#include <feather-tk/ui/RowLayout.h>
+#include <ftk/ui/App.h>
+#include <ftk/ui/Label.h>
+#include <ftk/ui/MainWindow.h>
+#include <ftk/ui/RowLayout.h>
 
-namespace feather_tk
+namespace ftk
 {
     namespace examples
     {
@@ -17,7 +17,7 @@ namespace feather_tk
         {
             class DragWidget;
 
-            class DragAndDropData : public feather_tk::DragAndDropData
+            class DragAndDropData : public ftk::DragAndDropData
             {
             public:
                 DragAndDropData(const std::shared_ptr<DragWidget>&);

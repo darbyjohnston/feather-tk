@@ -4,14 +4,14 @@
 
 #include <corePy/Memory.h>
 
-#include <feather-tk/core/Memory.h>
+#include <ftk/core/Memory.h>
 
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
 
 namespace py = pybind11;
 
-namespace feather_tk
+namespace ftk
 {
     void memory(py::module_& m)
     {

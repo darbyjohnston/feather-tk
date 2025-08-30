@@ -4,18 +4,18 @@
 
 #include <coreTest/FileIOTest.h>
 
-#include <feather-tk/core/Assert.h>
-#include <feather-tk/core/FileIO.h>
-#include <feather-tk/core/Format.h>
+#include <ftk/core/Assert.h>
+#include <ftk/core/FileIO.h>
+#include <ftk/core/Format.h>
 
 #include <limits>
 
-namespace feather_tk
+namespace ftk
 {
     namespace core_test
     {
         FileIOTest::FileIOTest(const std::shared_ptr<Context>& context) :
-            ITest(context, "feather_tk::core_test::FileIOTest")
+            ITest(context, "ftk::core_test::FileIOTest")
         {}
 
         FileIOTest::~FileIOTest()
@@ -37,8 +37,8 @@ namespace feather_tk
         
         void FileIOTest::_enums()
         {
-            FEATHER_TK_TEST_ENUM(FileMode);
-            FEATHER_TK_TEST_ENUM(FileRead);
+            FTK_TEST_ENUM(FileMode);
+            FTK_TEST_ENUM(FileRead);
         }
         
         void FileIOTest::_members()
@@ -48,18 +48,18 @@ namespace feather_tk
                 {
                     const std::filesystem::path path = "FileIOTest";
                     auto fileIO = FileIO::create(path, FileMode::Write);
-                    FEATHER_TK_ASSERT(fileIO->isOpen());
-                    FEATHER_TK_ASSERT(path == fileIO->getPath());
-                    FEATHER_TK_ASSERT(0 == fileIO->getPos());
+                    FTK_ASSERT(fileIO->isOpen());
+                    FTK_ASSERT(path == fileIO->getPath());
+                    FTK_ASSERT(0 == fileIO->getPos());
                     fileIO->write("Hello");
                     fileIO->setPos(0);
-                    FEATHER_TK_ASSERT(0 == fileIO->getPos());
+                    FTK_ASSERT(0 == fileIO->getPos());
                     fileIO->seek(1);
                     fileIO->seek(1);
-                    FEATHER_TK_ASSERT(2 == fileIO->getPos());
-                    FEATHER_TK_ASSERT(!fileIO->isEOF());
+                    FTK_ASSERT(2 == fileIO->getPos());
+                    FTK_ASSERT(!fileIO->isEOF());
                     fileIO->setPos(5);                    
-                    FEATHER_TK_ASSERT(fileIO->isEOF());
+                    FTK_ASSERT(fileIO->isEOF());
                     fileIO.reset();
                     
                     fileIO = FileIO::create(path, FileMode::Append);
@@ -68,12 +68,12 @@ namespace feather_tk
 
                     fileIO = FileIO::create(path, FileMode::Read, fileRead);
                     const size_t size = fileIO->getSize();
-                    FEATHER_TK_ASSERT(11 == size);
+                    FTK_ASSERT(11 == size);
                     if (FileRead::MemoryMapped == fileRead)
                     {
-                        FEATHER_TK_ASSERT(fileIO->getMemoryStart());
-                        FEATHER_TK_ASSERT(fileIO->getMemoryEnd());
-                        FEATHER_TK_ASSERT(fileIO->getMemoryP());
+                        FTK_ASSERT(fileIO->getMemoryStart());
+                        FTK_ASSERT(fileIO->getMemoryEnd());
+                        FTK_ASSERT(fileIO->getMemoryP());
                     }
                     std::string contents;
                     while (!fileIO->isEOF())
@@ -82,15 +82,15 @@ namespace feather_tk
                         fileIO->read(&c, 1);
                         contents.push_back(c);
                     }
-                    FEATHER_TK_ASSERT(contents == "Hello world");
+                    FTK_ASSERT(contents == "Hello world");
                     fileIO->setPos(0);
-                    FEATHER_TK_ASSERT(0 == fileIO->getPos());
+                    FTK_ASSERT(0 == fileIO->getPos());
                     fileIO->seek(1);
                     fileIO->seek(1);
-                    FEATHER_TK_ASSERT(2 == fileIO->getPos());
-                    FEATHER_TK_ASSERT(!fileIO->isEOF());
+                    FTK_ASSERT(2 == fileIO->getPos());
+                    FTK_ASSERT(!fileIO->isEOF());
                     fileIO->setPos(fileIO->getSize());                    
-                    FEATHER_TK_ASSERT(fileIO->isEOF());
+                    FTK_ASSERT(fileIO->isEOF());
                     fileIO.reset();
 
                     InMemoryFile memoryRead((uint8_t*)contents.data(), contents.size());
@@ -102,7 +102,7 @@ namespace feather_tk
                         fileIO->read(&c, 1);
                         contents2.push_back(c);
                     }
-                    FEATHER_TK_ASSERT(contents2 == "Hello world");
+                    FTK_ASSERT(contents2 == "Hello world");
                 }
                 {
                     const std::filesystem::path path = "FileIOTest2";
@@ -138,48 +138,48 @@ namespace feather_tk
                     fileIO->read32(&i32b, 1);
                     fileIO->readU32(&u32b, 1);
                     fileIO->readF32(&fb, 1);
-                    FEATHER_TK_ASSERT(i8 == i8b);
-                    FEATHER_TK_ASSERT(u8 == u8b);
-                    FEATHER_TK_ASSERT(i16 == i16b);
-                    FEATHER_TK_ASSERT(u16 == u16b);
-                    FEATHER_TK_ASSERT(i32 == i32b);
-                    FEATHER_TK_ASSERT(u32 == u32b);
-                    FEATHER_TK_ASSERT(f == fb);
+                    FTK_ASSERT(i8 == i8b);
+                    FTK_ASSERT(u8 == u8b);
+                    FTK_ASSERT(i16 == i16b);
+                    FTK_ASSERT(u16 == u16b);
+                    FTK_ASSERT(i32 == i32b);
+                    FTK_ASSERT(u32 == u32b);
+                    FTK_ASSERT(f == fb);
                 }
                 {
                     const std::filesystem::path path = "FileIOTest3";
                     auto fileIO = FileIO::create(path, FileMode::Write);
                     uint32_t u32 = 1;
-                    FEATHER_TK_ASSERT(!fileIO->hasEndianConversion());
+                    FTK_ASSERT(!fileIO->hasEndianConversion());
                     fileIO->setEndianConversion(true);
-                    FEATHER_TK_ASSERT(fileIO->hasEndianConversion());
+                    FTK_ASSERT(fileIO->hasEndianConversion());
                     fileIO->writeU32(u32);
                     fileIO.reset();
 
                     fileIO = FileIO::create(path, FileMode::Read, fileRead);
                     uint32_t u32b = 0;
                     fileIO->readU32(&u32b, 1);
-                    FEATHER_TK_ASSERT(u32 != u32b);
+                    FTK_ASSERT(u32 != u32b);
                     fileIO.reset();
 
                     fileIO = FileIO::create(path, FileMode::Read, fileRead);
                     fileIO->setEndianConversion(true);
                     u32b = 0;
                     fileIO->readU32(&u32b, 1);
-                    FEATHER_TK_ASSERT(u32 == u32b);
+                    FTK_ASSERT(u32 == u32b);
                     fileIO.reset();
 
                     fileIO = FileIO::create(path, FileMode::ReadWrite, fileRead);
                     fileIO->setEndianConversion(true);
                     u32b = 0;
                     fileIO->readU32(&u32b, 1);
-                    FEATHER_TK_ASSERT(u32 == u32b);
+                    FTK_ASSERT(u32 == u32b);
                 }
                 try
                 {
                     const std::filesystem::path path = "FileIOTest4";
                     auto fileIO = FileIO::create(path, FileMode::Read, fileRead);
-                    FEATHER_TK_ASSERT(false);
+                    FTK_ASSERT(false);
                 }
                 catch (const std::exception&)
                 {}
@@ -194,7 +194,7 @@ namespace feather_tk
                     fileIO = FileIO::create(path, FileMode::Read, fileRead);
                     uint8_t u8 = 0;
                     fileIO->readU8(&u8, 1);
-                    FEATHER_TK_ASSERT(false);
+                    FTK_ASSERT(false);
                 }
                 catch (const std::exception&)
                 {}
@@ -207,7 +207,7 @@ namespace feather_tk
                     fileIO = FileIO::create(path, FileMode::ReadWrite, fileRead);
                     uint8_t u8 = 0;
                     fileIO->readU8(&u8, 1);
-                    FEATHER_TK_ASSERT(false);
+                    FTK_ASSERT(false);
                 }
                 catch (const std::exception&)
                 {}
@@ -217,7 +217,7 @@ namespace feather_tk
                     const std::filesystem::path path = "FileIOTest7";
                     auto fileIO = FileIO::create(path, FileMode::Read, fileRead);
                     fileIO->writeU8(1);
-                    FEATHER_TK_ASSERT(false);
+                    FTK_ASSERT(false);
                 }
                 catch (const std::exception&)
                 {}
@@ -230,7 +230,7 @@ namespace feather_tk
                     fileIO = FileIO::create(path, FileMode::Read, fileRead);
                     uint8_t c = 0;
                     fileIO->readU8(&c);
-                    FEATHER_TK_ASSERT(1 == c);
+                    FTK_ASSERT(1 == c);
                 }
             }
         }
@@ -245,7 +245,7 @@ namespace feather_tk
 
                 fileIO = FileIO::create(path, FileMode::Read);
                 std::string contents = read(fileIO);
-                FEATHER_TK_ASSERT(contents == "Hello world");
+                FTK_ASSERT(contents == "Hello world");
             }
             {
                 const std::filesystem::path path = "FileIOTest9";
@@ -260,9 +260,9 @@ namespace feather_tk
                     auto io = FileIO::create(path, FileMode::Read, readType);
                     char buf[cStringSize];
                     readWord(io, buf);
-                    FEATHER_TK_ASSERT(std::string("Hello") == std::string(buf));
+                    FTK_ASSERT(std::string("Hello") == std::string(buf));
                     readWord(io, buf);
-                    FEATHER_TK_ASSERT(std::string("world") == std::string(buf));
+                    FTK_ASSERT(std::string("world") == std::string(buf));
                 }
             }
             {
@@ -273,7 +273,7 @@ namespace feather_tk
 
                 fileIO = FileIO::create(path, FileMode::Read);
                 std::string line = readLine(fileIO);
-                FEATHER_TK_ASSERT(line == "Hello world");
+                FTK_ASSERT(line == "Hello world");
             }
             {
                 const std::filesystem::path path = "FileIOTest11";
@@ -281,7 +281,7 @@ namespace feather_tk
                 contents.push_back("Hello");
                 contents.push_back("World");
                 writeLines(path, contents);
-                FEATHER_TK_ASSERT(contents == readLines(path));
+                FTK_ASSERT(contents == readLines(path));
             }
             {
                 const std::filesystem::path path = "FileIOTest12";
@@ -292,7 +292,7 @@ namespace feather_tk
                 truncateFile(path, 5);
                 fileIO = FileIO::create(path, FileMode::ReadWrite);
                 std::string contents = read(fileIO);
-                FEATHER_TK_ASSERT(contents == "Hello");
+                FTK_ASSERT(contents == "Hello");
             }
         }
         
@@ -302,9 +302,9 @@ namespace feather_tk
                 std::string contents = "Hello world";
                 InMemoryFile a((uint8_t*)contents.data(), contents.size());
                 InMemoryFile b((uint8_t*)contents.data(), contents.size());
-                FEATHER_TK_ASSERT(a == b);
+                FTK_ASSERT(a == b);
                 b = InMemoryFile();
-                FEATHER_TK_ASSERT(a != b);
+                FTK_ASSERT(a != b);
             }
         }
     }

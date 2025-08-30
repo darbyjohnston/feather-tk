@@ -2,16 +2,16 @@
 // Copyright (c) 2024-2025 Darby Johnston
 // All rights reserved.
 
-#include <feather-tk/ui/App.h>
-#include <feather-tk/ui/Label.h>
-#include <feather-tk/ui/MainWindow.h>
-#include <feather-tk/ui/Splitter.h>
+#include <ftk/ui/App.h>
+#include <ftk/ui/Label.h>
+#include <ftk/ui/MainWindow.h>
+#include <ftk/ui/Splitter.h>
 
-#include <feather-tk/core/Format.h>
+#include <ftk/core/Format.h>
 
-using namespace feather_tk;
+using namespace ftk;
 
-FEATHER_TK_MAIN()
+FTK_MAIN()
 {
     try
     {

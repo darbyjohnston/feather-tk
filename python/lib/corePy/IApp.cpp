@@ -4,16 +4,16 @@
 
 #include <corePy/IApp.h>
 
-#include <feather-tk/core/CmdLine.h>
-#include <feather-tk/core/Context.h>
-#include <feather-tk/core/IApp.h>
+#include <ftk/core/CmdLine.h>
+#include <ftk/core/Context.h>
+#include <ftk/core/IApp.h>
 
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
 
 namespace py = pybind11;
 
-namespace feather_tk
+namespace ftk
 {
     void iApp(py::module_& m)
     {

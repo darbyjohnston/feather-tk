@@ -4,22 +4,22 @@
 
 #include <uiTest/TabWidgetTest.h>
 
-#include <feather-tk/ui/App.h>
-#include <feather-tk/ui/Label.h>
-#include <feather-tk/ui/RowLayout.h>
-#include <feather-tk/ui/TabBar.h>
-#include <feather-tk/ui/TabWidget.h>
-#include <feather-tk/ui/Window.h>
+#include <ftk/ui/App.h>
+#include <ftk/ui/Label.h>
+#include <ftk/ui/RowLayout.h>
+#include <ftk/ui/TabBar.h>
+#include <ftk/ui/TabWidget.h>
+#include <ftk/ui/Window.h>
 
-#include <feather-tk/core/Assert.h>
-#include <feather-tk/core/Format.h>
+#include <ftk/core/Assert.h>
+#include <ftk/core/Format.h>
 
-namespace feather_tk
+namespace ftk
 {
     namespace ui_test
     {
         TabWidgetTest::TabWidgetTest(const std::shared_ptr<Context>& context) :
-            ITest(context, "feather_tk::ui_test::TabWidgetTest")
+            ITest(context, "ftk::ui_test::TabWidgetTest")
         {}
 
         TabWidgetTest::~TabWidgetTest()
@@ -63,14 +63,14 @@ namespace feather_tk
                 };
                 widget->setTabs(tabs);
                 widget->setTabs(tabs);
-                FEATHER_TK_ASSERT(tabs == widget->getTabs());
+                FTK_ASSERT(tabs == widget->getTabs());
                 app->tick();
                 widget->addTab("Tab 2");
                 tabs.push_back("Tab 2");
-                FEATHER_TK_ASSERT(tabs == widget->getTabs());
+                FTK_ASSERT(tabs == widget->getTabs());
                 app->tick();
                 widget->clearTabs();
-                FEATHER_TK_ASSERT(widget->getTabs().empty());
+                FTK_ASSERT(widget->getTabs().empty());
                 app->tick();
                 widget->setTabs(tabs);
                 int tab = 0;
@@ -81,7 +81,7 @@ namespace feather_tk
                     });
                 widget->setCurrentTab(2);
                 widget->setCurrentTab(2);
-                FEATHER_TK_ASSERT(2 == widget->getCurrentTab());
+                FTK_ASSERT(2 == widget->getCurrentTab());
                 app->tick();
             }
         }
@@ -114,10 +114,10 @@ namespace feather_tk
                 widget->addTab(tabs[0], label0);
                 auto label1 = Label::create(context, "Label 1");
                 widget->addTab(tabs[1], label1);
-                FEATHER_TK_ASSERT(tabs == widget->getTabs());
+                FTK_ASSERT(tabs == widget->getTabs());
                 app->tick();
                 widget->clearTabs();
-                FEATHER_TK_ASSERT(widget->getTabs().empty());
+                FTK_ASSERT(widget->getTabs().empty());
                 app->tick();
                 widget->addTab(tabs[0], label0);
                 widget->addTab(tabs[1], label1);
@@ -129,7 +129,7 @@ namespace feather_tk
                     });
                 widget->setCurrentTab(1);
                 widget->setCurrentTab(1);
-                FEATHER_TK_ASSERT(1 == widget->getCurrentTab());
+                FTK_ASSERT(1 == widget->getCurrentTab());
                 app->tick();
             }
         }

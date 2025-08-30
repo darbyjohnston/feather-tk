@@ -4,17 +4,17 @@
 
 #include <coreTest/ImageIOTest.h>
 
-#include <feather-tk/core/Assert.h>
-#include <feather-tk/core/Context.h>
-#include <feather-tk/core/Format.h>
-#include <feather-tk/core/ImageIO.h>
+#include <ftk/core/Assert.h>
+#include <ftk/core/Context.h>
+#include <ftk/core/Format.h>
+#include <ftk/core/ImageIO.h>
 
-namespace feather_tk
+namespace ftk
 {
     namespace core_test
     {
         ImageIOTest::ImageIOTest(const std::shared_ptr<Context>& context) :
-            ITest(context, "feather_tk::core_test::ImageIOTest")
+            ITest(context, "ftk::core_test::ImageIOTest")
         {}
 
         ImageIOTest::~ImageIOTest()
@@ -73,9 +73,9 @@ namespace feather_tk
             ImageIOOptions options2;
             options2["Compression"] = "RLE";
             ImageIOOptions options3 = merge(options, options2);
-            FEATHER_TK_ASSERT(2 == options3.size());
-            FEATHER_TK_ASSERT(options3["Layer"] == "1");
-            FEATHER_TK_ASSERT(options3["Compression"] == "RLE");
+            FTK_ASSERT(2 == options3.size());
+            FTK_ASSERT(options3["Layer"] == "1");
+            FTK_ASSERT(options3["Compression"] == "RLE");
         }
     }
 }

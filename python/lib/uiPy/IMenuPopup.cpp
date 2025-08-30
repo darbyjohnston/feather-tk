@@ -4,8 +4,8 @@
 
 #include <uiPy/IMenuPopup.h>
 
-#include <feather-tk/ui/IMenuPopup.h>
-#include <feather-tk/ui/IWindow.h>
+#include <ftk/ui/IMenuPopup.h>
+#include <ftk/ui/IWindow.h>
 
 #include <pybind11/pybind11.h>
 #include <pybind11/functional.h>
@@ -13,7 +13,7 @@
 
 namespace py = pybind11;
 
-namespace feather_tk
+namespace ftk
 {
     void iMenuPopup(py::module_& m)
     {

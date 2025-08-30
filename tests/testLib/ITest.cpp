@@ -6,7 +6,7 @@
 
 #include <iostream>
 
-namespace feather_tk
+namespace ftk
 {
     namespace test
     {

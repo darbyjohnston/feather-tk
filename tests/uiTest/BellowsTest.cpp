@@ -4,21 +4,21 @@
 
 #include <uiTest/BellowsTest.h>
 
-#include <feather-tk/ui/App.h>
-#include <feather-tk/ui/Bellows.h>
-#include <feather-tk/ui/Label.h>
-#include <feather-tk/ui/RowLayout.h>
-#include <feather-tk/ui/Window.h>
+#include <ftk/ui/App.h>
+#include <ftk/ui/Bellows.h>
+#include <ftk/ui/Label.h>
+#include <ftk/ui/RowLayout.h>
+#include <ftk/ui/Window.h>
 
-#include <feather-tk/core/Assert.h>
-#include <feather-tk/core/Format.h>
+#include <ftk/core/Assert.h>
+#include <ftk/core/Format.h>
 
-namespace feather_tk
+namespace ftk
 {
     namespace ui_test
     {
         BellowsTest::BellowsTest(const std::shared_ptr<Context>& context) :
-            ITest(context, "feather_tk::ui_test::BellowsTest")
+            ITest(context, "ftk::ui_test::BellowsTest")
         {}
 
         BellowsTest::~BellowsTest()
@@ -50,14 +50,14 @@ namespace feather_tk
 
                 auto bellows = Bellows::create(context, "Bellows", layout);
                 bellows->setText("Test");
-                FEATHER_TK_ASSERT("Test" == bellows->getText());
+                FTK_ASSERT("Test" == bellows->getText());
                 auto label = Label::create(context, "Label");
                 bellows->setWidget(label);
                 bellows->setWidget(label);
-                FEATHER_TK_ASSERT(label == bellows->getWidget());
+                FTK_ASSERT(label == bellows->getWidget());
                 bellows->setOpen(true);
                 bellows->setOpen(true);
-                FEATHER_TK_ASSERT(bellows->isOpen());
+                FTK_ASSERT(bellows->isOpen());
                 bellows->setOpen(false);
 
                 bellows->hide();

@@ -4,19 +4,19 @@
 
 #include <uiTest/IWidgetTest.h>
 
-#include <feather-tk/ui/App.h>
-#include <feather-tk/ui/RowLayout.h>
-#include <feather-tk/ui/Window.h>
+#include <ftk/ui/App.h>
+#include <ftk/ui/RowLayout.h>
+#include <ftk/ui/Window.h>
 
-#include <feather-tk/core/Assert.h>
-#include <feather-tk/core/Format.h>
+#include <ftk/core/Assert.h>
+#include <ftk/core/Format.h>
 
-namespace feather_tk
+namespace ftk
 {
     namespace ui_test
     {
         IWidgetTest::IWidgetTest(const std::shared_ptr<Context>& context) :
-            ITest(context, "feather_tk::ui_test::IWidgetTest")
+            ITest(context, "ftk::ui_test::IWidgetTest")
         {}
 
         IWidgetTest::~IWidgetTest()
@@ -67,48 +67,48 @@ namespace feather_tk
                 app->tick();
 
                 auto widget0 = Widget::create(context, layout);
-                FEATHER_TK_ASSERT(0 == layout->getChildIndex(widget0));
+                FTK_ASSERT(0 == layout->getChildIndex(widget0));
                 auto widget1 = Widget::create(context, layout);
-                FEATHER_TK_ASSERT(1 == layout->getChildIndex(widget1));
+                FTK_ASSERT(1 == layout->getChildIndex(widget1));
                 auto widget2 = Widget::create(context, layout);
-                FEATHER_TK_ASSERT(2 == layout->getChildIndex(widget2));
+                FTK_ASSERT(2 == layout->getChildIndex(widget2));
                 app->tick();
 
                 layout->moveToBack(widget2);
                 app->tick();
-                FEATHER_TK_ASSERT(0 == layout->getChildIndex(widget2));
-                FEATHER_TK_ASSERT(1 == layout->getChildIndex(widget0));
-                FEATHER_TK_ASSERT(2 == layout->getChildIndex(widget1));
+                FTK_ASSERT(0 == layout->getChildIndex(widget2));
+                FTK_ASSERT(1 == layout->getChildIndex(widget0));
+                FTK_ASSERT(2 == layout->getChildIndex(widget1));
 
                 layout->moveToFront(widget2);
                 app->tick();
-                FEATHER_TK_ASSERT(0 == layout->getChildIndex(widget0));
-                FEATHER_TK_ASSERT(1 == layout->getChildIndex(widget1));
-                FEATHER_TK_ASSERT(2 == layout->getChildIndex(widget2));
+                FTK_ASSERT(0 == layout->getChildIndex(widget0));
+                FTK_ASSERT(1 == layout->getChildIndex(widget1));
+                FTK_ASSERT(2 == layout->getChildIndex(widget2));
 
                 layout->moveToIndex(widget2, 2);
                 app->tick();
-                FEATHER_TK_ASSERT(0 == layout->getChildIndex(widget0));
-                FEATHER_TK_ASSERT(1 == layout->getChildIndex(widget1));
-                FEATHER_TK_ASSERT(2 == layout->getChildIndex(widget2));
+                FTK_ASSERT(0 == layout->getChildIndex(widget0));
+                FTK_ASSERT(1 == layout->getChildIndex(widget1));
+                FTK_ASSERT(2 == layout->getChildIndex(widget2));
 
                 layout->moveToIndex(widget2, 3);
                 app->tick();
-                FEATHER_TK_ASSERT(0 == layout->getChildIndex(widget0));
-                FEATHER_TK_ASSERT(1 == layout->getChildIndex(widget1));
-                FEATHER_TK_ASSERT(2 == layout->getChildIndex(widget2));
+                FTK_ASSERT(0 == layout->getChildIndex(widget0));
+                FTK_ASSERT(1 == layout->getChildIndex(widget1));
+                FTK_ASSERT(2 == layout->getChildIndex(widget2));
 
                 layout->moveToIndex(widget2, 1);
                 app->tick();
-                FEATHER_TK_ASSERT(0 == layout->getChildIndex(widget0));
-                FEATHER_TK_ASSERT(1 == layout->getChildIndex(widget2));
-                FEATHER_TK_ASSERT(2 == layout->getChildIndex(widget1));
+                FTK_ASSERT(0 == layout->getChildIndex(widget0));
+                FTK_ASSERT(1 == layout->getChildIndex(widget2));
+                FTK_ASSERT(2 == layout->getChildIndex(widget1));
 
                 layout->moveToIndex(widget0, 1);
                 app->tick();
-                FEATHER_TK_ASSERT(0 == layout->getChildIndex(widget2));
-                FEATHER_TK_ASSERT(1 == layout->getChildIndex(widget0));
-                FEATHER_TK_ASSERT(2 == layout->getChildIndex(widget1));
+                FTK_ASSERT(0 == layout->getChildIndex(widget2));
+                FTK_ASSERT(1 == layout->getChildIndex(widget0));
+                FTK_ASSERT(2 == layout->getChildIndex(widget1));
             }
         }
     }

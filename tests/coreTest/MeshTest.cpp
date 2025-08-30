@@ -4,15 +4,15 @@
 
 #include <coreTest/MeshTest.h>
 
-#include <feather-tk/core/Assert.h>
-#include <feather-tk/core/Mesh.h>
+#include <ftk/core/Assert.h>
+#include <ftk/core/Mesh.h>
 
-namespace feather_tk
+namespace ftk
 {
     namespace core_test
     {
         MeshTest::MeshTest(const std::shared_ptr<Context>& context) :
-            ITest(context, "feather_tk::core_test::MeshTest")
+            ITest(context, "ftk::core_test::MeshTest")
         {}
 
         MeshTest::~MeshTest()
@@ -34,29 +34,29 @@ namespace feather_tk
         {
             {
                 const Vertex2 v;
-                FEATHER_TK_ASSERT(0 == v.v);
-                FEATHER_TK_ASSERT(0 == v.t);
-                FEATHER_TK_ASSERT(0 == v.c);
+                FTK_ASSERT(0 == v.v);
+                FTK_ASSERT(0 == v.t);
+                FTK_ASSERT(0 == v.c);
             }
             {
                 const Vertex2 v(1, 2, 3);
-                FEATHER_TK_ASSERT(1 == v.v);
-                FEATHER_TK_ASSERT(2 == v.t);
-                FEATHER_TK_ASSERT(3 == v.c);
+                FTK_ASSERT(1 == v.v);
+                FTK_ASSERT(2 == v.t);
+                FTK_ASSERT(3 == v.c);
             }
             {
                 const Vertex3 v;
-                FEATHER_TK_ASSERT(0 == v.v);
-                FEATHER_TK_ASSERT(0 == v.t);
-                FEATHER_TK_ASSERT(0 == v.n);
-                FEATHER_TK_ASSERT(0 == v.c);
+                FTK_ASSERT(0 == v.v);
+                FTK_ASSERT(0 == v.t);
+                FTK_ASSERT(0 == v.n);
+                FTK_ASSERT(0 == v.c);
             }
             {
                 const Vertex3 v(1, 2, 3, 4);
-                FEATHER_TK_ASSERT(1 == v.v);
-                FEATHER_TK_ASSERT(2 == v.t);
-                FEATHER_TK_ASSERT(3 == v.n);
-                FEATHER_TK_ASSERT(4 == v.c);
+                FTK_ASSERT(1 == v.v);
+                FTK_ASSERT(2 == v.t);
+                FTK_ASSERT(3 == v.n);
+                FTK_ASSERT(4 == v.c);
             }
         }
         

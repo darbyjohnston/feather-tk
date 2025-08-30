@@ -6,15 +6,15 @@
 
 #include "App.h"
 
-#include <feather-tk/ui/Divider.h>
-#include <feather-tk/ui/FileBrowser.h>
-#include <feather-tk/ui/MenuBar.h>
-#include <feather-tk/ui/RowLayout.h>
-#include <feather-tk/ui/ScrollWidget.h>
+#include <ftk/ui/Divider.h>
+#include <ftk/ui/FileBrowser.h>
+#include <ftk/ui/MenuBar.h>
+#include <ftk/ui/RowLayout.h>
+#include <ftk/ui/ScrollWidget.h>
 
-using namespace feather_tk;
+using namespace ftk;
 
-namespace feather_tk
+namespace ftk
 {
     namespace examples
     {

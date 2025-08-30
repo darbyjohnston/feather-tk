@@ -4,21 +4,21 @@
 
 #include <glTest/MeshTest.h>
 
-#include <feather-tk/gl/GL.h>
-#include <feather-tk/gl/Mesh.h>
-#include <feather-tk/gl/Window.h>
+#include <ftk/gl/GL.h>
+#include <ftk/gl/Mesh.h>
+#include <ftk/gl/Window.h>
 
-#include <feather-tk/core/Assert.h>
-#include <feather-tk/core/Format.h>
+#include <ftk/core/Assert.h>
+#include <ftk/core/Format.h>
 
-using namespace feather_tk::gl;
+using namespace ftk::gl;
 
-namespace feather_tk
+namespace ftk
 {
     namespace gl_test
     {
         MeshTest::MeshTest(const std::shared_ptr<Context>& context) :
-            ITest(context, "feather_tk::gl_test::MeshTest")
+            ITest(context, "ftk::gl_test::MeshTest")
         {}
 
         MeshTest::~MeshTest()
@@ -52,7 +52,7 @@ namespace feather_tk
         
         void MeshTest::_enums()
         {
-            FEATHER_TK_TEST_ENUM(VBOType);
+            FTK_TEST_ENUM(VBOType);
             for (auto i : getVBOTypeEnums())
             {
                 _print(Format("{0} byte count: {1}").arg(i).arg(getByteCount(i)));
@@ -101,19 +101,19 @@ namespace feather_tk
             {
                 auto window = createWindow(context);
                 {
-                    auto mesh = feather_tk::mesh(Box2F(0.F, 0.F, 1.F, 1.F));
+                    auto mesh = ftk::mesh(Box2F(0.F, 0.F, 1.F, 1.F));
                     for (auto type : getVBOTypeEnums())
                     {
                         const size_t size = mesh.triangles.size() * 3;
                         auto vbo = VBO::create(size, type);
-                        FEATHER_TK_ASSERT(size == vbo->getSize());
-                        FEATHER_TK_ASSERT(type == vbo->getType());
-                        FEATHER_TK_ASSERT(vbo->getID());
+                        FTK_ASSERT(size == vbo->getSize());
+                        FTK_ASSERT(type == vbo->getType());
+                        FTK_ASSERT(vbo->getID());
                         auto data = convert(mesh, type);
                         vbo->copy(data);
                         vbo->copy(data, 0, getByteCount(type));
                         auto vao = VAO::create(type, vbo->getID());
-                        FEATHER_TK_ASSERT(vao->getID());
+                        FTK_ASSERT(vao->getID());
                         vao->bind();
                         vao->draw(GL_TRIANGLES, 0, 3);
                     }
@@ -124,7 +124,7 @@ namespace feather_tk
         void MeshTest::_functions()
         {
             {
-                const auto mesh = feather_tk::mesh(Box2F(0.F, 0.F, 1.F, 1.F));
+                const auto mesh = ftk::mesh(Box2F(0.F, 0.F, 1.F, 1.F));
                 for (auto type : getVBOTypeEnums())
                 {
                     auto data = convert(mesh, type);

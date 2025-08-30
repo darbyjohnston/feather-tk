@@ -4,9 +4,9 @@
 
 #include "TextWidget.h"
 
-using namespace feather_tk;
+using namespace ftk;
 
-namespace feather_tk
+namespace ftk
 {
     namespace examples
     {
@@ -19,7 +19,7 @@ namespace feather_tk
                 const std::shared_ptr<Context>& context,
                 const std::shared_ptr<IWidget>& parent)
             {
-                IWidget::_init(context, "feather_tk::examples::textedit::TextWidget", parent);
+                IWidget::_init(context, "ftk::examples::textedit::TextWidget", parent);
             }
 
             TextWidget::TextWidget() :

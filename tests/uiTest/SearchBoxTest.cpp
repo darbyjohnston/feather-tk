@@ -4,20 +4,20 @@
 
 #include <uiTest/SearchBoxTest.h>
 
-#include <feather-tk/ui/App.h>
-#include <feather-tk/ui/SearchBox.h>
-#include <feather-tk/ui/RowLayout.h>
-#include <feather-tk/ui/Window.h>
+#include <ftk/ui/App.h>
+#include <ftk/ui/SearchBox.h>
+#include <ftk/ui/RowLayout.h>
+#include <ftk/ui/Window.h>
 
-#include <feather-tk/core/Assert.h>
-#include <feather-tk/core/Format.h>
+#include <ftk/core/Assert.h>
+#include <ftk/core/Format.h>
 
-namespace feather_tk
+namespace ftk
 {
     namespace ui_test
     {
         SearchBoxTest::SearchBoxTest(const std::shared_ptr<Context>& context) :
-            ITest(context, "feather_tk::ui_test::SearchBoxTest")
+            ITest(context, "ftk::ui_test::SearchBoxTest")
         {}
 
         SearchBoxTest::~SearchBoxTest()
@@ -56,7 +56,7 @@ namespace feather_tk
                     });
                 widget->setText("Search");
                 widget->setText("Search");
-                FEATHER_TK_ASSERT("Search" == widget->getText());
+                FTK_ASSERT("Search" == widget->getText());
             }
         }
     }

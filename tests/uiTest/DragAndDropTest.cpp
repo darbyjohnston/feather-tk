@@ -4,15 +4,15 @@
 
 #include <uiTest/DragAndDropTest.h>
 
-#include <feather-tk/ui/App.h>
-#include <feather-tk/ui/RowLayout.h>
-#include <feather-tk/ui/Spacer.h>
-#include <feather-tk/ui/Window.h>
+#include <ftk/ui/App.h>
+#include <ftk/ui/RowLayout.h>
+#include <ftk/ui/Spacer.h>
+#include <ftk/ui/Window.h>
 
-#include <feather-tk/core/Assert.h>
-#include <feather-tk/core/Format.h>
+#include <ftk/core/Assert.h>
+#include <ftk/core/Format.h>
 
-namespace feather_tk
+namespace ftk
 {
     namespace ui_test
     {
@@ -55,7 +55,7 @@ namespace feather_tk
                 const std::string& text,
                 const std::shared_ptr<IWidget>& parent)
             {
-                IWidget::_init(context, "feather_tk::examples::dnd::DragAndDropWidget", parent);
+                IWidget::_init(context, "ftk::examples::dnd::DragAndDropWidget", parent);
                 setStretch(Stretch::Expanding);
                 _setMouseHoverEnabled(true);
                 _setMousePressEnabled(true);
@@ -92,7 +92,7 @@ namespace feather_tk
                 IWidget::mouseMoveEvent(event);
                 if (_isMousePressed())
                 {
-                    const float length = feather_tk::length(event.pos - _getMousePressPos());
+                    const float length = ftk::length(event.pos - _getMousePressPos());
                     if (length > _dragLength)
                     {
                         event.dndData = std::make_shared<TextDragAndDropData>(_text);
@@ -140,7 +140,7 @@ namespace feather_tk
         }
 
         DragAndDropTest::DragAndDropTest(const std::shared_ptr<Context>& context) :
-            ITest(context, "feather_tk::ui_test::DragAndDropTest")
+            ITest(context, "ftk::ui_test::DragAndDropTest")
         {}
 
         DragAndDropTest::~DragAndDropTest()

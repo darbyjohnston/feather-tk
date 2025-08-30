@@ -4,19 +4,19 @@
 
 #include <uiTest/DrawUtilTest.h>
 
-#include <feather-tk/ui/App.h>
-#include <feather-tk/ui/DrawUtil.h>
-#include <feather-tk/ui/Window.h>
+#include <ftk/ui/App.h>
+#include <ftk/ui/DrawUtil.h>
+#include <ftk/ui/Window.h>
 
-#include <feather-tk/core/Assert.h>
-#include <feather-tk/core/Format.h>
+#include <ftk/core/Assert.h>
+#include <ftk/core/Format.h>
 
-namespace feather_tk
+namespace ftk
 {
     namespace ui_test
     {
         DrawUtilTest::DrawUtilTest(const std::shared_ptr<Context>& context) :
-            ITest(context, "feather_tk::ui_test::DrawUtilTest")
+            ITest(context, "ftk::ui_test::DrawUtilTest")
         {}
 
         DrawUtilTest::~DrawUtilTest()
@@ -45,7 +45,7 @@ namespace feather_tk
                     const std::shared_ptr<IWidget>& parent = nullptr)
                 {
                     auto out = std::shared_ptr<DrawWidget>(new DrawWidget);
-                    out->_init(context, "feather_tk::ui_test::DrawWidget", parent);
+                    out->_init(context, "ftk::ui_test::DrawWidget", parent);
                     return out;
                 }
 

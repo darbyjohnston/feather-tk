@@ -4,17 +4,17 @@
 
 #include <uiTest/RecentFilesModelTest.h>
 
-#include <feather-tk/ui/RecentFilesModel.h>
+#include <ftk/ui/RecentFilesModel.h>
 
-#include <feather-tk/core/Assert.h>
-#include <feather-tk/core/Format.h>
+#include <ftk/core/Assert.h>
+#include <ftk/core/Format.h>
 
-namespace feather_tk
+namespace ftk
 {
     namespace ui_test
     {
         RecentFilesModelTest::RecentFilesModelTest(const std::shared_ptr<Context>& context) :
-            ITest(context, "feather_tk::ui_test::RecentFilesModelTest")
+            ITest(context, "ftk::ui_test::RecentFilesModelTest")
         {}
 
         RecentFilesModelTest::~RecentFilesModelTest()
@@ -49,8 +49,8 @@ namespace feather_tk
 
                 model->setRecentMax(2);
                 model->setRecentMax(2);
-                FEATHER_TK_ASSERT(2 == model->getRecentMax());
-                FEATHER_TK_ASSERT(2 == recentMax);
+                FTK_ASSERT(2 == model->getRecentMax());
+                FTK_ASSERT(2 == recentMax);
 
                 std::vector<std::filesystem::path> recent2;
                 recent2.push_back("path 0");
@@ -60,20 +60,20 @@ namespace feather_tk
                 recent2.clear();
                 recent2.push_back("path 1");
                 recent2.push_back("path 2");
-                FEATHER_TK_ASSERT(recent2 == model->getRecent());
-                FEATHER_TK_ASSERT(recent2 == recent);
+                FTK_ASSERT(recent2 == model->getRecent());
+                FTK_ASSERT(recent2 == recent);
                 model->addRecent("path 3");
                 recent2.clear();
                 recent2.push_back("path 2");
                 recent2.push_back("path 3");
-                FEATHER_TK_ASSERT(recent2 == recent);
+                FTK_ASSERT(recent2 == recent);
 
                 model->setRecentMax(1);
                 recent2.clear();
                 recent2.push_back("path 3");
-                FEATHER_TK_ASSERT(recent2 == recent);
+                FTK_ASSERT(recent2 == recent);
                 model->addRecent("path 3");
-                FEATHER_TK_ASSERT(recent2 == recent);
+                FTK_ASSERT(recent2 == recent);
             }
         }
     }

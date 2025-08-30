@@ -4,14 +4,14 @@
 
 #include <uiPy/Label.h>
 
-#include <feather-tk/ui/Label.h>
+#include <ftk/ui/Label.h>
 
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
 
 namespace py = pybind11;
 
-namespace feather_tk
+namespace ftk
 {
     void label(py::module_& m)
     {

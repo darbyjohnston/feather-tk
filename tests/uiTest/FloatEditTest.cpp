@@ -4,20 +4,20 @@
 
 #include <uiTest/FloatEditTest.h>
 
-#include <feather-tk/ui/App.h>
-#include <feather-tk/ui/FloatEdit.h>
-#include <feather-tk/ui/RowLayout.h>
-#include <feather-tk/ui/Window.h>
+#include <ftk/ui/App.h>
+#include <ftk/ui/FloatEdit.h>
+#include <ftk/ui/RowLayout.h>
+#include <ftk/ui/Window.h>
 
-#include <feather-tk/core/Assert.h>
-#include <feather-tk/core/Format.h>
+#include <ftk/core/Assert.h>
+#include <ftk/core/Format.h>
 
-namespace feather_tk
+namespace ftk
 {
     namespace ui_test
     {
         FloatEditTest::FloatEditTest(const std::shared_ptr<Context>& context) :
-            ITest(context, "feather_tk::ui_test::FloatEditTest")
+            ITest(context, "ftk::ui_test::FloatEditTest")
         {}
 
         FloatEditTest::~FloatEditTest()
@@ -48,27 +48,27 @@ namespace feather_tk
                 app->tick();
 
                 auto edit = FloatEdit::create(context, layout);
-                FEATHER_TK_ASSERT(edit->getModel());
+                FTK_ASSERT(edit->getModel());
                 float value = 0.F;
                 edit->setCallback([&value](float v) { value = v; });
                 edit->setValue(.9F);
                 app->tick();
-                FEATHER_TK_ASSERT(.9F == edit->getValue());
-                FEATHER_TK_ASSERT(.9F == value);
+                FTK_ASSERT(.9F == edit->getValue());
+                FTK_ASSERT(.9F == value);
                 edit->setRange(0.F, .5F);
                 app->tick();
-                FEATHER_TK_ASSERT(RangeF(0.F, .5F) == edit->getRange());
-                FEATHER_TK_ASSERT(.5F == value);
+                FTK_ASSERT(RangeF(0.F, .5F) == edit->getRange());
+                FTK_ASSERT(.5F == value);
                 edit->setStep(.2F);
-                FEATHER_TK_ASSERT(.2F == edit->getStep());
+                FTK_ASSERT(.2F == edit->getStep());
                 edit->setLargeStep(.3F);
-                FEATHER_TK_ASSERT(.3F == edit->getLargeStep());
+                FTK_ASSERT(.3F == edit->getLargeStep());
                 edit->setPrecision(3);
                 edit->setPrecision(3);
-                FEATHER_TK_ASSERT(3 == edit->getPrecision());
+                FTK_ASSERT(3 == edit->getPrecision());
                 edit->setPrecision(2);
                 edit->setFontRole(FontRole::Label);
-                FEATHER_TK_ASSERT(FontRole::Label == edit->getFontRole());
+                FTK_ASSERT(FontRole::Label == edit->getFontRole());
                 edit->setFontRole(FontRole::Mono);
             }
         }

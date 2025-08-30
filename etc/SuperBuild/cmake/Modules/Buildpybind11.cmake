@@ -4,7 +4,7 @@ set(pybind11_GIT_REPOSITORY "https://github.com/pybind/pybind11.git")
 set(pybind11_GIT_TAG "v2.13.6")
 
 set(pybind11_ARGS
-    ${feather_tk_DEPS_ARGS}
+    ${ftk_DEPS_ARGS}
     -DPYBIND11_TEST=OFF)
 
 ExternalProject_Add(

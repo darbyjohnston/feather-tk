@@ -6,7 +6,7 @@
 
 #include <testLib/ITest.h>
 
-namespace feather_tk
+namespace ftk
 {
     namespace gl_test
     {

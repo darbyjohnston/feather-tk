@@ -4,13 +4,13 @@
 
 #include <uiPy/WidgetOptions.h>
 
-#include <feather-tk/ui/IWidget.h>
+#include <ftk/ui/IWidget.h>
 
 #include <pybind11/pybind11.h>
 
 namespace py = pybind11;
 
-namespace feather_tk
+namespace ftk
 {
     void widgetOptions(py::module_& m)
     {

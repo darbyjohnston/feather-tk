@@ -1,6 +1,6 @@
 set(HEADERS
-    feather-tk/glad/glad.h
-    feather-tk/KHR/khrplatform.h)
+    ftk/glad/glad.h
+    ftk/KHR/khrplatform.h)
 
 set(SOURCE
     src/glad.c)
@@ -18,13 +18,13 @@ install(
 install(
     EXPORT gladTargets
     FILE gladTargets.cmake
-    DESTINATION "share/feather-tk"
-    NAMESPACE feather-tk::)
+    DESTINATION "share/ftk"
+    NAMESPACE ftk::)
 install(
     DIRECTORY
-    "${CMAKE_CURRENT_SOURCE_DIR}/feather-tk/glad"
-    DESTINATION "include/feather-tk")
+    "${CMAKE_CURRENT_SOURCE_DIR}/ftk/glad"
+    DESTINATION "include/ftk")
 install(
     DIRECTORY
-    "${CMAKE_CURRENT_SOURCE_DIR}/feather-tk/KHR"
-    DESTINATION "include/feather-tk")
+    "${CMAKE_CURRENT_SOURCE_DIR}/ftk/KHR"
+    DESTINATION "include/ftk")

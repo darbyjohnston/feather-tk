@@ -4,19 +4,19 @@
 
 #include <glTest/WindowTest.h>
 
-#include <feather-tk/gl/Window.h>
+#include <ftk/gl/Window.h>
 
-#include <feather-tk/core/Assert.h>
-#include <feather-tk/core/Format.h>
+#include <ftk/core/Assert.h>
+#include <ftk/core/Format.h>
 
-using namespace feather_tk::gl;
+using namespace ftk::gl;
 
-namespace feather_tk
+namespace ftk
 {
     namespace gl_test
     {
         WindowTest::WindowTest(const std::shared_ptr<Context>& context) :
-            ITest(context, "feather_tk::gl_test::WindowTest")
+            ITest(context, "ftk::gl_test::WindowTest")
         {}
 
         WindowTest::~WindowTest()
@@ -34,7 +34,7 @@ namespace feather_tk
             {
                 Size2I size(1024, 1024);
                 auto window = Window::create(context, "WindowTest", size);
-                FEATHER_TK_ASSERT(window->getID());
+                FTK_ASSERT(window->getID());
                 _print(Format("Screen: {0}").arg(window->getScreen()));
                 _print(Format("Full screen: {0}").arg(window->isFullScreen()));
                 _print(Format("Float on top: {0}").arg(window->isFloatOnTop()));

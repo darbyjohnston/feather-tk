@@ -4,7 +4,7 @@
 
 #include <corePy/String.h>
 
-#include <feather-tk/core/String.h>
+#include <ftk/core/String.h>
 
 #include <pybind11/pybind11.h>
 #include <pybind11/operators.h>
@@ -14,7 +14,7 @@
 
 namespace py = pybind11;
 
-namespace feather_tk
+namespace ftk
 {
     void string(py::module_& m)
     {

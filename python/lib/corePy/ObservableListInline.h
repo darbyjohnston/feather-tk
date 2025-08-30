@@ -2,9 +2,9 @@
 // Copyright (c) 2024-2025 Darby Johnston
 // All rights reserved.
 
-#include <feather-tk/core/ObservableList.h>
+#include <ftk/core/ObservableList.h>
 
-namespace feather_tk
+namespace ftk
 {
     template<typename T>
     inline void observableList(pybind11::module_& m, const std::string& type)

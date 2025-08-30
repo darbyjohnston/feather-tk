@@ -4,13 +4,13 @@
 
 #include <uiPy/Style.h>
 
-#include <feather-tk/ui/Style.h>
+#include <ftk/ui/Style.h>
 
 #include <pybind11/pybind11.h>
 
 namespace py = pybind11;
 
-namespace feather_tk
+namespace ftk
 {
     void style(py::module_& m)
     {

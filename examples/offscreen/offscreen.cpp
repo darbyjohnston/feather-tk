@@ -4,15 +4,15 @@
 
 #include "offscreen.h"
 
-#include <feather-tk/ui/App.h>
-#include <feather-tk/ui/MainWindow.h>
+#include <ftk/ui/App.h>
+#include <ftk/ui/MainWindow.h>
 
-#include <feather-tk/gl/GL.h>
-#include <feather-tk/gl/Mesh.h>
+#include <ftk/gl/GL.h>
+#include <ftk/gl/Mesh.h>
 
-#include <feather-tk/core/Format.h>
-#include <feather-tk/core/Matrix.h>
-#include <feather-tk/core/RenderUtil.h>
+#include <ftk/core/Format.h>
+#include <ftk/core/Matrix.h>
+#include <ftk/core/RenderUtil.h>
 
 void OffscreenWidget::_init(
     const std::shared_ptr<Context>& context,
@@ -102,12 +102,12 @@ void OffscreenWidget::drawEvent(const Box2I& drawRect, const DrawEvent& event)
         const Size2I size = g.size();
         gl::OffscreenBufferOptions offscreenBufferOptions;
         offscreenBufferOptions.color = ImageType::RGBA_F32;
-#if defined(FEATHER_TK_API_GL_4_1)
+#if defined(FTK_API_GL_4_1)
         offscreenBufferOptions.depth = gl::OffscreenDepth::_24;
         offscreenBufferOptions.stencil = gl::OffscreenStencil::_8;
-#elif defined(FEATHER_TK_API_GLES_2)
+#elif defined(FTK_API_GLES_2)
         offscreenBufferOptions.stencil = gl::OffscreenStencil::_8;
-#endif // FEATHER_TK_API_GL_4_1
+#endif // FTK_API_GL_4_1
         if (gl::doCreate(_buffer, size, offscreenBufferOptions))
         {
             _buffer = gl::OffscreenBuffer::create(size, offscreenBufferOptions);
@@ -186,7 +186,7 @@ void OffscreenWidget::drawEvent(const Box2I& drawRect, const DrawEvent& event)
     }
 }
 
-FEATHER_TK_MAIN()
+FTK_MAIN()
 {
     try
     {

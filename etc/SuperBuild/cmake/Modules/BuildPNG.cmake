@@ -4,7 +4,7 @@ set(PNG_GIT_REPOSITORY "https://github.com/glennrp/libpng.git")
 set(PNG_GIT_TAG "v1.6.43")
 
 set(PNG_DEPS)
-if(feather_tk_ZLIB)
+if(ftk_ZLIB)
     list(APPEND PNG_DEPS ZLIB)
 endif()
 
@@ -16,7 +16,7 @@ if(NOT BUILD_SHARED_LIBS)
 endif()
 
 set(PNG_ARGS
-    ${feather_tk_DEPS_ARGS}
+    ${ftk_DEPS_ARGS}
     -DCMAKE_INSTALL_LIBDIR=lib
     -DPNG_SHARED=${PNG_SHARED_LIBS}
     -DPNG_STATIC=${PNG_STATIC_LIBS}

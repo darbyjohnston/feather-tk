@@ -4,20 +4,20 @@
 
 #include <uiTest/ConfirmDialogTest.h>
 
-#include <feather-tk/ui/App.h>
-#include <feather-tk/ui/DialogSystem.h>
-#include <feather-tk/ui/ConfirmDialog.h>
-#include <feather-tk/ui/Window.h>
+#include <ftk/ui/App.h>
+#include <ftk/ui/DialogSystem.h>
+#include <ftk/ui/ConfirmDialog.h>
+#include <ftk/ui/Window.h>
 
-#include <feather-tk/core/Assert.h>
-#include <feather-tk/core/Format.h>
+#include <ftk/core/Assert.h>
+#include <ftk/core/Format.h>
 
-namespace feather_tk
+namespace ftk
 {
     namespace ui_test
     {
         ConfirmDialogTest::ConfirmDialogTest(const std::shared_ptr<Context>& context) :
-            ITest(context, "feather_tk::ui_test::ConfirmDialogTest")
+            ITest(context, "ftk::ui_test::ConfirmDialogTest")
         {}
 
         ConfirmDialogTest::~ConfirmDialogTest()

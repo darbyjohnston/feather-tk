@@ -4,14 +4,14 @@
 
 #include <uiPy/ScrollArea.h>
 
-#include <feather-tk/ui/ScrollArea.h>
+#include <ftk/ui/ScrollArea.h>
 
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
 
 namespace py = pybind11;
 
-namespace feather_tk
+namespace ftk
 {
     void scrollArea(py::module_& m)
     {

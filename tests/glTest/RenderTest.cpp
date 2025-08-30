@@ -4,22 +4,22 @@
 
 #include <glTest/RenderTest.h>
 
-#include <feather-tk/gl/OffscreenBuffer.h>
-#include <feather-tk/gl/Render.h>
-#include <feather-tk/gl/Window.h>
+#include <ftk/gl/OffscreenBuffer.h>
+#include <ftk/gl/Render.h>
+#include <ftk/gl/Window.h>
 
-#include <feather-tk/core/Assert.h>
-#include <feather-tk/core/Context.h>
-#include <feather-tk/core/FontSystem.h>
+#include <ftk/core/Assert.h>
+#include <ftk/core/Context.h>
+#include <ftk/core/FontSystem.h>
 
-using namespace feather_tk::gl;
+using namespace ftk::gl;
 
-namespace feather_tk
+namespace ftk
 {
     namespace gl_test
     {
         RenderTest::RenderTest(const std::shared_ptr<Context>& context) :
-            ITest(context, "feather_tk::gl_test::RenderTest")
+            ITest(context, "ftk::gl_test::RenderTest")
         {}
 
         RenderTest::~RenderTest()
@@ -62,26 +62,26 @@ namespace feather_tk
 
                 auto render = Render::create(context->getLogSystem());
                 render->begin(size);
-                FEATHER_TK_ASSERT(render->getRenderSize() == size);
+                FTK_ASSERT(render->getRenderSize() == size);
 
                 size = Size2I(1280, 960);
                 render->setRenderSize(size);
-                FEATHER_TK_ASSERT(render->getRenderSize() == size);
+                FTK_ASSERT(render->getRenderSize() == size);
                 
                 Box2I viewport(0, 0, 100, 100);
                 render->setViewport(viewport);
-                FEATHER_TK_ASSERT(render->getViewport() == viewport);
+                FTK_ASSERT(render->getViewport() == viewport);
                 
                 render->setClipRectEnabled(true);
-                FEATHER_TK_ASSERT(render->getClipRectEnabled());
+                FTK_ASSERT(render->getClipRectEnabled());
                 Box2I clipRect(0, 0, 50, 50);
                 render->setClipRect(clipRect);
-                FEATHER_TK_ASSERT(clipRect == render->getClipRect());
+                FTK_ASSERT(clipRect == render->getClipRect());
                 render->setClipRectEnabled(false);
                 
                 M44F transform = perspective(60.F, 1.F, .1F, 10000.F);
                 render->setTransform(transform);
-                FEATHER_TK_ASSERT(transform == render->getTransform());
+                FTK_ASSERT(transform == render->getTransform());
 
                 render->end();
             }

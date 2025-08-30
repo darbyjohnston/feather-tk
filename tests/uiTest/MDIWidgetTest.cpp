@@ -4,21 +4,21 @@
 
 #include <uiTest/MDIWidgetTest.h>
 
-#include <feather-tk/ui/App.h>
-#include <feather-tk/ui/Label.h>
-#include <feather-tk/ui/MDICanvas.h>
-#include <feather-tk/ui/MDIWidget.h>
-#include <feather-tk/ui/Window.h>
+#include <ftk/ui/App.h>
+#include <ftk/ui/Label.h>
+#include <ftk/ui/MDICanvas.h>
+#include <ftk/ui/MDIWidget.h>
+#include <ftk/ui/Window.h>
 
-#include <feather-tk/core/Assert.h>
-#include <feather-tk/core/Format.h>
+#include <ftk/core/Assert.h>
+#include <ftk/core/Format.h>
 
-namespace feather_tk
+namespace ftk
 {
     namespace ui_test
     {
         MDIWidgetTest::MDIWidgetTest(const std::shared_ptr<Context>& context) :
-            ITest(context, "feather_tk::ui_test::MDIWidgetTest")
+            ITest(context, "ftk::ui_test::MDIWidgetTest")
         {}
 
         MDIWidgetTest::~MDIWidgetTest()
@@ -38,7 +38,7 @@ namespace feather_tk
 
         void MDIWidgetTest::_enums()
         {
-            FEATHER_TK_TEST_ENUM(MDIResize);
+            FTK_TEST_ENUM(MDIResize);
         }
 
         void MDIWidgetTest::_widget()
@@ -60,18 +60,18 @@ namespace feather_tk
                 auto canvas = MDICanvas::create(context, window);
                 canvas->setCanvasSize(Size2I(100, 100));
                 canvas->setCanvasSize(Size2I(100, 100));
-                FEATHER_TK_ASSERT(Size2I(100, 100) == canvas->getCanvasSize());
+                FTK_ASSERT(Size2I(100, 100) == canvas->getCanvasSize());
                 canvas->setCanvasSize(Size2I(1000, 1000));
                 canvas->setGridSize(Size2I(2, 2));
                 canvas->setGridSize(Size2I(2, 2));
-                FEATHER_TK_ASSERT(Size2I(2, 2) == canvas->getGridSize());
+                FTK_ASSERT(Size2I(2, 2) == canvas->getGridSize());
                 canvas->setGridSize(Size2I(20, 20));
 
                 auto label = Label::create(context, "Label");
                 auto widget = canvas->addWidget("Widget 0", V2I(100, 100), label);
-                FEATHER_TK_ASSERT("Widget 0" == widget->getTitle());
+                FTK_ASSERT("Widget 0" == widget->getTitle());
                 widget->setTitle("Widget");
-                FEATHER_TK_ASSERT("Widget" == widget->getTitle());
+                FTK_ASSERT("Widget" == widget->getTitle());
                 app->tick();
                 label.reset();
                 widget->setParent(nullptr);
@@ -81,7 +81,7 @@ namespace feather_tk
                 label = Label::create(context, "Label 2");
                 widget->setWidget(label);
                 widget->setWidget(label);
-                FEATHER_TK_ASSERT(label == widget->getWidget());
+                FTK_ASSERT(label == widget->getWidget());
                 widget->setPos(V2I(200, 200));
                 widget->setSize(Size2I(1000, 1000));
             }
