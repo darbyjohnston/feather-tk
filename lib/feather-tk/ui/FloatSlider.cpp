@@ -222,7 +222,7 @@ namespace ftk
         {
             p.draw = Private::DrawData();
             p.draw->g = getGeometry();
-            p.draw->margin = margin(p.draw->g, -(p.size.margin + p.size.borderFocus));
+            p.draw->margin = margin(p.draw->g, -(p.size.margin + p.size.border));
             p.draw->border = border(p.draw->g, p.size.border);
             p.draw->borderFocus = border(p.draw->g, p.size.borderFocus);
         }
