@@ -191,7 +191,7 @@ git clone https://github.com/darbyjohnston/feather-tk.git
 
 Run the super build script:
 ```
-feather-tk\sbuild.bat
+feather-tk\sbuild-win.bat
 ```
 
 Try running the `simple` example:
