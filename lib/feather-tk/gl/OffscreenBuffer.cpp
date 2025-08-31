@@ -371,7 +371,7 @@ namespace ftk
             bool out = false;
             out |= size.isValid() && !offscreenBuffer;
             out |= size.isValid() && offscreenBuffer && offscreenBuffer->getSize() != size;
-            out |= offscreenBuffer && offscreenBuffer->getOptions() != options;
+            out |= size.isValid() && offscreenBuffer && offscreenBuffer->getOptions() != options;
             return out;
         }
 
