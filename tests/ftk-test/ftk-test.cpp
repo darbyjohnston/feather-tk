@@ -2,7 +2,7 @@
 // Copyright (c) 2024-2025 Darby Johnston
 // All rights reserved.
 
-#include "feather-tk-test.h"
+#include "ftk-test.h"
 
 #if defined(FTK_UI_LIB)
 #include <uiTest/ActionTest.h>
