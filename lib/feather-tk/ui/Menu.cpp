@@ -239,7 +239,7 @@ namespace ftk
 
     bool Menu::isEmpty() const
     {
-        return _p->actions.empty();
+        return _p->actions.empty() && _p->subMenus.empty();
     }
 
     bool Menu::shortcut(Key shortcut, int modifiers)

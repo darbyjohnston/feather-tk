@@ -52,6 +52,18 @@ namespace ftk
         bool operator != (const InMemoryFile&) const;
     };
 
+    //! Seek modes.
+    enum class SeekMode
+    {
+        Set,
+        Forward,
+        Reverse,
+
+        Count,
+        First = Set
+    };
+    FTK_ENUM(SeekMode);
+
     //! File I/O.
     class FileIO : public std::enable_shared_from_this<FileIO>
     {
@@ -105,11 +117,8 @@ namespace ftk
         //! Get the current file position.
         size_t getPos() const;
 
-        //! Set the current file position.
-        void setPos(size_t);
-
-        //! Advance the current file position.
-        void seek(size_t);
+        //! Change the current file position.
+        void seek(size_t, SeekMode);
 
         //! Get whether the file position is at the end of the file.
         bool isEOF() const;

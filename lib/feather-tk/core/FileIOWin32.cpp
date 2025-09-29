@@ -43,34 +43,34 @@ namespace ftk
             switch (type)
             {
             case ErrorType::Open:
-                out = Format("Cannot open file: \"{0}\"").arg(path);
+                out = Format("Cannot open file \"{0}\"").arg(path);
                 break;
             case ErrorType::OpenTemp:
                 out = Format("Cannot open temporary file");
                 break;
             case ErrorType::MemoryMap:
-                out = Format("Cannot memory map file: \"{0}\"").arg(path);
+                out = Format("Cannot memory map file \"{0}\"").arg(path);
                 break;
             case ErrorType::Close:
-                out = Format("Cannot close file: \"{0}\"").arg(path);
+                out = Format("Cannot close file \"{0}\"").arg(path);
                 break;
             case ErrorType::CloseMemoryMap:
-                out = Format("Cannot unmap file: \"{0}\"").arg(path);
+                out = Format("Cannot unmap file \"{0}\"").arg(path);
                 break;
             case ErrorType::Read:
-                out = Format("Cannot read file: \"{0}\"").arg(path);
+                out = Format("Cannot read file \"{0}\"").arg(path);
                 break;
             case ErrorType::ReadMemoryMap:
-                out = Format("Cannot read memory mapped file: \"{0}\"").arg(path);
+                out = Format("Cannot read memory mapped file \"{0}\"").arg(path);
                 break;
             case ErrorType::Write:
-                out = Format("Cannot write file: \"{0}\"").arg(path);
+                out = Format("Cannot write file \"{0}\"").arg(path);
                 break;
             case ErrorType::Seek:
-                out = Format("Cannot seek file: \"{0}\"").arg(path);
+                out = Format("Cannot seek file \"{0}\"").arg(path);
                 break;
             case ErrorType::SeekMemoryMap:
-                out = Format("Cannot seek memory mapped file: \"{0}\"").arg(path);
+                out = Format("Cannot seek memory mapped file \"{0}\"").arg(path);
                 break;
             default: break;
             }
@@ -85,7 +85,7 @@ namespace ftk
 
     struct FileIO::Private
     {
-        void setPos(size_t, bool seek);
+        void seek(size_t, SeekMode);
 
         std::filesystem::path path;
         FileMode              mode = FileMode::First;
@@ -144,14 +144,9 @@ namespace ftk
         return _p->pos;
     }
 
-    void FileIO::setPos(size_t in)
+    void FileIO::seek(size_t in, SeekMode mode)
     {
-        _p->setPos(in, false);
-    }
-
-    void FileIO::seek(size_t in)
-    {
-        _p->setPos(in, true);
+        _p->seek(in, mode);
     }
 
     const uint8_t* FileIO::getMemoryStart() const
@@ -376,7 +371,7 @@ namespace ftk
         // Seek to the end when appending.
         if (FileMode::Append == mode)
         {
-            seek(p.size);
+            seek(p.size, SeekMode::Forward);
         }
     }
 
@@ -430,71 +425,69 @@ namespace ftk
         return out;
     }
 
-    void FileIO::Private::setPos(size_t value, bool seek)
+    void FileIO::Private::seek(size_t value, SeekMode seekMode)
     {
-        switch (mode)
+        if (FileMode::Read == mode && memoryStart)
         {
-        case FileMode::Read:
-        {
-            if (memoryStart)
+            switch (seekMode)
             {
-                if (!seek)
-                {
-                    memoryP = reinterpret_cast<const uint8_t*>(memoryStart) + value;
-                }
-                else
-                {
-                    memoryP += value;
-                }
+            case SeekMode::Set:
+                memoryP = reinterpret_cast<const uint8_t*>(memoryStart) + value;
                 if (memoryP > memoryEnd)
                 {
                     throw std::runtime_error(
                         getErrorMessage(ErrorType::SeekMemoryMap, path.u8string()));
                 }
-            }
-            else
-            {
-                LARGE_INTEGER v;
-                v.QuadPart = value;
-                if (!::SetFilePointerEx(
-                    f,
-                    static_cast<LARGE_INTEGER>(v),
-                    0,
-                    !seek ? FILE_BEGIN : FILE_CURRENT))
+                break;
+            case SeekMode::Forward:
+                memoryP += value;
+                if (memoryP > memoryEnd)
                 {
                     throw std::runtime_error(
-                        getErrorMessage(ErrorType::Seek, path.u8string(), getLastError()));
+                        getErrorMessage(ErrorType::SeekMemoryMap, path.u8string()));
                 }
+                break;
+            case SeekMode::Reverse:
+                memoryP -= value;
+                if (memoryP < memoryStart)
+                {
+                    throw std::runtime_error(
+                        getErrorMessage(ErrorType::SeekMemoryMap, path.u8string()));
+                }
+                break;
             }
-            break;
         }
-        case FileMode::Write:
-        case FileMode::ReadWrite:
-        case FileMode::Append:
+        else
         {
             LARGE_INTEGER v;
-            v.QuadPart = value;
-            if (!::SetFilePointerEx(
-                f,
-                static_cast<LARGE_INTEGER>(v),
-                0,
-                !seek ? FILE_BEGIN : FILE_CURRENT))
+            DWORD move = 0;
+            switch (seekMode)
+            {
+            case SeekMode::Set:
+                v.QuadPart = value;
+                move = FILE_BEGIN;
+                break;
+            case SeekMode::Forward:
+                v.QuadPart = value;
+                move = FILE_CURRENT;
+                break;
+            case SeekMode::Reverse:
+                v.QuadPart = -static_cast<LONGLONG>(value);
+                move = FILE_CURRENT;
+                break;
+            }
+            if (!::SetFilePointerEx(f, v, 0, move))
             {
                 throw std::runtime_error(
                     getErrorMessage(ErrorType::Seek, path.u8string(), getLastError()));
             }
-            break;
         }
+        switch (seekMode)
+        {
+        case SeekMode::Set: pos = value; break;
+        case SeekMode::Forward: pos += value; break;
+        case SeekMode::Reverse: pos -= value; break;
         default: break;
-        }
-
-        if (!seek)
-        {
-            pos = value;
-        }
-        else
-        {
-            pos += value;
         }
     }
 

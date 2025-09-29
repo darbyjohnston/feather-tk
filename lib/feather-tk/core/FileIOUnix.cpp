@@ -56,31 +56,31 @@ namespace ftk
             switch (type)
             {
             case ErrorType::Open:
-                out = Format("Cannot open file: \"{0}\"").arg(path);
+                out = Format("Cannot open file \"{0}\"").arg(path);
                 break;
             case ErrorType::MemoryMap:
-                out = Format("Cannot memory map file: \"{0}\"").arg(path);
+                out = Format("Cannot memory map file \"{0}\"").arg(path);
                 break;
             case ErrorType::Close:
-                out = Format("Cannot close file: \"{0}\"").arg(path);
+                out = Format("Cannot close file \"{0}\"").arg(path);
                 break;
             case ErrorType::CloseMemoryMap:
-                out = Format("Cannot unmap file: \"{0}\"").arg(path);
+                out = Format("Cannot unmap file \"{0}\"").arg(path);
                 break;
             case ErrorType::Read:
-                out = Format("Cannot read file: \"{0}\"").arg(path);
+                out = Format("Cannot read file \"{0}\"").arg(path);
                 break;
             case ErrorType::ReadMemoryMap:
-                out = Format("Cannot read memory mapped file: \"{0}\"").arg(path);
+                out = Format("Cannot read memory mapped file \"{0}\"").arg(path);
                 break;
             case ErrorType::Write:
-                out = Format("Cannot write file: \"{0}\"").arg(path);
+                out = Format("Cannot write file \"{0}\"").arg(path);
                 break;
             case ErrorType::Seek:
-                out = Format("Cannot seek file: \"{0}\"").arg(path);
+                out = Format("Cannot seek file \"{0}\"").arg(path);
                 break;
             case ErrorType::SeekMemoryMap:
-                out = Format("Cannot seek memory mapped file: \"{0}\"").arg(path);
+                out = Format("Cannot seek memory mapped file \"{0}\"").arg(path);
                 break;
             default: break;
             }

@@ -5,46 +5,41 @@
 #pragma once
 
 #include <feather-tk/ui/Label.h>
-#include <feather-tk/ui/ScrollWidget.h>
+
+#include <feather-tk/core/LogSystem.h>
+#include <feather-tk/core/Timer.h>
 
 namespace examples
 {
     namespace textedit
     {
-        class Document;
-
-        class TextWidget : public ftk::IWidget
+        class StatusBar : public ftk::IWidget
         {
         protected:
             void _init(
                 const std::shared_ptr<ftk::Context>&,
-                const std::shared_ptr<Document>&,
                 const std::shared_ptr<ftk::IWidget>& parent);
 
-            TextWidget() = default;
+            StatusBar() = default;
 
         public:
-            virtual ~TextWidget();
+            virtual ~StatusBar();
 
-            static std::shared_ptr<TextWidget> create(
+            static std::shared_ptr<StatusBar> create(
                 const std::shared_ptr<ftk::Context>&,
-                const std::shared_ptr<Document>&,
                 const std::shared_ptr<ftk::IWidget>& parent = nullptr);
 
             ftk::FontRole getFontRole() const;
-
-            void setFontRole(ftk::FontRole);
 
             void setGeometry(const ftk::Box2I&) override;
             void sizeHintEvent(const ftk::SizeHintEvent&) override;
 
         private:
-            std::shared_ptr<Document> _document;
-
             std::shared_ptr<ftk::Label> _label;
-            std::shared_ptr<ftk::ScrollWidget> _scrollWidget;
 
-            std::shared_ptr<ftk::ListObserver<std::string> > _linesObserver;
+            std::shared_ptr<ftk::Timer> _timer;
+
+            std::shared_ptr<ftk::ListObserver<ftk::LogItem> > _logObserver;
         };
     }
 }

@@ -52,13 +52,13 @@ namespace ftk
                     FTK_ASSERT(path == fileIO->getPath());
                     FTK_ASSERT(0 == fileIO->getPos());
                     fileIO->write("Hello");
-                    fileIO->setPos(0);
+                    fileIO->seek(0, SeekMode::Set);
                     FTK_ASSERT(0 == fileIO->getPos());
-                    fileIO->seek(1);
-                    fileIO->seek(1);
+                    fileIO->seek(1, SeekMode::Forward);
+                    fileIO->seek(1, SeekMode::Forward);
                     FTK_ASSERT(2 == fileIO->getPos());
                     FTK_ASSERT(!fileIO->isEOF());
-                    fileIO->setPos(5);                    
+                    fileIO->seek(5, SeekMode::Set);
                     FTK_ASSERT(fileIO->isEOF());
                     fileIO.reset();
                     
@@ -83,13 +83,13 @@ namespace ftk
                         contents.push_back(c);
                     }
                     FTK_ASSERT(contents == "Hello world");
-                    fileIO->setPos(0);
+                    fileIO->seek(0, SeekMode::Set);
                     FTK_ASSERT(0 == fileIO->getPos());
-                    fileIO->seek(1);
-                    fileIO->seek(1);
+                    fileIO->seek(1, SeekMode::Forward);
+                    fileIO->seek(1, SeekMode::Forward);
                     FTK_ASSERT(2 == fileIO->getPos());
                     FTK_ASSERT(!fileIO->isEOF());
-                    fileIO->setPos(fileIO->getSize());                    
+                    fileIO->seek(fileIO->getSize(), SeekMode::Set);
                     FTK_ASSERT(fileIO->isEOF());
                     fileIO.reset();
 

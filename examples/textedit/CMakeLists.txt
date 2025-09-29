@@ -1,12 +1,20 @@
 set(HEADERS
     App.h
-    TextWidget.h
-    Window.h)
+    Document.h
+    DocumentModel.h
+    MainWindow.h
+    MenuBar.h
+    StatusBar.h
+    TextWidget.h)
 
 set(SOURCE
     App.cpp
+    Document.cpp
+    DocumentModel.cpp
+    MainWindow.cpp
+    MenuBar.cpp
+    StatusBar.cpp
     TextWidget.cpp
-    Window.cpp
     main.cpp)
 
 add_executable(textedit ${HEADERS} ${SOURCE})

@@ -12,48 +12,41 @@
 
 #include <filesystem>
 
-namespace ftk
+namespace examples
 {
-    namespace examples
+    namespace textedit
     {
-        namespace textedit
+        class DocumentModel;
+        class MainWindow;
+
+        class App : public ftk::App
         {
-            class Window;
+        protected:
+            void _init(
+                const std::shared_ptr<ftk::Context>&,
+                const std::vector<std::string>& argv);
 
-            class App : public ftk::App
+            App() = default;
+
+        public:
+            virtual ~App() = default;
+
+            static std::shared_ptr<App> create(
+                const std::shared_ptr<ftk::Context>&,
+                const std::vector<std::string>&);
+
+            const std::shared_ptr<DocumentModel>& getDocumentModel() const;
+
+            void open(const std::filesystem::path&);
+
+        private:
+            struct CmdLine
             {
-            protected:
-                void _init(
-                    const std::shared_ptr<Context>&,
-                    const std::vector<std::string>& argv);
-
-                App() = default;
-
-            public:
-                virtual ~App() = default;
-
-                static std::shared_ptr<App> create(
-                    const std::shared_ptr<Context>&,
-                    const std::vector<std::string>&);
-
-                std::shared_ptr<IObservableValue<FontRole> > observeFont() const;
-
-                void setFont(FontRole);
-
-                std::shared_ptr<IObservableValue<std::string> > observeText() const;
-
-                void open(const std::filesystem::path&);
-
-            private:
-                struct CmdLine
-                {
-                    std::shared_ptr<CmdLineValueArg<std::string> > path;
-                };
-                CmdLine _cmdLine;
-                std::shared_ptr<ObservableValue<FontRole> > _font;
-                std::shared_ptr<ObservableValue<std::string> > _text;
-                std::shared_ptr<Window> _window;
+                std::shared_ptr<ftk::CmdLineListArg<std::string> > paths;
             };
-        }
+            CmdLine _cmdLine;
+            std::shared_ptr<DocumentModel> _documentModel;
+            std::shared_ptr<MainWindow> _mainWindow;
+        };
     }
 }

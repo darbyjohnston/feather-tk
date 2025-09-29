@@ -63,6 +63,8 @@ namespace ftk
         p.scrollWidget->setParent(p.layout);
         p.menuButton->setParent(p.layout);
 
+        _widgetUpdate();
+
         p.buttonGroup->setClickedCallback(
             [this](int index)
             {

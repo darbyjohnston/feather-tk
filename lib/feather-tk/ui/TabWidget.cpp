@@ -151,7 +151,7 @@ namespace ftk
         _p->tabCallback = value;
     }
 
-    std::shared_ptr<IWidget> TabWidget::getCurrentWidget() const
+    std::shared_ptr<IWidget> TabWidget::getWidget() const
     {
         FTK_P();
         std::shared_ptr<IWidget> out;
@@ -168,7 +168,7 @@ namespace ftk
         return out;
     }
 
-    void TabWidget::setCurrentWidget(const std::shared_ptr<IWidget>& value)
+    void TabWidget::setWidget(const std::shared_ptr<IWidget>& value)
     {
         FTK_P();
         const auto& children = p.stack->getChildren();

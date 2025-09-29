@@ -182,6 +182,22 @@ namespace ftk
         return _p->menuBar;
     }
 
+    void MainWindow::setMenuBar(const std::shared_ptr<MenuBar>& value)
+    {
+        FTK_P();
+        if (p.menuBar)
+        {
+            p.menuBar->setParent(nullptr);
+            p.menuBar.reset();
+        }
+        p.menuBar = value;
+        if (p.menuBar)
+        {
+            p.menuBar->setParent(p.layout);
+            p.layout->moveToBack(p.menuBar);
+        }
+    }
+
     void MainWindow::setWidget(const std::shared_ptr<IWidget>& value)
     {
         FTK_P();

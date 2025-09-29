@@ -4,7 +4,8 @@
 
 #include "App.h"
 
-#include "Window.h"
+#include "DocumentModel.h"
+#include "MainWindow.h"
 
 #include <feather-tk/ui/DialogSystem.h>
 #include <feather-tk/ui/FileBrowser.h>
@@ -13,83 +14,68 @@
 
 using namespace ftk;
 
-namespace ftk
+namespace examples
 {
-    namespace examples
+    namespace textedit
     {
-        namespace textedit
+        void App::_init(
+            const std::shared_ptr<Context>& context,
+            const std::vector<std::string>& argv)
         {
-            void App::_init(
-                const std::shared_ptr<Context>& context,
-                const std::vector<std::string>& argv)
+            _cmdLine.paths = CmdLineListArg<std::string>::create(
+                "inputs",
+                "Input paths.",
+                true);
+
+            ftk::App::_init(
+                context,
+                argv,
+                "textedit",
+                "Text edit example",
+                { _cmdLine.paths });
+
+            context->getSystem<FileBrowserSystem>()->setNativeFileDialog(false);
+
+            _documentModel = DocumentModel::create(context);
+
+            _mainWindow = MainWindow::create(
+                context,
+                std::dynamic_pointer_cast<App>(shared_from_this()),
+                "textedit",
+                Size2I(1280, 960));
+            _mainWindow->show();
+
+            for (const auto& input : _cmdLine.paths->getList())
             {
-                _cmdLine.path = CmdLineValueArg<std::string>::create(
-                    "input",
-                    "Input path.",
-                    true);
-
-                ftk::App::_init(
-                    context,
-                    argv,
-                    "textedit",
-                    "Text edit example",
-                    { _cmdLine.path });
-
-                _font = ObservableValue<FontRole>::create(FontRole::Mono);
-                _text = ObservableValue<std::string>::create();
-
-                context->getSystem<FileBrowserSystem>()->setNativeFileDialog(false);
-
-                _window = Window::create(
-                    context,
-                    std::dynamic_pointer_cast<App>(shared_from_this()),
-                    "textedit",
-                    Size2I(1280, 960));
-
-                if (_cmdLine.path->hasValue())
-                {
-                    open(_cmdLine.path->getValue());
-                }
-
-                _window->show();
+                open(input);
             }
+        }
 
-            std::shared_ptr<App> App::create(
-                const std::shared_ptr<Context>& context,
-                const std::vector<std::string>& argv)
+        std::shared_ptr<App> App::create(
+            const std::shared_ptr<Context>& context,
+            const std::vector<std::string>& argv)
+        {
+            auto out = std::shared_ptr<App>(new App);
+            out->_init(context, argv);
+            return out;
+        }
+
+        const std::shared_ptr<DocumentModel>& App::getDocumentModel() const
+        {
+            return _documentModel;
+        }
+
+        void App::open(const std::filesystem::path& path)
+        {
+            try
             {
-                auto out = std::shared_ptr<App>(new App);
-                out->_init(context, argv);
-                return out;
+                auto document = Document::create(_context, path);
+                document->setLines(readLines(path));
+                _documentModel->add(document);
             }
-
-            std::shared_ptr<IObservableValue<FontRole> > App::observeFont() const
+            catch (const std::exception& e)
             {
-                return _font;
-            }
-
-            void App::setFont(FontRole value)
-            {
-                _font->setIfChanged(value);
-            }
-
-            std::shared_ptr<IObservableValue<std::string> > App::observeText() const
-            {
-                return _text;
-            }
-
-            void App::open(const std::filesystem::path& path)
-            {
-                try
-                {
-                    auto fileIO = FileIO::create(path, FileMode::Read);
-                    const std::string text = read(fileIO);
-                    _text->setIfChanged(text);
-                }
-                catch (const std::exception& e)
-                {
-                    _context->getSystem<DialogSystem>()->message("ERROR", e.what(), _window);
-                }
+                _context->getSystem<LogSystem>()->print("App", e.what(), LogType::Error);
             }
         }
     }

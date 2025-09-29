@@ -229,21 +229,23 @@ namespace ftk
     std::string readLine(const std::shared_ptr<FileIO>& io)
     {
         std::string out;
-        if (!io->isEOF())
+        while (!io->isEOF())
         {
             char c = 0;
-            do
+            io->read(&c, 1);
+            if ('\n' == c)
             {
-                io->read(&c, 1);
-                if (c != '\n' &&
-                    c != '\r')
+                if (!io->isEOF())
                 {
-                    out.push_back(c);
+                    io->read(&c, 1);
+                    if (c != '\r')
+                    {
+                        io->seek(1, SeekMode::Reverse);
+                    }
                 }
-            } while (
-                c != '\n' &&
-                c != '\r' &&
-                !io->isEOF());
+                break;
+            }
+            out.push_back(c);
         }
         return out;
     }

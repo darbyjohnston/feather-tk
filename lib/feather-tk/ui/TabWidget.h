@@ -57,10 +57,10 @@ namespace ftk
         void setTabCallback(const std::function<void(int)>&);
 
         //! Get the current widget.
-        std::shared_ptr<IWidget> getCurrentWidget() const;
+        std::shared_ptr<IWidget> getWidget() const;
 
         //! Set the current widget.
-        void setCurrentWidget(const std::shared_ptr<IWidget>&);
+        void setWidget(const std::shared_ptr<IWidget>&);
 
         //! Set the current widget callback.
         void setWidgetCallback(const std::function<void(const std::shared_ptr<IWidget>&)>&);
