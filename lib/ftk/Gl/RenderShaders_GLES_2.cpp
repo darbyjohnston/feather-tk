@@ -2,9 +2,9 @@
 // Copyright (c) 2024 Darby Johnston
 // All rights reserved.
 
-#include <feather-tk/gl/RenderPrivate.h>
+#include <ftk/Gl/RenderPrivate.h>
 
-#include <feather-tk/core/Format.h>
+#include <ftk/Core/Format.h>
 
 namespace ftk
 {

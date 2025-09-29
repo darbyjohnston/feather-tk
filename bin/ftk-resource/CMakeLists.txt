@@ -20,5 +20,5 @@ install(TARGETS ftk-resource
 install(
     EXPORT ftk-resourceTargets
     FILE ftk-resourceTargets.cmake
-    DESTINATION "share/feather-tk"
+    DESTINATION "share/ftk"
     NAMESPACE ftk::)

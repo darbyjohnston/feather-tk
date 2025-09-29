@@ -140,7 +140,7 @@ namespace ftk
             IApp::_init(
                 context,
                 argv,
-                "feather-tk-test",
+                "ftk-test",
                 "Test application",
                 { p.testName });
             p.startTime = std::chrono::steady_clock::now();                
