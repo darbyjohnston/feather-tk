@@ -30,7 +30,6 @@ namespace ftk
             .def_property("scrollBarsVisible", &ScrollWidget::areScrollBarsVisible, &ScrollWidget::setScrollBarsVisible)
             .def_property("scrollBarsAutoHide", &ScrollWidget::getScrollBarsAutoHide, &ScrollWidget::setScrollBarsAutoHide)
             .def("setScrollEventsEnabled", &ScrollWidget::setScrollEventsEnabled)
-            .def_property("border", &ScrollWidget::hasBorder, &ScrollWidget::setBorder)
-            .def_property("marginRole", &ScrollWidget::getMarginRole, &ScrollWidget::setMarginRole);
+            .def_property("border", &ScrollWidget::hasBorder, &ScrollWidget::setBorder);
     }
 }

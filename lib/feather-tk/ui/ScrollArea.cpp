@@ -28,6 +28,7 @@ namespace ftk
         V2I scrollPos;
         std::function<void(const Size2I&)> scrollSizeCallback;
         std::function<void(const V2I&)> scrollPosCallback;
+        SizeRole sizeHintRole = SizeRole::ScrollArea;
 
         struct SizeData
         {
@@ -147,6 +148,22 @@ namespace ftk
         _p->scrollPosCallback = value;
     }
 
+    SizeRole ScrollArea::getSizeHintRole() const
+    {
+        return _p->sizeHintRole;
+    }
+
+    void ScrollArea::setSizeHintRole(SizeRole value)
+    {
+        FTK_P();
+        if (value == p.sizeHintRole)
+            return;
+        p.sizeHintRole = value;
+        p.size.displayScale.reset();
+        _setSizeUpdate();
+        _setDrawUpdate();
+    }
+
     void ScrollArea::setGeometry(const Box2I& value)
     {
         IWidget::setGeometry(value);
@@ -215,7 +232,7 @@ namespace ftk
             (p.size.displayScale.has_value() && p.size.displayScale.value() != event.displayScale))
         {
             p.size.displayScale = event.displayScale;
-            p.size.size = event.style->getSizeRole(SizeRole::ScrollArea, event.displayScale);
+            p.size.size = event.style->getSizeRole(p.sizeHintRole, event.displayScale);
         }
 
         Size2I sizeHint;

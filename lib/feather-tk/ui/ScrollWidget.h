@@ -85,11 +85,11 @@ namespace ftk
         //! Set whether the scroll area has a border.
         void setBorder(bool);
 
-        //! Get the margin role.
-        SizeRole getMarginRole() const;
+        //! Get the size hint role.
+        SizeRole getSizeHintRole() const;
 
-        //! Set the margin role.
-        void setMarginRole(SizeRole);
+        //! Set the size hint role.
+        void setSizeHintRole(SizeRole);
 
         void setGeometry(const Box2I&) override;
         void sizeHintEvent(const SizeHintEvent&) override;

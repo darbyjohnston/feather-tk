@@ -100,10 +100,6 @@ namespace ftk
             scrollWidget->setBorder(false);
             FTK_ASSERT(!scrollWidget->hasBorder());
             scrollWidget->setBorder(true);
-            scrollWidget->setMarginRole(SizeRole::Margin);
-            scrollWidget->setMarginRole(SizeRole::Margin);
-            FTK_ASSERT(SizeRole::Margin == scrollWidget->getMarginRole());
-            scrollWidget->setMarginRole(SizeRole::None);
 
             Size2I size = scrollWidget->getScrollSize();
             scrollWidget->setScrollPos(V2I(size.w, size.h));

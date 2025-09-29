@@ -38,7 +38,7 @@ namespace examples
             _tabWidget->setTabsClosable(true);
             _tabWidget->setStretch(Stretch::Expanding);
 
-            _statusBar = StatusBar::create(context);
+            _statusBar = StatusBar::create(context, app);
 
             _layout = VerticalLayout::create(context, shared_from_this());
             _layout->setSpacingRole(SizeRole::None);
@@ -141,14 +141,16 @@ namespace examples
             return out;
         }
 
-        void MainWindow::_drop(const std::vector<std::string>& list)
+        void MainWindow::_drop(const std::vector<std::string>& drops)
         {
             if (auto app = _app.lock())
             {
-                for (const auto& item : list)
+                std::vector<std::filesystem::path> paths;
+                for (const auto& drop : drops)
                 {
-                    app->open(item);
+                    paths.push_back(std::filesystem::u8path(drop));
                 }
+                app->open(paths);
             }
         }
     }

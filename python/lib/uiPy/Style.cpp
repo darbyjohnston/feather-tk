@@ -29,6 +29,7 @@ namespace ftk
             .value("Border", SizeRole::Border)
             .value("LabelPad", SizeRole::LabelPad)
             .value("ScrollArea", SizeRole::ScrollArea)
+            .value("ScrollAreaSmall", SizeRole::ScrollAreaSmall)
             .value("Slider", SizeRole::Slider)
             .value("Handle", SizeRole::Handle)
             .value("Swatch", SizeRole::Swatch)

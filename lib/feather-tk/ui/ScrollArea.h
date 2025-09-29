@@ -68,6 +68,12 @@ namespace ftk
         //! Set the scroll position callback.
         void setScrollPosCallback(const std::function<void(const V2I&)>&);
 
+        //! Get the size hint role.
+        SizeRole getSizeHintRole() const;
+
+        //! Set the size hint role.
+        void setSizeHintRole(SizeRole);
+
         void setGeometry(const Box2I&) override;
         void sizeHintEvent(const SizeHintEvent&) override;
 

@@ -253,14 +253,14 @@ namespace ftk
         _setDrawUpdate();
     }
 
-    SizeRole ScrollWidget::getMarginRole() const
+    SizeRole ScrollWidget::getSizeHintRole() const
     {
-        return _p->layout->getMarginRole();
+        return _p->scrollArea->getSizeHintRole();
     }
 
-    void ScrollWidget::setMarginRole(SizeRole value)
+    void ScrollWidget::setSizeHintRole(SizeRole value)
     {
-        _p->layout->setMarginRole(value);
+        _p->scrollArea->setSizeHintRole(value);
     }
 
     void ScrollWidget::setGeometry(const Box2I& value)

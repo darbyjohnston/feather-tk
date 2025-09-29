@@ -5,7 +5,9 @@
 #include "StatusBar.h"
 
 #include "App.h"
+#include "DocumentModel.h"
 
+#include <feather-tk/core/Format.h>
 #include <feather-tk/core/String.h>
 
 using namespace ftk;
@@ -16,38 +18,35 @@ namespace examples
     {
         void StatusBar::_init(
             const std::shared_ptr<Context>& context,
+            const std::shared_ptr<App>& app,
             const std::shared_ptr<IWidget>& parent)
         {
             IWidget::_init(context, "examples::textedit::StatusBar", parent);
 
-            _label = Label::create(context, shared_from_this());
+            _label = Label::create(context);
             _label->setMarginRole(SizeRole::MarginInside);
 
-            _timer = Timer::create(context);
+            _layout = HorizontalLayout::create(context, shared_from_this());
+            _layout->setSpacingRole(SizeRole::None);
+            _layout->addSpacer(Stretch::Expanding);
+            _label->setParent(_layout);
 
-            _logObserver = ListObserver<LogItem>::create(
-                context->getSystem<LogSystem>()->observeLogItems(),
-                [this](const std::vector<LogItem>& items)
+            std::weak_ptr<App> appWeak(app);
+            _currentDocumentObserver = ftk::ValueObserver<int>::create(
+                app->getDocumentModel()->observeCurrent(),
+                [this, appWeak](int index)
                 {
-                    std::string error;
-                    for (const auto& item : items)
+                    int lineCount = 0;
+                    if (auto app = appWeak.lock())
                     {
-                        if (LogType::Error == item.type)
+                        const auto& documents = app->getDocumentModel()->getList();
+                        if (index >= 0 && index < documents.size())
                         {
-                            error = item.message;
+                            const auto& document = documents[index];
+                            lineCount = document->getLines().size();
                         }
                     }
-                    if (!error.empty())
-                    {
-                        _label->setText("ERROR: " + error);
-                        
-                        _timer->start(
-                            std::chrono::seconds(5),
-                            [this]
-                            {
-                                _label->setText(std::string());
-                            });
-                    }
+                    _label->setText(Format("Lines: {0}").arg(lineCount));
                 });
         }
 
@@ -56,23 +55,24 @@ namespace examples
 
         std::shared_ptr<StatusBar> StatusBar::create(
             const std::shared_ptr<Context>& context,
+            const std::shared_ptr<App>& app,
             const std::shared_ptr<IWidget>& parent)
         {
             auto out = std::shared_ptr<StatusBar>(new StatusBar);
-            out->_init(context, parent);
+            out->_init(context, app, parent);
             return out;
         }
 
         void StatusBar::setGeometry(const Box2I& value)
         {
             IWidget::setGeometry(value);
-            _label->setGeometry(value);
+            _layout->setGeometry(value);
         }
 
         void StatusBar::sizeHintEvent(const SizeHintEvent& event)
         {
             IWidget::sizeHintEvent(event);
-            _setSizeHint(_label->getSizeHint());
+            _setSizeHint(_layout->getSizeHint());
         }
     }
 }

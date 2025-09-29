@@ -38,6 +38,7 @@ namespace examples
             const std::shared_ptr<DocumentModel>& getDocumentModel() const;
 
             void open(const std::filesystem::path&);
+            void open(const std::vector<std::filesystem::path>&);
 
         private:
             struct CmdLine

@@ -32,6 +32,7 @@ namespace ftk
         BorderFocus,
         LabelPad,
         ScrollArea,
+        ScrollAreaSmall,
         Slider,
         Handle,
         Swatch,

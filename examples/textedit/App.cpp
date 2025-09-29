@@ -45,9 +45,14 @@ namespace examples
                 Size2I(1280, 960));
             _mainWindow->show();
 
-            for (const auto& input : _cmdLine.paths->getList())
+            std::vector<std::filesystem::path> paths;
+            for (const std::string& path : _cmdLine.paths->getList())
             {
-                open(input);
+                paths.push_back(std::filesystem::u8path(path));
+            }
+            if (!paths.empty())
+            {
+                open(paths);
             }
         }
 
@@ -75,7 +80,29 @@ namespace examples
             }
             catch (const std::exception& e)
             {
-                _context->getSystem<LogSystem>()->print("App", e.what(), LogType::Error);
+                _context->getSystem<DialogSystem>()->message("ERROR", e.what(), _mainWindow);
+            }
+        }
+
+        void App::open(const std::vector<std::filesystem::path>& paths)
+        {
+            std::vector<std::string> errors;
+            for (const auto& path : paths)
+            {
+                try
+                {
+                    auto document = Document::create(_context, path);
+                    document->setLines(readLines(path));
+                    _documentModel->add(document);
+                }
+                catch (const std::exception& e)
+                {
+                    errors.push_back(e.what());
+                }
+            }
+            if (!errors.empty())
+            {
+                _context->getSystem<DialogSystem>()->message("ERROR", join(errors, '\n') , _mainWindow);
             }
         }
     }

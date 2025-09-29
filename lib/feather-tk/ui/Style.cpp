@@ -29,6 +29,7 @@ namespace ftk
         "BorderFocus",
         "LabelPad",
         "ScrollArea",
+        "ScrollAreaSmall",
         "Slider",
         "Handle",
         "Swatch",
@@ -53,6 +54,7 @@ namespace ftk
         out[SizeRole::BorderFocus] = 2;
         out[SizeRole::LabelPad] = 4;
         out[SizeRole::ScrollArea] = 200;
+        out[SizeRole::ScrollAreaSmall] = 100;
         out[SizeRole::Slider] = 100;
         out[SizeRole::Handle] = 8;
         out[SizeRole::Swatch] = 20;

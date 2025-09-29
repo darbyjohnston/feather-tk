@@ -8,6 +8,7 @@
 #include <feather-tk/ui/Label.h>
 #include <feather-tk/ui/PushButton.h>
 #include <feather-tk/ui/RowLayout.h>
+#include <feather-tk/ui/ScrollWidget.h>
 
 namespace ftk
 {
@@ -39,6 +40,7 @@ namespace ftk
     private:
         std::shared_ptr<Label> _titleLabel;
         std::shared_ptr<Label> _label;
+        std::shared_ptr<ScrollWidget> _scrollWidget;
         std::shared_ptr<PushButton> _okButton;
         std::shared_ptr<VerticalLayout> _layout;
         std::function<void(void)> _callback;
@@ -60,8 +62,13 @@ namespace ftk
         _titleLabel->setBackgroundRole(ColorRole::Button);
 
         _label = Label::create(context, text);
-        _label->setMarginRole(SizeRole::Margin);
-        _label->setAlign(HAlign::Center, VAlign::Top);
+        _label->setMarginRole(SizeRole::MarginSmall);
+        _label->setAlign(HAlign::Left, VAlign::Top);
+
+        _scrollWidget = ScrollWidget::create(context);
+        _scrollWidget->setBorder(false);
+        _scrollWidget->setSizeHintRole(SizeRole::ScrollAreaSmall);
+        _scrollWidget->setWidget(_label);
 
         _okButton = PushButton::create(context, "OK");
 
@@ -69,7 +76,7 @@ namespace ftk
         _layout->setSpacingRole(SizeRole::None);
         _titleLabel->setParent(_layout);
         Divider::create(context, Orientation::Vertical, _layout);
-        _label->setParent(_layout);
+        _scrollWidget->setParent(_layout);
         Divider::create(context, Orientation::Vertical, _layout);
         auto hLayout = HorizontalLayout::create(context, _layout);
         hLayout->setMarginRole(SizeRole::MarginSmall);
@@ -120,7 +127,7 @@ namespace ftk
         IWidget::sizeHintEvent(event);
         const int sa = event.style->getSizeRole(SizeRole::ScrollArea, event.displayScale);
         Size2I sizeHint = _layout->getSizeHint();
-        sizeHint.w = std::max(sizeHint.w, sa);
+        sizeHint.w = std::max(sizeHint.w, sa * 2);
         _setSizeHint(sizeHint);
     }
 
