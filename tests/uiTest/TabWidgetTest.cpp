@@ -122,7 +122,7 @@ namespace ftk
                 widget->addTab(tabs[0], label0);
                 widget->addTab(tabs[1], label1);
                 int tab = 0;
-                widget->setTabCallback(
+                widget->setCurrentTabCallback(
                     [&tab](int value)
                     {
                         tab = value;

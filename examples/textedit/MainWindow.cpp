@@ -49,7 +49,7 @@ namespace examples
             setWidget(_layout);
 
             auto appWeak = std::weak_ptr<App>(app);
-            _tabWidget->setTabCallback(
+            _tabWidget->setCurrentTabCallback(
                 [appWeak](int index)
                 {
                     if (auto app = appWeak.lock())

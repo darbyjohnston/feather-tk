@@ -54,16 +54,16 @@ namespace ftk
         void setCurrentTab(int);
 
         //! Set the current tab callback.
-        void setTabCallback(const std::function<void(int)>&);
+        void setCurrentTabCallback(const std::function<void(int)>&);
 
         //! Get the current widget.
-        std::shared_ptr<IWidget> getWidget() const;
+        std::shared_ptr<IWidget> getCurrentWidget() const;
 
         //! Set the current widget.
-        void setWidget(const std::shared_ptr<IWidget>&);
+        void setCurrentWidget(const std::shared_ptr<IWidget>&);
 
         //! Set the current widget callback.
-        void setWidgetCallback(const std::function<void(const std::shared_ptr<IWidget>&)>&);
+        void setCurrentWidgetCallback(const std::function<void(const std::shared_ptr<IWidget>&)>&);
 
         //! Get whether the tabs are closable.
         bool areTabsClosable() const;

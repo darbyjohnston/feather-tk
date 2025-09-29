@@ -111,7 +111,7 @@ namespace ftk
         _modeUpdate();
         _colorUpdate();
 
-        p.tabWidget->setTabCallback(
+        p.tabWidget->setCurrentTabCallback(
             [this](int value)
             {
                 _p->mode = static_cast<ColorWidgetMode>(value);
@@ -121,7 +121,7 @@ namespace ftk
             [this](float value)
             {
                 FTK_P();
-                if (p.rgbLayout == p.tabWidget->getWidget())
+                if (p.rgbLayout == p.tabWidget->getCurrentWidget())
                 {
                     p.color.r = value;
                     float rgb[3] = { p.color.r, p.color.g, p.color.b };
@@ -137,7 +137,7 @@ namespace ftk
             [this](float value)
             {
                 FTK_P();
-                if (p.rgbLayout == p.tabWidget->getWidget())
+                if (p.rgbLayout == p.tabWidget->getCurrentWidget())
                 {
                     p.color.g = value;
                     float rgb[3] = { p.color.r, p.color.g, p.color.b };
@@ -153,7 +153,7 @@ namespace ftk
             [this](float value)
             {
                 FTK_P();
-                if (p.rgbLayout == p.tabWidget->getWidget())
+                if (p.rgbLayout == p.tabWidget->getCurrentWidget())
                 {
                     p.color.b = value;
                     float rgb[3] = { p.color.r, p.color.g, p.color.b };
@@ -169,7 +169,7 @@ namespace ftk
             [this](float value)
             {
                 FTK_P();
-                if (p.rgbLayout == p.tabWidget->getWidget())
+                if (p.rgbLayout == p.tabWidget->getCurrentWidget())
                 {
                     p.color.a = value;
                     _colorUpdate();
@@ -184,7 +184,7 @@ namespace ftk
             [this](float value)
             {
                 FTK_P();
-                if (p.hsvLayout == p.tabWidget->getWidget())
+                if (p.hsvLayout == p.tabWidget->getCurrentWidget())
                 {
                     p.hsv[0] = value;
                     float rgb[3] = { 0.F, 0.F, 0.F };
@@ -203,7 +203,7 @@ namespace ftk
             [this](float value)
             {
                 FTK_P();
-                if (p.hsvLayout == p.tabWidget->getWidget())
+                if (p.hsvLayout == p.tabWidget->getCurrentWidget())
                 {
                     p.hsv[1] = value;
                     float rgb[3] = { 0.F, 0.F, 0.F };
@@ -222,7 +222,7 @@ namespace ftk
             [this](float value)
             {
                 FTK_P();
-                if (p.hsvLayout == p.tabWidget->getWidget())
+                if (p.hsvLayout == p.tabWidget->getCurrentWidget())
                 {
                     p.hsv[2] = value;
                     float rgb[3] = { 0.F, 0.F, 0.F };
@@ -241,7 +241,7 @@ namespace ftk
             [this](float value)
             {
                 FTK_P();
-                if (p.hsvLayout == p.tabWidget->getWidget())
+                if (p.hsvLayout == p.tabWidget->getCurrentWidget())
                 {
                     p.color.a = value;
                     _colorUpdate();
