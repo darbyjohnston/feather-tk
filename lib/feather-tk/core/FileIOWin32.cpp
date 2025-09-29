@@ -455,26 +455,24 @@ namespace ftk
                         getErrorMessage(ErrorType::SeekMemoryMap, path.u8string()));
                 }
                 break;
+            default: break;
             }
         }
         else
         {
             LARGE_INTEGER v;
-            DWORD move = 0;
+            v.QuadPart = value;
+            DWORD move = FILE_BEGIN;
             switch (seekMode)
             {
-            case SeekMode::Set:
-                v.QuadPart = value;
-                move = FILE_BEGIN;
-                break;
             case SeekMode::Forward:
-                v.QuadPart = value;
                 move = FILE_CURRENT;
                 break;
             case SeekMode::Reverse:
-                v.QuadPart = -static_cast<LONGLONG>(value);
+                v.QuadPart = -v.QuadPart;
                 move = FILE_CURRENT;
                 break;
+            default: break;
             }
             if (!::SetFilePointerEx(f, v, 0, move))
             {
