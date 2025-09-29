@@ -2,7 +2,7 @@
 // Copyright (c) 2024-2025 Darby Johnston
 // All rights reserved.
 
-#include <uiTest/ListWidgetTest.h>
+#include <UiTest/ListWidgetTest.h>
 
 #include <ftk/Ui/ListWidget.h>
 

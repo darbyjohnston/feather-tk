@@ -2,7 +2,7 @@
 // Copyright (c) 2024-2025 Darby Johnston
 // All rights reserved.
 
-#include <uiTest/ScrollAreaTest.h>
+#include <UiTest/ScrollAreaTest.h>
 
 #include <ftk/Ui/ScrollArea.h>
 

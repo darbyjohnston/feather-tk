@@ -2,7 +2,7 @@
 // Copyright (c) 2024-2025 Darby Johnston
 // All rights reserved.
 
-#include <uiPy/RowLayout.h>
+#include <UiPy/RowLayout.h>
 
 #include <ftk/Ui/RowLayout.h>
 

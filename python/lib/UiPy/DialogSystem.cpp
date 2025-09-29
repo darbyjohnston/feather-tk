@@ -2,7 +2,7 @@
 // Copyright (c) 2024-2025 Darby Johnston
 // All rights reserved.
 
-#include <uiPy/DialogSystem.h>
+#include <UiPy/DialogSystem.h>
 
 #include <ftk/Ui/DialogSystem.h>
 #include <ftk/Ui/Window.h>

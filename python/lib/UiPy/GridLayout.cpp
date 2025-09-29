@@ -2,7 +2,7 @@
 // Copyright (c) 2024-2025 Darby Johnston
 // All rights reserved.
 
-#include <uiPy/GridLayout.h>
+#include <UiPy/GridLayout.h>
 
 #include <ftk/Ui/GridLayout.h>
 

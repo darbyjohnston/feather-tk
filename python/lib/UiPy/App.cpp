@@ -2,7 +2,7 @@
 // Copyright (c) 2024-2025 Darby Johnston
 // All rights reserved.
 
-#include <uiPy/App.h>
+#include <UiPy/App.h>
 
 #include <ftk/Ui/App.h>
 #include <ftk/Ui/Settings.h>

@@ -2,7 +2,7 @@
 // Copyright (c) 2024-2025 Darby Johnston
 // All rights reserved.
 
-#include <uiPy/FileEdit.h>
+#include <UiPy/FileEdit.h>
 
 #include <ftk/Ui/FileEdit.h>
 #include <ftk/Ui/RecentFilesModel.h>

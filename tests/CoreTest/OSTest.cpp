@@ -2,7 +2,7 @@
 // Copyright (c) 2024-2025 Darby Johnston
 // All rights reserved.
 
-#include <coreTest/OSTest.h>
+#include <CoreTest/OSTest.h>
 
 #include <ftk/Core/Assert.h>
 #include <ftk/Core/OS.h>

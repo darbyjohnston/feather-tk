@@ -2,7 +2,7 @@
 // Copyright (c) 2024-2025 Darby Johnston
 // All rights reserved.
 
-#include <coreTest/MemoryTest.h>
+#include <CoreTest/MemoryTest.h>
 
 #include <ftk/Core/Assert.h>
 #include <ftk/Core/Format.h>

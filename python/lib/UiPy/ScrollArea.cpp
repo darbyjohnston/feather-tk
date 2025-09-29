@@ -2,7 +2,7 @@
 // Copyright (c) 2024-2025 Darby Johnston
 // All rights reserved.
 
-#include <uiPy/ScrollArea.h>
+#include <UiPy/ScrollArea.h>
 
 #include <ftk/Ui/ScrollArea.h>
 

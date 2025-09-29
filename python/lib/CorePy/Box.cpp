@@ -2,7 +2,7 @@
 // Copyright (c) 2024-2025 Darby Johnston
 // All rights reserved.
 
-#include <corePy/Box.h>
+#include <CorePy/Box.h>
 
 #include <ftk/Core/Box.h>
 

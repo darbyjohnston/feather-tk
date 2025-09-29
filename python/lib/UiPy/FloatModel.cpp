@@ -2,7 +2,7 @@
 // Copyright (c) 2024-2025 Darby Johnston
 // All rights reserved.
 
-#include <uiPy/FloatModel.h>
+#include <UiPy/FloatModel.h>
 
 #include <ftk/Ui/FloatModel.h>
 

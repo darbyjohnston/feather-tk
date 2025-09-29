@@ -2,7 +2,7 @@
 // Copyright (c) 2024-2025 Darby Johnston
 // All rights reserved.
 
-#include <uiTest/ScrollBarTest.h>
+#include <UiTest/ScrollBarTest.h>
 
 #include <ftk/Ui/ScrollBar.h>
 

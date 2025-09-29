@@ -2,7 +2,7 @@
 // Copyright (c) 2024-2025 Darby Johnston
 // All rights reserved.
 
-#include <uiTest/DoubleEditSliderTest.h>
+#include <UiTest/DoubleEditSliderTest.h>
 
 #include <ftk/Ui/App.h>
 #include <ftk/Ui/DoubleEditSlider.h>

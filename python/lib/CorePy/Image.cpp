@@ -2,7 +2,7 @@
 // Copyright (c) 2024-2025 Darby Johnston
 // All rights reserved.
 
-#include <corePy/Image.h>
+#include <CorePy/Image.h>
 
 #include <ftk/Core/Image.h>
 

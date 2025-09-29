@@ -2,7 +2,7 @@
 // Copyright (c) 2024-2025 Darby Johnston
 // All rights reserved.
 
-#include <uiPy/ProgressDialog.h>
+#include <UiPy/ProgressDialog.h>
 
 #include <ftk/Ui/ProgressDialog.h>
 #include <ftk/Ui/Window.h>

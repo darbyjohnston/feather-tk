@@ -2,7 +2,7 @@
 // Copyright (c) 2024-2025 Darby Johnston
 // All rights reserved.
 
-#include <corePy/Random.h>
+#include <CorePy/Random.h>
 
 #include <ftk/Core/Random.h>
 

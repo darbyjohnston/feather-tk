@@ -2,7 +2,7 @@
 // Copyright (c) 2024-2025 Darby Johnston
 // All rights reserved.
 
-#include <uiTest/LayoutUtilTest.h>
+#include <UiTest/LayoutUtilTest.h>
 
 #include <ftk/Ui/LayoutUtil.h>
 

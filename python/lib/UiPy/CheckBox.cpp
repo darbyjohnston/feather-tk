@@ -2,7 +2,7 @@
 // Copyright (c) 2024-2025 Darby Johnston
 // All rights reserved.
 
-#include <uiPy/CheckBox.h>
+#include <UiPy/CheckBox.h>
 
 #include <ftk/Ui/CheckBox.h>
 

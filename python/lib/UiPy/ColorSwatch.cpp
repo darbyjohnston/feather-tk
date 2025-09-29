@@ -2,7 +2,7 @@
 // Copyright (c) 2024-2025 Darby Johnston
 // All rights reserved.
 
-#include <uiPy/ColorSwatch.h>
+#include <UiPy/ColorSwatch.h>
 
 #include <ftk/Ui/ColorSwatch.h>
 

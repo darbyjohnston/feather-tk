@@ -2,7 +2,7 @@
 // Copyright (c) 2024-2025 Darby Johnston
 // All rights reserved.
 
-#include <uiPy/IDialog.h>
+#include <UiPy/IDialog.h>
 
 #include <ftk/Ui/IDialog.h>
 #include <ftk/Ui/Window.h>

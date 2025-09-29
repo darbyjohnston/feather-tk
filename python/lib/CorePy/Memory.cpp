@@ -2,7 +2,7 @@
 // Copyright (c) 2024-2025 Darby Johnston
 // All rights reserved.
 
-#include <corePy/Memory.h>
+#include <CorePy/Memory.h>
 
 #include <ftk/Core/Memory.h>
 

@@ -2,7 +2,7 @@
 // Copyright (c) 2024-2025 Darby Johnston
 // All rights reserved.
 
-#include <corePy/OS.h>
+#include <CorePy/OS.h>
 
 #include <ftk/Core/OS.h>
 

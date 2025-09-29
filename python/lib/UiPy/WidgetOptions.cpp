@@ -2,7 +2,7 @@
 // Copyright (c) 2024-2025 Darby Johnston
 // All rights reserved.
 
-#include <uiPy/WidgetOptions.h>
+#include <UiPy/WidgetOptions.h>
 
 #include <ftk/Ui/IWidget.h>
 

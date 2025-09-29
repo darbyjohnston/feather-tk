@@ -2,7 +2,7 @@
 // Copyright (c) 2024-2025 Darby Johnston
 // All rights reserved.
 
-#include <coreTest/NoiseTest.h>
+#include <CoreTest/NoiseTest.h>
 
 #include <ftk/Core/Assert.h>
 #include <ftk/Core/Math.h>

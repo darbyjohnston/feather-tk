@@ -2,7 +2,7 @@
 // Copyright (c) 2024-2025 Darby Johnston
 // All rights reserved.
 
-#include <uiPy/ButtonGroup.h>
+#include <UiPy/ButtonGroup.h>
 
 #include <ftk/Ui/ButtonGroup.h>
 

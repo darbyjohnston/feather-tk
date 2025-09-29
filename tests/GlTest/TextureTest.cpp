@@ -2,7 +2,7 @@
 // Copyright (c) 2024-2025 Darby Johnston
 // All rights reserved.
 
-#include <glTest/TextureTest.h>
+#include <GlTest/TextureTest.h>
 
 #include <ftk/Gl/Texture.h>
 #include <ftk/Gl/Window.h>

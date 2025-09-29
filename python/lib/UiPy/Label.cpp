@@ -2,7 +2,7 @@
 // Copyright (c) 2024-2025 Darby Johnston
 // All rights reserved.
 
-#include <uiPy/Label.h>
+#include <UiPy/Label.h>
 
 #include <ftk/Ui/Label.h>
 

@@ -2,7 +2,7 @@
 // Copyright (c) 2024-2025 Darby Johnston
 // All rights reserved.
 
-#include <uiTest/RowLayoutTest.h>
+#include <UiTest/RowLayoutTest.h>
 
 #include <ftk/Ui/Label.h>
 #include <ftk/Ui/Spacer.h>

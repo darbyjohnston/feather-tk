@@ -2,7 +2,7 @@
 // Copyright (c) 2024-2025 Darby Johnston
 // All rights reserved.
 
-#include <coreTest/FormatTest.h>
+#include <CoreTest/FormatTest.h>
 
 #include <ftk/Core/Assert.h>
 #include <ftk/Core/Format.h>

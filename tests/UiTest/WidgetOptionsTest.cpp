@@ -2,7 +2,7 @@
 // Copyright (c) 2024-2025 Darby Johnston
 // All rights reserved.
 
-#include <uiTest/WidgetOptionsTest.h>
+#include <UiTest/WidgetOptionsTest.h>
 
 #include <ftk/Ui/WidgetOptions.h>
 

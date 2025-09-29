@@ -2,7 +2,7 @@
 // Copyright (c) 2024-2025 Darby Johnston
 // All rights reserved.
 
-#include <coreTest/CmdLineTest.h>
+#include <CoreTest/CmdLineTest.h>
 
 #include <ftk/Core/CmdLine.h>
 

@@ -2,7 +2,7 @@
 // Copyright (c) 2024-2025 Darby Johnston
 // All rights reserved.
 
-#include <corePy/ObservableMap.h>
+#include <CorePy/ObservableMap.h>
 
 #include <pybind11/pybind11.h>
 #include <pybind11/functional.h>

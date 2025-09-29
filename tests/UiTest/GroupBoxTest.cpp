@@ -2,7 +2,7 @@
 // Copyright (c) 2024-2025 Darby Johnston
 // All rights reserved.
 
-#include <uiTest/GroupBoxTest.h>
+#include <UiTest/GroupBoxTest.h>
 
 #include <ftk/Ui/App.h>
 #include <ftk/Ui/GroupBox.h>

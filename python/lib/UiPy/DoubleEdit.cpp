@@ -2,7 +2,7 @@
 // Copyright (c) 2024-2025 Darby Johnston
 // All rights reserved.
 
-#include <uiPy/DoubleEdit.h>
+#include <UiPy/DoubleEdit.h>
 
 #include <ftk/Ui/DoubleEdit.h>
 

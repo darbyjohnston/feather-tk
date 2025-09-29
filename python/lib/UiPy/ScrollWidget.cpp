@@ -2,7 +2,7 @@
 // Copyright (c) 2024-2025 Darby Johnston
 // All rights reserved.
 
-#include <uiPy/ScrollWidget.h>
+#include <UiPy/ScrollWidget.h>
 
 #include <ftk/Ui/ScrollWidget.h>
 

@@ -2,7 +2,7 @@
 // Copyright (c) 2024-2025 Darby Johnston
 // All rights reserved.
 
-#include <uiTest/FloatEditSliderTest.h>
+#include <UiTest/FloatEditSliderTest.h>
 
 #include <ftk/Ui/App.h>
 #include <ftk/Ui/FloatEditSlider.h>

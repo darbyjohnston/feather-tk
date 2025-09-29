@@ -2,7 +2,7 @@
 // Copyright (c) 2024-2025 Darby Johnston
 // All rights reserved.
 
-#include <glTest/MeshTest.h>
+#include <GlTest/MeshTest.h>
 
 #include <ftk/Gl/GL.h>
 #include <ftk/Gl/Mesh.h>

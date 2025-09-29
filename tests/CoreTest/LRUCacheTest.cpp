@@ -2,7 +2,7 @@
 // Copyright (c) 2024-2025 Darby Johnston
 // All rights reserved.
 
-#include <coreTest/LRUCacheTest.h>
+#include <CoreTest/LRUCacheTest.h>
 
 #include <ftk/Core/Assert.h>
 #include <ftk/Core/Format.h>

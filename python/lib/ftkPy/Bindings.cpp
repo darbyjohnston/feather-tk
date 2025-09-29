@@ -2,8 +2,8 @@
 // Copyright (c) 2024-2025 Darby Johnston
 // All rights reserved.
 
-#include <corePy/Bindings.h>
-#include <uiPy/Bindings.h>
+#include <CorePy/Bindings.h>
+#include <UiPy/Bindings.h>
 
 #include <pybind11/pybind11.h>
 

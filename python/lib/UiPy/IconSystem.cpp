@@ -2,7 +2,7 @@
 // Copyright (c) 2024-2025 Darby Johnston
 // All rights reserved.
 
-#include <uiPy/IconSystem.h>
+#include <UiPy/IconSystem.h>
 
 #include <ftk/Ui/IconSystem.h>
 

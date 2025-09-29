@@ -2,7 +2,7 @@
 // Copyright (c) 2024-2025 Darby Johnston
 // All rights reserved.
 
-#include <uiPy/MDIWidget.h>
+#include <UiPy/MDIWidget.h>
 
 #include <ftk/Ui/MDIWidget.h>
 

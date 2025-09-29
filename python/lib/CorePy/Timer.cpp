@@ -2,7 +2,7 @@
 // Copyright (c) 2024-2025 Darby Johnston
 // All rights reserved.
 
-#include <corePy/Timer.h>
+#include <CorePy/Timer.h>
 
 #include <ftk/Core/Context.h>
 #include <ftk/Core/Timer.h>

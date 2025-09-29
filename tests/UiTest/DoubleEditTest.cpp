@@ -2,7 +2,7 @@
 // Copyright (c) 2024-2025 Darby Johnston
 // All rights reserved.
 
-#include <uiTest/DoubleEditTest.h>
+#include <UiTest/DoubleEditTest.h>
 
 #include <ftk/Ui/App.h>
 #include <ftk/Ui/DoubleEdit.h>

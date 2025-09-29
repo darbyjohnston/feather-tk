@@ -2,7 +2,7 @@
 // Copyright (c) 2024-2025 Darby Johnston
 // All rights reserved.
 
-#include <uiPy/FileBrowser.h>
+#include <UiPy/FileBrowser.h>
 
 #include <ftk/Ui/FileBrowser.h>
 #include <ftk/Ui/IWindow.h>

@@ -2,7 +2,7 @@
 // Copyright (c) 2024-2025 Darby Johnston
 // All rights reserved.
 
-#include <uiPy/MenuBar.h>
+#include <UiPy/MenuBar.h>
 
 #include <ftk/Ui/MenuBar.h>
 

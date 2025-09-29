@@ -2,7 +2,7 @@
 // Copyright (c) 2024-2025 Darby Johnston
 // All rights reserved.
 
-#include <glTest/TextureAtlasTest.h>
+#include <GlTest/TextureAtlasTest.h>
 
 #include <ftk/Gl/TextureAtlas.h>
 #include <ftk/Gl/Window.h>

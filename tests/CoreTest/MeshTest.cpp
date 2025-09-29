@@ -2,7 +2,7 @@
 // Copyright (c) 2024-2025 Darby Johnston
 // All rights reserved.
 
-#include <coreTest/MeshTest.h>
+#include <CoreTest/MeshTest.h>
 
 #include <ftk/Core/Assert.h>
 #include <ftk/Core/Mesh.h>

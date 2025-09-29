@@ -13,4 +13,4 @@ namespace ftk
     void observableValue(pybind11::module_&);
 }
 
-#include <corePy/ObservableValueInline.h>
+#include <CorePy/ObservableValueInline.h>

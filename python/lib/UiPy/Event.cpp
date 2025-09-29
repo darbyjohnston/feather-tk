@@ -2,7 +2,7 @@
 // Copyright (c) 2024-2025 Darby Johnston
 // All rights reserved.
 
-#include <uiPy/Event.h>
+#include <UiPy/Event.h>
 
 #include <ftk/Ui/Event.h>
 #include <ftk/Ui/IWidget.h>

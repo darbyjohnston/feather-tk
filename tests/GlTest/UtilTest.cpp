@@ -2,7 +2,7 @@
 // Copyright (c) 2024-2025 Darby Johnston
 // All rights reserved.
 
-#include <glTest/UtilTest.h>
+#include <GlTest/UtilTest.h>
 
 #include <ftk/Gl/Util.h>
 

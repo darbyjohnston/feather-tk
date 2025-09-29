@@ -2,7 +2,7 @@
 // Copyright (c) 2024-2025 Darby Johnston
 // All rights reserved.
 
-#include <uiPy/Bellows.h>
+#include <UiPy/Bellows.h>
 
 #include <ftk/Ui/Bellows.h>
 

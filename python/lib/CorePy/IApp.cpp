@@ -2,7 +2,7 @@
 // Copyright (c) 2024-2025 Darby Johnston
 // All rights reserved.
 
-#include <corePy/IApp.h>
+#include <CorePy/IApp.h>
 
 #include <ftk/Core/CmdLine.h>
 #include <ftk/Core/Context.h>

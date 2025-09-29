@@ -13,4 +13,4 @@ namespace ftk
     void observableList(pybind11::module_&);
 }
 
-#include <corePy/ObservableListInline.h>
+#include <CorePy/ObservableListInline.h>

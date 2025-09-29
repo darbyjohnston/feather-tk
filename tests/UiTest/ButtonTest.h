@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include <testLib/ITest.h>
+#include <TestLib/ITest.h>
 
 #include <ftk/Ui/App.h>
 #include <ftk/Ui/IButton.h>

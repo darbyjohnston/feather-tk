@@ -2,7 +2,7 @@
 // Copyright (c) 2024-2025 Darby Johnston
 // All rights reserved.
 
-#include <uiTest/RecentFilesModelTest.h>
+#include <UiTest/RecentFilesModelTest.h>
 
 #include <ftk/Ui/RecentFilesModel.h>
 

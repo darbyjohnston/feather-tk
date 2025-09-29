@@ -2,7 +2,7 @@
 // Copyright (c) 2024-2025 Darby Johnston
 // All rights reserved.
 
-#include <uiPy/ConfirmDialog.h>
+#include <UiPy/ConfirmDialog.h>
 
 #include <ftk/Ui/ConfirmDialog.h>
 #include <ftk/Ui/Window.h>

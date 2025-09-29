@@ -2,7 +2,7 @@
 // Copyright (c) 2024-2025 Darby Johnston
 // All rights reserved.
 
-#include <corePy/String.h>
+#include <CorePy/String.h>
 
 #include <ftk/Core/String.h>
 

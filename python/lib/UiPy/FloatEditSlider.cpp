@@ -2,7 +2,7 @@
 // Copyright (c) 2024-2025 Darby Johnston
 // All rights reserved.
 
-#include <uiPy/FloatEditSlider.h>
+#include <UiPy/FloatEditSlider.h>
 
 #include <ftk/Ui/FloatEditSlider.h>
 

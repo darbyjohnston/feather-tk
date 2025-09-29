@@ -2,7 +2,7 @@
 // Copyright (c) 2024-2025 Darby Johnston
 // All rights reserved.
 
-#include <uiPy/IntEditSlider.h>
+#include <UiPy/IntEditSlider.h>
 
 #include <ftk/Ui/IntEditSlider.h>
 

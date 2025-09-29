@@ -2,7 +2,7 @@
 // Copyright (c) 2024-2025 Darby Johnston
 // All rights reserved.
 
-#include <glTest/RenderTest.h>
+#include <GlTest/RenderTest.h>
 
 #include <ftk/Gl/OffscreenBuffer.h>
 #include <ftk/Gl/Render.h>

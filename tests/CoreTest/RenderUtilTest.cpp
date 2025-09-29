@@ -2,7 +2,7 @@
 // Copyright (c) 2024-2025 Darby Johnston
 // All rights reserved.
 
-#include <coreTest/RenderUtilTest.h>
+#include <CoreTest/RenderUtilTest.h>
 
 #include <ftk/Core/Assert.h>
 #include <ftk/Core/Context.h>

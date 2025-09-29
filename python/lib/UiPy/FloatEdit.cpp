@@ -2,7 +2,7 @@
 // Copyright (c) 2024-2025 Darby Johnston
 // All rights reserved.
 
-#include <uiPy/FloatEdit.h>
+#include <UiPy/FloatEdit.h>
 
 #include <ftk/Ui/FloatEdit.h>
 

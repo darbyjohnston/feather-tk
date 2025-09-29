@@ -2,7 +2,7 @@
 // Copyright (c) 2024-2025 Darby Johnston
 // All rights reserved.
 
-#include <uiTest/SplitterTest.h>
+#include <UiTest/SplitterTest.h>
 
 #include <ftk/Ui/Label.h>
 #include <ftk/Ui/Splitter.h>

@@ -2,7 +2,7 @@
 // Copyright (c) 2024-2025 Darby Johnston
 // All rights reserved.
 
-#include <uiPy/DoubleModel.h>
+#include <UiPy/DoubleModel.h>
 
 #include <ftk/Ui/DoubleModel.h>
 

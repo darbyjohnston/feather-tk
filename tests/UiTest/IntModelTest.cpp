@@ -2,7 +2,7 @@
 // Copyright (c) 2024-2025 Darby Johnston
 // All rights reserved.
 
-#include <uiTest/IntModelTest.h>
+#include <UiTest/IntModelTest.h>
 
 #include <ftk/Ui/IntModel.h>
 

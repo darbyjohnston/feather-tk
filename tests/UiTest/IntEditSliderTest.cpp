@@ -2,7 +2,7 @@
 // Copyright (c) 2024-2025 Darby Johnston
 // All rights reserved.
 
-#include <uiTest/IntEditSliderTest.h>
+#include <UiTest/IntEditSliderTest.h>
 
 #include <ftk/Ui/App.h>
 #include <ftk/Ui/IntEditSlider.h>

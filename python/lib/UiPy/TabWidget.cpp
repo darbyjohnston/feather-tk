@@ -2,7 +2,7 @@
 // Copyright (c) 2024-2025 Darby Johnston
 // All rights reserved.
 
-#include <uiPy/TabWidget.h>
+#include <UiPy/TabWidget.h>
 
 #include <ftk/Ui/TabWidget.h>
 

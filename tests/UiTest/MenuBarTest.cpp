@@ -2,7 +2,7 @@
 // Copyright (c) 2024-2025 Darby Johnston
 // All rights reserved.
 
-#include <uiTest/MenuBarTest.h>
+#include <UiTest/MenuBarTest.h>
 
 #include <ftk/Ui/App.h>
 #include <ftk/Ui/MenuBar.h>

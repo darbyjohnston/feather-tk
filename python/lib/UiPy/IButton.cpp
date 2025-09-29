@@ -2,7 +2,7 @@
 // Copyright (c) 2024-2025 Darby Johnston
 // All rights reserved.
 
-#include <uiPy/IButton.h>
+#include <UiPy/IButton.h>
 
 #include <ftk/Ui/IButton.h>
 

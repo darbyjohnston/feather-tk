@@ -2,7 +2,7 @@
 // Copyright (c) 2024-2025 Darby Johnston
 // All rights reserved.
 
-#include <uiTest/EventTest.h>
+#include <UiTest/EventTest.h>
 
 #include <ftk/Ui/Event.h>
 

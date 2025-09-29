@@ -2,7 +2,7 @@
 // Copyright (c) 2024-2025 Darby Johnston
 // All rights reserved.
 
-#include <testLib/ITest.h>
+#include <TestLib/ITest.h>
 
 #include <iostream>
 

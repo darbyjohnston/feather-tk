@@ -2,7 +2,7 @@
 // Copyright (c) 2024-2025 Darby Johnston
 // All rights reserved.
 
-#include <uiTest/ButtonTest.h>
+#include <UiTest/ButtonTest.h>
 
 #include <ftk/Ui/CheckBox.h>
 #include <ftk/Ui/PushButton.h>

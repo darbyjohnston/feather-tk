@@ -2,7 +2,7 @@
 // Copyright (c) 2024-2025 Darby Johnston
 // All rights reserved.
 
-#include <uiPy/IntModel.h>
+#include <UiPy/IntModel.h>
 
 #include <ftk/Ui/IntModel.h>
 

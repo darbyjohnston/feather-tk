@@ -2,7 +2,7 @@
 // Copyright (c) 2024-2025 Darby Johnston
 // All rights reserved.
 
-#include <uiPy/ToolButton.h>
+#include <UiPy/ToolButton.h>
 
 #include <ftk/Ui/ToolButton.h>
 

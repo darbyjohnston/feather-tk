@@ -8,7 +8,7 @@
 #include <ftk/Ui/ButtonGroup.h>
 #include <ftk/Ui/Window.h>
 
-#include <testLib/ITest.h>
+#include <TestLib/ITest.h>
 
 namespace ftk
 {

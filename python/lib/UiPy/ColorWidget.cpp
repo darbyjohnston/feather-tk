@@ -2,7 +2,7 @@
 // Copyright (c) 2024-2025 Darby Johnston
 // All rights reserved.
 
-#include <uiPy/ColorWidget.h>
+#include <UiPy/ColorWidget.h>
 
 #include <ftk/Ui/ColorWidget.h>
 

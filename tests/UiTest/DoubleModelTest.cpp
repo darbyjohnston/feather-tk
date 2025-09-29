@@ -2,7 +2,7 @@
 // Copyright (c) 2024-2025 Darby Johnston
 // All rights reserved.
 
-#include <uiTest/DoubleModelTest.h>
+#include <UiTest/DoubleModelTest.h>
 
 #include <ftk/Ui/DoubleModel.h>
 

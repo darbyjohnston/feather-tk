@@ -13,4 +13,4 @@ namespace ftk
     void observableMap(pybind11::module_&);
 }
 
-#include <corePy/ObservableMapInline.h>
+#include <CorePy/ObservableMapInline.h>

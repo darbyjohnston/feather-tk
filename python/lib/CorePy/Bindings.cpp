@@ -2,29 +2,29 @@
 // Copyright (c) 2024-2025 Darby Johnston
 // All rights reserved.
 
-#include <corePy/Bindings.h>
+#include <CorePy/Bindings.h>
 
-#include <corePy/Box.h>
-#include <corePy/CmdLine.h>
-#include <corePy/Color.h>
-#include <corePy/Context.h>
-#include <corePy/FontSystem.h>
-#include <corePy/IApp.h>
-#include <corePy/IRender.h>
-#include <corePy/ISystem.h>
-#include <corePy/Image.h>
-#include <corePy/Memory.h>
-#include <corePy/Observable.h>
-#include <corePy/ObservableList.h>
-#include <corePy/ObservableMap.h>
-#include <corePy/ObservableValue.h>
-#include <corePy/OS.h>
-#include <corePy/Random.h>
-#include <corePy/Range.h>
-#include <corePy/Size.h>
-#include <corePy/String.h>
-#include <corePy/Timer.h>
-#include <corePy/Vector.h>
+#include <CorePy/Box.h>
+#include <CorePy/CmdLine.h>
+#include <CorePy/Color.h>
+#include <CorePy/Context.h>
+#include <CorePy/FontSystem.h>
+#include <CorePy/IApp.h>
+#include <CorePy/IRender.h>
+#include <CorePy/ISystem.h>
+#include <CorePy/Image.h>
+#include <CorePy/Memory.h>
+#include <CorePy/Observable.h>
+#include <CorePy/ObservableList.h>
+#include <CorePy/ObservableMap.h>
+#include <CorePy/ObservableValue.h>
+#include <CorePy/OS.h>
+#include <CorePy/Random.h>
+#include <CorePy/Range.h>
+#include <CorePy/Size.h>
+#include <CorePy/String.h>
+#include <CorePy/Timer.h>
+#include <CorePy/Vector.h>
 
 #include <ftk/Core/Context.h>
 

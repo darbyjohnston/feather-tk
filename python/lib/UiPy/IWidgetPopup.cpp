@@ -2,7 +2,7 @@
 // Copyright (c) 2024-2025 Darby Johnston
 // All rights reserved.
 
-#include <uiPy/IWidgetPopup.h>
+#include <UiPy/IWidgetPopup.h>
 
 #include <ftk/Ui/IWidgetPopup.h>
 #include <ftk/Ui/IWindow.h>

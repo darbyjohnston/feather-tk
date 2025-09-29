@@ -2,7 +2,7 @@
 // Copyright (c) 2024-2025 Darby Johnston
 // All rights reserved.
 
-#include <glTest/ShaderTest.h>
+#include <GlTest/ShaderTest.h>
 
 #include <ftk/Gl/Shader.h>
 #include <ftk/Gl/Window.h>

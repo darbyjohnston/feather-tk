@@ -2,7 +2,7 @@
 // Copyright (c) 2024-2025 Darby Johnston
 // All rights reserved.
 
-#include <uiTest/ActionTest.h>
+#include <UiTest/ActionTest.h>
 
 #include <ftk/Ui/Action.h>
 

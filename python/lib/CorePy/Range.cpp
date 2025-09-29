@@ -2,7 +2,7 @@
 // Copyright (c) 2024-2025 Darby Johnston
 // All rights reserved.
 
-#include <corePy/Range.h>
+#include <CorePy/Range.h>
 
 #include <ftk/Core/Range.h>
 

@@ -2,7 +2,7 @@
 // Copyright (c) 2024-2025 Darby Johnston
 // All rights reserved.
 
-#include <uiPy/DoubleEditSlider.h>
+#include <UiPy/DoubleEditSlider.h>
 
 #include <ftk/Ui/DoubleEditSlider.h>
 

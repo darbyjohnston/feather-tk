@@ -2,7 +2,7 @@
 // Copyright (c) 2024-2025 Darby Johnston
 // All rights reserved.
 
-#include <corePy/Color.h>
+#include <CorePy/Color.h>
 
 #include <ftk/Core/Color.h>
 

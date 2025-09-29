@@ -2,7 +2,7 @@
 // Copyright (c) 2024-2025 Darby Johnston
 // All rights reserved.
 
-#include <uiTest/ScrollWidgetTest.h>
+#include <UiTest/ScrollWidgetTest.h>
 
 #include <ftk/Ui/GridLayout.h>
 #include <ftk/Ui/Label.h>

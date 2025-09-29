@@ -2,7 +2,7 @@
 // Copyright (c) 2024-2025 Darby Johnston
 // All rights reserved.
 
-#include <uiPy/MessageDialog.h>
+#include <UiPy/MessageDialog.h>
 
 #include <ftk/Ui/MessageDialog.h>
 #include <ftk/Ui/Window.h>

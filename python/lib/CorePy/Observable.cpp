@@ -2,7 +2,7 @@
 // Copyright (c) 2024-2025 Darby Johnston
 // All rights reserved.
 
-#include <corePy/Observable.h>
+#include <CorePy/Observable.h>
 
 #include <ftk/Core/Observable.h>
 

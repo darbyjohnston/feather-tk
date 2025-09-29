@@ -2,7 +2,7 @@
 // Copyright (c) 2024-2025 Darby Johnston
 // All rights reserved.
 
-#include <uiPy/ColorPopup.h>
+#include <UiPy/ColorPopup.h>
 
 #include <ftk/Ui/ColorPopup.h>
 
