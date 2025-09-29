@@ -95,7 +95,7 @@ namespace ftk
 
     struct FileIO::Private
     {
-        void setPos(size_t, bool seek);
+        void seek(size_t, SeekMode);
         
         std::filesystem::path path;
         FileMode              mode = FileMode::First;
@@ -154,14 +154,9 @@ namespace ftk
         return _p->pos;
     }
 
-    void FileIO::setPos(size_t in)
+    void FileIO::seek(size_t in, SeekMode mode)
     {
-        _p->setPos(in, false);
-    }
-
-    void FileIO::seek(size_t in)
-    {
-        _p->setPos(in, true);
+        _p->seek(in, mode);
     }
 
     const uint8_t* FileIO::getMemoryStart() const
@@ -411,58 +406,66 @@ namespace ftk
         return out;
     }
 
-    void FileIO::Private::setPos(size_t in, bool seek)
+    void FileIO::Private::seek(size_t value, SeekMode seekMode)
     {
-        switch (mode)
+        if (FileMode::Read == mode && memoryStart)
         {
-        case FileMode::Read:
-        {
-            if (memoryStart)
+            switch (seekMode)
             {
-                if (!seek)
-                {
-                    memoryP = reinterpret_cast<const uint8_t*>(memoryStart) + in;
-                }
-                else
-                {
-                    memoryP += in;
-                }
+            case SeekMode::Set:
+                memoryP = reinterpret_cast<const uint8_t*>(memoryStart) + value;
                 if (memoryP > memoryEnd)
                 {
                     throw std::runtime_error(
                         getErrorMessage(ErrorType::SeekMemoryMap, path.u8string()));
                 }
-            }
-            else
-            {
-                if (::lseek(f, in, ! seek ? SEEK_SET : SEEK_CUR) == (off_t)-1)
+                break;
+            case SeekMode::Forward:
+                memoryP += value;
+                if (memoryP > memoryEnd)
                 {
                     throw std::runtime_error(
-                        getErrorMessage(ErrorType::Seek, path.u8string(), getErrorString()));
+                        getErrorMessage(ErrorType::SeekMemoryMap, path.u8string()));
                 }
+                break;
+            case SeekMode::Reverse:
+                memoryP -= value;
+                if (memoryP < memoryStart)
+                {
+                    throw std::runtime_error(
+                        getErrorMessage(ErrorType::SeekMemoryMap, path.u8string()));
+                }
+                break;
+            default: break;
             }
-            break;
         }
-        case FileMode::Write:
-        case FileMode::ReadWrite:
-        case FileMode::Append:
+        else
         {
-            if (::lseek(f, in, ! seek ? SEEK_SET : SEEK_CUR) == (off_t)-1)
+            off_t offset = value;
+            int whence = SEEK_SET;
+            switch (seekMode)
+            {
+            case SeekMode::Forward:
+                whence = SEEK_CUR;
+                break;
+            case SeekMode::Reverse:
+                offset = -offset;
+                whence = SEEK_CUR;
+                break;
+            default: break;
+            }
+            if (::lseek(f, offset, whence) == (off_t)-1)
             {
                 throw std::runtime_error(
                     getErrorMessage(ErrorType::Seek, path.u8string(), getErrorString()));
             }
-            break;
         }
+        switch (seekMode)
+        {
+        case SeekMode::Set: pos = value; break;
+        case SeekMode::Forward: pos += value; break;
+        case SeekMode::Reverse: pos -= value; break;
         default: break;
-        }
-        if (!seek)
-        {
-            pos = in;
-        }
-        else
-        {
-            pos += in;
         }
     }
 
