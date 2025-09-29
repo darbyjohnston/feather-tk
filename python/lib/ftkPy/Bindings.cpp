@@ -9,7 +9,7 @@
 
 namespace py = pybind11;
 
-PYBIND11_MODULE(featherTkPy, m)
+PYBIND11_MODULE(ftkPy, m)
 {
     m.doc() = "A lightweight toolkit for building cross-platform applications.";
     ftk::coreBind(m);

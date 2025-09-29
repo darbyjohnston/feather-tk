@@ -115,26 +115,26 @@ else()
         TimeUnix.cpp)
 endif()
 
-set(LIBS_PUBLIC feather-tk-resourceLib nlohmann_json::nlohmann_json)
+set(LIBS_PUBLIC ftk-resourceLib nlohmann_json::nlohmann_json)
 if(CMAKE_COMPILER_IS_GNUCXX AND CMAKE_CXX_COMPILER_VERSION VERSION_LESS 9)
     list(APPEND LIBS_PUBLIC stdc++fs)
 endif()
 set(LIBS_PRIVATE Freetype::Freetype PNG::PNG ZLIB::ZLIB)
 
-add_library(feather-tk-core ${HEADERS} ${HEADERS_PRIVATE} ${SOURCE})
-target_link_libraries(feather-tk-core PUBLIC ${LIBS_PUBLIC} PRIVATE ${LIBS_PRIVATE})
-set_target_properties(feather-tk-core PROPERTIES FOLDER lib)
-set_target_properties(feather-tk-core PROPERTIES PUBLIC_HEADER "${HEADERS}")
+add_library(ftk-core ${HEADERS} ${HEADERS_PRIVATE} ${SOURCE})
+target_link_libraries(ftk-core PUBLIC ${LIBS_PUBLIC} PRIVATE ${LIBS_PRIVATE})
+set_target_properties(ftk-core PROPERTIES FOLDER lib)
+set_target_properties(ftk-core PROPERTIES PUBLIC_HEADER "${HEADERS}")
 
 install(
-    TARGETS feather-tk-core
-    EXPORT feather-tk-coreTargets
+    TARGETS ftk-core
+    EXPORT ftk-coreTargets
     ARCHIVE DESTINATION lib
     LIBRARY DESTINATION lib
     RUNTIME DESTINATION bin
     PUBLIC_HEADER DESTINATION include/feather-tk/core)
 install(
-    EXPORT feather-tk-coreTargets
-    FILE feather-tk-coreTargets.cmake
+    EXPORT ftk-coreTargets
+    FILE ftk-coreTargets.cmake
     DESTINATION "share/feather-tk"
     NAMESPACE ftk::)

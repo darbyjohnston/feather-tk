@@ -116,12 +116,12 @@ set(SOURCE
     WidgetOptions.cpp
     Window.cpp)
 
-add_library(feather-tk-uiPy ${HEADERS} ${HEADERS_PRIVATE} ${SOURCE})
-target_link_libraries(feather-tk-uiPy feather-tk-ui Python3::Python)
-set_target_properties(feather-tk-uiPy PROPERTIES FOLDER python/lib)
-set_target_properties(feather-tk-uiPy PROPERTIES PUBLIC_HEADER "${HEADERS}")
+add_library(ftk-uiPy ${HEADERS} ${HEADERS_PRIVATE} ${SOURCE})
+target_link_libraries(ftk-uiPy ftk-ui Python3::Python)
+set_target_properties(ftk-uiPy PROPERTIES FOLDER python/lib)
+set_target_properties(ftk-uiPy PROPERTIES PUBLIC_HEADER "${HEADERS}")
 
-install(TARGETS feather-tk-uiPy
+install(TARGETS ftk-uiPy
     ARCHIVE DESTINATION lib
     LIBRARY DESTINATION lib
     RUNTIME DESTINATION bin

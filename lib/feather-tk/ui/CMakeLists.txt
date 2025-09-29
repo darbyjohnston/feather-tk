@@ -196,28 +196,28 @@ set(LIBRARIES)
 if ("${ftk_API}" STREQUAL "GL_4_1" OR
     "${ftk_API}" STREQUAL "GL_4_1_Debug" OR
     "${ftk_API}" STREQUAL "GLES_2")
-    list(APPEND LIBRARIES feather-tk-gl)
+    list(APPEND LIBRARIES ftk-gl)
 endif()
-list(APPEND LIBRARIES feather-tk-core)
+list(APPEND LIBRARIES ftk-core)
 set(LIBRARIES_PRIVATE lunasvg::lunasvg)
 if(ftk_nfd)
     list(APPEND LIBRARIES_PRIVATE nfd::nfd)
 endif()
 
-add_library(feather-tk-ui ${HEADERS} ${PRIVATE_HEADERS} ${SOURCE})
-target_link_libraries(feather-tk-ui PUBLIC ${LIBRARIES} PRIVATE ${LIBRARIES_PRIVATE})
-set_target_properties(feather-tk-ui PROPERTIES FOLDER lib)
-set_target_properties(feather-tk-ui PROPERTIES PUBLIC_HEADER "${HEADERS}")
+add_library(ftk-ui ${HEADERS} ${PRIVATE_HEADERS} ${SOURCE})
+target_link_libraries(ftk-ui PUBLIC ${LIBRARIES} PRIVATE ${LIBRARIES_PRIVATE})
+set_target_properties(ftk-ui PROPERTIES FOLDER lib)
+set_target_properties(ftk-ui PROPERTIES PUBLIC_HEADER "${HEADERS}")
 
 install(
-    TARGETS feather-tk-ui
-    EXPORT feather-tk-uiTargets
+    TARGETS ftk-ui
+    EXPORT ftk-uiTargets
     ARCHIVE DESTINATION lib
     LIBRARY DESTINATION lib
     RUNTIME DESTINATION bin
     PUBLIC_HEADER DESTINATION include/feather-tk/ui)
 install(
-    EXPORT feather-tk-uiTargets
-    FILE feather-tk-uiTargets.cmake
+    EXPORT ftk-uiTargets
+    FILE ftk-uiTargets.cmake
     DESTINATION "share/feather-tk"
     NAMESPACE ftk::)

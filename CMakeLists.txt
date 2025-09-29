@@ -170,7 +170,7 @@ endif()
 #-------------------------------------------------------------------------------
 # Subdirectories
 
-add_subdirectory(bin/feather-tk-resource)
+add_subdirectory(bin/ftk-resource)
 add_subdirectory(lib/feather-tk)
 if(ftk_UI_LIB AND ftk_PYTHON)
     add_subdirectory(python)

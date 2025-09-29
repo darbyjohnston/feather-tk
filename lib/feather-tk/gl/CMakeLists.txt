@@ -33,20 +33,20 @@ elseif ("${ftk_API}" STREQUAL "GLES_2")
     list(APPEND SOURCE RenderShaders_GLES_2.cpp)
 endif()
 
-add_library(feather-tk-gl ${HEADERS} ${PRIVATE_HEADERS} ${SOURCE})
-target_link_libraries(feather-tk-gl feather-tk-core feather-tk-glad SDL2::SDL2-static)
-set_target_properties(feather-tk-gl PROPERTIES FOLDER lib)
-set_target_properties(feather-tk-gl PROPERTIES PUBLIC_HEADER "${HEADERS}")
+add_library(ftk-gl ${HEADERS} ${PRIVATE_HEADERS} ${SOURCE})
+target_link_libraries(ftk-gl ftk-core ftk-glad SDL2::SDL2-static)
+set_target_properties(ftk-gl PROPERTIES FOLDER lib)
+set_target_properties(ftk-gl PROPERTIES PUBLIC_HEADER "${HEADERS}")
 
 install(
-    TARGETS feather-tk-gl
-    EXPORT feather-tk-glTargets
+    TARGETS ftk-gl
+    EXPORT ftk-glTargets
     ARCHIVE DESTINATION lib
     LIBRARY DESTINATION lib
     RUNTIME DESTINATION bin
     PUBLIC_HEADER DESTINATION include/feather-tk/gl)
 install(
-    EXPORT feather-tk-glTargets
-    FILE feather-tk-glTargets.cmake
+    EXPORT ftk-glTargets
+    FILE ftk-glTargets.cmake
     DESTINATION "share/feather-tk"
     NAMESPACE ftk::)
