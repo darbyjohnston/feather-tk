@@ -2,9 +2,9 @@
 // Copyright (c) 2024-2025 Darby Johnston
 // All rights reserved.
 
-#include <feather-tk/ui/App.h>
-#include <feather-tk/ui/Label.h>
-#include <feather-tk/ui/MainWindow.h>
+#include <ftk/Ui/App.h>
+#include <ftk/Ui/Label.h>
+#include <ftk/Ui/MainWindow.h>
 
 using namespace ftk;
 

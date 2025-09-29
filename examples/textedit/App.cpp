@@ -7,10 +7,10 @@
 #include "DocumentModel.h"
 #include "MainWindow.h"
 
-#include <feather-tk/ui/DialogSystem.h>
-#include <feather-tk/ui/FileBrowser.h>
+#include <ftk/Ui/DialogSystem.h>
+#include <ftk/Ui/FileBrowser.h>
 
-#include <feather-tk/core/FileIO.h>
+#include <ftk/Core/FileIO.h>
 
 using namespace ftk;
 

@@ -4,7 +4,7 @@
 
 #include "ColorWidgets.h"
 
-#include <feather-tk/ui/ColorWidget.h>
+#include <ftk/Ui/ColorWidget.h>
 
 void ColorWidgets::_init(
     const std::shared_ptr<Context>& context,

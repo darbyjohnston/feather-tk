@@ -4,7 +4,7 @@
 
 #include "Document.h"
 
-#include <feather-tk/core/FileIO.h>
+#include <ftk/Core/FileIO.h>
 
 using namespace ftk;
 

@@ -4,16 +4,16 @@
 
 #include "dialogs.h"
 
-#include <feather-tk/ui/DialogSystem.h>
-#include <feather-tk/ui/Divider.h>
-#include <feather-tk/ui/FileBrowser.h>
-#include <feather-tk/ui/FileEdit.h>
-#include <feather-tk/ui/MenuBar.h>
-#include <feather-tk/ui/PushButton.h>
-#include <feather-tk/ui/RecentFilesModel.h>
-#include <feather-tk/ui/RowLayout.h>
+#include <ftk/Ui/DialogSystem.h>
+#include <ftk/Ui/Divider.h>
+#include <ftk/Ui/FileBrowser.h>
+#include <ftk/Ui/FileEdit.h>
+#include <ftk/Ui/MenuBar.h>
+#include <ftk/Ui/PushButton.h>
+#include <ftk/Ui/RecentFilesModel.h>
+#include <ftk/Ui/RowLayout.h>
 
-#include <feather-tk/core/Format.h>
+#include <ftk/Core/Format.h>
 
 void DialogsWindow::_init(
     const std::shared_ptr<Context>& context,

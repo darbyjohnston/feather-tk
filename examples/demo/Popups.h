@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include <feather-tk/ui/FormLayout.h>
+#include <ftk/Ui/FormLayout.h>
 
 using namespace ftk;
 

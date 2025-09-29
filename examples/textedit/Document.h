@@ -4,8 +4,8 @@
 
 #pragma once
 
-#include <feather-tk/core/Context.h>
-#include <feather-tk/core/ObservableList.h>
+#include <ftk/Core/Context.h>
+#include <ftk/Core/ObservableList.h>
 
 #include <filesystem>
 

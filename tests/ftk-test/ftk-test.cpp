@@ -103,17 +103,17 @@
 #include <testLib/ITest.h>
 
 #if defined(FTK_UI_LIB)
-#include <feather-tk/ui/Init.h>
+#include <ftk/Ui/Init.h>
 
 #if defined(FTK_API_GL_4_1) || defined(FTK_API_GLES_2)
-#include <feather-tk/gl/Init.h>
+#include <ftk/Gl/Init.h>
 #endif // FTK_API_GL_4_1
 #endif // FTK_UI_LIB
 
-#include <feather-tk/core/CmdLine.h>
-#include <feather-tk/core/Context.h>
-#include <feather-tk/core/Format.h>
-#include <feather-tk/core/Time.h>
+#include <ftk/Core/CmdLine.h>
+#include <ftk/Core/Context.h>
+#include <ftk/Core/Format.h>
+#include <ftk/Core/Time.h>
 
 #include <iostream>
 

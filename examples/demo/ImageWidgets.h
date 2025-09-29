@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include <feather-tk/ui/RowLayout.h>
+#include <ftk/Ui/RowLayout.h>
 
 using namespace ftk;
 

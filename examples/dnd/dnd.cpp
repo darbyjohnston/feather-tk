@@ -4,10 +4,10 @@
 
 #include "dnd.h"
 
-#include <feather-tk/ui/DrawUtil.h>
-#include <feather-tk/ui/ScrollWidget.h>
+#include <ftk/Ui/DrawUtil.h>
+#include <ftk/Ui/ScrollWidget.h>
 
-#include <feather-tk/core/Format.h>
+#include <ftk/Core/Format.h>
 
 namespace ftk
 {

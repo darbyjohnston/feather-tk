@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include <feather-tk/ui/GridLayout.h>
+#include <ftk/Ui/GridLayout.h>
 
 using namespace ftk;
 

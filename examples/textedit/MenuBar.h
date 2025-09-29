@@ -4,9 +4,9 @@
 
 #pragma once
 
-#include <feather-tk/ui/Action.h>
-#include <feather-tk/ui/Menu.h>
-#include <feather-tk/ui/MenuBar.h>
+#include <ftk/Ui/Action.h>
+#include <ftk/Ui/Menu.h>
+#include <ftk/Ui/MenuBar.h>
 
 namespace examples
 {

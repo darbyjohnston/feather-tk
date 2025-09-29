@@ -7,9 +7,9 @@
 #include "App.h"
 #include "DocumentModel.h"
 
-#include <feather-tk/ui/FileBrowser.h>
+#include <ftk/Ui/FileBrowser.h>
 
-#include <feather-tk/core/String.h>
+#include <ftk/Core/String.h>
 
 using namespace ftk;
 

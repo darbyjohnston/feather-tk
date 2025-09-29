@@ -4,11 +4,11 @@
 
 #pragma once
 
-#include <feather-tk/ui/App.h>
-#include <feather-tk/ui/Style.h>
+#include <ftk/Ui/App.h>
+#include <ftk/Ui/Style.h>
 
-#include <feather-tk/core/CmdLine.h>
-#include <feather-tk/core/ObservableValue.h>
+#include <ftk/Core/CmdLine.h>
+#include <ftk/Core/ObservableValue.h>
 
 #include <filesystem>
 

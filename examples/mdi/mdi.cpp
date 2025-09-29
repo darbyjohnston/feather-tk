@@ -2,15 +2,15 @@
 // Copyright (c) 2024-2025 Darby Johnston
 // All rights reserved.
 
-#include <feather-tk/ui/App.h>
-#include <feather-tk/ui/ColorWidget.h>
-#include <feather-tk/ui/MDICanvas.h>
-#include <feather-tk/ui/MDIWidget.h>
-#include <feather-tk/ui/MainWindow.h>
-#include <feather-tk/ui/ScrollWidget.h>
+#include <ftk/Ui/App.h>
+#include <ftk/Ui/ColorWidget.h>
+#include <ftk/Ui/MDICanvas.h>
+#include <ftk/Ui/MDIWidget.h>
+#include <ftk/Ui/MainWindow.h>
+#include <ftk/Ui/ScrollWidget.h>
 
-#include <feather-tk/core/Format.h>
-#include <feather-tk/core/Random.h>
+#include <ftk/Core/Format.h>
+#include <ftk/Core/Random.h>
 
 using namespace ftk;
 

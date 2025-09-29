@@ -6,7 +6,7 @@
 
 #include "Document.h"
 
-#include <feather-tk/ui/Style.h>
+#include <ftk/Ui/Style.h>
 
 namespace examples
 {

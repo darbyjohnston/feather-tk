@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include <feather-tk/core/IApp.h>
+#include <ftk/Core/IApp.h>
 
 namespace ftk
 {

@@ -2,18 +2,18 @@
 // Copyright (c) 2024-2025 Darby Johnston
 // All rights reserved.
 
-#include <feather-tk/ui/App.h>
-#include <feather-tk/ui/FormLayout.h>
-#include <feather-tk/ui/GridLayout.h>
-#include <feather-tk/ui/GroupBox.h>
-#include <feather-tk/ui/IntEdit.h>
-#include <feather-tk/ui/IntEditSlider.h>
-#include <feather-tk/ui/Label.h>
-#include <feather-tk/ui/MainWindow.h>
-#include <feather-tk/ui/RowLayout.h>
-#include <feather-tk/ui/ScrollWidget.h>
+#include <ftk/Ui/App.h>
+#include <ftk/Ui/FormLayout.h>
+#include <ftk/Ui/GridLayout.h>
+#include <ftk/Ui/GroupBox.h>
+#include <ftk/Ui/IntEdit.h>
+#include <ftk/Ui/IntEditSlider.h>
+#include <ftk/Ui/Label.h>
+#include <ftk/Ui/MainWindow.h>
+#include <ftk/Ui/RowLayout.h>
+#include <ftk/Ui/ScrollWidget.h>
 
-#include <feather-tk/core/Format.h>
+#include <ftk/Core/Format.h>
 
 using namespace ftk;
 

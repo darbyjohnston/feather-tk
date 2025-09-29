@@ -10,10 +10,10 @@
 #include "StatusBar.h"
 #include "TextWidget.h"
 
-#include <feather-tk/ui/Divider.h>
-#include <feather-tk/ui/MenuBar.h>
-#include <feather-tk/ui/RowLayout.h>
-#include <feather-tk/ui/ScrollWidget.h>
+#include <ftk/Ui/Divider.h>
+#include <ftk/Ui/MenuBar.h>
+#include <ftk/Ui/RowLayout.h>
+#include <ftk/Ui/ScrollWidget.h>
 
 using namespace ftk;
 

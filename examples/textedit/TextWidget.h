@@ -4,8 +4,8 @@
 
 #pragma once
 
-#include <feather-tk/ui/Label.h>
-#include <feather-tk/ui/ScrollWidget.h>
+#include <ftk/Ui/Label.h>
+#include <ftk/Ui/ScrollWidget.h>
 
 namespace examples
 {

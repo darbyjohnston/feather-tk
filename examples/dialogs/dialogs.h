@@ -4,12 +4,12 @@
 
 #pragma once
 
-#include <feather-tk/ui/App.h>
-#include <feather-tk/ui/ProgressDialog.h>
-#include <feather-tk/ui/MainWindow.h>
-#include <feather-tk/ui/Settings.h>
+#include <ftk/Ui/App.h>
+#include <ftk/Ui/ProgressDialog.h>
+#include <ftk/Ui/MainWindow.h>
+#include <ftk/Ui/Settings.h>
 
-#include <feather-tk/core/Timer.h>
+#include <ftk/Core/Timer.h>
 
 using namespace ftk;
 

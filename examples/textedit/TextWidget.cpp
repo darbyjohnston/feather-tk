@@ -6,7 +6,7 @@
 
 #include "Document.h"
 
-#include <feather-tk/core/String.h>
+#include <ftk/Core/String.h>
 
 using namespace ftk;
 

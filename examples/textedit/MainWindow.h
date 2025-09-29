@@ -4,9 +4,9 @@
 
 #pragma once
 
-#include <feather-tk/ui/MainWindow.h>
-#include <feather-tk/ui/RowLayout.h>
-#include <feather-tk/ui/TabWidget.h>
+#include <ftk/Ui/MainWindow.h>
+#include <ftk/Ui/RowLayout.h>
+#include <ftk/Ui/TabWidget.h>
 
 namespace examples
 {
