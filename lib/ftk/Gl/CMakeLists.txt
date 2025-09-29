@@ -1,5 +1,5 @@
 set(HEADERS
-    GL.h
+    Gl.h
     Init.h
     Mesh.h
     OffscreenBuffer.h

@@ -4,7 +4,7 @@
 
 #include <ftk/Gl/Texture.h>
 
-#include <ftk/Gl/GL.h>
+#include <ftk/Gl/Gl.h>
 #include <ftk/Gl/Util.h>
 
 #include <ftk/Core/Assert.h>

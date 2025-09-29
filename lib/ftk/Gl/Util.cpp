@@ -4,7 +4,7 @@
 
 #include <ftk/Gl/Util.h>
 
-#include <ftk/Gl/GL.h>
+#include <ftk/Gl/Gl.h>
 
 #include <ftk/Core/String.h>
 

@@ -4,7 +4,7 @@
 
 #include <ftk/Gl/System.h>
 
-#include <ftk/Gl/GL.h>
+#include <ftk/Gl/Gl.h>
 
 #include <ftk/Core/Context.h>
 #include <ftk/Core/Format.h>

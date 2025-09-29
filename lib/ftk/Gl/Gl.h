@@ -5,8 +5,8 @@
 #pragma once
 
 #if defined(FTK_API_GL_4_1)
-#include <ftk/Glad/gl.h>
+#include <ftk/glad/gl.h>
 #elif defined(FTK_API_GLES_2)
-#include <ftk/Glad/glad.h>
+#include <ftk/glad/glad.h>
 #endif // FTK_API_GL_4_1
 

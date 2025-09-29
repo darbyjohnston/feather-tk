@@ -4,7 +4,7 @@
 
 #include <ftk/Gl/Window.h>
 
-#include <ftk/Gl/GL.h>
+#include <ftk/Gl/Gl.h>
 #include <ftk/Gl/Init.h>
 #include <ftk/Gl/Util.h>
 
