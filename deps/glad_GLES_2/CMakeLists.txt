@@ -5,19 +5,19 @@ set(HEADERS
 set(SOURCE
     src/glad.c)
 
-add_library(ftk-glad ${HEADERS} ${SOURCE})
-target_link_libraries(ftk-glad OpenGL::GL ${CMAKE_DL_LIBS})
-set_target_properties(ftk-glad PROPERTIES FOLDER deps)
+add_library(ftkGlad ${HEADERS} ${SOURCE})
+target_link_libraries(ftkGlad OpenGL::GL ${CMAKE_DL_LIBS})
+set_target_properties(ftkGlad PROPERTIES FOLDER deps)
 
 install(
-    TARGETS ftk-glad
-    EXPORT ftk-gladTargets
+    TARGETS ftkGlad
+    EXPORT ftkGladTargets
     ARCHIVE DESTINATION lib
     LIBRARY DESTINATION lib
     RUNTIME DESTINATION bin)
 install(
-    EXPORT ftk-gladTargets
-    FILE ftk-gladTargets.cmake
+    EXPORT ftkGladTargets
+    FILE ftkGladTargets.cmake
     DESTINATION "share/feather-tk"
     NAMESPACE ftk::)
 install(

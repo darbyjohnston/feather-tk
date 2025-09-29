@@ -70,21 +70,21 @@ foreach(RESOURCE ${RESOURCES})
     list(APPEND SOURCE ${CMAKE_CURRENT_BINARY_DIR}/${RESOURCE_BASE}.cpp)
 endforeach()
 
-add_library(ftk-resourceLib ${HEADERS} ${SOURCE})
-target_link_libraries(ftk-resourceLib)
-set_target_properties(ftk-resourceLib PROPERTIES FOLDER lib)
-set_target_properties(ftk-resourceLib PROPERTIES PUBLIC_HEADER "${HEADERS}")
-add_dependencies(ftk-resourceLib ftk-resource)
+add_library(ftkResourceLib ${HEADERS} ${SOURCE})
+target_link_libraries(ftkResourceLib)
+set_target_properties(ftkResourceLib PROPERTIES FOLDER lib)
+set_target_properties(ftkResourceLib PROPERTIES PUBLIC_HEADER "${HEADERS}")
+add_dependencies(ftkResourceLib ftk-resource)
 
 install(
-    TARGETS ftk-resourceLib
-    EXPORT ftk-resourceLibTargets
+    TARGETS ftkResourceLib
+    EXPORT ftkResourceLibTargets
     ARCHIVE DESTINATION lib
     LIBRARY DESTINATION lib
     RUNTIME DESTINATION bin
     PUBLIC_HEADER DESTINATION include/feather-tk/resource)
 install(
-    EXPORT ftk-resourceLibTargets
-    FILE ftk-resourceLibTargets.cmake
+    EXPORT ftkResourceLibTargets
+    FILE ftkResourceLibTargets.cmake
     DESTINATION "share/feather-tk"
     NAMESPACE ftk::)

@@ -116,12 +116,12 @@ set(SOURCE
     WidgetOptions.cpp
     Window.cpp)
 
-add_library(ftk-uiPy ${HEADERS} ${HEADERS_PRIVATE} ${SOURCE})
-target_link_libraries(ftk-uiPy ftk-ui Python3::Python)
-set_target_properties(ftk-uiPy PROPERTIES FOLDER python/lib)
-set_target_properties(ftk-uiPy PROPERTIES PUBLIC_HEADER "${HEADERS}")
+add_library(ftkUiPy ${HEADERS} ${HEADERS_PRIVATE} ${SOURCE})
+target_link_libraries(ftkUiPy ftkUi Python3::Python)
+set_target_properties(ftkUiPy PROPERTIES FOLDER python/lib)
+set_target_properties(ftkUiPy PROPERTIES PUBLIC_HEADER "${HEADERS}")
 
-install(TARGETS ftk-uiPy
+install(TARGETS ftkUiPy
     ARCHIVE DESTINATION lib
     LIBRARY DESTINATION lib
     RUNTIME DESTINATION bin

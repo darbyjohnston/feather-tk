@@ -18,7 +18,7 @@ set(SOURCE
     main.cpp)
 
 add_executable(textedit ${HEADERS} ${SOURCE})
-target_link_libraries(textedit ftk-ui)
+target_link_libraries(textedit ftkUi)
 set_target_properties(textedit PROPERTIES FOLDER examples)
 
 add_test(NAME textedit COMMAND textedit -exit -log)

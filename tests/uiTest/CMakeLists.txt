@@ -101,7 +101,7 @@ set(SOURCE
     TabWidgetTest.cpp
     WidgetOptionsTest.cpp)
 
-add_library(ftk-uiTest ${HEADERS} ${PRIVATE_HEADERS} ${SOURCE})
-target_link_libraries(ftk-uiTest ftk-ui ftk-testLib)
-set_target_properties(ftk-uiTest PROPERTIES FOLDER tests)
-set_target_properties(ftk-uiTest PROPERTIES PUBLIC_HEADER "${HEADERS}")
+add_library(ftkUiTest ${HEADERS} ${PRIVATE_HEADERS} ${SOURCE})
+target_link_libraries(ftkUiTest ftkUi ftkTestLib)
+set_target_properties(ftkUiTest PROPERTIES FOLDER tests)
+set_target_properties(ftkUiTest PROPERTIES PUBLIC_HEADER "${HEADERS}")

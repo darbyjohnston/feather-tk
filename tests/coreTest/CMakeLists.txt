@@ -67,8 +67,8 @@ set(SOURCE
     TimerTest.cpp
     VectorTest.cpp)
 
-add_library(ftk-coreTest ${HEADERS} ${PRIVATE_HEADERS} ${SOURCE})
-target_link_libraries(ftk-coreTest ftk-testLib)
-set_target_properties(ftk-coreTest PROPERTIES FOLDER tests)
-set_target_properties(ftk-coreTest PROPERTIES PUBLIC_HEADER "${HEADERS}")
+add_library(ftkCoreTest ${HEADERS} ${PRIVATE_HEADERS} ${SOURCE})
+target_link_libraries(ftkCoreTest ftkTestLib)
+set_target_properties(ftkCoreTest PROPERTIES FOLDER tests)
+set_target_properties(ftkCoreTest PROPERTIES PUBLIC_HEADER "${HEADERS}")
 

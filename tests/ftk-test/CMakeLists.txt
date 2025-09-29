@@ -2,14 +2,14 @@ set(HEADERS ftk-test.h)
 
 set(SOURCE ftk-test.cpp)
 
-set(LIBRARIES ftk-coreTest)
+set(LIBRARIES ftkCoreTest)
 if(ftk_UI_LIB)
     if ("${ftk_API}" STREQUAL "GL_4_1" OR
         "${ftk_API}" STREQUAL "GL_4_1_Debug" OR
         "${ftk_API}" STREQUAL "GLES_2")
-        list(APPEND LIBRARIES ftk-glTest)
+        list(APPEND LIBRARIES ftkGlTest)
     endif()
-    list(APPEND LIBRARIES ftk-uiTest)
+    list(APPEND LIBRARIES ftkUiTest)
 endif()
 
 add_executable(ftk-test ${SOURCE} ${HEADERS})

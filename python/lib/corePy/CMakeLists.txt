@@ -50,12 +50,12 @@ set(SOURCE
     Timer.cpp
     Vector.cpp)
 
-add_library(ftk-corePy ${HEADERS} ${HEADERS_PRIVATE} ${SOURCE})
-target_link_libraries(ftk-corePy ftk-core Python3::Python)
-set_target_properties(ftk-corePy PROPERTIES FOLDER python/lib)
-set_target_properties(ftk-corePy PROPERTIES PUBLIC_HEADER "${HEADERS}")
+add_library(ftkCorePy ${HEADERS} ${HEADERS_PRIVATE} ${SOURCE})
+target_link_libraries(ftkCorePy ftkCore Python3::Python)
+set_target_properties(ftkCorePy PROPERTIES FOLDER python/lib)
+set_target_properties(ftkCorePy PROPERTIES PUBLIC_HEADER "${HEADERS}")
 
-install(TARGETS ftk-corePy
+install(TARGETS ftkCorePy
     ARCHIVE DESTINATION lib
     LIBRARY DESTINATION lib
     RUNTIME DESTINATION bin
