@@ -2,7 +2,7 @@
 // Copyright (c) 2024 Darby Johnston
 // All rights reserved.
 
-#include <ftk/Gl/RenderPrivate.h>
+#include <ftk/GL/RenderPrivate.h>
 
 #include <ftk/Core/Format.h>
 
