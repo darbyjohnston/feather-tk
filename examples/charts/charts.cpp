@@ -2,11 +2,11 @@
 // Copyright (c) 2024-2025 Darby Johnston
 // All rights reserved.
 
-#include <ftk/Ui/App.h>
-#include <ftk/Ui/MainWindow.h>
-#include <ftk/Ui/PieChart.h>
-#include <ftk/Ui/RowLayout.h>
-#include <ftk/Ui/ScrollWidget.h>
+#include <ftk/UI/App.h>
+#include <ftk/UI/MainWindow.h>
+#include <ftk/UI/PieChart.h>
+#include <ftk/UI/RowLayout.h>
+#include <ftk/UI/ScrollWidget.h>
 
 using namespace ftk;
 

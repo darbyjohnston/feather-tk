@@ -4,7 +4,7 @@
 
 #include "DemoWindow.h"
 
-#include <ftk/Ui/App.h>
+#include <ftk/UI/App.h>
 
 FTK_MAIN()
 {

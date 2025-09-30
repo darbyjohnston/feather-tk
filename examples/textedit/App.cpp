@@ -7,8 +7,8 @@
 #include "DocumentModel.h"
 #include "MainWindow.h"
 
-#include <ftk/Ui/DialogSystem.h>
-#include <ftk/Ui/FileBrowser.h>
+#include <ftk/UI/DialogSystem.h>
+#include <ftk/UI/FileBrowser.h>
 
 #include <ftk/Core/FileIO.h>
 

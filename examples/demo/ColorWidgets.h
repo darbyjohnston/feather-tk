@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include <ftk/Ui/RowLayout.h>
+#include <ftk/UI/RowLayout.h>
 
 using namespace ftk;
 

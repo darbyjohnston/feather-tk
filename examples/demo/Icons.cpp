@@ -4,7 +4,7 @@
 
 #include "Icons.h"
 
-#include <ftk/Ui/Icon.h>
+#include <ftk/UI/Icon.h>
 
 void Icons::_init(
     const std::shared_ptr<Context>& context,

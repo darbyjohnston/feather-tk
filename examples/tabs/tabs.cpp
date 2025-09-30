@@ -2,11 +2,11 @@
 // Copyright (c) 2024-2025 Darby Johnston
 // All rights reserved.
 
-#include <ftk/Ui/App.h>
-#include <ftk/Ui/Label.h>
-#include <ftk/Ui/MainWindow.h>
-#include <ftk/Ui/ScrollWidget.h>
-#include <ftk/Ui/TabWidget.h>
+#include <ftk/UI/App.h>
+#include <ftk/UI/Label.h>
+#include <ftk/UI/MainWindow.h>
+#include <ftk/UI/ScrollWidget.h>
+#include <ftk/UI/TabWidget.h>
 
 #include <ftk/Core/Format.h>
 #include <ftk/Core/String.h>

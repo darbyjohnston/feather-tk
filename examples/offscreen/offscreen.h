@@ -4,10 +4,10 @@
 
 #pragma once
 
-#include <ftk/Ui/IWidget.h>
+#include <ftk/UI/IWidget.h>
 
-#include <ftk/Gl/OffscreenBuffer.h>
-#include <ftk/Gl/Shader.h>
+#include <ftk/GL/OffscreenBuffer.h>
+#include <ftk/GL/Shader.h>
 
 #include <ftk/Core/Timer.h>
 

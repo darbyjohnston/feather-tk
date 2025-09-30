@@ -3,7 +3,7 @@
 // All rights reserved.
 
 #include <CorePy/Bindings.h>
-#include <UiPy/Bindings.h>
+#include <UIPy/Bindings.h>
 
 #include <pybind11/pybind11.h>
 

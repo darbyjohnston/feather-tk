@@ -13,12 +13,12 @@
 #include "Popups.h"
 #include "Sliders.h"
 
-#include <ftk/Ui/FileBrowser.h>
-#include <ftk/Ui/GroupBox.h>
-#include <ftk/Ui/Menu.h>
-#include <ftk/Ui/MenuBar.h>
-#include <ftk/Ui/RowLayout.h>
-#include <ftk/Ui/ScrollWidget.h>
+#include <ftk/UI/FileBrowser.h>
+#include <ftk/UI/GroupBox.h>
+#include <ftk/UI/Menu.h>
+#include <ftk/UI/MenuBar.h>
+#include <ftk/UI/RowLayout.h>
+#include <ftk/UI/ScrollWidget.h>
 
 #include <ftk/Core/ImageIO.h>
 

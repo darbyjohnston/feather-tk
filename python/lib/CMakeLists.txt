@@ -1,3 +1,3 @@
 add_subdirectory(CorePy)
-add_subdirectory(UiPy)
+add_subdirectory(UIPy)
 add_subdirectory(ftkPy)

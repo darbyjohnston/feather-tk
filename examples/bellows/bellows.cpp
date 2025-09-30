@@ -2,14 +2,14 @@
 // Copyright (c) 2024-2025 Darby Johnston
 // All rights reserved.
 
-#include <ftk/Ui/App.h>
-#include <ftk/Ui/Bellows.h>
-#include <ftk/Ui/CheckBox.h>
-#include <ftk/Ui/MainWindow.h>
-#include <ftk/Ui/PushButton.h>
-#include <ftk/Ui/RowLayout.h>
-#include <ftk/Ui/ScrollWidget.h>
-#include <ftk/Ui/ToolButton.h>
+#include <ftk/UI/App.h>
+#include <ftk/UI/Bellows.h>
+#include <ftk/UI/CheckBox.h>
+#include <ftk/UI/MainWindow.h>
+#include <ftk/UI/PushButton.h>
+#include <ftk/UI/RowLayout.h>
+#include <ftk/UI/ScrollWidget.h>
+#include <ftk/UI/ToolButton.h>
 
 #include <ftk/Core/Format.h>
 

@@ -4,10 +4,10 @@
 
 #include "Editors.h"
 
-#include <ftk/Ui/DoubleEdit.h>
-#include <ftk/Ui/FloatEdit.h>
-#include <ftk/Ui/IntEdit.h>
-#include <ftk/Ui/LineEdit.h>
+#include <ftk/UI/DoubleEdit.h>
+#include <ftk/UI/FloatEdit.h>
+#include <ftk/UI/IntEdit.h>
+#include <ftk/UI/LineEdit.h>
 
 void Editors::_init(
     const std::shared_ptr<Context>& context,

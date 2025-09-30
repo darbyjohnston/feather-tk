@@ -5,19 +5,19 @@ set(HEADERS
 set(SOURCE
     src/glad.c)
 
-add_library(ftkGlad ${HEADERS} ${SOURCE})
-target_link_libraries(ftkGlad OpenGL::GL ${CMAKE_DL_LIBS})
-set_target_properties(ftkGlad PROPERTIES FOLDER deps)
+add_library(ftkglad ${HEADERS} ${SOURCE})
+target_link_libraries(ftkglad OpenGL::GL ${CMAKE_DL_LIBS})
+set_target_properties(ftkglad PROPERTIES FOLDER deps)
 
 install(
-    TARGETS ftkGlad
-    EXPORT ftkGladTargets
+    TARGETS ftkglad
+    EXPORT ftkgladTargets
     ARCHIVE DESTINATION lib
     LIBRARY DESTINATION lib
     RUNTIME DESTINATION bin)
 install(
-    EXPORT ftkGladTargets
-    FILE ftkGladTargets.cmake
+    EXPORT ftkgladTargets
+    FILE ftkgladTargets.cmake
     DESTINATION "share/ftk"
     NAMESPACE ftk::)
 install(

@@ -4,8 +4,8 @@
 
 #pragma once
 
-#include <ftk/Ui/App.h>
-#include <ftk/Ui/Style.h>
+#include <ftk/UI/App.h>
+#include <ftk/UI/Style.h>
 
 #include <ftk/Core/CmdLine.h>
 #include <ftk/Core/ObservableValue.h>

@@ -4,8 +4,8 @@
 
 #include "dnd.h"
 
-#include <ftk/Ui/DrawUtil.h>
-#include <ftk/Ui/ScrollWidget.h>
+#include <ftk/UI/DrawUtil.h>
+#include <ftk/UI/ScrollWidget.h>
 
 #include <ftk/Core/Format.h>
 

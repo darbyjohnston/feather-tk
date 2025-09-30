@@ -4,11 +4,11 @@
 
 #include "offscreen.h"
 
-#include <ftk/Ui/App.h>
-#include <ftk/Ui/MainWindow.h>
+#include <ftk/UI/App.h>
+#include <ftk/UI/MainWindow.h>
 
-#include <ftk/Gl/Gl.h>
-#include <ftk/Gl/Mesh.h>
+#include <ftk/GL/Gl.h>
+#include <ftk/GL/Mesh.h>
 
 #include <ftk/Core/Format.h>
 #include <ftk/Core/Matrix.h>

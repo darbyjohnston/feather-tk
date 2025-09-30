@@ -5,65 +5,65 @@
 #include "ftk-test.h"
 
 #if defined(FTK_UI_LIB)
-#include <UiTest/ActionTest.h>
-#include <UiTest/AppTest.h>
-#include <UiTest/BellowsTest.h>
-#include <UiTest/ButtonGroupTest.h>
-#include <UiTest/ButtonTest.h>
-#include <UiTest/ColorWidgetTest.h>
-#include <UiTest/ComboBoxTest.h>
-#include <UiTest/ConfirmDialogTest.h>
-#include <UiTest/DoubleEditTest.h>
-#include <UiTest/DoubleEditSliderTest.h>
-#include <UiTest/DoubleSliderTest.h>
-#include <UiTest/DoubleModelTest.h>
-#include <UiTest/DragAndDropTest.h>
-#include <UiTest/DrawUtilTest.h>
-#include <UiTest/EventTest.h>
-#include <UiTest/FileBrowserTest.h>
-#include <UiTest/FileEditTest.h>
-#include <UiTest/FloatEditTest.h>
-#include <UiTest/FloatEditSliderTest.h>
-#include <UiTest/FloatSliderTest.h>
-#include <UiTest/FloatModelTest.h>
-#include <UiTest/GridLayoutTest.h>
-#include <UiTest/GroupBoxTest.h>
-#include <UiTest/IWidgetTest.h>
-#include <UiTest/IconTest.h>
-#include <UiTest/IntEditTest.h>
-#include <UiTest/IntEditSliderTest.h>
-#include <UiTest/IntSliderTest.h>
-#include <UiTest/IntModelTest.h>
-#include <UiTest/LabelTest.h>
-#include <UiTest/LayoutUtilTest.h>
-#include <UiTest/LineEditTest.h>
-#include <UiTest/ListWidgetTest.h>
-#include <UiTest/MDIWidgetTest.h>
-#include <UiTest/MenuBarTest.h>
-#include <UiTest/MessageDialogTest.h>
-#include <UiTest/PieChartTest.h>
-#include <UiTest/ProgressDialogTest.h>
-#include <UiTest/RecentFilesModelTest.h>
-#include <UiTest/RowLayoutTest.h>
-#include <UiTest/ScrollAreaTest.h>
-#include <UiTest/ScrollBarTest.h>
-#include <UiTest/ScrollWidgetTest.h>
-#include <UiTest/SearchBoxTest.h>
-#include <UiTest/SplitterTest.h>
-#include <UiTest/StackLayoutTest.h>
-#include <UiTest/StyleTest.h>
-#include <UiTest/TabWidgetTest.h>
-#include <UiTest/WidgetOptionsTest.h>
+#include <UITest/ActionTest.h>
+#include <UITest/AppTest.h>
+#include <UITest/BellowsTest.h>
+#include <UITest/ButtonGroupTest.h>
+#include <UITest/ButtonTest.h>
+#include <UITest/ColorWidgetTest.h>
+#include <UITest/ComboBoxTest.h>
+#include <UITest/ConfirmDialogTest.h>
+#include <UITest/DoubleEditTest.h>
+#include <UITest/DoubleEditSliderTest.h>
+#include <UITest/DoubleSliderTest.h>
+#include <UITest/DoubleModelTest.h>
+#include <UITest/DragAndDropTest.h>
+#include <UITest/DrawUtilTest.h>
+#include <UITest/EventTest.h>
+#include <UITest/FileBrowserTest.h>
+#include <UITest/FileEditTest.h>
+#include <UITest/FloatEditTest.h>
+#include <UITest/FloatEditSliderTest.h>
+#include <UITest/FloatSliderTest.h>
+#include <UITest/FloatModelTest.h>
+#include <UITest/GridLayoutTest.h>
+#include <UITest/GroupBoxTest.h>
+#include <UITest/IWidgetTest.h>
+#include <UITest/IconTest.h>
+#include <UITest/IntEditTest.h>
+#include <UITest/IntEditSliderTest.h>
+#include <UITest/IntSliderTest.h>
+#include <UITest/IntModelTest.h>
+#include <UITest/LabelTest.h>
+#include <UITest/LayoutUtilTest.h>
+#include <UITest/LineEditTest.h>
+#include <UITest/ListWidgetTest.h>
+#include <UITest/MDIWidgetTest.h>
+#include <UITest/MenuBarTest.h>
+#include <UITest/MessageDialogTest.h>
+#include <UITest/PieChartTest.h>
+#include <UITest/ProgressDialogTest.h>
+#include <UITest/RecentFilesModelTest.h>
+#include <UITest/RowLayoutTest.h>
+#include <UITest/ScrollAreaTest.h>
+#include <UITest/ScrollBarTest.h>
+#include <UITest/ScrollWidgetTest.h>
+#include <UITest/SearchBoxTest.h>
+#include <UITest/SplitterTest.h>
+#include <UITest/StackLayoutTest.h>
+#include <UITest/StyleTest.h>
+#include <UITest/TabWidgetTest.h>
+#include <UITest/WidgetOptionsTest.h>
 
 #if defined(FTK_API_GL_4_1) || defined(FTK_API_GLES_2)
-#include <GlTest/MeshTest.h>
-#include <GlTest/OffscreenBufferTest.h>
-#include <GlTest/TextureAtlasTest.h>
-#include <GlTest/TextureTest.h>
-#include <GlTest/RenderTest.h>
-#include <GlTest/ShaderTest.h>
-#include <GlTest/UtilTest.h>
-#include <GlTest/WindowTest.h>
+#include <GLTest/MeshTest.h>
+#include <GLTest/OffscreenBufferTest.h>
+#include <GLTest/TextureAtlasTest.h>
+#include <GLTest/TextureTest.h>
+#include <GLTest/RenderTest.h>
+#include <GLTest/ShaderTest.h>
+#include <GLTest/UtilTest.h>
+#include <GLTest/WindowTest.h>
 #endif // FTK_API_GL_4_1
 #endif // FTK_UI_LIB
 
@@ -103,10 +103,10 @@
 #include <TestLib/ITest.h>
 
 #if defined(FTK_UI_LIB)
-#include <ftk/Ui/Init.h>
+#include <ftk/UI/Init.h>
 
 #if defined(FTK_API_GL_4_1) || defined(FTK_API_GLES_2)
-#include <ftk/Gl/Init.h>
+#include <ftk/GL/Init.h>
 #endif // FTK_API_GL_4_1
 #endif // FTK_UI_LIB
 

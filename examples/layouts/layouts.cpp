@@ -2,16 +2,16 @@
 // Copyright (c) 2024-2025 Darby Johnston
 // All rights reserved.
 
-#include <ftk/Ui/App.h>
-#include <ftk/Ui/FormLayout.h>
-#include <ftk/Ui/GridLayout.h>
-#include <ftk/Ui/GroupBox.h>
-#include <ftk/Ui/IntEdit.h>
-#include <ftk/Ui/IntEditSlider.h>
-#include <ftk/Ui/Label.h>
-#include <ftk/Ui/MainWindow.h>
-#include <ftk/Ui/RowLayout.h>
-#include <ftk/Ui/ScrollWidget.h>
+#include <ftk/UI/App.h>
+#include <ftk/UI/FormLayout.h>
+#include <ftk/UI/GridLayout.h>
+#include <ftk/UI/GroupBox.h>
+#include <ftk/UI/IntEdit.h>
+#include <ftk/UI/IntEditSlider.h>
+#include <ftk/UI/Label.h>
+#include <ftk/UI/MainWindow.h>
+#include <ftk/UI/RowLayout.h>
+#include <ftk/UI/ScrollWidget.h>
 
 #include <ftk/Core/Format.h>
 

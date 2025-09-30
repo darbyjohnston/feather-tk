@@ -4,7 +4,7 @@
 
 #include "ColorWidgets.h"
 
-#include <ftk/Ui/ColorWidget.h>
+#include <ftk/UI/ColorWidget.h>
 
 void ColorWidgets::_init(
     const std::shared_ptr<Context>& context,

@@ -4,12 +4,12 @@
 
 #include "Buttons.h"
 
-#include <ftk/Ui/CheckBox.h>
-#include <ftk/Ui/GridLayout.h>
-#include <ftk/Ui/GroupBox.h>
-#include <ftk/Ui/PushButton.h>
-#include <ftk/Ui/RadioButton.h>
-#include <ftk/Ui/ToolButton.h>
+#include <ftk/UI/CheckBox.h>
+#include <ftk/UI/GridLayout.h>
+#include <ftk/UI/GroupBox.h>
+#include <ftk/UI/PushButton.h>
+#include <ftk/UI/RadioButton.h>
+#include <ftk/UI/ToolButton.h>
 
 void Buttons::_init(
     const std::shared_ptr<Context>& context,

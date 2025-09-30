@@ -2,12 +2,12 @@
 // Copyright (c) 2024-2025 Darby Johnston
 // All rights reserved.
 
-#include <ftk/Ui/App.h>
-#include <ftk/Ui/ColorWidget.h>
-#include <ftk/Ui/MDICanvas.h>
-#include <ftk/Ui/MDIWidget.h>
-#include <ftk/Ui/MainWindow.h>
-#include <ftk/Ui/ScrollWidget.h>
+#include <ftk/UI/App.h>
+#include <ftk/UI/ColorWidget.h>
+#include <ftk/UI/MDICanvas.h>
+#include <ftk/UI/MDIWidget.h>
+#include <ftk/UI/MainWindow.h>
+#include <ftk/UI/ScrollWidget.h>
 
 #include <ftk/Core/Format.h>
 #include <ftk/Core/Random.h>

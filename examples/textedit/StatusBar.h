@@ -4,8 +4,8 @@
 
 #pragma once
 
-#include <ftk/Ui/Label.h>
-#include <ftk/Ui/RowLayout.h>
+#include <ftk/UI/Label.h>
+#include <ftk/UI/RowLayout.h>
 
 namespace examples
 {

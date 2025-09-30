@@ -2,16 +2,16 @@
 // Copyright (c) 2024-2025 Darby Johnston
 // All rights reserved.
 
-#include <ftk/Ui/App.h>
-#include <ftk/Ui/Action.h>
-#include <ftk/Ui/ComboBox.h>
-#include <ftk/Ui/ColorSwatch.h>
-#include <ftk/Ui/Divider.h>
-#include <ftk/Ui/GroupBox.h>
-#include <ftk/Ui/MainWindow.h>
-#include <ftk/Ui/MenuBar.h>
-#include <ftk/Ui/RowLayout.h>
-#include <ftk/Ui/ScrollWidget.h>
+#include <ftk/UI/App.h>
+#include <ftk/UI/Action.h>
+#include <ftk/UI/ComboBox.h>
+#include <ftk/UI/ColorSwatch.h>
+#include <ftk/UI/Divider.h>
+#include <ftk/UI/GroupBox.h>
+#include <ftk/UI/MainWindow.h>
+#include <ftk/UI/MenuBar.h>
+#include <ftk/UI/RowLayout.h>
+#include <ftk/UI/ScrollWidget.h>
 
 using namespace ftk;
 

@@ -4,8 +4,8 @@
 
 #include "ImageWidgets.h"
 
-#include <ftk/Ui/ImageWidget.h>
-#include <ftk/Ui/SvgWidget.h>
+#include <ftk/UI/ImageWidget.h>
+#include <ftk/UI/SvgWidget.h>
 
 #include <ftk/Core/ImageIO.h>
 

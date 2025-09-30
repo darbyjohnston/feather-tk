@@ -4,9 +4,9 @@
 
 #include "Layouts.h"
 
-#include <ftk/Ui/GridLayout.h>
-#include <ftk/Ui/Label.h>
-#include <ftk/Ui/RowLayout.h>
+#include <ftk/UI/GridLayout.h>
+#include <ftk/UI/Label.h>
+#include <ftk/UI/RowLayout.h>
 
 void Layouts::_init(
     const std::shared_ptr<Context>& context,

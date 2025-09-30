@@ -4,10 +4,10 @@
 
 #pragma once
 
-#include <ftk/Ui/App.h>
-#include <ftk/Ui/ProgressDialog.h>
-#include <ftk/Ui/MainWindow.h>
-#include <ftk/Ui/Settings.h>
+#include <ftk/UI/App.h>
+#include <ftk/UI/ProgressDialog.h>
+#include <ftk/UI/MainWindow.h>
+#include <ftk/UI/Settings.h>
 
 #include <ftk/Core/Timer.h>
 

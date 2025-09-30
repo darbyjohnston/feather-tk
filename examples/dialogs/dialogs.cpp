@@ -4,14 +4,14 @@
 
 #include "dialogs.h"
 
-#include <ftk/Ui/DialogSystem.h>
-#include <ftk/Ui/Divider.h>
-#include <ftk/Ui/FileBrowser.h>
-#include <ftk/Ui/FileEdit.h>
-#include <ftk/Ui/MenuBar.h>
-#include <ftk/Ui/PushButton.h>
-#include <ftk/Ui/RecentFilesModel.h>
-#include <ftk/Ui/RowLayout.h>
+#include <ftk/UI/DialogSystem.h>
+#include <ftk/UI/Divider.h>
+#include <ftk/UI/FileBrowser.h>
+#include <ftk/UI/FileEdit.h>
+#include <ftk/UI/MenuBar.h>
+#include <ftk/UI/PushButton.h>
+#include <ftk/UI/RecentFilesModel.h>
+#include <ftk/UI/RowLayout.h>
 
 #include <ftk/Core/Format.h>
 

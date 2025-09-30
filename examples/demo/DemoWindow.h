@@ -4,9 +4,9 @@
 
 #pragma once
 
-#include <ftk/Ui/Action.h>
-#include <ftk/Ui/App.h>
-#include <ftk/Ui/MainWindow.h>
+#include <ftk/UI/Action.h>
+#include <ftk/UI/App.h>
+#include <ftk/UI/MainWindow.h>
 
 using namespace ftk;
 

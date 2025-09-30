@@ -7,7 +7,7 @@
 #include "App.h"
 #include "DocumentModel.h"
 
-#include <ftk/Ui/FileBrowser.h>
+#include <ftk/UI/FileBrowser.h>
 
 #include <ftk/Core/String.h>
 

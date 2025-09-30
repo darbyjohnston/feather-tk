@@ -7,9 +7,9 @@ if(ftk_UI_LIB)
     if ("${ftk_API}" STREQUAL "GL_4_1" OR
         "${ftk_API}" STREQUAL "GL_4_1_Debug" OR
         "${ftk_API}" STREQUAL "GLES_2")
-        list(APPEND LIBRARIES ftkGlTest)
+        list(APPEND LIBRARIES ftkGLTest)
     endif()
-    list(APPEND LIBRARIES ftkUiTest)
+    list(APPEND LIBRARIES ftkUITest)
 endif()
 
 add_executable(ftk-test ${SOURCE} ${HEADERS})

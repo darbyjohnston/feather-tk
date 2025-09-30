@@ -6,7 +6,7 @@
 
 #include "Document.h"
 
-#include <ftk/Ui/Style.h>
+#include <ftk/UI/Style.h>
 
 namespace examples
 {
