@@ -4,7 +4,7 @@
 
 #include <GLTest/MeshTest.h>
 
-#include <ftk/GL/Gl.h>
+#include <ftk/GL/GL.h>
 #include <ftk/GL/Mesh.h>
 #include <ftk/GL/Window.h>
 

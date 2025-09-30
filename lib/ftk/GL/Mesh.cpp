@@ -4,7 +4,7 @@
 
 #include <ftk/GL/Mesh.h>
 
-#include <ftk/GL/Gl.h>
+#include <ftk/GL/GL.h>
 
 #include <ftk/Core/Error.h>
 #include <ftk/Core/Math.h>

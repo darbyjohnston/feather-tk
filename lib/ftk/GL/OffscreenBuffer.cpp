@@ -4,7 +4,7 @@
 
 #include <ftk/GL/OffscreenBuffer.h>
 
-#include <ftk/GL/Gl.h>
+#include <ftk/GL/GL.h>
 #include <ftk/GL/Texture.h>
 
 #include <ftk/Core/Error.h>

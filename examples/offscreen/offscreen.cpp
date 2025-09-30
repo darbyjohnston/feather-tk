@@ -7,7 +7,7 @@
 #include <ftk/UI/App.h>
 #include <ftk/UI/MainWindow.h>
 
-#include <ftk/GL/Gl.h>
+#include <ftk/GL/GL.h>
 #include <ftk/GL/Mesh.h>
 
 #include <ftk/Core/Format.h>

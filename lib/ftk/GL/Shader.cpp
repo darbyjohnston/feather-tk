@@ -4,7 +4,7 @@
 
 #include <ftk/GL/Shader.h>
 
-#include <ftk/GL/Gl.h>
+#include <ftk/GL/GL.h>
 
 #include <ftk/Core/Color.h>
 #include <ftk/Core/Format.h>

@@ -4,7 +4,7 @@
 
 #include <ftk/GL/Init.h>
 
-#include <ftk/GL/Gl.h>
+#include <ftk/GL/GL.h>
 #include <ftk/GL/System.h>
 
 #include <ftk/Core/Context.h>

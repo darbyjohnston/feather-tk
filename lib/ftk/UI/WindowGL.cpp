@@ -8,7 +8,7 @@
 #include <ftk/UI/Style.h>
 #include <ftk/UI/Util.h>
 
-#include <ftk/GL/Gl.h>
+#include <ftk/GL/GL.h>
 #include <ftk/GL/OffscreenBuffer.h>
 #include <ftk/GL/Render.h>
 #include <ftk/GL/Window.h>

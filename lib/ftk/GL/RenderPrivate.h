@@ -4,7 +4,7 @@
 
 #include <ftk/GL/Render.h>
 
-#include <ftk/GL/Gl.h>
+#include <ftk/GL/GL.h>
 #include <ftk/GL/Mesh.h>
 #include <ftk/GL/Shader.h>
 #include <ftk/GL/TextureAtlas.h>
