@@ -29,7 +29,6 @@ namespace ftk
         SpacingTool,
         Icon,
         Border,
-        BorderFocus,
         LabelPad,
         ScrollArea,
         ScrollAreaSmall,

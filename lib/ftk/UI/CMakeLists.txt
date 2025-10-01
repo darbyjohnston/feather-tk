@@ -63,6 +63,7 @@ set(HEADERS
     RadioButton.h
     RecentFilesModel.h
     RowLayout.h
+    SVGWidget.h
     ScrollArea.h
     ScrollBar.h
     ScrollWidget.h
@@ -73,9 +74,9 @@ set(HEADERS
     Splitter.h
     StackLayout.h
     Style.h
-    SvgWidget.h
     TabBar.h
     TabWidget.h
+    TextEdit.h
     ToolBar.h
     ToolButton.h
     Tooltip.h
@@ -89,7 +90,8 @@ set(PRIVATE_HEADERS
     ListItemsWidgetPrivate.h
     MenuBarPrivate.h
     MenuPrivate.h
-    TabBarPrivate.h)
+    TabBarPrivate.h
+    TextEditPrivate.h)
 
 set(SOURCE
     Action.cpp
@@ -166,6 +168,7 @@ set(SOURCE
     RadioButton.cpp
     RecentFilesModel.cpp
     RowLayout.cpp
+    SVGWidget.cpp
     ScrollArea.cpp
     ScrollBar.cpp
     ScrollWidget.cpp
@@ -175,10 +178,12 @@ set(SOURCE
     Splitter.cpp
     StackLayout.cpp
     Style.cpp
-    SvgWidget.cpp
     TabBar.cpp
     TabBarButton.cpp
     TabWidget.cpp
+    TextEdit.cpp
+    TextEditModel.cpp
+    TextEditWidget.cpp
     ToolBar.cpp
     ToolButton.cpp
     Tooltip.cpp

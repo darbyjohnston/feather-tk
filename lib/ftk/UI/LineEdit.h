@@ -92,7 +92,7 @@ namespace ftk
         void textEvent(TextEvent&) override;
 
     private:
-        int _getCursorPos(const V2I&);
+        int _getCursorPos(const V2I&) const;
 
         void _textUpdate();
 

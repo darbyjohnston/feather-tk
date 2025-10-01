@@ -8,12 +8,10 @@
 #include "DocumentModel.h"
 #include "MenuBar.h"
 #include "StatusBar.h"
-#include "TextWidget.h"
 
 #include <ftk/UI/Divider.h>
 #include <ftk/UI/MenuBar.h>
 #include <ftk/UI/RowLayout.h>
-#include <ftk/UI/ScrollWidget.h>
 
 using namespace ftk;
 
@@ -44,7 +42,7 @@ namespace examples
             _layout->setSpacingRole(SizeRole::None);
             _layout->setStretch(Stretch::Expanding);
             _tabWidget->setParent(_layout);
-            Divider::create(context, Orientation::Vertical, _layout);
+            //Divider::create(context, Orientation::Vertical, _layout);
             _statusBar->setParent(_layout);
             setWidget(_layout);
 
@@ -76,12 +74,13 @@ namespace examples
                         auto app = appWeak.lock();
                         if (context && app)
                         {
-                            auto textWidget = TextWidget::create(context, document);
-                            textWidget->setFontRole(app->getDocumentModel()->getFontRole());
-                            _textWidgets.push_back(textWidget);
+                            auto textEdit = ftk::TextEdit::create(context);
+                            textEdit->setText(document->getLines());
+                            textEdit->setFontRole(app->getDocumentModel()->getFontRole());
+                            _textEdits.push_back(textEdit);
                             _tabWidget->addTab(
                                 document->getName(),
-                                textWidget,
+                                textEdit,
                                 document->getPath().u8string());
                         }
                     }
@@ -91,9 +90,9 @@ namespace examples
                 app->getDocumentModel()->observeRemove(),
                 [this](int index)
                 {
-                    if (index >= 0 && index < _textWidgets.size())
+                    if (index >= 0 && index < _textEdits.size())
                     {
-                        _textWidgets.erase(_textWidgets.begin() + index);
+                        _textEdits.erase(_textEdits.begin() + index);
                         _tabWidget->removeTab(index);
                     }
                 });
@@ -104,7 +103,7 @@ namespace examples
                 {
                     if (value)
                     {
-                        _textWidgets.clear();
+                        _textEdits.clear();
                         _tabWidget->clearTabs();
                     }
                 });
@@ -120,7 +119,7 @@ namespace examples
                 app->getDocumentModel()->observeFontRole(),
                 [this](FontRole value)
                 {
-                    for (const auto& widget : _textWidgets)
+                    for (const auto& widget : _textEdits)
                     {
                         widget->setFontRole(value);
                     }

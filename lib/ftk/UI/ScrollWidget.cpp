@@ -19,6 +19,7 @@ namespace ftk
         bool scrollBarsAutoHide = true;
         bool scrollEventsEnabled = true;
         bool border = true;
+        ColorRole borderColor = ColorRole::Border;
         std::shared_ptr<IWidget> widget;
         std::shared_ptr<ScrollArea> scrollArea;
         std::shared_ptr<ScrollBar> horizontalScrollBar;
@@ -253,6 +254,20 @@ namespace ftk
         _setDrawUpdate();
     }
 
+    ColorRole ScrollWidget::getBorderColorRole() const
+    {
+        return _p->borderColor;
+    }
+
+    void ScrollWidget::setBorderColorRole(ColorRole value)
+    {
+        FTK_P();
+        if (value == p.borderColor)
+            return;
+        p.borderColor = value;
+        _setDrawUpdate();
+    }
+
     SizeRole ScrollWidget::getSizeHintRole() const
     {
         return _p->scrollArea->getSizeHintRole();
@@ -298,7 +313,7 @@ namespace ftk
             const Box2I& g = getGeometry();
             event.render->drawMesh(
                 border(g, p.size.border),
-                event.style->getColorRole(ColorRole::Border));
+                event.style->getColorRole(p.borderColor));
         }
     }
 

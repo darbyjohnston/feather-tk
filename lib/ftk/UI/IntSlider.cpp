@@ -23,7 +23,6 @@ namespace ftk
             int size = 0;
             int margin = 0;
             int border = 0;
-            int borderFocus = 0;
             int handle = 0;
             FontMetrics fontMetrics;
         };
@@ -34,7 +33,6 @@ namespace ftk
             Box2I g;
             Box2I margin;
             TriMesh2F border;
-            TriMesh2F borderFocus;
         };
         std::optional<DrawData> draw;
     };
@@ -189,7 +187,6 @@ namespace ftk
             p.size.size = event.style->getSizeRole(SizeRole::Slider, event.displayScale);
             p.size.margin = event.style->getSizeRole(SizeRole::MarginInside, event.displayScale);
             p.size.border = event.style->getSizeRole(SizeRole::Border, event.displayScale);
-            p.size.borderFocus = event.style->getSizeRole(SizeRole::BorderFocus, event.displayScale);
             p.size.handle = event.style->getSizeRole(SizeRole::Handle, event.displayScale);
             auto fontInfo = event.style->getFontRole(FontRole::Label, event.displayScale);
             p.size.fontMetrics = event.fontSystem->getMetrics(fontInfo);
@@ -197,7 +194,7 @@ namespace ftk
         }
 
         Size2I sizeHint(p.size.size, p.size.fontMetrics.lineHeight);
-        sizeHint = margin(sizeHint, p.size.borderFocus * 2);
+        sizeHint = margin(sizeHint, p.size.border * 2);
         _setSizeHint(sizeHint);
     }
 
@@ -224,7 +221,6 @@ namespace ftk
             p.draw->g = getGeometry();
             p.draw->margin = margin(p.draw->g, -(p.size.margin + p.size.border));
             p.draw->border = border(p.draw->g, p.size.border);
-            p.draw->borderFocus = border(p.draw->g, p.size.borderFocus);
         }
 
         // Draw the background.
@@ -233,18 +229,9 @@ namespace ftk
             event.style->getColorRole(ColorRole::Base));
 
         // Draw the focus and border.
-        if (hasKeyFocus())
-        {
-            event.render->drawMesh(
-                p.draw->borderFocus,
-                event.style->getColorRole(ColorRole::KeyFocus));
-        }
-        else
-        {
-            event.render->drawMesh(
-                p.draw->border,
-                event.style->getColorRole(ColorRole::Border));
-        }
+        event.render->drawMesh(
+            p.draw->border,
+            event.style->getColorRole(hasKeyFocus() ? ColorRole::KeyFocus : ColorRole::Border));
 
         // Draw the handle.
         const Box2I g2 = _getSliderGeometry();

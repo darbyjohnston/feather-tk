@@ -122,23 +122,23 @@ namespace ftk
     void ScrollArea::scrollTo(const Box2I& value)
     {
         FTK_P();
-        const Size2I size = getChildrenClipRect().size();
+        const Size2I size = getGeometry().size();
         V2I scrollPos = _p->scrollPos;
-        if (value.min.x <= scrollPos.x)
+        if (value.min.x < scrollPos.x)
         {
             scrollPos.x = value.min.x;
         }
-        else if (value.max.x > scrollPos.x + size.w)
+        else if (value.max.x >= scrollPos.x + size.w)
         {
-            scrollPos.x = value.max.x - size.w + 1;
+            scrollPos.x = (value.max.x + 1) - (size.w);
         }
-        if (value.min.y <= scrollPos.y)
+        if (value.min.y < scrollPos.y)
         {
             scrollPos.y = value.min.y;
         }
-        else if (value.max.y > scrollPos.y + size.h)
+        else if (value.max.y >= scrollPos.y + size.h)
         {
-            scrollPos.y = value.max.y - size.h + 1;
+            scrollPos.y = (value.max.y + 1) - (size.h);
         }
         setScrollPos(scrollPos);
     }

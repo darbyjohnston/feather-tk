@@ -233,12 +233,12 @@ namespace ftk
         {
             char c = 0;
             io->read(&c, 1);
-            if ('\n' == c)
+            if ('\r' == c || '\n' == c)
             {
-                if (!io->isEOF())
+                if ('\r' == c && !io->isEOF())
                 {
                     io->read(&c, 1);
-                    if (c != '\r')
+                    if (c != '\n')
                     {
                         io->seek(1, SeekMode::Reverse);
                     }

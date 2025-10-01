@@ -7,6 +7,7 @@
 #include <ftk/UI/MainWindow.h>
 #include <ftk/UI/RowLayout.h>
 #include <ftk/UI/TabWidget.h>
+#include <ftk/UI/TextEdit.h>
 
 namespace examples
 {
@@ -16,7 +17,6 @@ namespace examples
         class Document;
         class MenuBar;
         class StatusBar;
-        class TextWidget;
 
         class MainWindow : public ftk::MainWindow
         {
@@ -47,7 +47,7 @@ namespace examples
 
             std::shared_ptr<MenuBar> _menuBar;
             std::shared_ptr<ftk::TabWidget> _tabWidget;
-            std::vector<std::shared_ptr<TextWidget> > _textWidgets;
+            std::vector<std::shared_ptr<ftk::TextEdit> > _textEdits;
             std::shared_ptr<StatusBar> _statusBar;
             std::shared_ptr<ftk::VerticalLayout> _layout;
 

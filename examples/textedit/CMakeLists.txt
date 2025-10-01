@@ -4,8 +4,7 @@ set(HEADERS
     DocumentModel.h
     MainWindow.h
     MenuBar.h
-    StatusBar.h
-    TextWidget.h)
+    StatusBar.h)
 
 set(SOURCE
     App.cpp
@@ -14,7 +13,6 @@ set(SOURCE
     MainWindow.cpp
     MenuBar.cpp
     StatusBar.cpp
-    TextWidget.cpp
     main.cpp)
 
 add_executable(textedit ${HEADERS} ${SOURCE})

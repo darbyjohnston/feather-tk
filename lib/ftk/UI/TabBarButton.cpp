@@ -18,7 +18,7 @@ namespace ftk
         {
             std::optional<float> displayScale = 0.F;
             int margin = 0;
-            int borderFocus = 0;
+            int border = 0;
             int pad = 0;
             FontInfo fontInfo;
             FontMetrics fontMetrics;
@@ -30,7 +30,7 @@ namespace ftk
         {
             Box2I g;
             Box2I g2;
-            TriMesh2F borderFocus;
+            TriMesh2F border;
             std::vector<std::shared_ptr<Glyph> > glyphs;
         };
         std::optional<DrawData> draw;
@@ -97,7 +97,7 @@ namespace ftk
         {
             p.size.displayScale = event.displayScale;
             p.size.margin = event.style->getSizeRole(SizeRole::MarginInside, event.displayScale);
-            p.size.borderFocus = event.style->getSizeRole(SizeRole::BorderFocus, event.displayScale);
+            p.size.border = event.style->getSizeRole(SizeRole::Border, event.displayScale);
             p.size.pad = event.style->getSizeRole(SizeRole::LabelPad, event.displayScale);
             p.size.fontInfo = event.style->getFontRole(FontRole::Label, event.displayScale);
             p.size.fontMetrics = event.fontSystem->getMetrics(p.size.fontInfo);
@@ -108,7 +108,7 @@ namespace ftk
         Size2I sizeHint(
             p.size.textSize.w + p.size.pad * 2,
             p.size.fontMetrics.lineHeight);
-        sizeHint = margin(sizeHint, p.size.margin + p.size.borderFocus);
+        sizeHint = margin(sizeHint, p.size.margin + p.size.border);
         _setSizeHint(sizeHint);
     }
 
@@ -131,8 +131,8 @@ namespace ftk
         {
             p.draw = Private::DrawData();
             p.draw->g = getGeometry();
-            p.draw->g2 = margin(p.draw->g, -(p.size.margin + p.size.borderFocus));
-            p.draw->borderFocus = border(p.draw->g, p.size.borderFocus);
+            p.draw->g2 = margin(p.draw->g, -(p.size.margin + p.size.border));
+            p.draw->border = border(p.draw->g, p.size.border);
         }
 
         // Draw the background.
@@ -148,7 +148,7 @@ namespace ftk
         if (p.current)
         {
             event.render->drawMesh(
-                p.draw->borderFocus,
+                p.draw->border,
                 event.style->getColorRole(ColorRole::KeyFocus));
         }
 

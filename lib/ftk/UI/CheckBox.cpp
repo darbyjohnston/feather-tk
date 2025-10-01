@@ -18,7 +18,6 @@ namespace ftk
             int margin = 0;
             int spacing = 0;
             int border = 0;
-            int borderFocus = 0;
             int pad = 0;
             FontInfo fontInfo;
             FontMetrics fontMetrics;
@@ -32,7 +31,7 @@ namespace ftk
             Box2I g;
             Box2I g2;
             Box2I g3;
-            TriMesh2F borderFocus;
+            TriMesh2F border;
             TriMesh2F checkBox;
             std::vector<std::shared_ptr<Glyph> > glyphs;
         };
@@ -124,7 +123,6 @@ namespace ftk
             p.size.margin = event.style->getSizeRole(SizeRole::MarginInside, event.displayScale);
             p.size.spacing = event.style->getSizeRole(SizeRole::SpacingSmall, event.displayScale);
             p.size.border = event.style->getSizeRole(SizeRole::Border, event.displayScale);
-            p.size.borderFocus = event.style->getSizeRole(SizeRole::BorderFocus, event.displayScale);
             p.size.pad = event.style->getSizeRole(SizeRole::LabelPad, event.displayScale);
             p.size.fontInfo = event.style->getFontRole(_fontRole, event.displayScale);
             p.size.fontMetrics = event.fontSystem->getMetrics(p.size.fontInfo);
@@ -138,7 +136,7 @@ namespace ftk
         sizeHint.w += p.size.spacing;
         sizeHint.w += p.size.textSize.w + p.size.pad * 2;
         sizeHint.h = p.size.fontMetrics.lineHeight;
-        sizeHint = margin(sizeHint, p.size.margin + p.size.borderFocus);
+        sizeHint = margin(sizeHint, p.size.margin + p.size.border);
         _setSizeHint(sizeHint);
     }
 
@@ -163,13 +161,13 @@ namespace ftk
         {
             p.draw = Private::DrawData();
             p.draw->g = getGeometry();
-            p.draw->g2 = margin(p.draw->g, -(p.size.margin + p.size.borderFocus));
+            p.draw->g2 = margin(p.draw->g, -(p.size.margin + p.size.border));
             p.draw->g3 = Box2I(
                 p.draw->g2.x(),
                 p.draw->g2.y() + p.draw->g2.h() / 2 - p.size.checkBox / 2,
                 p.size.checkBox,
                 p.size.checkBox);
-            p.draw->borderFocus = border(p.draw->g, p.size.borderFocus);
+            p.draw->border = border(p.draw->g, p.size.border);
             p.draw->checkBox = border(p.draw->g3, p.size.border);
         }
 
@@ -177,7 +175,7 @@ namespace ftk
         if (hasKeyFocus())
         {
             event.render->drawMesh(
-                p.draw->borderFocus,
+                p.draw->border,
                 event.style->getColorRole(ColorRole::KeyFocus));
         }
 

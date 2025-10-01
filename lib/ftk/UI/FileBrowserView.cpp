@@ -51,7 +51,7 @@ namespace ftk
         {
             std::optional<float> displayScale;
             int margin = 0;
-            int borderFocus = 0;
+            int border = 0;
             int pad = 0;
             FontInfo fontInfo;
             FontMetrics fontMetrics;
@@ -198,7 +198,7 @@ namespace ftk
         {
             p.size.displayScale = event.displayScale;
             p.size.margin = event.style->getSizeRole(SizeRole::MarginInside, event.displayScale);
-            p.size.borderFocus = event.style->getSizeRole(SizeRole::BorderFocus, event.displayScale);
+            p.size.border = event.style->getSizeRole(SizeRole::Border, event.displayScale);
             p.size.pad = event.style->getSizeRole(SizeRole::LabelPad, event.displayScale);
             p.size.fontInfo = event.style->getFontRole(FontRole::Label, event.displayScale);
             p.size.fontMetrics = event.fontSystem->getMetrics(p.size.fontInfo);
@@ -215,10 +215,10 @@ namespace ftk
                 {
                     const Size2I textSize = event.fontSystem->getSize(text, p.size.fontInfo);
                     item.textSizes.push_back(textSize);
-                    item.size.w += textSize.w + p.size.pad * 2 + p.size.margin * 2 + p.size.borderFocus * 2;
+                    item.size.w += textSize.w + p.size.pad * 2 + p.size.margin * 2 + p.size.border * 2;
                     item.size.h = std::max(
                         item.size.h,
-                        std::max(textSize.h + p.size.margin * 2, imageHeight) + p.size.borderFocus * 2);
+                        std::max(textSize.h + p.size.margin * 2, imageHeight) + p.size.border * 2);
                 }
             }
         }
@@ -245,7 +245,7 @@ namespace ftk
         {
             const Box2I g2 = move(getRect(p.current->get()), g.min);
             event.render->drawMesh(
-                border(g2, p.size.borderFocus),
+                border(g2, p.size.border),
                 event.style->getColorRole(ColorRole::KeyFocus));
         }
 
