@@ -125,6 +125,9 @@ namespace ftk
         //! Append a list item.
         void pushBack(const T&);
 
+        //! Insert an item.
+        void insertItem(std::size_t, const T&);
+
         //! Remove an item.
         void removeItem(std::size_t);
 

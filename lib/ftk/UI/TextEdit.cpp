@@ -145,7 +145,7 @@ namespace ftk
             p.model->observeCursor(),
             [this](const TextPos&)
             {
-                _p->scrollWidget->scrollTo(_p->widget->getCursorBox());
+                _p->scrollWidget->scrollTo(_p->widget->getCursorBox(true));
             });
     }
 

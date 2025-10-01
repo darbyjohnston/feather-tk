@@ -27,16 +27,6 @@ namespace ftk
 
     const TextPos posInvalid(-1, -1);
 
-    enum class MoveCursor
-    {
-        Left,
-        Right,
-        Up,
-        Down,
-        Home,
-        End
-    };
-
     typedef std::pair<TextPos, TextPos> SelectionPair;
 
     class Selection
@@ -89,8 +79,6 @@ namespace ftk
 
         void setCursor(const TextPos&);
 
-        void moveCursor(MoveCursor, bool select = false);
-
         const Selection& getSelection() const;
 
         std::shared_ptr<IObservableValue<Selection> > observeSelection() const;
@@ -100,6 +88,10 @@ namespace ftk
         void selectAll();
 
         void selectNone();
+
+        void text(const std::string&);
+
+        bool key(Key, int modifiers = 0);
 
     private:
         FTK_PRIVATE();
@@ -141,7 +133,7 @@ namespace ftk
 
         void setFontRole(FontRole);
 
-        Box2I getCursorBox() const;
+        Box2I getCursorBox(bool margin = false) const;
 
         void setGeometry(const Box2I&) override;
         void setVisible(bool) override;

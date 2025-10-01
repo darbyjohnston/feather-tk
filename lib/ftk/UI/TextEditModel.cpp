@@ -73,59 +73,6 @@ namespace ftk
         _p->cursor->setIfChanged(value);
     }
 
-    void TextEditModel::moveCursor(MoveCursor value, bool select)
-    {
-        FTK_P();
-        const auto& text = p.text->get();
-        TextPos cursor = p.cursor->get();
-        if (cursor.line >= 0 && cursor.line < static_cast<int>(text.size()))
-        {
-            switch (value)
-            {
-            case MoveCursor::Left:
-                if (cursor.chr > 0)
-                {
-                    --cursor.chr;
-                }
-                break;
-            case MoveCursor::Right:
-                if (cursor.chr < static_cast<int>(text[cursor.line].size()))
-                {
-                    ++cursor.chr;
-                }
-                break;
-            case MoveCursor::Up:
-                if (cursor.line > 0)
-                {
-                    --cursor.line;
-                    cursor.chr = std::min(cursor.chr, static_cast<int>(text[cursor.line].size()));
-                }
-                break;
-            case MoveCursor::Down:
-                if (cursor.line < static_cast<int>(text.size()) - 1)
-                {
-                    ++cursor.line;
-                    cursor.chr = std::min(cursor.chr, static_cast<int>(text[cursor.line].size()));
-                }
-                break;
-            case MoveCursor::Home:
-                if (cursor.chr > 0)
-                {
-                    cursor.chr = 0;
-                }
-                break;
-            case MoveCursor::End:
-                if (cursor.chr < static_cast<int>(text[cursor.line].size()))
-                {
-                    cursor.chr = static_cast<int>(text[cursor.line].size());
-                }
-                break;
-            default: break;
-            }
-            p.cursor->setIfChanged(cursor);
-        }
-    }
-
     const Selection& TextEditModel::getSelection() const
     {
         return _p->selection->get();
@@ -171,5 +118,122 @@ namespace ftk
             selection.clear();
             p.selection->setIfChanged(selection);
         }
+    }
+
+    void TextEditModel::text(const std::string& value)
+    {
+        FTK_P();
+        const auto& text = p.text->get();
+        TextPos cursor = p.cursor->get();
+        if (cursor.line >= 0 && cursor.line < text.size())
+        {
+            std::string line = text[cursor.line];
+            line.insert(cursor.chr, value);
+            cursor.chr += value.size();
+            p.text->setItem(cursor.line, line);
+        }
+        else
+        {
+            std::string line = value;
+            cursor.chr = line.size();
+            p.text->pushBack(line);
+        }
+        p.cursor->setIfChanged(cursor);
+    }
+
+    bool TextEditModel::key(Key key, int modifiers)
+    {
+        FTK_P();
+        bool out = false;
+        const auto& text = p.text->get();
+        TextPos cursor = p.cursor->get();
+        switch (key)
+        {
+        case Key::Left:
+            if (cursor.line >= 0 &&
+                cursor.line < static_cast<int>(text.size()) &&
+                cursor.chr > 0)
+            {
+                --cursor.chr;
+            }
+            out = true;
+            break;
+        case Key::Right:
+            if (cursor.line >= 0 &&
+                cursor.line < static_cast<int>(text.size()) &&
+                cursor.chr < static_cast<int>(text[cursor.line].size()))
+            {
+                ++cursor.chr;
+            }
+            out = true;
+            break;
+        case Key::Up:
+            if (cursor.line > 0 &&
+                cursor.line < static_cast<int>(text.size()))
+            {
+                --cursor.line;
+                cursor.chr = std::min(cursor.chr, static_cast<int>(text[cursor.line].size()));
+            }
+            out = true;
+            break;
+        case Key::Down:
+            if (cursor.line >= 0 &&
+                cursor.line < static_cast<int>(text.size()) - 1)
+            {
+                ++cursor.line;
+                cursor.chr = std::min(cursor.chr, static_cast<int>(text[cursor.line].size()));
+            }
+            out = true;
+            break;
+        case Key::Home:
+            if (cursor.line >= 0 &&
+                cursor.line < static_cast<int>(text.size()) &&
+                cursor.chr > 0)
+            {
+                cursor.chr = 0;
+            }
+            out = true;
+            break;
+        case Key::End:
+            if (cursor.line >= 0 &&
+                cursor.line < static_cast<int>(text.size()) &&
+                cursor.chr < static_cast<int>(text[cursor.line].size()))
+            {
+                cursor.chr = static_cast<int>(text[cursor.line].size());
+            }
+            out = true;
+            break;
+        case Key::Backspace:
+            if (cursor.line >= 0 && cursor.line < static_cast<int>(text.size()))
+            {
+                std::string line = text[cursor.line];
+                if (cursor.chr > 0)
+                {
+                    --cursor.chr;
+                    line.erase(cursor.chr, 1);
+                    p.text->setItem(cursor.line, line);
+                }
+                else if (cursor.line > 0)
+                {
+                    p.text->removeItem(cursor.line);
+                    --cursor.line;
+                    cursor.chr = text[cursor.line].size();
+                    p.text->setItem(cursor.line, text[cursor.line] + line);
+                }
+            }
+            out = true;
+            break;
+        case Key::Return:
+            if (cursor.line >= 0 && cursor.line < static_cast<int>(text.size()))
+            {
+                p.text->insertItem(cursor.line, std::string());
+                ++cursor.line;
+            }
+            out = true;
+            break;
+        default: break;
+        }
+        p.cursor->setIfChanged(cursor);
+        return out;
     }
 }

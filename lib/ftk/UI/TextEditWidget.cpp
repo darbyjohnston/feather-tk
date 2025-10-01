@@ -157,27 +157,24 @@ namespace ftk
         _setDrawUpdate();
     }
 
-    Box2I TextEditWidget::getCursorBox() const
+    Box2I TextEditWidget::getCursorBox(bool margin) const
     {
         FTK_P();
         const auto& text = p.model->getText();
         const TextPos& cursor = p.model->getCursor();
-        V2I pos;
+        V2I pos(p.size.margin, 0);
         pos.y += p.size.fontMetrics.lineHeight * cursor.line;
         if (cursor.line >= 0 && cursor.line < text.size())
         {
             const std::string& line = text[cursor.line];
-            const auto glyphBoxes = p.fontSystem->getBox(line, p.size.fontInfo);
-            if (cursor.chr >= 0 && cursor.chr < glyphBoxes.size())
-            {
-                pos.x += glyphBoxes[cursor.chr].min.x;
-            }
-            else if (cursor.chr == line.size() && !glyphBoxes.empty())
-            {
-                pos.x += glyphBoxes.back().min.x + glyphBoxes.back().w();
-            }
+            pos.x += p.fontSystem->getSize(line.substr(0, cursor.chr), p.size.fontInfo).w;
         }
-        return Box2I(pos.x, pos.y, p.size.border, p.size.fontMetrics.lineHeight);
+        Box2I out(pos.x, pos.y, p.size.border, p.size.fontMetrics.lineHeight);
+        if (margin)
+        {
+            out = ftk::margin(out, p.size.margin, 0, p.size.margin, 0);
+        }
+        return out;
     }
 
     void TextEditWidget::setGeometry(const Box2I& value)
@@ -263,7 +260,7 @@ namespace ftk
             }
         }
 
-        _setSizeHint(margin(p.size.textSize, p.size.margin));
+        _setSizeHint(margin(p.size.textSize, p.size.margin, 0));
     }
 
     void TextEditWidget::drawEvent(
@@ -280,6 +277,10 @@ namespace ftk
             g,
             event.style->getColorRole(ColorRole::Base));
 
+        //event.render->drawMesh(
+        //    border(g, 1),
+        //    event.style->getColorRole(ColorRole::Text));
+
         // Draw the selection.
         /*if (p.selection.isValid())
         {
@@ -295,7 +296,7 @@ namespace ftk
 
         // Draw the text.
         const bool enabled = isEnabled();
-        const Box2I g2 = margin(g, -p.size.margin);
+        const Box2I g2 = margin(g, -p.size.margin, 0, -p.size.margin, 0);
         V2I pos(g2.min);
         for (const auto& line : p.model->getText())
         {
@@ -355,7 +356,7 @@ namespace ftk
             }*/
             const Box2I cursor = getCursorBox();
             event.render->drawRect(
-                Box2I(g2.min.x + cursor.min.x, g2.min.y + cursor.min.y, cursor.w(), cursor.h()),
+                Box2I(g.min.x + cursor.min.x, g.min.y + cursor.min.y, cursor.w(), cursor.h()),
                 event.style->getColorRole(ColorRole::Text));
 
             /*const std::string text = p.text.substr(0, p.cursorPos);
@@ -432,34 +433,7 @@ namespace ftk
         FTK_P();
         if (hasKeyFocus())
         {
-            switch (event.key)
-            {
-            case Key::Left:
-                event.accept = true;
-                p.model->moveCursor(MoveCursor::Left);
-                break;
-            case Key::Right:
-                event.accept = true;
-                p.model->moveCursor(MoveCursor::Right);
-                break;
-            case Key::Up:
-                event.accept = true;
-                p.model->moveCursor(MoveCursor::Up);
-                break;
-            case Key::Down:
-                event.accept = true;
-                p.model->moveCursor(MoveCursor::Down);
-                break;
-            case Key::Home:
-                event.accept = true;
-                p.model->moveCursor(MoveCursor::Home);
-                break;
-            case Key::End:
-                event.accept = true;
-                p.model->moveCursor(MoveCursor::End);
-                break;
-            default: break;
-            }
+            event.accept = p.model->key(event.key);
         }
         /*if (hasKeyFocus())
         {
@@ -724,9 +698,10 @@ namespace ftk
 
     void TextEditWidget::textEvent(TextEvent& event)
     {
-        FTK_P();
-        /*event.accept = true;
-        if (p.selection.isValid())
+        IWidget::textEvent(event);
+        event.accept = true;
+        _p->model->text(event.text);
+        /*if (p.selection.isValid())
         {
             const auto selection = p.selection.getSorted();
             p.text.replace(

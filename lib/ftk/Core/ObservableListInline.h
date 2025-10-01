@@ -187,6 +187,19 @@ namespace ftk
     }
 
     template<typename T>
+    inline void ObservableList<T>::insertItem(std::size_t index, const T& value)
+    {
+        _value.insert(_value.begin() + index, value);
+        for (const auto& i : IObservableList<T>::_observers)
+        {
+            if (auto observer = i.lock())
+            {
+                observer->doCallback(_value);
+            }
+        }
+    }
+
+    template<typename T>
     inline void ObservableList<T>::removeItem(std::size_t index)
     {
         _value.erase(_value.begin() + index);

@@ -9,7 +9,6 @@
 #include "MenuBar.h"
 #include "StatusBar.h"
 
-#include <ftk/UI/Divider.h>
 #include <ftk/UI/MenuBar.h>
 #include <ftk/UI/RowLayout.h>
 
@@ -42,7 +41,6 @@ namespace examples
             _layout->setSpacingRole(SizeRole::None);
             _layout->setStretch(Stretch::Expanding);
             _tabWidget->setParent(_layout);
-            //Divider::create(context, Orientation::Vertical, _layout);
             _statusBar->setParent(_layout);
             setWidget(_layout);
 
