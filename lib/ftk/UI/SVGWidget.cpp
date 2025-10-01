@@ -2,7 +2,7 @@
 // Copyright (c) 2024-2025 Darby Johnston
 // All rights reserved.
 
-#include <ftk/UI/SvgWidget.h>
+#include <ftk/UI/SVGWidget.h>
 
 #include <ftk/UI/LayoutUtil.h>
 
