@@ -39,6 +39,7 @@ namespace examples
             std::shared_ptr<ftk::HorizontalLayout> _layout;
 
             std::shared_ptr<ftk::ValueObserver<int> > _currentDocumentObserver;
+            std::shared_ptr<ftk::ListObserver<std::string> > _textObserver;
         };
     }
 }

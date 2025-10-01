@@ -72,9 +72,10 @@ namespace examples
                         auto app = appWeak.lock();
                         if (context && app)
                         {
-                            auto textEdit = ftk::TextEdit::create(context);
-                            textEdit->setText(document->getLines());
-                            textEdit->setFontRole(app->getDocumentModel()->getFontRole());
+                            auto textEdit = ftk::TextEdit::create(context, document->getModel());
+                            TextEditOptions options;
+                            options.fontRole = app->getDocumentModel()->getFontRole();
+                            textEdit->setOptions(options);
                             _textEdits.push_back(textEdit);
                             _tabWidget->addTab(
                                 document->getName(),
@@ -119,7 +120,9 @@ namespace examples
                 {
                     for (const auto& widget : _textEdits)
                     {
-                        widget->setFontRole(value);
+                        auto options = widget->getOptions();
+                        options.fontRole = value;
+                        widget->setOptions(options);
                     }
                 });
         }

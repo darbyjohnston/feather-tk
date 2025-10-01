@@ -5,11 +5,22 @@
 #pragma once
 
 #include <ftk/UI/IWidget.h>
+#include <ftk/UI/TextEditModel.h>
 
 namespace ftk
 {
     //! \name Text Widgets
     ///@{
+
+    //! Text edit options.
+    struct TextEditOptions
+    {
+        bool     lineNumbers = false;
+        FontRole fontRole    = FontRole::Label;
+
+        bool operator == (const TextEditOptions&) const;
+        bool operator != (const TextEditOptions&) const;
+    };
         
     //! Text edit.
     class TextEdit : public IWidget
@@ -17,6 +28,7 @@ namespace ftk
     protected:
         void _init(
             const std::shared_ptr<Context>&,
+            const std::shared_ptr<TextEditModel>&,
             const std::shared_ptr<IWidget>& parent);
 
         TextEdit();
@@ -27,7 +39,11 @@ namespace ftk
         //! Create a new widget
         static std::shared_ptr<TextEdit> create(
             const std::shared_ptr<Context>&,
+            const std::shared_ptr<TextEditModel>& = nullptr,
             const std::shared_ptr<IWidget>& parent = nullptr);
+
+        //! Get the model.
+        const std::shared_ptr<TextEditModel>& getModel() const;
 
         //! Get the text.
         const std::vector<std::string>& getText() const;
@@ -45,13 +61,16 @@ namespace ftk
         void selectAll();
 
         //! Clear the selection.
-        void selectNone();
+        void clearSelection();
 
-        //! Get the font role.
-        FontRole getFontRole() const;
+        //! Get the options.
+        const TextEditOptions& getOptions() const;
 
-        //! Set the font role.
-        void setFontRole(FontRole);
+        //! Observe the options.
+        std::shared_ptr<IObservableValue<TextEditOptions> > observeOptions() const;
+
+        //! Set the options.
+        void setOptions(const TextEditOptions&);
 
         void setGeometry(const Box2I&) override;
         void sizeHintEvent(const SizeHintEvent&) override;

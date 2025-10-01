@@ -77,6 +77,7 @@ set(HEADERS
     TabBar.h
     TabWidget.h
     TextEdit.h
+    TextEditModel.h
     ToolBar.h
     ToolButton.h
     Tooltip.h

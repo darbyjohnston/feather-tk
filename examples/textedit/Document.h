@@ -4,8 +4,7 @@
 
 #pragma once
 
-#include <ftk/Core/Context.h>
-#include <ftk/Core/ObservableList.h>
+#include <ftk/UI/TextEditModel.h>
 
 #include <filesystem>
 
@@ -33,15 +32,11 @@ namespace examples
 
             std::string getName() const;
 
-            const std::vector<std::string>& getLines() const;
-
-            std::shared_ptr<ftk::IObservableList<std::string> > observeLines() const;
-
-            void setLines(const std::vector<std::string>&);
+            const std::shared_ptr<ftk::TextEditModel>& getModel() const;
 
         private:
             std::filesystem::path _path;
-            std::shared_ptr<ftk::ObservableList<std::string> > _lines;
+            std::shared_ptr<ftk::TextEditModel> _model;
         };
     }
 }

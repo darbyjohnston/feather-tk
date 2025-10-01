@@ -75,7 +75,7 @@ namespace examples
             try
             {
                 auto document = Document::create(_context, path);
-                document->setLines(readLines(path));
+                document->getModel()->setText(readLines(path));
                 _documentModel->add(document);
             }
             catch (const std::exception& e)
@@ -92,7 +92,7 @@ namespace examples
                 try
                 {
                     auto document = Document::create(_context, path);
-                    document->setLines(readLines(path));
+                    document->getModel()->setText(readLines(path));
                     _documentModel->add(document);
                 }
                 catch (const std::exception& e)

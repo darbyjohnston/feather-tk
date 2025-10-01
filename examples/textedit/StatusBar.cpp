@@ -36,17 +36,25 @@ namespace examples
                 app->getDocumentModel()->observeCurrent(),
                 [this, appWeak](int index)
                 {
-                    int lineCount = 0;
+                    _textObserver.reset();
                     if (auto app = appWeak.lock())
                     {
                         const auto& documents = app->getDocumentModel()->getList();
                         if (index >= 0 && index < documents.size())
                         {
                             const auto& document = documents[index];
-                            lineCount = document->getLines().size();
+                            _textObserver = ftk::ListObserver<std::string>::create(
+                                document->getModel()->observeText(),
+                                [this](const std::vector<std::string>& lines)
+                                {
+                                    _label->setText(Format("Lines: {0}").arg(lines.size()));
+                                });
                         }
                     }
-                    _label->setText(Format("Lines: {0}").arg(lineCount));
+                    if (!_textObserver)
+                    {
+                        _label->setText("Lines: 0");
+                    }
                 });
         }
 

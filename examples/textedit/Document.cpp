@@ -18,7 +18,7 @@ namespace examples
         {
             _path = path;
 
-            _lines = ObservableList<std::string>::create();
+            _model = ftk::TextEditModel::create();
         }
 
         Document::~Document()
@@ -43,19 +43,9 @@ namespace examples
             return _path.filename().u8string();
         }
 
-        const std::vector<std::string>& Document::getLines() const
+        const std::shared_ptr<ftk::TextEditModel>& Document::getModel() const
         {
-            return _lines->get();
-        }
-
-        std::shared_ptr<ftk::IObservableList<std::string> > Document::observeLines() const
-        {
-            return _lines;
-        }
-
-        void Document::setLines(const std::vector<std::string>& value)
-        {
-            _lines->setIfChanged(value);
+            return _model;
         }
     }
 }
