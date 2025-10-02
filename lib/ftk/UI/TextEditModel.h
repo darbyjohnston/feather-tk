@@ -26,50 +26,33 @@ namespace ftk
         bool operator == (const TextEditPos&) const;
         bool operator != (const TextEditPos&) const;
         bool operator < (const TextEditPos&) const;
-        bool operator <= (const TextEditPos&) const;
         bool operator > (const TextEditPos&) const;
-        bool operator >= (const TextEditPos&) const;
     };
 
     //! Invalid text edit position.
     const TextEditPos textEditPosInvalid(-1, -1);
 
-    //! Text edit selection pair.
-    typedef std::pair<TextEditPos, TextEditPos> TextEditSelectionPair;
-
-    //! Text edit selection pair.
-    class TextEditSelection
+    //! Text edit selection.
+    struct TextEditSelection
     {
-    public:
         TextEditSelection() = default;
+        TextEditSelection(const TextEditPos&);
+        TextEditSelection(const TextEditPos&, const TextEditPos&);
 
-        //! Get the selection.
-        const TextEditSelectionPair& get() const;
-
-        //! Get the sorted selection.
-        TextEditSelectionPair getSorted() const;
+        TextEditPos first = textEditPosInvalid;
+        TextEditPos second = textEditPosInvalid;
 
         //! Get whether the selection is valid.
         bool isValid() const;
 
-        //! Set the selection.
-        void set(const TextEditSelectionPair&);
+        //! Get the minimum.
+        TextEditPos min() const;
 
-        //! Set the start of the selection.
-        void setFirst(const TextEditPos&);
-
-        //! Set the end of the selection.
-        void setSecond(const TextEditPos&);
-
-        void select(const TextEditSelectionPair&);
-        void select(const TextEditPos& first, const TextEditPos& second);
-        void clear();
+        //! Get the maximum.
+        TextEditPos max() const;
 
         bool operator == (const TextEditSelection&) const;
         bool operator != (const TextEditSelection&) const;
-
-    private:
-        TextEditSelectionPair _pair = std::make_pair(textEditPosInvalid, textEditPosInvalid);
     };
 
     //! Text edit model.
@@ -127,6 +110,9 @@ namespace ftk
 
         //! Handle keys.
         bool key(Key, int modifiers = 0);
+
+        //! Set the numner of rows in a page.
+        void setPageRows(int);
 
     private:
         

@@ -23,85 +23,48 @@ namespace ftk
 
     bool TextEditPos::operator < (const TextEditPos& other) const
     {
-        return line < other.line && chr < other.chr;
-    }
-
-    bool TextEditPos::operator <= (const TextEditPos& other) const
-    {
-        return line <= other.line && chr <= other.chr;
+        return line < other.line ||
+            (line == other.line && chr < other.chr);
     }
 
     bool TextEditPos::operator > (const TextEditPos& other) const
     {
-        return line > other.line && chr > other.chr;
+        return line > other.line ||
+            (line == other.line) && chr > other.chr;
     }
 
-    bool TextEditPos::operator >= (const TextEditPos& other) const
-    {
-        return line >= other.line && chr >= other.chr;
-    }
+    TextEditSelection::TextEditSelection(const TextEditPos& first) :
+        first(first)
+    {}
 
-    const TextEditSelectionPair& TextEditSelection::get() const
-    {
-        return _pair;
-    }
-
-    TextEditSelectionPair TextEditSelection::getSorted() const
-    {
-        return std::make_pair(
-            std::min(_pair.first, _pair.second),
-            std::max(_pair.first, _pair.second));
-    }
+    TextEditSelection::TextEditSelection(const TextEditPos& first, const TextEditPos& second) :
+        first(first),
+        second(second)
+    {}
 
     bool TextEditSelection::isValid() const
     {
         return
-            _pair.first != textEditPosInvalid &&
-            _pair.second != textEditPosInvalid &&
-            _pair.first != _pair.second;
+            first != textEditPosInvalid &&
+            second != textEditPosInvalid &&
+            first != second;
     }
 
-    void TextEditSelection::set(const TextEditSelectionPair& value)
+    TextEditPos TextEditSelection::min() const
     {
-        _pair = value;
+        return std::min(first, second);
     }
 
-    void TextEditSelection::setFirst(const TextEditPos& value)
+    TextEditPos TextEditSelection::max() const
     {
-        _pair.first = value;
-    }
-
-    void TextEditSelection::setSecond(const TextEditPos& value)
-    {
-        _pair.second = value;
-    }
-
-    void TextEditSelection::select(const TextEditSelectionPair& value)
-    {
-        if (textEditPosInvalid == _pair.first)
-        {
-            _pair.first = value.first;
-            _pair.second = value.second;
-        }
-        else
-        {
-            _pair.second = value.second;
-        }
-    }
-
-    void TextEditSelection::select(const TextEditPos& first, const TextEditPos& second)
-    {
-        select(TextEditSelectionPair(first, second));
-    }
-
-    void TextEditSelection::clear()
-    {
-        _pair = std::make_pair(textEditPosInvalid, textEditPosInvalid);
+        return std::max(first, second);
     }
 
     bool TextEditSelection::operator == (const TextEditSelection& other) const
     {
-        return _pair == other._pair;
+        return
+            first == other.first &&
+            second == other.second;
     }
 
     bool TextEditSelection::operator != (const TextEditSelection& other) const
@@ -114,6 +77,7 @@ namespace ftk
         std::shared_ptr<ObservableList<std::string> > text;
         std::shared_ptr<ObservableValue<TextEditPos> > cursor;
         std::shared_ptr<ObservableValue<TextEditSelection> > selection;
+        int pageRows = 0;
     };
 
     void TextEditModel::_init()
@@ -194,33 +158,22 @@ namespace ftk
     void TextEditModel::selectAll()
     {
         FTK_P();
-        TextEditSelectionPair select;
+        TextEditSelection selection;
         const auto& text = p.text->get();
         if (!text.empty())
         {
-            select.first.line = 0;
-            select.first.chr = static_cast<int>(text.front().size()) - 1;
-            select.second.line = static_cast<int>(text.size()) - 1;
-            select.second.chr = static_cast<int>(text.back().size()) - 1;
+            selection.first.line = 0;
+            selection.first.chr = static_cast<int>(text.front().size()) - 1;
+            selection.second.line = static_cast<int>(text.size()) - 1;
+            selection.second.chr = static_cast<int>(text.back().size()) - 1;
         }
-        auto selection = p.selection->get();
-        if (select != selection.get())
-        {
-            selection.clear();
-            selection.select(select);
-            p.selection->setIfChanged(selection);
-        }
+        p.selection->setIfChanged(selection);
     }
 
     void TextEditModel::clearSelection()
     {
         FTK_P();
-        auto selection = p.selection->get();
-        if (selection.isValid())
-        {
-            selection.clear();
-            p.selection->setIfChanged(selection);
-        }
+        p.selection->setIfChanged(TextEditSelection());
     }
 
     void TextEditModel::text(const std::string& value)
@@ -250,6 +203,33 @@ namespace ftk
         bool out = false;
         const auto& text = p.text->get();
         TextEditPos cursor = p.cursor->get();
+        TextEditSelection selection = p.selection->get();
+
+        switch (key)
+        {
+        case Key::Left:
+        case Key::Right:
+        case Key::Up:
+        case Key::Down:
+        case Key::Home:
+        case Key::End:
+        case Key::PageUp:
+        case Key::PageDown:
+            if (static_cast<int>(KeyModifier::Shift) == modifiers)
+            {
+                if (!selection.isValid())
+                {
+                    selection = TextEditSelection(cursor);
+                }
+            }
+            else
+            {
+                selection = TextEditSelection();
+            }
+            break;
+        default: break;
+        }
+
         switch (key)
         {
         case Key::Left:
@@ -303,6 +283,22 @@ namespace ftk
                 cursor.chr < static_cast<int>(text[cursor.line].size()))
             {
                 cursor.chr = static_cast<int>(text[cursor.line].size());
+            }
+            out = true;
+            break;
+        case Key::PageUp:
+            if (cursor.line >= 0 &&
+                cursor.line < static_cast<int>(text.size()))
+            {
+                cursor.line = std::max(0, cursor.line - p.pageRows);
+            }
+            out = true;
+            break;
+        case Key::PageDown:
+            if (cursor.line >= 0 &&
+                cursor.line < static_cast<int>(text.size()))
+            {
+                cursor.line = std::min(cursor.line + p.pageRows, static_cast<int>(text.size()) - 1);
             }
             out = true;
             break;
@@ -372,7 +368,32 @@ namespace ftk
             break;
         default: break;
         }
+
+        switch (key)
+        {
+        case Key::Left:
+        case Key::Right:
+        case Key::Up:
+        case Key::Down:
+        case Key::Home:
+        case Key::End:
+        case Key::PageUp:
+        case Key::PageDown:
+            if (static_cast<int>(KeyModifier::Shift) == modifiers)
+            {
+                selection.second = cursor;
+            }
+            break;
+        default: break;
+        }
+
         p.cursor->setIfChanged(cursor);
+        p.selection->setIfChanged(selection);
         return out;
+    }
+
+    void TextEditModel::setPageRows(int value)
+    {
+        _p->pageRows = value;
     }
 }

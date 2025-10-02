@@ -25,6 +25,7 @@ namespace ftk
         std::function<void(bool)> focusCallback;
         bool cursorVisible = false;
         std::chrono::steady_clock::time_point cursorTimer;
+        TextEditSelection selection;
         std::shared_ptr<FontSystem> fontSystem;
 
         struct SizeData
@@ -83,8 +84,9 @@ namespace ftk
 
         p.selectionObserver = ValueObserver<TextEditSelection>::create(
             p.model->observeSelection(),
-            [this](const TextEditSelection&)
+            [this](const TextEditSelection& value)
             {
+                _p->selection = value;
                 _setDrawUpdate();
             });
     }
@@ -175,6 +177,12 @@ namespace ftk
     void TextEditWidget::setGeometry(const Box2I& value)
     {
         IWidget::setGeometry(value);
+        FTK_P();
+        if (auto parent = getParentT<ScrollArea>())
+        {
+            const Size2I size = parent->getGeometry().size();
+            p.model->setPageRows(size.h / p.size.fontMetrics.lineHeight);
+        }
     }
 
     void TextEditWidget::setVisible(bool value)
@@ -277,23 +285,66 @@ namespace ftk
         //    event.style->getColorRole(ColorRole::Text));
 
         // Draw the selection.
-        /*if (p.selection.isValid())
+        const Box2I g2 = margin(g, -p.size.margin, 0, -p.size.margin, 0);
+        const auto& text = p.model->getText();
+        if (p.selection.isValid() &&
+            p.selection.first.line >= 0 &&
+            p.selection.first.line < static_cast<int>(text.size()) &&
+            p.selection.second.line >= 0 &&
+            p.selection.second.line < static_cast<int>(text.size()))
         {
-            const auto selection = p.selection.getSorted();
-            const std::string text0 = p.text.substr(0, selection.first);
-            const int x0 = event.fontSystem->getSize(text0, p.size.fontInfo).w;
-            const std::string text1 = p.text.substr(0, selection.second);
-            const int x1 = event.fontSystem->getSize(text1, p.size.fontInfo).w;
-            event.render->drawRect(
-                Box2I(p.draw->g3.x() + x0, p.draw->g3.y(), x1 - x0 + 1, p.draw->g3.h()),
-                event.style->getColorRole(ColorRole::Checked));
-        }*/
+            std::vector<Box2I> boxes;
+            const TextEditPos min = p.selection.min();
+            const TextEditPos max = p.selection.max();
+            if (min.line == max.line)
+            {
+                const std::string& line = text[min.line];
+                const int w0 = event.fontSystem->getSize(line.substr(0, min.chr), p.size.fontInfo).w;
+                const int w1 = event.fontSystem->getSize(line.substr(0, max.chr), p.size.fontInfo).w;
+                boxes.push_back(Box2I(
+                    g2.min.x + w0,
+                    g2.min.y + min.line * p.size.fontMetrics.lineHeight,
+                    w1 - w0,
+                    p.size.fontMetrics.lineHeight));
+            }
+            else
+            {
+                int w0 = event.fontSystem->getSize(text[min.line].substr(0, min.chr), p.size.fontInfo).w;
+                int w1 = event.fontSystem->getSize(text[min.line], p.size.fontInfo).w;
+                boxes.push_back(Box2I(
+                    g2.min.x + w0,
+                    g2.min.y + min.line * p.size.fontMetrics.lineHeight,
+                    w1 - w0,
+                    p.size.fontMetrics.lineHeight));
+                for (int i = min.line + 1; i < max.line; ++i)
+                {
+                    w0 = event.fontSystem->getSize(text[i], p.size.fontInfo).w;
+                    boxes.push_back(Box2I(
+                        g2.min.x,
+                        g2.min.y + i * p.size.fontMetrics.lineHeight,
+                        w0,
+                        p.size.fontMetrics.lineHeight));
+                }
+                w0 = event.fontSystem->getSize(text[max.line].substr(0, max.chr), p.size.fontInfo).w;
+                boxes.push_back(Box2I(
+                    g2.min.x,
+                    g2.min.y + max.line * p.size.fontMetrics.lineHeight,
+                    w0,
+                    p.size.fontMetrics.lineHeight));
+            }
+            for (const auto& box : boxes)
+            {
+                if (intersects(box, drawRect))
+                {
+                    event.render->drawRect(box, event.style->getColorRole(ColorRole::Checked));
+                }
+            }
+        }
 
         // Draw the text.
         const bool enabled = isEnabled();
-        const Box2I g2 = margin(g, -p.size.margin, 0, -p.size.margin, 0);
         V2I pos(g2.min);
-        for (const auto& line : p.model->getText())
+        for (const auto& line : text)
         {
             const Box2I g3(pos.x, pos.y, p.size.textSize.w, p.size.fontMetrics.lineHeight);
             if (intersects(g3, drawRect))
@@ -382,43 +433,7 @@ namespace ftk
         FTK_P();
         if (hasKeyFocus())
         {
-            event.accept = p.model->key(event.key);
-            if (!event.accept)
-            {
-                switch (event.key)
-                {
-                case Key::PageUp:
-                    event.accept = true;
-                    if (auto parent = getParentT<ScrollArea>())
-                    {
-                        if (p.size.fontMetrics.lineHeight > 0)
-                        {
-                            const int h = parent->getGeometry().h();
-                            const int lines = h / p.size.fontMetrics.lineHeight;
-                            TextEditPos cursor = p.model->getCursor();
-                            cursor.line = std::max(0, cursor.line - lines);
-                            p.model->setCursor(cursor);
-                        }
-                    }
-                    break;
-                case Key::PageDown:
-                    event.accept = true;
-                    if (auto parent = getParentT<ScrollArea>())
-                    {
-                        if (p.size.fontMetrics.lineHeight > 0)
-                        {
-                            const int h = parent->getGeometry().h();
-                            const int lines = h / p.size.fontMetrics.lineHeight;
-                            TextEditPos cursor = p.model->getCursor();
-                            const auto& text = p.model->getText();
-                            cursor.line = std::min(cursor.line + lines, static_cast<int>(text.size()) - 1);
-                            p.model->setCursor(cursor);
-                        }
-                    }
-                    break;
-                default: break;
-                }
-            }
+            event.accept = p.model->key(event.key, event.modifiers);
         }
         if (!event.accept)
         {
