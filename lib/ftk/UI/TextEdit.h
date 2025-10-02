@@ -16,7 +16,7 @@ namespace ftk
     struct TextEditOptions
     {
         bool     lineNumbers = false;
-        FontRole fontRole    = FontRole::Label;
+        FontInfo fontInfo;
 
         bool operator == (const TextEditOptions&) const;
         bool operator != (const TextEditOptions&) const;
@@ -71,6 +71,12 @@ namespace ftk
 
         //! Set the options.
         void setOptions(const TextEditOptions&);
+
+        //! Get the margin role.
+        SizeRole getMarginRole() const;
+
+        //! Set the margin role.
+        void setMarginRole(SizeRole);
 
         void setGeometry(const Box2I&) override;
         void sizeHintEvent(const SizeHintEvent&) override;

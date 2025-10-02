@@ -4,18 +4,17 @@
 
 #pragma once
 
-#include <ftk/UI/Action.h>
-#include <ftk/UI/Menu.h>
-#include <ftk/UI/MenuBar.h>
+#include <ftk/UI/RowLayout.h>
+#include <ftk/UI/ToolButton.h>
 
 namespace examples
 {
     namespace textedit
     {
-        class Actions;
         class App;
+        class Actions;
 
-        class MenuBar : public ftk::MenuBar
+        class ToolBar : public ftk::IWidget
         {
         protected:
             void _init(
@@ -24,27 +23,31 @@ namespace examples
                 const std::shared_ptr<Actions>&,
                 const std::shared_ptr<ftk::IWidget>& parent);
 
-            MenuBar() = default;
+            ToolBar() = default;
 
         public:
-            virtual ~MenuBar();
+            virtual ~ToolBar();
 
-            static std::shared_ptr<MenuBar> create(
+            static std::shared_ptr<ToolBar> create(
                 const std::shared_ptr<ftk::Context>&,
                 const std::shared_ptr<App>&,
                 const std::shared_ptr<Actions>&,
                 const std::shared_ptr<ftk::IWidget>& parent = nullptr);
 
+            void setGeometry(const ftk::Box2I&) override;
+            void sizeHintEvent(const ftk::SizeHintEvent&) override;
+
         private:
-            void _createFileMenu(
+            void _createFileToolBar(
                 const std::shared_ptr<ftk::Context>&,
                 const std::shared_ptr<App>&);
-            void _createEditMenu(
+            void _createEditToolBar(
                 const std::shared_ptr<ftk::Context>&,
                 const std::shared_ptr<App>&);
 
             std::shared_ptr<Actions> _actions;
-            std::map<std::string, std::shared_ptr<ftk::Menu> > _menus;
+            std::map<std::string, std::shared_ptr<ftk::ToolButton> > _buttons;
+            std::shared_ptr<ftk::HorizontalLayout> _layout;
         };
     }
 }

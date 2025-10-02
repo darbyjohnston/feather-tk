@@ -79,6 +79,12 @@ namespace ftk
         //! Set whether scroll events are enabled.
         void setScrollEventsEnabled(bool);
 
+        //! Get the margin role.
+        SizeRole getMarginRole() const;
+
+        //! Set the margin role.
+        void setMarginRole(SizeRole);
+
         //! Get whether the scroll area has a border.
         bool hasBorder() const;
 

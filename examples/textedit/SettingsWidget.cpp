@@ -1,0 +1,147 @@
+// SPDX-License-Identifier: BSD-3-Clause
+// Copyright (c) 2024-2025 Darby Johnston
+// All rights reserved.
+
+#include "SettingsWidget.h"
+
+#include "App.h"
+#include "SettingsModel.h"
+
+#include <ftk/UI/Divider.h>
+#include <ftk/UI/FormLayout.h>
+#include <ftk/UI/Label.h>
+#include <ftk/UI/ToolButton.h>
+
+using namespace ftk;
+
+namespace examples
+{
+    namespace textedit
+    {
+        void SettingsWidget::_init(
+            const std::shared_ptr<Context>& context,
+            const std::shared_ptr<App>& app,
+            const std::shared_ptr<IWidget>& parent)
+        {
+            IWidget::_init(context, "examples::textedit::SettingsWidget", parent);
+
+            auto titleLabel = Label::create(context, "Settings");
+            titleLabel->setMarginRole(SizeRole::MarginSmall);
+            titleLabel->setHStretch(Stretch::Expanding);
+            auto closeButton = ToolButton::create(context);
+            closeButton->setIcon("Close");
+
+            _lineNumbersCheckBox = CheckBox::create(context);
+
+            _fontComboBox = ComboBox::create(context);
+            _fontComboBox->setItems(getFontLabels());
+            _fontComboBox->setHStretch(Stretch::Expanding);
+
+            _fontSizeEdit = ftk::IntEdit::create(context);
+            _fontSizeEdit->setRange(6, 64);
+
+            _layout = VerticalLayout::create(context, shared_from_this());
+            _layout->setSpacingRole(SizeRole::None);
+
+            auto hLayout = HorizontalLayout::create(context, _layout);
+            hLayout->setSpacingRole(SizeRole::None);
+            hLayout->setBackgroundRole(ColorRole::Button);
+            titleLabel->setParent(hLayout);
+            closeButton->setParent(hLayout);
+
+            auto formLayout = FormLayout::create(context, _layout);
+            formLayout->setMarginRole(SizeRole::Margin);
+            formLayout->addRow("Line numbers:", _lineNumbersCheckBox);
+            formLayout->addRow("Font:", _fontComboBox);
+            formLayout->addRow("Font size:", _fontSizeEdit);
+
+            std::weak_ptr<App> appWeak(app);
+            closeButton->setClickedCallback(
+                [appWeak]
+                {
+                    if (auto app = appWeak.lock())
+                    {
+                        auto windowOptions = app->getSettingsModel()->getWindowOptions();
+                        windowOptions.settings = false;
+                        app->getSettingsModel()->setWindowOptions(windowOptions);
+                    }
+                });
+
+            _lineNumbersCheckBox->setCheckedCallback(
+                [appWeak](bool value)
+                {
+                    if (auto app = appWeak.lock())
+                    {
+                        auto options = app->getSettingsModel()->getTextEditOptions();
+                        options.lineNumbers = value;
+                        app->getSettingsModel()->setTextEditOptions(options);
+                    }
+                });
+
+            _fontComboBox->setIndexCallback(
+                [appWeak](int index)
+                {
+                    if (auto app = appWeak.lock())
+                    {
+                        auto options = app->getSettingsModel()->getTextEditOptions();
+                        options.fontInfo.family = getFont(static_cast<Font>(index));
+                        app->getSettingsModel()->setTextEditOptions(options);
+                    }
+                });
+
+            _fontSizeEdit->setCallback(
+                [appWeak](int value)
+                {
+                    if (auto app = appWeak.lock())
+                    {
+                        auto options = app->getSettingsModel()->getTextEditOptions();
+                        options.fontInfo.size = value;
+                        app->getSettingsModel()->setTextEditOptions(options);
+                    }
+                });
+
+            _textEditOptionsObserver = ValueObserver<TextEditOptions>::create(
+                app->getSettingsModel()->observeTextEditOptions(),
+                [this](const TextEditOptions& value)
+                {
+                    _lineNumbersCheckBox->setChecked(value.lineNumbers);
+                    int index = -1;
+                    for (int i = 0; i < static_cast<int>(Font::Count); ++i)
+                    {
+                        if (value.fontInfo.family == getFont(static_cast<Font>(i)))
+                        {
+                            index = i;
+                            break;
+                        }
+                    }
+                    _fontComboBox->setCurrentIndex(index);
+                    _fontSizeEdit->setValue(value.fontInfo.size);
+                });
+        }
+
+        SettingsWidget::~SettingsWidget()
+        {}
+
+        std::shared_ptr<SettingsWidget> SettingsWidget::create(
+            const std::shared_ptr<Context>& context,
+            const std::shared_ptr<App>& app,
+            const std::shared_ptr<IWidget>& parent)
+        {
+            auto out = std::shared_ptr<SettingsWidget>(new SettingsWidget);
+            out->_init(context, app, parent);
+            return out;
+        }
+
+        void SettingsWidget::setGeometry(const Box2I& value)
+        {
+            IWidget::setGeometry(value);
+            _layout->setGeometry(value);
+        }
+
+        void SettingsWidget::sizeHintEvent(const SizeHintEvent& event)
+        {
+            IWidget::sizeHintEvent(event);
+            _setSizeHint(_layout->getSizeHint());
+        }
+    }
+}

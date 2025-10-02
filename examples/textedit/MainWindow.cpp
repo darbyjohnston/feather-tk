@@ -4,12 +4,16 @@
 
 #include "MainWindow.h"
 
+#include "Actions.h"
 #include "App.h"
 #include "DocumentModel.h"
+#include "DocumentTabs.h"
 #include "MenuBar.h"
+#include "SettingsWidget.h"
 #include "StatusBar.h"
+#include "ToolBar.h"
 
-#include <ftk/UI/MenuBar.h>
+#include <ftk/UI/Divider.h>
 #include <ftk/UI/RowLayout.h>
 
 using namespace ftk;
@@ -28,107 +32,50 @@ namespace examples
 
             _app = app;
 
-            _menuBar = MenuBar::create(context, app);
+            _actions = Actions::create(context, app);
+
+            _menuBar = MenuBar::create(context, app, _actions);
             setMenuBar(_menuBar);
 
-            _tabWidget = TabWidget::create(context);
-            _tabWidget->setTabsClosable(true);
-            _tabWidget->setStretch(Stretch::Expanding);
+            _tabs = DocumentTabs::create(context, app);
+
+            _settingsWidget = SettingsWidget::create(context, app);
+
+            _toolBar = ToolBar::create(context, app, _actions);
 
             _statusBar = StatusBar::create(context, app);
 
             _layout = VerticalLayout::create(context, shared_from_this());
             _layout->setSpacingRole(SizeRole::None);
             _layout->setStretch(Stretch::Expanding);
-            _tabWidget->setParent(_layout);
+            _toolBar->setParent(_layout);
+            Divider::create(context, Orientation::Vertical, _layout);
+            _splitter = Splitter::create(context, Orientation::Horizontal, _layout);
+            _splitter->setSplit(.7F);
+            _tabs->setParent(_splitter);
+            _settingsWidget->setParent(_splitter);
+            Divider::create(context, Orientation::Vertical, _layout);
             _statusBar->setParent(_layout);
             setWidget(_layout);
 
-            auto appWeak = std::weak_ptr<App>(app);
-            _tabWidget->setCurrentTabCallback(
-                [appWeak](int index)
+            _windowOptionsObserver = ValueObserver<WindowOptions>::create(
+                app->getSettingsModel()->observeWindowOptions(),
+                [this](const WindowOptions& value)
                 {
-                    if (auto app = appWeak.lock())
-                    {
-                        app->getDocumentModel()->setCurrent(index);
-                    }
-                });
-            _tabWidget->setTabCloseCallback(
-                [appWeak](int index)
-                {
-                    if (auto app = appWeak.lock())
-                    {
-                        app->getDocumentModel()->remove(index);
-                    }
-                });
-
-            _addDocumentObserver = ftk::ValueObserver<std::shared_ptr<Document> >::create(
-                app->getDocumentModel()->observeAdd(),
-                [this, appWeak](const std::shared_ptr<Document>& document)
-                {
-                    if (document)
-                    {
-                        auto context = getContext();
-                        auto app = appWeak.lock();
-                        if (context && app)
-                        {
-                            auto textEdit = ftk::TextEdit::create(context, document->getModel());
-                            TextEditOptions options;
-                            options.fontRole = app->getDocumentModel()->getFontRole();
-                            textEdit->setOptions(options);
-                            _textEdits.push_back(textEdit);
-                            _tabWidget->addTab(
-                                document->getName(),
-                                textEdit,
-                                document->getPath().u8string());
-                        }
-                    }
-                });
-
-            _removeDocumentObserver = ftk::ValueObserver<int>::create(
-                app->getDocumentModel()->observeRemove(),
-                [this](int index)
-                {
-                    if (index >= 0 && index < _textEdits.size())
-                    {
-                        _textEdits.erase(_textEdits.begin() + index);
-                        _tabWidget->removeTab(index);
-                    }
-                });
-
-            _clearDocumentsObserver = ftk::ValueObserver<bool>::create(
-                app->getDocumentModel()->observeClear(),
-                [this](bool value)
-                {
-                    if (value)
-                    {
-                        _textEdits.clear();
-                        _tabWidget->clearTabs();
-                    }
-                });
-
-            _currentDocumentObserver = ftk::ValueObserver<int>::create(
-                app->getDocumentModel()->observeCurrent(),
-                [this, appWeak](int index)
-                {
-                    _tabWidget->setCurrentTab(index);
-                });
-
-            _fontObserver = ValueObserver<FontRole>::create(
-                app->getDocumentModel()->observeFontRole(),
-                [this](FontRole value)
-                {
-                    for (const auto& widget : _textEdits)
-                    {
-                        auto options = widget->getOptions();
-                        options.fontRole = value;
-                        widget->setOptions(options);
-                    }
+                    _splitter->setSplit(value.split);
+                    _settingsWidget->setVisible(value.settings);
                 });
         }
 
         MainWindow::~MainWindow()
-        {}
+        {
+            if (auto app = _app.lock())
+            {
+                auto windowOptions = app->getSettingsModel()->getWindowOptions();
+                windowOptions.split = _splitter->getSplit();
+                app->getSettingsModel()->setWindowOptions(windowOptions);
+            }
+        }
 
         std::shared_ptr<MainWindow> MainWindow::create(
             const std::shared_ptr<Context>& context,

@@ -41,6 +41,7 @@ namespace ftk_resource
     extern std::vector<uint8_t> FileBrowser;
     extern std::vector<uint8_t> FileClose;
     extern std::vector<uint8_t> FileCloseAll;
+    extern std::vector<uint8_t> FileNew;
     extern std::vector<uint8_t> FileOpen;
     extern std::vector<uint8_t> FileReload;
     extern std::vector<uint8_t> FrameEnd;
@@ -149,6 +150,7 @@ namespace ftk
         p.iconData["FileBrowser"] = ftk_resource::FileBrowser;
         p.iconData["FileClose"] = ftk_resource::FileClose;
         p.iconData["FileCloseAll"] = ftk_resource::FileCloseAll;
+        p.iconData["FileNew"] = ftk_resource::FileNew;
         p.iconData["FileOpen"] = ftk_resource::FileOpen;
         p.iconData["FileReload"] = ftk_resource::FileReload;
         p.iconData["FrameEnd"] = ftk_resource::FrameEnd;

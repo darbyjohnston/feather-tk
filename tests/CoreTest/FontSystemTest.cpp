@@ -30,13 +30,13 @@ namespace ftk
         {
             {
                 const FontInfo a;
-                const FontInfo b("NotoSans-Bold", 16);
+                const FontInfo b(getFont(Font::Bold), 16);
                 FTK_ASSERT(a == a);
                 FTK_ASSERT(a != b);
             }
             {
                 const GlyphInfo a;
-                const FontInfo fontInfo("NotoSans-Bold", 16);
+                const FontInfo fontInfo(getFont(Font::Bold), 16);
                 const GlyphInfo b(1, fontInfo);
                 FTK_ASSERT(a == a);
                 FTK_ASSERT(a != b);

@@ -172,9 +172,10 @@ namespace ftk
     std::map<FontRole, FontInfo> getDefaultFontRoles()
     {
         std::map<FontRole, FontInfo> out;
-        out[FontRole::Label] = FontInfo("NotoSans-Regular", 12 * 1);
-        out[FontRole::Mono] = FontInfo("NotoSansMono-Regular", 12 * 1);
-        out[FontRole::Title] = FontInfo("NotoSans-Regular", 16 * 1);
+        out[FontRole::None]  = FontInfo(std::string(), 0);
+        out[FontRole::Label] = FontInfo(getFont(Font::Regular), 12 * 1);
+        out[FontRole::Mono]  = FontInfo(getFont(Font::Mono),    12 * 1);
+        out[FontRole::Title] = FontInfo(getFont(Font::Regular), 16 * 1);
         return out;
     }
 

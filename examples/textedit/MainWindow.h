@@ -4,19 +4,24 @@
 
 #pragma once
 
+#include "SettingsModel.h"
+
 #include <ftk/UI/MainWindow.h>
 #include <ftk/UI/RowLayout.h>
-#include <ftk/UI/TabWidget.h>
-#include <ftk/UI/TextEdit.h>
+#include <ftk/UI/Splitter.h>
 
 namespace examples
 {
     namespace textedit
     {
+        class Actions;
         class App;
         class Document;
+        class DocumentTabs;
         class MenuBar;
+        class SettingsWidget;
         class StatusBar;
+        class ToolBar;
 
         class MainWindow : public ftk::MainWindow
         {
@@ -45,17 +50,16 @@ namespace examples
 
             std::weak_ptr<App> _app;
 
+            std::shared_ptr<Actions> _actions;
             std::shared_ptr<MenuBar> _menuBar;
-            std::shared_ptr<ftk::TabWidget> _tabWidget;
-            std::vector<std::shared_ptr<ftk::TextEdit> > _textEdits;
+            std::shared_ptr<ToolBar> _toolBar;
+            std::shared_ptr<DocumentTabs> _tabs;
+            std::shared_ptr<SettingsWidget> _settingsWidget;
             std::shared_ptr<StatusBar> _statusBar;
+            std::shared_ptr<ftk::Splitter> _splitter;
             std::shared_ptr<ftk::VerticalLayout> _layout;
 
-            std::shared_ptr<ftk::ValueObserver<std::shared_ptr<Document> > > _addDocumentObserver;
-            std::shared_ptr<ftk::ValueObserver<int> > _removeDocumentObserver;
-            std::shared_ptr<ftk::ValueObserver<bool> > _clearDocumentsObserver;
-            std::shared_ptr<ftk::ValueObserver<int> > _currentDocumentObserver;
-            std::shared_ptr<ftk::ValueObserver<ftk::FontRole> > _fontObserver;
+            std::shared_ptr<ftk::ValueObserver<WindowOptions> > _windowOptionsObserver;
         };
     }
 }

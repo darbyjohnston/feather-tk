@@ -12,7 +12,7 @@ namespace ftk
     {
         return
             lineNumbers == other.lineNumbers &&
-            fontRole == other.fontRole;
+            fontInfo == other.fontInfo;
     }
 
     bool TextEditOptions::operator != (const TextEditOptions& other) const
@@ -68,8 +68,7 @@ namespace ftk
 
     TextEdit::TextEdit() :
         _p(new Private)
-    {
-    }
+    {}
 
     TextEdit::~TextEdit()
     {
@@ -130,6 +129,16 @@ namespace ftk
         FTK_P();
         p.options->setIfChanged(value);
         p.widget->setOptions(value);
+    }
+
+    SizeRole TextEdit::getMarginRole() const
+    {
+        return _p->scrollWidget->getMarginRole();
+    }
+
+    void TextEdit::setMarginRole(SizeRole value)
+    {
+        _p->scrollWidget->setMarginRole(value);
     }
 
     void TextEdit::setGeometry(const Box2I& value)

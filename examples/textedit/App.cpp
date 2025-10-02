@@ -6,6 +6,7 @@
 
 #include "DocumentModel.h"
 #include "MainWindow.h"
+#include "SettingsModel.h"
 
 #include <ftk/UI/DialogSystem.h>
 #include <ftk/UI/FileBrowser.h>
@@ -36,6 +37,8 @@ namespace examples
 
             context->getSystem<FileBrowserSystem>()->setNativeFileDialog(false);
 
+            _settingsModel = SettingsModel::create(context);
+
             _documentModel = DocumentModel::create(context);
 
             _mainWindow = MainWindow::create(
@@ -65,9 +68,19 @@ namespace examples
             return out;
         }
 
+        const std::shared_ptr<SettingsModel>& App::getSettingsModel() const
+        {
+            return _settingsModel;
+        }
+
         const std::shared_ptr<DocumentModel>& App::getDocumentModel() const
         {
             return _documentModel;
+        }
+
+        const std::shared_ptr<MainWindow>& App::getMainWindow() const
+        {
+            return _mainWindow;
         }
 
         void App::open(const std::filesystem::path& path)

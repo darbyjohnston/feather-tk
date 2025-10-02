@@ -18,6 +18,7 @@ namespace examples
     {
         class DocumentModel;
         class MainWindow;
+        class SettingsModel;
 
         class App : public ftk::App
         {
@@ -35,7 +36,11 @@ namespace examples
                 const std::shared_ptr<ftk::Context>&,
                 const std::vector<std::string>&);
 
+            const std::shared_ptr<SettingsModel>& getSettingsModel() const;
+
             const std::shared_ptr<DocumentModel>& getDocumentModel() const;
+
+            const std::shared_ptr<MainWindow>& getMainWindow() const;
 
             void open(const std::filesystem::path&);
             void open(const std::vector<std::filesystem::path>&);
@@ -46,6 +51,7 @@ namespace examples
                 std::shared_ptr<ftk::CmdLineListArg<std::string> > paths;
             };
             CmdLine _cmdLine;
+            std::shared_ptr<SettingsModel> _settingsModel;
             std::shared_ptr<DocumentModel> _documentModel;
             std::shared_ptr<MainWindow> _mainWindow;
         };

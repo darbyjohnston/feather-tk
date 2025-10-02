@@ -4,8 +4,6 @@
 
 #include "DocumentModel.h"
 
-#include <ftk/Core/FileIO.h>
-
 using namespace ftk;
 
 namespace examples
@@ -16,16 +14,10 @@ namespace examples
             const std::shared_ptr<Context>& context)
         {
             _documents = ObservableList<std::shared_ptr<Document> >::create();
-
             _add = ObservableValue<std::shared_ptr<Document> >::create();
-
-            _remove = ObservableValue<int>::create(-1);
-
-            _clear = ObservableValue<bool>::create(false);
-
+            _close = ObservableValue<int>::create(-1);
+            _closeAll = ObservableValue<bool>::create(false);
             _current = ObservableValue<int>::create(-1);
-
-            _fontRole = ObservableValue<FontRole>::create(FontRole::Mono);
         }
 
         DocumentModel::~DocumentModel()
@@ -62,12 +54,12 @@ namespace examples
             return _add;
         }
 
-        void DocumentModel::remove(int index)
+        void DocumentModel::close(int index)
         {
             if (index >= 0 && index < _documents->getSize())
             {
                 _documents->removeItem(index);
-                _remove->setAlways(index);
+                _close->setAlways(index);
 
                 if (index == _current->get())
                 {
@@ -82,21 +74,21 @@ namespace examples
             }
         }
 
-        std::shared_ptr<ftk::IObservableValue<int> > DocumentModel::observeRemove() const
+        std::shared_ptr<ftk::IObservableValue<int> > DocumentModel::observeClose() const
         {
-            return _remove;
+            return _close;
         }
 
-        void DocumentModel::clear()
+        void DocumentModel::closeAll()
         {
             _documents->clear();
-            _clear->setAlways(true);
+            _closeAll->setAlways(true);
             _current->setIfChanged(-1);
         }
 
-        std::shared_ptr<ftk::IObservableValue<bool> > DocumentModel::observeClear() const
+        std::shared_ptr<ftk::IObservableValue<bool> > DocumentModel::observeCloseAll() const
         {
-            return _clear;
+            return _closeAll;
         }
 
         int DocumentModel::getCurrent() const
@@ -112,21 +104,6 @@ namespace examples
         void DocumentModel::setCurrent(int value)
         {
             _current->setIfChanged(value);
-        }
-
-        ftk::FontRole DocumentModel::getFontRole() const
-        {
-            return _fontRole->get();
-        }
-
-        std::shared_ptr<IObservableValue<FontRole> > DocumentModel::observeFontRole() const
-        {
-            return _fontRole;
-        }
-
-        void DocumentModel::setFontRole(FontRole value)
-        {
-            _fontRole->setIfChanged(value);
         }
     }
 }

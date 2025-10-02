@@ -179,22 +179,36 @@ namespace ftk
     void TextEditModel::text(const std::string& value)
     {
         FTK_P();
+
         const auto& text = p.text->get();
         TextEditPos cursor = p.cursor->get();
-        if (cursor.line >= 0 && cursor.line < text.size())
+        TextEditSelection selection = p.selection->get();
+
+        if (selection.isValid())
         {
-            std::string line = text[cursor.line];
-            line.insert(cursor.chr, value);
-            cursor.chr += value.size();
-            p.text->setItem(cursor.line, line);
+            // Replace the selection with text.
         }
         else
         {
-            std::string line = value;
-            cursor.chr = line.size();
-            p.text->pushBack(line);
+            if (cursor.line >= 0 && cursor.line < static_cast<int>(text.size()))
+            {
+                // Insert text at the cursor.
+                std::string line = text[cursor.line];
+                line.insert(cursor.chr, value);
+                cursor.chr += value.size();
+                p.text->setItem(cursor.line, line);
+            }
+            else
+            {
+                // Add a line.
+                std::string line = value;
+                cursor.chr = line.size();
+                p.text->pushBack(line);
+            }
         }
+
         p.cursor->setIfChanged(cursor);
+        p.selection->setIfChanged(selection);
     }
 
     bool TextEditModel::key(Key key, int modifiers)
@@ -205,6 +219,7 @@ namespace ftk
         TextEditPos cursor = p.cursor->get();
         TextEditSelection selection = p.selection->get();
 
+        // Start selection.
         switch (key)
         {
         case Key::Left:
@@ -230,6 +245,7 @@ namespace ftk
         default: break;
         }
 
+        // Handle keys.
         switch (key)
         {
         case Key::Left:
@@ -347,11 +363,13 @@ namespace ftk
                 std::string line = text[cursor.line];
                 if (0 == cursor.chr)
                 {
+                    // Insert a line.
                     p.text->insertItem(cursor.line, std::string());
                     ++cursor.line;
                 }
                 else if (cursor.chr < static_cast<int>(line.size()) - 1)
                 {
+                    // Break the line.
                     p.text->insertItem(cursor.line + 1, line.substr(cursor.chr));
                     p.text->setItem(cursor.line, line.erase(cursor.chr));
                     ++cursor.line;
@@ -359,16 +377,25 @@ namespace ftk
                 }
                 else
                 {
+                    // Append a line.
                     p.text->insertItem(cursor.line + 1, std::string());
                     ++cursor.line;
                     cursor.chr = 0;
                 }
+            }
+            else
+            {
+                // Add a line.
+                p.text->pushBack(std::string());
+                ++cursor.line;
+                cursor.chr = 0;
             }
             out = true;
             break;
         default: break;
         }
 
+        // Finish selection.
         switch (key)
         {
         case Key::Left:

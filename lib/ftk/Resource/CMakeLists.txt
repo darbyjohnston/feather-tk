@@ -25,6 +25,7 @@ set(RESOURCES
     etc/Icons/FileBrowser.svg
     etc/Icons/FileClose.svg
     etc/Icons/FileCloseAll.svg
+    etc/Icons/FileNew.svg
     etc/Icons/FileOpen.svg
     etc/Icons/FileReload.svg
     etc/Icons/FrameEnd.svg

@@ -22,7 +22,7 @@ namespace ftk
             int handle = 0;
             int border = 0;
 
-            Box2I g;
+            Box2I g = Box2I(0, 0, -1, -1);
             Box2I g2;
         };
         SizeData size;
@@ -99,7 +99,7 @@ namespace ftk
         }
 
         std::vector<Box2I> childGeometry;
-        p.size.g = Box2I();
+        p.size.g = Box2I(0, 0, -1, -1);
         if (1 == children.size())
         {
             childGeometry.push_back(g);

@@ -5,9 +5,11 @@
 #include <ftk/Core/FontSystem.h>
 
 #include <ftk/Core/Context.h>
+#include <ftk/Core/Error.h>
 #include <ftk/Core/Format.h>
 #include <ftk/Core/LRUCache.h>
 #include <ftk/Core/LogSystem.h>
+#include <ftk/Core/String.h>
 
 #include <ft2build.h>
 #include FT_FREETYPE_H
@@ -28,6 +30,23 @@ namespace ftk_resource
 
 namespace ftk
 {
+    FTK_ENUM_IMPL(
+        Font,
+        "Regular",
+        "Bold",
+        "Mono");
+
+    std::string getFont(Font value)
+    {
+        const std::array<std::string, static_cast<size_t>(Font::Count)> data =
+        {
+            "NotoSans-Regular",
+            "NotoSans-Bold",
+            "NotoSansMono-Regular"
+        };
+        return data[static_cast<size_t>(value)];
+    }
+
     namespace
     {
 #if defined(_WINDOWS)
@@ -62,9 +81,9 @@ namespace ftk
     {
         FTK_P();
 
-        p.fontData["NotoSans-Bold"] = ftk_resource::NotoSansBold;
-        p.fontData["NotoSansMono-Regular"] = ftk_resource::NotoSansMonoRegular;
-        p.fontData["NotoSans-Regular"] = ftk_resource::NotoSansRegular;
+        p.fontData[getFont(Font::Regular)] = ftk_resource::NotoSansRegular;
+        p.fontData[getFont(Font::Bold)] = ftk_resource::NotoSansBold;
+        p.fontData[getFont(Font::Mono)] = ftk_resource::NotoSansMonoRegular;
 
 #if defined(FTK_API_GLES_2)
         //! \bug Some GLES 2 implementations (Pi Zero W) only support RGBA?
@@ -175,8 +194,7 @@ namespace ftk
             p.measure(utf32, fontInfo, maxLineWidth, out);
         }
         catch (const std::exception&)
-        {
-        }
+        {}
         return out;
     }
 
@@ -194,8 +212,7 @@ namespace ftk
             p.measure(utf32, fontInfo, maxLineWidth, size, &out);
         }
         catch (const std::exception&)
-        {
-        }
+        {}
         return out;
     }
 
@@ -214,8 +231,7 @@ namespace ftk
             }
         }
         catch (const std::exception&)
-        {
-        }
+        {}
         return out;
     }
 

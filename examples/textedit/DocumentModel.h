@@ -33,13 +33,13 @@ namespace examples
 
             std::shared_ptr<ftk::IObservableValue<std::shared_ptr<Document> > > observeAdd() const;
 
-            void remove(int);
+            void close(int);
 
-            std::shared_ptr<ftk::IObservableValue<int> > observeRemove() const;
+            std::shared_ptr<ftk::IObservableValue<int> > observeClose() const;
 
-            void clear();
+            void closeAll();
 
-            std::shared_ptr<ftk::IObservableValue<bool> > observeClear() const;
+            std::shared_ptr<ftk::IObservableValue<bool> > observeCloseAll() const;
 
             int getCurrent() const;
 
@@ -47,19 +47,12 @@ namespace examples
 
             void setCurrent(int);
 
-            ftk::FontRole getFontRole() const;
-
-            std::shared_ptr<ftk::IObservableValue<ftk::FontRole> > observeFontRole() const;
-
-            void setFontRole(ftk::FontRole);
-
         private:
             std::shared_ptr<ftk::ObservableList<std::shared_ptr<Document> > > _documents;
             std::shared_ptr<ftk::ObservableValue<std::shared_ptr<Document> > > _add;
-            std::shared_ptr<ftk::ObservableValue<int> > _remove;
-            std::shared_ptr<ftk::ObservableValue<bool> > _clear;
+            std::shared_ptr<ftk::ObservableValue<int> > _close;
+            std::shared_ptr<ftk::ObservableValue<bool> > _closeAll;
             std::shared_ptr<ftk::ObservableValue<int> > _current;
-            std::shared_ptr<ftk::ObservableValue<ftk::FontRole> > _fontRole;
         };
     }
 }

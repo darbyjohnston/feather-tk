@@ -15,14 +15,29 @@ namespace ftk
     //! \name Fonts
     ///@{
 
+    //! Built-in fonts.
+    enum class Font
+    {
+        Regular,
+        Bold,
+        Mono,
+
+        Count,
+        First = Regular
+    };
+    FTK_ENUM(Font);
+
+    //! Get a built-in font.
+    std::string getFont(Font);
+
     //! Font information.
     struct FontInfo
     {
         FontInfo() = default;
         FontInfo(const std::string& family, int size);
 
-        std::string family = "NotoSans-Regular";
-        int         size   = 14;
+        std::string family = getFont(Font::Regular);
+        int         size   = 12;
 
         bool operator == (const FontInfo&) const;
         bool operator != (const FontInfo&) const;

@@ -238,11 +238,11 @@ namespace ftk
         const int tmp = !p.text.empty() ?
             clamp(value, 0, static_cast<int>(p.text.size()) - 1) :
             -1;
-        if (tmp == _p->currentTab)
+        if (tmp == p.currentTab)
             return;
-        _p->currentTab = tmp;
-        _p->buttonGroup->setChecked(_p->currentTab, true);
-        _p->currentFocus = tmp;
+        p.currentTab = tmp;
+        p.buttonGroup->setChecked(p.currentTab, true);
+        p.currentFocus = tmp;
         _currentUpdate();
     }
 
@@ -414,6 +414,7 @@ namespace ftk
         for (size_t i = 0; i < p.buttons.size(); ++i)
         {
             p.buttons[i]->setCurrent(p.currentFocus == i && focus);
+            p.closeButtons[i]->setButtonRole(p.currentTab == i ? ColorRole::Button : ColorRole::None);
         }
         if (p.currentFocus >= 0 && p.currentFocus < p.buttons.size())
         {
