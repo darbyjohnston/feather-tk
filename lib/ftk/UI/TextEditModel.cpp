@@ -383,7 +383,7 @@ namespace ftk
                     p.text->insertItem(cursor.line, std::string());
                     ++cursor.line;
                 }
-                else if (cursor.chr < static_cast<int>(line.size()) - 1)
+                else if (cursor.chr < static_cast<int>(line.size()))
                 {
                     // Break the line.
                     p.text->insertItem(cursor.line + 1, line.substr(cursor.chr));
@@ -455,6 +455,26 @@ namespace ftk
             std::string line = text[min.line];
             line.replace(min.chr, max.chr - min.chr, value);
             p.text->setItem(min.line, line);
+            cursor.line = min.line;
+            cursor.chr = min.chr;
+            selection = TextEditSelection();
+        }
+        else if (
+            min.line >= 0 && min.line < static_cast<int>(text.size()) &&
+            max.line >= 0 && max.line < static_cast<int>(text.size()))
+        {
+            const std::string line =
+                text[min.line].substr(0, min.chr) +
+                value +
+                text[max.line].substr(max.chr);
+            if (!line.empty())
+            {
+                p.text->replaceItems(min.line, max.line, { line });
+            }
+            else
+            {
+                p.text->removeItems(min.line, max.line);
+            }
             cursor.line = min.line;
             cursor.chr = min.chr;
             selection = TextEditSelection();

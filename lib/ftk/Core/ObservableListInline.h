@@ -55,7 +55,7 @@ namespace ftk
     {}
 
     template<typename T>
-    inline std::size_t IObservableList<T>::getObserversCount() const
+    inline size_t IObservableList<T>::getObserversCount() const
     {
         return _observers.size();
     }
@@ -146,7 +146,7 @@ namespace ftk
     }
 
     template<typename T>
-    inline void ObservableList<T>::setItem(std::size_t index, const T& value)
+    inline void ObservableList<T>::setItem(size_t index, const T& value)
     {
         _value[index] = value;
         for (const auto& i : IObservableList<T>::_observers)
@@ -159,7 +159,7 @@ namespace ftk
     }
 
     template<typename T>
-    inline void ObservableList<T>::setItemOnlyIfChanged(std::size_t index, const T& value)
+    inline void ObservableList<T>::setItemOnlyIfChanged(size_t index, const T& value)
     {
         if (value == _value[index])
             return;
@@ -187,7 +187,20 @@ namespace ftk
     }
 
     template<typename T>
-    inline void ObservableList<T>::insertItem(std::size_t index, const T& value)
+    inline void ObservableList<T>::pushBack(const std::vector<T>& value)
+    {
+        _value.insert(_value.end(), value.begin(), value.end());
+        for (const auto& i : IObservableList<T>::_observers)
+        {
+            if (auto observer = i.lock())
+            {
+                observer->doCallback(_value);
+            }
+        }
+    }
+
+    template<typename T>
+    inline void ObservableList<T>::insertItem(size_t index, const T& value)
     {
         _value.insert(_value.begin() + index, value);
         for (const auto& i : IObservableList<T>::_observers)
@@ -200,9 +213,52 @@ namespace ftk
     }
 
     template<typename T>
-    inline void ObservableList<T>::removeItem(std::size_t index)
+    inline void ObservableList<T>::insertItems(size_t index, const std::vector<T>& value)
+    {
+        _value.insert(_value.begin() + index, value.begin(), value.end());
+        for (const auto& i : IObservableList<T>::_observers)
+        {
+            if (auto observer = i.lock())
+            {
+                observer->doCallback(_value);
+            }
+        }
+    }
+
+    template<typename T>
+    inline void ObservableList<T>::removeItem(size_t index)
     {
         _value.erase(_value.begin() + index);
+        for (const auto& i : IObservableList<T>::_observers)
+        {
+            if (auto observer = i.lock())
+            {
+                observer->doCallback(_value);
+            }
+        }
+    }
+
+    template<typename T>
+    inline void ObservableList<T>::removeItems(size_t start, size_t end)
+    {
+        _value.erase(_value.begin() + start, _value.begin() + end + 1);
+        for (const auto& i : IObservableList<T>::_observers)
+        {
+            if (auto observer = i.lock())
+            {
+                observer->doCallback(_value);
+            }
+        }
+    }
+
+    template<typename T>
+    inline void ObservableList<T>::replaceItems(
+        size_t start,
+        size_t end,
+        const std::vector<T>& items)
+    {
+        _value.erase(_value.begin() + start, _value.begin() + end + 1);
+        _value.insert(_value.begin() + start, items.begin(), items.end());
         for (const auto& i : IObservableList<T>::_observers)
         {
             if (auto observer = i.lock())
@@ -219,7 +275,7 @@ namespace ftk
     }
 
     template<typename T>
-    inline std::size_t ObservableList<T>::getSize() const
+    inline size_t ObservableList<T>::getSize() const
     {
         return _value.size();
     }
@@ -231,7 +287,7 @@ namespace ftk
     }
 
     template<typename T>
-    inline T ObservableList<T>::getItem(std::size_t index) const
+    inline T ObservableList<T>::getItem(size_t index) const
     {
         return _value[index];
     }
@@ -250,7 +306,7 @@ namespace ftk
     }
 
     template<typename T>
-    inline std::size_t ObservableList<T>::indexOf(const T& value) const
+    inline size_t ObservableList<T>::indexOf(const T& value) const
     {
         const auto i = std::find_if(
             _value.begin(),

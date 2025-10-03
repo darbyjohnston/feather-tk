@@ -20,7 +20,7 @@ namespace ftk
     class IObservableList;
 
     //! Invalid index.
-    static const std::size_t ObservableListInvalidIndex = static_cast<std::size_t>(-1);
+    static const size_t ObservableListInvalidIndex = static_cast<size_t>(-1);
 
     //! List observer.
     template<typename T>
@@ -64,22 +64,22 @@ namespace ftk
         virtual const std::vector<T>& get() const = 0;
 
         //! Get the list size.
-        virtual std::size_t getSize() const = 0;
+        virtual size_t getSize() const = 0;
 
         //! Get whether the list is empty.
         virtual bool isEmpty() const = 0;
 
         //! Get a list item.
-        virtual T getItem(std::size_t) const = 0;
+        virtual T getItem(size_t) const = 0;
 
         //! Does the list contain the given item?
         virtual bool contains(const T&) const = 0;
 
         //! Get the index of the given item.
-        virtual std::size_t indexOf(const T&) const = 0;
+        virtual size_t indexOf(const T&) const = 0;
 
         //! Get the number of observers.
-        std::size_t getObserversCount() const;
+        size_t getObserversCount() const;
 
     protected:
         void _add(const std::weak_ptr<ListObserver<T> >&);
@@ -116,27 +116,39 @@ namespace ftk
         //! Clear the list.
         void clear();
 
-        //! Set a list item.
-        void setItem(std::size_t, const T&);
+        //! Set an item.
+        void setItem(size_t, const T&);
 
-        //! Set a list item only if it has changed.
-        void setItemOnlyIfChanged(std::size_t, const T&);
+        //! Set an item only if it has changed.
+        void setItemOnlyIfChanged(size_t, const T&);
 
-        //! Append a list item.
+        //! Append an item.
         void pushBack(const T&);
 
+        //! Append a range of items.
+        void pushBack(const std::vector<T>&);
+
         //! Insert an item.
-        void insertItem(std::size_t, const T&);
+        void insertItem(size_t, const T&);
+
+        //! Insert a range of items.
+        void insertItems(size_t, const std::vector<T>&);
 
         //! Remove an item.
-        void removeItem(std::size_t);
+        void removeItem(size_t);
+
+        //! Remove a range of items.
+        void removeItems(size_t start, size_t end);
+
+        //! Replace a range of items.
+        void replaceItems(size_t start, size_t end, const std::vector<T>&);
 
         const std::vector<T>& get() const override;
-        std::size_t getSize() const override;
+        size_t getSize() const override;
         bool isEmpty() const override;
-        T getItem(std::size_t) const override;
+        T getItem(size_t) const override;
         bool contains(const T&) const override;
-        std::size_t indexOf(const T&) const override;
+        size_t indexOf(const T&) const override;
 
     private:
         std::vector<T> _value;

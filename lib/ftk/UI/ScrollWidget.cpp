@@ -32,11 +32,11 @@ namespace ftk
 
         struct SizeData
         {
-            float displayScale = 0.F;
+            std::optional<float> displayScale;
             int margin = 0;
             int border = 0;
         };
-        std::optional<SizeData> size;
+        SizeData size;
     };
 
     void ScrollWidget::_init(
@@ -252,7 +252,7 @@ namespace ftk
         if (value == p.marginRole)
             return;
         p.marginRole = value;
-        p.size.reset();
+        p.size.displayScale.reset();
         _setSizeUpdate();
         _setDrawUpdate();
     }
@@ -303,7 +303,7 @@ namespace ftk
         Box2I g = value;
         if (p.border || p.marginRole != SizeRole::None)
         {
-            g = margin(g, -std::max(p.size->margin, p.size->border));
+            g = margin(g, -std::max(p.size.margin, p.size.border));
         }
         p.layout->setGeometry(g);
         _scrollBarsUpdate();
@@ -314,19 +314,19 @@ namespace ftk
         IWidget::sizeHintEvent(event);
         FTK_P();
 
-        if (!p.size.has_value() ||
-            (p.size.has_value() && p.size->displayScale != event.displayScale))
+        if (!p.size.displayScale.has_value() ||
+            (p.size.displayScale.has_value() && p.size.displayScale != event.displayScale))
         {
             p.size = Private::SizeData();
-            p.size->displayScale = event.displayScale;
-            p.size->border = event.style->getSizeRole(SizeRole::Border, event.displayScale);
-            p.size->margin = event.style->getSizeRole(p.marginRole, event.displayScale);
+            p.size.displayScale = event.displayScale;
+            p.size.border = event.style->getSizeRole(SizeRole::Border, event.displayScale);
+            p.size.margin = event.style->getSizeRole(p.marginRole, event.displayScale);
         }
 
         Size2I sizeHint = _p->layout->getSizeHint();
         if (p.border || p.marginRole != SizeRole::None)
         {
-            sizeHint = margin(sizeHint, std::max(p.size->margin, p.size->border));
+            sizeHint = margin(sizeHint, std::max(p.size.margin, p.size.border));
         }
         _setSizeHint(sizeHint);
     }
@@ -343,10 +343,10 @@ namespace ftk
             Box2I g2 = g;
             if (p.marginRole != SizeRole::None)
             {
-                g2 = margin(g2, -(p.size->margin - p.size->border));
+                g2 = margin(g2, -(p.size.margin - p.size.border));
             }
             event.render->drawMesh(
-                border(g2, p.size->border),
+                border(g2, p.size.border),
                 event.style->getColorRole(p.borderColor));
         }
     }

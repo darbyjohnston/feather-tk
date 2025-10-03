@@ -49,11 +49,14 @@ namespace ftk
                         {
                             value = v;
                         });
+
                     FTK_ASSERT(ovalue->setIfChanged(true));
                     FTK_ASSERT(!ovalue->setIfChanged(true));
                     FTK_ASSERT(value);
+
                     FTK_ASSERT(ovalue->setIfChanged(false));
                     FTK_ASSERT(!value);
+
                     ovalue->setAlways(false);
                     FTK_ASSERT(!value);
                     ovalue->setAlways(true);
@@ -81,17 +84,21 @@ namespace ftk
                         {
                             list = value;
                         });
+
                     FTK_ASSERT(olist->setIfChanged({ 1, 0 }));
                     FTK_ASSERT(!olist->setIfChanged({ 1, 0 }));
                     FTK_ASSERT(!list.empty() && list[0]);
+
                     FTK_ASSERT(olist->setIfChanged({ 0, 0 }));
                     FTK_ASSERT(!list.empty() && 0 == list[0]);
                     olist->setAlways({ 0, 0 });
                     FTK_ASSERT(!list.empty() && 0 == list[0]);
                     olist->setAlways({ 1, 0 });
                     FTK_ASSERT(!list.empty() && 1 == list[0]);
+
                     olist->clear();
                     FTK_ASSERT(list.empty());
+
                     olist->pushBack(1);
                     olist->pushBack(2);
                     FTK_ASSERT(2 == olist->getSize());
@@ -100,9 +107,16 @@ namespace ftk
                     FTK_ASSERT(olist->contains(2));
                     FTK_ASSERT(1 == olist->indexOf(2));
                     FTK_ASSERT(!list.empty() && 1 == list[0]);
+                    olist->pushBack({ 3, 4 });
+                    FTK_ASSERT(4 == olist->getSize());
+
                     olist->setItem(0, 1);
                     olist->setItemOnlyIfChanged(0, 1);
                     olist->setItemOnlyIfChanged(0, 2);
+                    olist->replaceItems(2, 3, { 5, 6 });
+                    FTK_ASSERT(5 == olist->getItem(2));
+                    FTK_ASSERT(6 == olist->getItem(3));
+                    olist->removeItems(2, 3);
                     olist->removeItem(1);
                     olist->removeItem(0);
                     FTK_ASSERT(list.empty());
@@ -129,17 +143,22 @@ namespace ftk
                         {
                             map = value;
                         });
+
                     FTK_ASSERT(omap->setIfChanged({ { 0, true }, { 1, false } }));
                     FTK_ASSERT(!omap->setIfChanged({ { 0, true }, { 1, false } }));
                     FTK_ASSERT(!map.empty() && map[0]);
+
                     FTK_ASSERT(omap->setIfChanged({ { 0, false }, { 1, false } }));
                     FTK_ASSERT(!map.empty() && !map[0]);
+
                     omap->setAlways({ { 0, false }, { 1, false } });
                     FTK_ASSERT(!map.empty() && !map[0]);
                     omap->setAlways({ { 0, true }, { 1, false } });
                     FTK_ASSERT(!map.empty() && map[0]);
+
                     omap->clear();
                     FTK_ASSERT(map.empty());
+
                     omap->setItem(0, false);
                     omap->setItem(1, true);
                     FTK_ASSERT(2 == omap->getSize());
@@ -147,6 +166,7 @@ namespace ftk
                     FTK_ASSERT(omap->hasKey(1));
                     FTK_ASSERT(omap->getItem(1));
                     FTK_ASSERT(!map.empty() && map[1]);
+
                     omap->setItem(1, false);
                     omap->setItemOnlyIfChanged(1, false);
                     omap->setItemOnlyIfChanged(1, true);
