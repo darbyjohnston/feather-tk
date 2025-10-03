@@ -27,7 +27,7 @@ namespace examples
 
             auto fileToolBar = ftk::ToolBar::create(context, Orientation::Horizontal, _layout);
             for (const auto& key :
-                { "File / New", "File / Open", "File / Close", "File / CloseAll" })
+                { "File/New", "File/Open", "File/Close", "File/CloseAll" })
             {
                 fileToolBar->addAction(actions->getAction(key));
             }
