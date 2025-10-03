@@ -11,7 +11,6 @@ namespace examples
 {
     namespace textedit
     {
-        class App;
         class Actions;
 
         class ToolBar : public ftk::IWidget
@@ -19,7 +18,6 @@ namespace examples
         protected:
             void _init(
                 const std::shared_ptr<ftk::Context>&,
-                const std::shared_ptr<App>&,
                 const std::shared_ptr<Actions>&,
                 const std::shared_ptr<ftk::IWidget>& parent);
 
@@ -30,7 +28,6 @@ namespace examples
 
             static std::shared_ptr<ToolBar> create(
                 const std::shared_ptr<ftk::Context>&,
-                const std::shared_ptr<App>&,
                 const std::shared_ptr<Actions>&,
                 const std::shared_ptr<ftk::IWidget>& parent = nullptr);
 
@@ -38,14 +35,6 @@ namespace examples
             void sizeHintEvent(const ftk::SizeHintEvent&) override;
 
         private:
-            void _createFileToolBar(
-                const std::shared_ptr<ftk::Context>&,
-                const std::shared_ptr<App>&);
-            void _createEditToolBar(
-                const std::shared_ptr<ftk::Context>&,
-                const std::shared_ptr<App>&);
-
-            std::shared_ptr<Actions> _actions;
             std::map<std::string, std::shared_ptr<ftk::ToolButton> > _buttons;
             std::shared_ptr<ftk::HorizontalLayout> _layout;
         };

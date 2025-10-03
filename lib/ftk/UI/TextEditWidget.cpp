@@ -37,7 +37,6 @@ namespace ftk
             FontInfo fontInfo;
             FontMetrics fontMetrics;
             Size2I textSize;
-            int lineNumbersDigits = 0;
             int lineNumbersWidth = 0;
         };
         std::optional<SizeData> size;
@@ -263,9 +262,8 @@ namespace ftk
             p.size->fontInfo.size *= event.displayScale;
             p.size->fontMetrics = event.fontSystem->getMetrics(p.size->fontInfo);
             p.size->textSize = Size2I();
-            const auto& text = p.model->getText();
-            p.size->lineNumbersDigits = digits(text.size());
             p.size->lineNumbersWidth = 0;
+            const auto& text = p.model->getText();
             for (size_t i = 0; i < text.size(); ++i)
             {
                 p.size->textSize.w = std::max(
@@ -274,7 +272,7 @@ namespace ftk
                 p.size->textSize.h += p.size->fontMetrics.lineHeight;
                 if (p.options.lineNumbers)
                 {
-                    const std::string text = Format("{0}").arg(static_cast<int>(i + 1), p.size->lineNumbersDigits);
+                    const std::string text = Format("{0}").arg(static_cast<int>(i + 1));
                     p.size->lineNumbersWidth = std::max(
                         event.fontSystem->getSize(text, p.size->fontInfo).w,
                         p.size->lineNumbersWidth);
@@ -303,7 +301,6 @@ namespace ftk
         event.render->drawRect(
             g,
             event.style->getColorRole(ColorRole::Base));
-
         //event.render->drawMesh(
         //    border(g, 1),
         //    event.style->getColorRole(ColorRole::Text));
@@ -334,7 +331,7 @@ namespace ftk
                     p.size->fontMetrics.lineHeight);
                 if (intersects(lineNumberBox, drawRect))
                 {
-                    const std::string text = Format("{0}").arg(static_cast<int>(i + 1), p.size->lineNumbersDigits);
+                    const std::string text = Format("{0}").arg(static_cast<int>(i + 1));
                     event.render->drawText(
                         event.fontSystem->getGlyphs(text, p.size->fontInfo),
                         p.size->fontMetrics,

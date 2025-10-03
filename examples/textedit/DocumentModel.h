@@ -26,25 +26,18 @@ namespace examples
                 const std::shared_ptr<ftk::Context>&);
 
             const std::vector<std::shared_ptr<Document> >& getList() const;
-
             std::shared_ptr<ftk::IObservableList<std::shared_ptr<Document> > > observeList() const;
 
             void add(const std::shared_ptr<Document>&);
-
             std::shared_ptr<ftk::IObservableValue<std::shared_ptr<Document> > > observeAdd() const;
 
             void close(int);
-
-            std::shared_ptr<ftk::IObservableValue<int> > observeClose() const;
-
             void closeAll();
-
+            std::shared_ptr<ftk::IObservableValue<int> > observeClose() const;
             std::shared_ptr<ftk::IObservableValue<bool> > observeCloseAll() const;
 
             int getCurrent() const;
-
             std::shared_ptr<ftk::IObservableValue<int> > observeCurrent() const;
-
             void setCurrent(int);
 
         private:

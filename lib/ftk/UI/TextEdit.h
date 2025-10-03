@@ -16,7 +16,7 @@ namespace ftk
     struct TextEditOptions
     {
         bool     lineNumbers = false;
-        FontInfo fontInfo;
+        FontInfo fontInfo = FontInfo(getFont(Font::Mono), 12);
 
         bool operator == (const TextEditOptions&) const;
         bool operator != (const TextEditOptions&) const;

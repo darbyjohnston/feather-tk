@@ -74,16 +74,16 @@ namespace examples
             }
         }
 
-        std::shared_ptr<ftk::IObservableValue<int> > DocumentModel::observeClose() const
-        {
-            return _close;
-        }
-
         void DocumentModel::closeAll()
         {
             _documents->clear();
             _closeAll->setAlways(true);
             _current->setIfChanged(-1);
+        }
+
+        std::shared_ptr<ftk::IObservableValue<int> > DocumentModel::observeClose() const
+        {
+            return _close;
         }
 
         std::shared_ptr<ftk::IObservableValue<bool> > DocumentModel::observeCloseAll() const

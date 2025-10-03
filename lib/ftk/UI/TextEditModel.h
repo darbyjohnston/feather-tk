@@ -115,7 +115,11 @@ namespace ftk
         void setPageRows(int);
 
     private:
-        
+        void _replace(
+            const std::string&,
+            TextEditPos&,
+            TextEditSelection&);
+
         FTK_PRIVATE();
     };
         

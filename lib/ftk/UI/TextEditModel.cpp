@@ -179,14 +179,15 @@ namespace ftk
     void TextEditModel::text(const std::string& value)
     {
         FTK_P();
-
         const auto& text = p.text->get();
         TextEditPos cursor = p.cursor->get();
         TextEditSelection selection = p.selection->get();
 
         if (selection.isValid())
         {
-            // Replace the selection with text.
+            // Replace the selection.
+            _replace(value, cursor, selection);
+            cursor.chr += value.size();
         }
         else
         {
@@ -319,7 +320,12 @@ namespace ftk
             out = true;
             break;
         case Key::Backspace:
-            if (cursor.line >= 0 && cursor.line < static_cast<int>(text.size()))
+            if (selection.isValid())
+            {
+                // Remove the selection.
+                _replace(std::string(), cursor, selection);
+            }
+            else if (cursor.line >= 0 && cursor.line < static_cast<int>(text.size()))
             {
                 std::string line = text[cursor.line];
                 if (cursor.chr > 0)
@@ -339,7 +345,12 @@ namespace ftk
             out = true;
             break;
         case Key::Delete:
-            if (cursor.line >= 0 && cursor.line < static_cast<int>(text.size()))
+            if (selection.isValid())
+            {
+                // Remove the selection.
+                _replace(std::string(), cursor, selection);
+            }
+            else if (cursor.line >= 0 && cursor.line < static_cast<int>(text.size()))
             {
                 std::string line = text[cursor.line];
                 if (cursor.chr < line.size())
@@ -358,6 +369,11 @@ namespace ftk
             break;
         case Key::Return:
         case Key::KeypadEnter:
+            if (selection.isValid())
+            {
+                // Remove the selection.
+                _replace(std::string(), cursor, selection);
+            }
             if (cursor.line >= 0 && cursor.line < static_cast<int>(text.size()))
             {
                 std::string line = text[cursor.line];
@@ -422,5 +438,26 @@ namespace ftk
     void TextEditModel::setPageRows(int value)
     {
         _p->pageRows = value;
+    }
+
+    void TextEditModel::_replace(
+        const std::string& value,
+        TextEditPos& cursor,
+        TextEditSelection& selection)
+    {
+        FTK_P();
+        const TextEditPos min = selection.min();
+        const TextEditPos max = selection.max();
+        const auto& text = p.text->get();
+        if (min.line == max.line &&
+            min.line >= 0 && min.line < static_cast<int>(text.size()))
+        {
+            std::string line = text[min.line];
+            line.replace(min.chr, max.chr - min.chr, value);
+            p.text->setItem(min.line, line);
+            cursor.line = min.line;
+            cursor.chr = min.chr;
+            selection = TextEditSelection();
+        }
     }
 }
