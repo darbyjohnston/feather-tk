@@ -34,6 +34,9 @@ namespace ftk
         const std::vector<char>& delimeters,
         SplitOptions = SplitOptions::DiscardEmpty);
 
+    //! Split a string on new-lines.
+    std::vector<std::string> splitLines(const std::string&);
+
     //! Join a list of strings.
     std::string join(const std::vector<std::string>&, char delimeter);
 

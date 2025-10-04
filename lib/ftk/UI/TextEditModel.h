@@ -55,11 +55,20 @@ namespace ftk
         bool operator != (const TextEditSelection&) const;
     };
 
+    //! Text edit model options.
+    struct TextEditModelOptions
+    {
+        int tabSpaceCount = 4;
+
+        bool operator == (const TextEditModelOptions&) const;
+        bool operator != (const TextEditModelOptions&) const;
+    };
+
     //! Text edit model.
     class TextEditModel : public std::enable_shared_from_this<TextEditModel>
     {
     protected:
-        void _init();
+        void _init(const std::shared_ptr<Context>&);
 
         TextEditModel();
 
@@ -67,7 +76,7 @@ namespace ftk
         virtual ~TextEditModel();
 
         //! Create a new text edit model.
-        static std::shared_ptr<TextEditModel> create();
+        static std::shared_ptr<TextEditModel> create(const std::shared_ptr<Context>&);
 
         //! Get the text.
         const std::vector<std::string>& getText() const;
@@ -114,11 +123,23 @@ namespace ftk
         //! Set the numner of rows in a page.
         void setPageRows(int);
 
+        //! Get the options.
+        const TextEditModelOptions& getOptions() const;
+
+        //! Observe the options.
+        std::shared_ptr<IObservableValue<TextEditModelOptions> > observeOptions() const;
+
+        //! Set the options.
+        void setOptions(const TextEditModelOptions&);
+
     private:
         void _replace(
             const std::string&,
             TextEditPos&,
             TextEditSelection&);
+
+        TextEditSelection _getSelectAll() const;
+        std::vector<std::string> _getSelection(const TextEditSelection&) const;
 
         FTK_PRIVATE();
     };

@@ -4,6 +4,10 @@
 
 #include <ftk/UI/TextEditModel.h>
 
+#include <ftk/UI/ClipboardSystem.h>
+
+#include <ftk/Core/String.h>
+
 namespace ftk
 {
     TextEditPos::TextEditPos(int line, int chr) :
@@ -67,6 +71,16 @@ namespace ftk
             second == other.second;
     }
 
+    bool TextEditModelOptions::operator != (const TextEditModelOptions& other) const
+    {
+        return !(*this == other);
+    }
+
+    bool TextEditModelOptions::operator == (const TextEditModelOptions& other) const
+    {
+        return tabSpaceCount == other.tabSpaceCount;
+    }
+
     bool TextEditSelection::operator != (const TextEditSelection& other) const
     {
         return !(*this == other);
@@ -74,15 +88,18 @@ namespace ftk
 
     struct TextEditModel::Private
     {
+        std::weak_ptr<Context> context;
         std::shared_ptr<ObservableList<std::string> > text;
         std::shared_ptr<ObservableValue<TextEditPos> > cursor;
         std::shared_ptr<ObservableValue<TextEditSelection> > selection;
         int pageRows = 0;
+        TextEditModelOptions options;
     };
 
-    void TextEditModel::_init()
+    void TextEditModel::_init(const std::shared_ptr<Context>& context)
     {
         FTK_P();
+        p.context = context;
         p.text = ObservableList<std::string>::create();
         p.cursor = ObservableValue<TextEditPos>::create(TextEditPos(0, 0));
         p.selection = ObservableValue<TextEditSelection>::create();
@@ -95,10 +112,10 @@ namespace ftk
     TextEditModel::~TextEditModel()
     {}
 
-    std::shared_ptr<TextEditModel> TextEditModel::create()
+    std::shared_ptr<TextEditModel> TextEditModel::create(const std::shared_ptr<Context>& context)
     {
         auto out = std::shared_ptr<TextEditModel>(new TextEditModel);
-        out->_init();
+        out->_init(context);
         return out;
     }
 
@@ -157,17 +174,7 @@ namespace ftk
 
     void TextEditModel::selectAll()
     {
-        FTK_P();
-        TextEditSelection selection;
-        const auto& text = p.text->get();
-        if (!text.empty())
-        {
-            selection.first.line = 0;
-            selection.first.chr = static_cast<int>(text.front().size()) - 1;
-            selection.second.line = static_cast<int>(text.size()) - 1;
-            selection.second.chr = static_cast<int>(text.back().size()) - 1;
-        }
-        p.selection->setIfChanged(selection);
+        _p->selection->setIfChanged(_getSelectAll());
     }
 
     void TextEditModel::clearSelection()
@@ -254,88 +261,124 @@ namespace ftk
                 cursor.line < static_cast<int>(text.size()) &&
                 cursor.chr > 0)
             {
+                // Move the cursor left.
                 --cursor.chr;
+            }
+            else if (
+                cursor.line > 0 &&
+                cursor.line < static_cast<int>(text.size()))
+            {
+                // Move the cursor up a line.
+                --cursor.line;
+                cursor.chr = static_cast<int>(text[cursor.line].size());
             }
             out = true;
             break;
+
         case Key::Right:
             if (cursor.line >= 0 &&
                 cursor.line < static_cast<int>(text.size()) &&
                 cursor.chr < static_cast<int>(text[cursor.line].size()))
             {
+                // Move the cursor right.
                 ++cursor.chr;
+            }
+            else if (
+                cursor.line >= 0 &&
+                cursor.line < static_cast<int>(text.size()))
+            {
+                // Move the cursor down a line.
+                ++cursor.line;
+                cursor.chr = 0;
             }
             out = true;
             break;
+
         case Key::Up:
             if (cursor.line > 0 &&
                 cursor.line < static_cast<int>(text.size()))
             {
+                // Move the cursor up a line.
                 --cursor.line;
                 cursor.chr = std::min(cursor.chr, static_cast<int>(text[cursor.line].size()));
             }
             out = true;
             break;
+
         case Key::Down:
             if (cursor.line >= 0 &&
                 cursor.line < static_cast<int>(text.size()) - 1)
             {
+                // Move the cursor down a line.
                 ++cursor.line;
                 cursor.chr = std::min(cursor.chr, static_cast<int>(text[cursor.line].size()));
             }
             out = true;
             break;
+
         case Key::Home:
             if (cursor.line >= 0 &&
                 cursor.line < static_cast<int>(text.size()) &&
                 cursor.chr > 0)
             {
+                // Move the cursor to the beginning of the line.
                 cursor.chr = 0;
             }
             out = true;
             break;
+
         case Key::End:
             if (cursor.line >= 0 &&
                 cursor.line < static_cast<int>(text.size()) &&
                 cursor.chr < static_cast<int>(text[cursor.line].size()))
             {
+                // Move the cursor to the end of the line.
                 cursor.chr = static_cast<int>(text[cursor.line].size());
             }
             out = true;
             break;
+
         case Key::PageUp:
             if (cursor.line >= 0 &&
                 cursor.line < static_cast<int>(text.size()))
             {
+                // Move the cursor up a page.
                 cursor.line = std::max(0, cursor.line - p.pageRows);
             }
             out = true;
             break;
+
         case Key::PageDown:
             if (cursor.line >= 0 &&
                 cursor.line < static_cast<int>(text.size()))
             {
+                // Move the cursor down a page.
                 cursor.line = std::min(cursor.line + p.pageRows, static_cast<int>(text.size()) - 1);
             }
             out = true;
             break;
+
         case Key::Backspace:
             if (selection.isValid())
             {
                 // Remove the selection.
                 _replace(std::string(), cursor, selection);
             }
-            else if (cursor.line >= 0 && cursor.line < static_cast<int>(text.size()))
+            else if (
+                cursor.line >= 0 &&
+                cursor.line < static_cast<int>(text.size()))
             {
                 std::string line = text[cursor.line];
                 if (cursor.chr > 0)
                 {
+                    // Remove the previous character.
                     --cursor.chr;
                     line.erase(cursor.chr, 1);
                     p.text->setItem(cursor.line, line);
                 }
                 else if (cursor.line > 0)
                 {
+                    // Append this line to the previous line.
                     p.text->removeItem(cursor.line);
                     --cursor.line;
                     cursor.chr = text[cursor.line].size();
@@ -344,22 +387,27 @@ namespace ftk
             }
             out = true;
             break;
+
         case Key::Delete:
             if (selection.isValid())
             {
                 // Remove the selection.
                 _replace(std::string(), cursor, selection);
             }
-            else if (cursor.line >= 0 && cursor.line < static_cast<int>(text.size()))
+            else if (
+                cursor.line >= 0 &&
+                cursor.line < static_cast<int>(text.size()))
             {
                 std::string line = text[cursor.line];
                 if (cursor.chr < line.size())
                 {
+                    // Delete the current character.
                     line.erase(cursor.chr, 1);
                     p.text->setItem(cursor.line, line);
                 }
                 else if (cursor.line < static_cast<int>(text.size()) - 1)
                 {
+                    // Append the previous line to this line.
                     line = text[cursor.line + 1];
                     p.text->removeItem(cursor.line + 1);
                     p.text->setItem(cursor.line, text[cursor.line] + line);
@@ -367,6 +415,7 @@ namespace ftk
             }
             out = true;
             break;
+
         case Key::Return:
         case Key::KeypadEnter:
             if (selection.isValid())
@@ -374,7 +423,8 @@ namespace ftk
                 // Remove the selection.
                 _replace(std::string(), cursor, selection);
             }
-            if (cursor.line >= 0 && cursor.line < static_cast<int>(text.size()))
+            if (cursor.line >= 0 &&
+                cursor.line < static_cast<int>(text.size()))
             {
                 std::string line = text[cursor.line];
                 if (0 == cursor.chr)
@@ -408,6 +458,153 @@ namespace ftk
             }
             out = true;
             break;
+
+        case Key::A:
+            if (static_cast<int>(KeyModifier::Control) == modifiers)
+            {
+                // Select all.
+                selection = _getSelectAll();
+                out = true;
+            }
+            break;
+
+        case Key::C:
+            if (static_cast<int>(KeyModifier::Control) == modifiers)
+            {
+                if (selection.isValid())
+                {
+                    // Copy.
+                    if (auto context = p.context.lock())
+                    {
+                        auto clipboard = context->getSystem<ClipboardSystem>();
+                        const auto lines = _getSelection(selection);
+                        clipboard->setText(join(lines, '\n'));
+                    }
+                }
+                out = true;
+            }
+            break;
+
+        case Key::X:
+            if (static_cast<int>(KeyModifier::Control) == modifiers)
+            {
+                if (selection.isValid())
+                {
+                    // Cut.
+                    if (auto context = p.context.lock())
+                    {
+                        auto clipboard = context->getSystem<ClipboardSystem>();
+                        const auto lines = _getSelection(selection);
+                        clipboard->setText(join(lines, '\n'));
+                        _replace(std::string(), cursor, selection);
+                    }
+                }
+                out = true;
+            }
+            break;
+
+        case Key::V:
+            if (static_cast<int>(KeyModifier::Control) == modifiers)
+            {
+                // Paste.
+                if (auto context = p.context.lock())
+                {
+                    auto clipboard = context->getSystem<ClipboardSystem>();
+                    auto lines = splitLines(clipboard->getText());
+                    if (selection.isValid())
+                    {
+                        _replace(std::string(), cursor, selection);
+                    }
+                    if (lines.size() > 0 &&
+                        cursor.line >= 0 &&
+                        cursor.line < static_cast<int>(text.size()))
+                    {
+                        const std::string& line = text[cursor.line];
+                        const int chr = cursor.chr;
+                        cursor.chr = lines.back().size();
+                        lines.front().insert(0, line.substr(0, chr));
+                        lines.back().append(line.substr(chr));
+                        p.text->replaceItems(cursor.line, cursor.line, lines);
+                        cursor.line += lines.size() - 1;
+                    }
+                    else
+                    {
+                        p.text->pushBack(lines);
+                    }
+                }
+                out = true;
+            }
+            break;
+
+        case Key::Tab:
+            if (0 == modifiers &&
+                selection.isValid() &&
+                selection.first.line >= 0 &&
+                selection.first.line < static_cast<int>(text.size()) &&
+                selection.second.line >= 0 &&
+                selection.second.line < static_cast<int>(text.size()))
+            {
+                // Indent.
+                std::vector<std::string> lines;
+                const TextEditPos min = selection.min();
+                const TextEditPos max = selection.max();
+                for (int i = min.line; i <= max.line; ++i)
+                {
+                    lines.push_back(std::string(p.options.tabSpaceCount, ' ') + text[i]);
+                }
+                p.text->replaceItems(min.line, max.line, lines);
+                cursor.chr += p.options.tabSpaceCount;
+                selection.first.chr += p.options.tabSpaceCount;
+                selection.second.chr += p.options.tabSpaceCount;
+            }
+            else if (
+                static_cast<int>(KeyModifier::Shift) == modifiers &&
+                selection.isValid() &&
+                selection.first.line >= 0 &&
+                selection.first.line < static_cast<int>(text.size()) &&
+                selection.second.line >= 0 &&
+                selection.second.line < static_cast<int>(text.size()))
+            {
+                // Un-indent.
+                std::vector<std::string> lines;
+                const TextEditPos min = selection.min();
+                const TextEditPos max = selection.max();
+                for (int i = min.line; i <= max.line; ++i)
+                {
+                    std::string line = text[i];
+                    int j = 0;
+                    for (;
+                        j < p.options.tabSpaceCount &&
+                        j < line.size() &&
+                        ' ' == line[0];
+                        ++j)
+                        ;
+                    if (j > 0)
+                    {
+                        line.erase(0, j);
+                    }
+                    lines.push_back(line);
+                }
+                p.text->replaceItems(min.line, max.line, lines);
+                cursor.chr = std::max(0, cursor.chr - p.options.tabSpaceCount);
+                selection.first.chr = std::max(0, selection.first.chr - p.options.tabSpaceCount);
+                selection.second.chr = std::max(0, selection.second.chr - p.options.tabSpaceCount);
+            }
+            else if (
+                cursor.line >= 0 &&
+                cursor.line < static_cast<int>(text.size()) &&
+                cursor.chr >= 0 &&
+                cursor.chr <= text[cursor.line].size())
+            {
+                // Insert spaces.
+                std::string line = text[cursor.line];
+                line.insert(cursor.chr, std::string(p.options.tabSpaceCount, ' '));
+                cursor.chr += p.options.tabSpaceCount;
+                p.text->setItem(cursor.line, line);
+            }
+            out = true;
+            break;
+
         default: break;
         }
 
@@ -479,5 +676,44 @@ namespace ftk
             cursor.chr = min.chr;
             selection = TextEditSelection();
         }
+    }
+
+    TextEditSelection TextEditModel::_getSelectAll() const
+    {
+        FTK_P();
+        TextEditSelection out;
+        const auto& text = p.text->get();
+        if (!text.empty())
+        {
+            out = TextEditSelection(
+                TextEditPos(0, 0),
+                TextEditPos(
+                    static_cast<int>(text.size()) - 1,
+                    static_cast<int>(text.back().size())));
+        }
+        return out;
+    }
+
+    std::vector<std::string> TextEditModel::_getSelection(const TextEditSelection& selection) const
+    {
+        FTK_P();
+        std::vector<std::string> out;
+        const auto& text = p.text->get();
+        const TextEditPos min = selection.min();
+        const TextEditPos max = selection.max();
+        if (min.line == max.line)
+        {
+            out.push_back(text[min.line].substr(min.chr, max.chr));
+        }
+        else
+        {
+            out.push_back(text[min.line].substr(min.chr));
+            for (int i = min.line + 1; i < max.line; ++i)
+            {
+                out.push_back(text[i]);
+            }
+            out.push_back(text[max.line].substr(0, max.chr));
+        }
+        return out;
     }
 }

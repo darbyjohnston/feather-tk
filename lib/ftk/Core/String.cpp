@@ -94,6 +94,54 @@ namespace ftk
         return out;
     }
 
+    std::vector<std::string> splitLines(const std::string& value)
+    {
+        std::vector<std::string> out;
+        size_t i = 0;
+        size_t j = 0;
+        const size_t size = value.size();
+        while (i < size)
+        {
+            if ('\r' == value[i] &&
+                size > 1 && i < size - 1 &&
+                '\n' == value[i + 1])
+            {
+                if (j < i)
+                {
+                    out.push_back(value.substr(j, i - j));
+                }
+                else
+                {
+                    out.push_back(std::string());
+                }
+                i += 2;
+                j = i;
+            }
+            else if ('\r' == value[i] || '\n' == value[i])
+            {
+                if (j < i)
+                {
+                    out.push_back(value.substr(j, i - j));
+                }
+                else
+                {
+                    out.push_back(std::string());
+                }
+                ++i;
+                j = i;
+            }
+            else
+            {
+                ++i;
+            }
+        }
+        if (j <= i)
+        {
+            out.push_back(value.substr(j, i - j + 1));
+        }
+        return out;
+    }
+
     std::string join(const std::vector<std::string>& values, char delimeter)
     {
         std::string out;

@@ -227,7 +227,7 @@ namespace ftk
     {
         IWidget::tickEvent(parentsVisible, parentsEnabled, event);
         FTK_P();
-        /*if (hasKeyFocus())
+        if (hasKeyFocus())
         {
             const auto now = std::chrono::steady_clock::now();
             const std::chrono::duration<float> diff = now - p.cursorTimer;
@@ -242,7 +242,7 @@ namespace ftk
         {
             p.cursorVisible = false;
             _setDrawUpdate();
-        }*/
+        }
     }
 
     void TextEditWidget::sizeHintEvent(const SizeHintEvent& event)

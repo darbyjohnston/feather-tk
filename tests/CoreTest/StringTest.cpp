@@ -61,6 +61,33 @@ namespace ftk
                 FTK_ASSERT(join({ "a", "b", "c" }, ',') == "a,b,c");
                 FTK_ASSERT(join({ "a", "b", "c" }, ",.") == "a,.b,.c");
             }
+            {
+                auto lines = splitLines("");
+                FTK_ASSERT(lines == std::vector<std::string>({ "" }));
+                lines = splitLines("abc");
+                FTK_ASSERT(lines == std::vector<std::string>({ "abc" }));
+
+                lines = splitLines("abc\n");
+                FTK_ASSERT(lines == std::vector<std::string>({ "abc", "" }));
+                lines = splitLines("\nabc");
+                FTK_ASSERT(lines == std::vector<std::string>({ "", "abc" }));
+                lines = splitLines("\na\nb\nc\n");
+                FTK_ASSERT(lines == std::vector<std::string>({ "", "a", "b", "c", "" }));
+
+                lines = splitLines("abc\r");
+                FTK_ASSERT(lines == std::vector<std::string>({ "abc", "" }));
+                lines = splitLines("\rabc");
+                FTK_ASSERT(lines == std::vector<std::string>({ "", "abc" }));
+                lines = splitLines("\ra\rb\rc\r");
+                FTK_ASSERT(lines == std::vector<std::string>({ "", "a", "b", "c", "" }));
+
+                lines = splitLines("abc\r\n");
+                FTK_ASSERT(lines == std::vector<std::string>({ "abc", "" }));
+                lines = splitLines("\r\nabc");
+                FTK_ASSERT(lines == std::vector<std::string>({ "", "abc" }));
+                lines = splitLines("\r\na\r\nb\r\nc\r\n");
+                FTK_ASSERT(lines == std::vector<std::string>({ "", "a", "b", "c", "" }));
+            }
         }
         
         void StringTest::_format()

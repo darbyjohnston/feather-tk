@@ -43,7 +43,7 @@ namespace ftk
         p.model = model;
         if (!p.model)
         {
-            p.model = TextEditModel::create();
+            p.model = TextEditModel::create(context);
         }
 
         p.widget = TextEditWidget::create(context, p.model);
