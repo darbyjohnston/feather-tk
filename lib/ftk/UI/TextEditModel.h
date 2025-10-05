@@ -133,16 +133,22 @@ namespace ftk
         void setOptions(const TextEditModelOptions&);
 
     private:
+        TextEditPos _getNext(const TextEditPos&) const;
+        TextEditPos _getPrev(const TextEditPos&) const;
+
+        TextEditSelection _getSelectAll() const;
+        std::vector<std::string> _getSelection(const TextEditSelection&) const;
+
         void _replace(
             const std::string&,
             TextEditPos&,
             TextEditSelection&);
 
-        TextEditSelection _getSelectAll() const;
-        std::vector<std::string> _getSelection(const TextEditSelection&) const;
-
         FTK_PRIVATE();
     };
-        
+
+    std::ostream& operator << (std::ostream&, const TextEditPos&);
+    std::ostream& operator << (std::ostream&, const TextEditSelection&);
+
     ///@}
 }

@@ -53,6 +53,7 @@
 #include <UITest/StackLayoutTest.h>
 #include <UITest/StyleTest.h>
 #include <UITest/TabWidgetTest.h>
+#include <UITest/TextEditModelTest.h>
 #include <UITest/WidgetOptionsTest.h>
 
 #if defined(FTK_API_GL_4_1) || defined(FTK_API_GLES_2)
@@ -243,6 +244,7 @@ namespace ftk
             p.tests.push_back(ui_test::StackLayoutTest::create(context));
             p.tests.push_back(ui_test::StyleTest::create(context));
             p.tests.push_back(ui_test::TabWidgetTest::create(context));
+            p.tests.push_back(ui_test::TextEditModelTest::create(context));
             p.tests.push_back(ui_test::WidgetOptionsTest::create(context));
 
             p.tests.push_back(ui_test::AppTest::create(context));

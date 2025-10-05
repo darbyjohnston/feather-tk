@@ -47,6 +47,7 @@ set(HEADERS
     StackLayoutTest.h
     StyleTest.h
     TabWidgetTest.h
+    TextEditModelTest.h
     WidgetOptionsTest.h)
 set(PRIVATE_HEADERS)
 
@@ -99,6 +100,7 @@ set(SOURCE
     StackLayoutTest.cpp
     StyleTest.cpp
     TabWidgetTest.cpp
+    TextEditModelTest.cpp
     WidgetOptionsTest.cpp)
 
 add_library(ftkUITest ${HEADERS} ${PRIVATE_HEADERS} ${SOURCE})
