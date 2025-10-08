@@ -113,10 +113,10 @@ namespace ftk
                     olist->setItem(0, 1);
                     olist->setItemOnlyIfChanged(0, 1);
                     olist->setItemOnlyIfChanged(0, 2);
-                    olist->replaceItems(2, 3, { 5, 6 });
+                    olist->replaceItems(2, 4, { 5, 6 });
                     FTK_ASSERT(5 == olist->getItem(2));
                     FTK_ASSERT(6 == olist->getItem(3));
-                    olist->removeItems(2, 3);
+                    olist->removeItems(2, 4);
                     olist->removeItem(1);
                     olist->removeItem(0);
                     FTK_ASSERT(list.empty());

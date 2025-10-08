@@ -241,7 +241,7 @@ namespace ftk
     template<typename T>
     inline void ObservableList<T>::removeItems(size_t start, size_t end)
     {
-        _value.erase(_value.begin() + start, _value.begin() + end + 1);
+        _value.erase(_value.begin() + start, _value.begin() + end);
         for (const auto& i : IObservableList<T>::_observers)
         {
             if (auto observer = i.lock())
@@ -257,7 +257,7 @@ namespace ftk
         size_t end,
         const std::vector<T>& items)
     {
-        _value.erase(_value.begin() + start, _value.begin() + end + 1);
+        _value.erase(_value.begin() + start, _value.begin() + end);
         _value.insert(_value.begin() + start, items.begin(), items.end());
         for (const auto& i : IObservableList<T>::_observers)
         {

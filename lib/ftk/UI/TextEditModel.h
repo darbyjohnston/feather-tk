@@ -84,7 +84,8 @@ namespace ftk
         //! Observer the text.
         std::shared_ptr<IObservableList<std::string> > observeText() const;
 
-        //! Set the text.
+        //! Set the text. Setting the text will also set the cursor to the
+        //! beginning of the text and clear the selection.
         void setText(const std::vector<std::string>&);
 
         //! Clear the text.
@@ -96,7 +97,7 @@ namespace ftk
         //! Observe the cursor.
         std::shared_ptr<IObservableValue<TextEditPos> > observeCursor() const;
 
-        //! Set the cursor.
+        //! Set the cursor. Setting the cursor clears the selection.
         void setCursor(const TextEditPos&);
 
         //! Get the selection.
@@ -105,7 +106,8 @@ namespace ftk
         //! Observer the selection.
         std::shared_ptr<IObservableValue<TextEditSelection> > observeSelection() const;
 
-        //! Set the selection.
+        //! Set the selection. Setting the selection also sets the cursor to
+        //! the end of the selection.
         void setSelection(const TextEditSelection&);
 
         //! Select all.
@@ -139,10 +141,12 @@ namespace ftk
         TextEditSelection _getSelectAll() const;
         std::vector<std::string> _getSelection(const TextEditSelection&) const;
 
+        void _insert(
+            const TextEditPos&,
+            const std::vector<std::string>&);
         void _replace(
-            const std::string&,
-            TextEditPos&,
-            TextEditSelection&);
+            const TextEditSelection&,
+            const std::vector<std::string>&);
 
         FTK_PRIVATE();
     };

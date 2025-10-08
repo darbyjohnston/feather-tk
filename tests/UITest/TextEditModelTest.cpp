@@ -81,8 +81,8 @@ namespace ftk
                 FTK_ASSERT(cursor2.chr == static_cast<int>(text[0].size()));
                 cursor.line = 1000;
                 model->setCursor(cursor);
-                FTK_ASSERT(cursor2.line == static_cast<int>(text.size()));
-                FTK_ASSERT(cursor2.chr == 0);
+                FTK_ASSERT(cursor2.line == static_cast<int>(text.size()) - 1);
+                FTK_ASSERT(cursor2.chr == static_cast<int>(text.back().size()));
             }
             if (auto context = _context.lock())
             {
@@ -146,10 +146,6 @@ namespace ftk
                 model->setCursor(TextEditPos(0, 4));
                 model->text("56");
                 FTK_ASSERT(text2[0] == "123456");
-                model->setCursor(TextEditPos(1, 0));
-                model->text("78");
-                FTK_ASSERT(text2[0] == "123456");
-                FTK_ASSERT(text2[1] == "78");
 
                 model->selectAll();
                 model->text("abc");
@@ -390,6 +386,151 @@ namespace ftk
                 FTK_ASSERT(TextEditSelection(
                     TextEditPos(3, 0),
                     TextEditPos(0, 0)) == model->getSelection());
+
+                model->clearSelection();
+                model->setPageRows(2);
+                model->key(Key::PageDown, static_cast<int>(KeyModifier::Shift));
+                model->key(Key::PageDown, static_cast<int>(KeyModifier::Shift));
+                FTK_ASSERT(TextEditSelection(
+                    TextEditPos(0, 0),
+                    TextEditPos(3, 0)) == model->getSelection());
+
+                model->clearSelection();
+                model->setPageRows(2);
+                model->key(Key::PageUp, static_cast<int>(KeyModifier::Shift));
+                model->key(Key::PageUp, static_cast<int>(KeyModifier::Shift));
+                FTK_ASSERT(TextEditSelection(
+                    TextEditPos(3, 0),
+                    TextEditPos(0, 0)) == model->getSelection());
+            }
+            if (auto context = _context.lock())
+            {
+                auto model = TextEditModel::create(context);
+                std::vector<std::string> text =
+                {
+                    "abc",
+                    "   ",
+                    "   123"
+                };
+                model->setText(text);
+
+                std::vector<std::string> text2;
+                auto textObserver = ListObserver<std::string>::create(
+                    model->observeText(),
+                    [&text2](const std::vector<std::string>& value)
+                    {
+                        text2 = value;
+                    });
+
+                model->selectAll();
+                model->key(Key::Tab);
+                FTK_ASSERT(text2[0] == "    abc");
+                FTK_ASSERT(text2[1] == "       ");
+                FTK_ASSERT(text2[2] == "       123");
+                model->key(Key::Tab, static_cast<int>(KeyModifier::Shift));
+                FTK_ASSERT(text2[0] == "abc");
+                FTK_ASSERT(text2[1] == "   ");
+                FTK_ASSERT(text2[2] == "   123");
+                model->key(Key::Tab, static_cast<int>(KeyModifier::Shift));
+                FTK_ASSERT(text2[0] == "abc");
+                FTK_ASSERT(text2[1] == "");
+                FTK_ASSERT(text2[2] == "123");
+
+                model->setSelection(TextEditSelection(
+                    TextEditPos(2, 1),
+                    TextEditPos(2, 2)));
+                model->key(Key::Tab);
+                FTK_ASSERT(text2[0] == "abc");
+                FTK_ASSERT(text2[1] == "");
+                FTK_ASSERT(text2[2] == "    123");
+
+                model->setCursor(TextEditPos(0, 0));
+                model->key(Key::Tab);
+                FTK_ASSERT(text2[0] == "    abc");
+                FTK_ASSERT(text2[1] == "");
+                FTK_ASSERT(text2[2] == "    123");
+            }
+            if (auto context = _context.lock())
+            {
+                auto model = TextEditModel::create(context);
+                std::vector<std::string> text =
+                {
+                    "abc",
+                    "   ",
+                    "123"
+                };
+                model->setText(text);
+
+                std::vector<std::string> text2;
+                auto textObserver = ListObserver<std::string>::create(
+                    model->observeText(),
+                    [&text2](const std::vector<std::string>& value)
+                    {
+                        text2 = value;
+                    });
+
+                model->key(Key::Backspace);
+                model->key(Key::Backspace);
+                FTK_ASSERT(TextEditPos(0, 0) == model->getCursor());
+                model->setCursor(TextEditPos(text.size() - 1, text.back().size()));
+                model->key(Key::Backspace);
+                FTK_ASSERT(text2[2] == "12");
+                model->key(Key::Backspace);
+                model->key(Key::Backspace);
+                model->key(Key::Backspace);
+                FTK_ASSERT(text2.size() == 2);
+                model->setCursor(TextEditPos(1, 0));
+                model->key(Key::Backspace);
+                FTK_ASSERT(text2.size() == 1);
+                FTK_ASSERT(text2[0] == "abc   ");
+
+                model->setSelection(TextEditSelection(
+                    TextEditPos(0, 2),
+                    TextEditPos(0, 6)));
+                model->key(Key::Backspace);
+                FTK_ASSERT(text2[0] == "ab");
+            }
+            if (auto context = _context.lock())
+            {
+                auto model = TextEditModel::create(context);
+                std::vector<std::string> text =
+                {
+                    "abc",
+                    "   ",
+                    "123"
+                };
+                model->setText(text);
+
+                std::vector<std::string> text2;
+                auto textObserver = ListObserver<std::string>::create(
+                    model->observeText(),
+                    [&text2](const std::vector<std::string>& value)
+                    {
+                        text2 = value;
+                    });
+
+                TextEditPos cursor(text.size() - 1, text.back().size());
+                model->setCursor(cursor);
+                model->key(Key::Delete);
+                model->key(Key::Delete);
+                FTK_ASSERT(cursor == model->getCursor());
+                model->setCursor(TextEditPos(0, 0));
+                model->key(Key::Delete);
+                FTK_ASSERT(text2[0] == "bc");
+                model->key(Key::Delete);
+                model->key(Key::Delete);
+                model->key(Key::Delete);
+                FTK_ASSERT(text2.size() == 2);
+                model->setCursor(TextEditPos(0, text2[0].size()));
+                model->key(Key::Delete);
+                FTK_ASSERT(text2.size() == 1);
+                FTK_ASSERT(text2[0] == "   123");
+
+                model->setSelection(TextEditSelection(
+                    TextEditPos(0, 0),
+                    TextEditPos(0, 4)));
+                model->key(Key::Delete);
+                FTK_ASSERT(text2[0] == "23");
             }
         }
     }
