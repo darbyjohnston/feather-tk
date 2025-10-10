@@ -111,18 +111,18 @@ namespace ftk
                     });
                 selection.first.chr = 1000;
                 model->setSelection(selection);
-                FTK_ASSERT(selection2.first.chr == static_cast<int>(text[0].size()));
+                FTK_ASSERT(selection2.first.chr == static_cast<int>(text.front().size()));
                 selection.second.line = 1000;
                 model->setSelection(selection);
-                FTK_ASSERT(selection2.second.line == static_cast<int>(text.size()));
-                FTK_ASSERT(selection2.second.chr == 0);
+                FTK_ASSERT(selection2.second.line == static_cast<int>(text.size()) - 1);
+                FTK_ASSERT(selection2.second.chr == 2);
 
                 model->clearSelection();
                 FTK_ASSERT(!selection2.isValid());
                 model->selectAll();
                 FTK_ASSERT(selection2.isValid());
-                FTK_ASSERT(selection2.second.line == static_cast<int>(text.size()));
-                FTK_ASSERT(selection2.second.chr == 0);
+                FTK_ASSERT(selection2.second.line == static_cast<int>(text.size()) - 1);
+                FTK_ASSERT(selection2.second.chr == static_cast<int>(text.back().size()));
             }
             if (auto context = _context.lock())
             {
@@ -299,9 +299,9 @@ namespace ftk
                         model->key(Key::Right);
                     }
                 }
-                FTK_ASSERT(TextEditPos(3, 0) == model->getCursor());
+                FTK_ASSERT(TextEditPos(2, 3) == model->getCursor());
                 model->key(Key::Right);
-                FTK_ASSERT(TextEditPos(3, 0) == model->getCursor());
+                FTK_ASSERT(TextEditPos(2, 3) == model->getCursor());
 
                 model->setCursor(TextEditPos(0, 0));
                 model->key(Key::End);
@@ -316,9 +316,9 @@ namespace ftk
                 {
                     model->key(Key::Down);
                 }
-                FTK_ASSERT(TextEditPos(3, 0) == model->getCursor());
+                FTK_ASSERT(TextEditPos(2, 0) == model->getCursor());
                 model->key(Key::Down);
-                FTK_ASSERT(TextEditPos(3, 0) == model->getCursor());
+                FTK_ASSERT(TextEditPos(2, 0) == model->getCursor());
             }
             if (auto context = _context.lock())
             {
@@ -357,7 +357,7 @@ namespace ftk
                 model->key(Key::Right, static_cast<int>(KeyModifier::Shift));
                 FTK_ASSERT(TextEditSelection(
                     TextEditPos(0, 0),
-                    TextEditPos(0, 1)) == model->getSelection());
+                    TextEditPos(0, 1)) == selection2);
                 for (int i = 0; i < static_cast<int>(text.size()); ++i)
                 {
                     for (int j = 0; j <= text[i].size(); ++j)
@@ -368,14 +368,14 @@ namespace ftk
                 model->key(Key::Right, static_cast<int>(KeyModifier::Shift));
                 FTK_ASSERT(TextEditSelection(
                     TextEditPos(0, 0),
-                    TextEditPos(3, 0)) == model->getSelection());
+                    TextEditPos(2, 3)) == selection2);
 
                 model->clearSelection();
                 model->key(Key::Left, static_cast<int>(KeyModifier::Shift));
                 model->key(Key::Left, static_cast<int>(KeyModifier::Shift));
                 FTK_ASSERT(TextEditSelection(
-                    TextEditPos(3, 0),
-                    TextEditPos(2, 2)) == model->getSelection());
+                    TextEditPos(2, 3),
+                    TextEditPos(2, 1)) == selection2);
                 for (int i = static_cast<int>(text.size()) - 1; i >= 0; --i)
                 {
                     for (int j = static_cast<int>(text[i].size()); j >= 0; --j)
@@ -384,8 +384,8 @@ namespace ftk
                     }
                 }
                 FTK_ASSERT(TextEditSelection(
-                    TextEditPos(3, 0),
-                    TextEditPos(0, 0)) == model->getSelection());
+                    TextEditPos(2, 3),
+                    TextEditPos(0, 0)) == selection2);
 
                 model->clearSelection();
                 model->setPageRows(2);
@@ -393,15 +393,15 @@ namespace ftk
                 model->key(Key::PageDown, static_cast<int>(KeyModifier::Shift));
                 FTK_ASSERT(TextEditSelection(
                     TextEditPos(0, 0),
-                    TextEditPos(3, 0)) == model->getSelection());
+                    TextEditPos(2, 3)) == selection2);
 
                 model->clearSelection();
                 model->setPageRows(2);
                 model->key(Key::PageUp, static_cast<int>(KeyModifier::Shift));
                 model->key(Key::PageUp, static_cast<int>(KeyModifier::Shift));
                 FTK_ASSERT(TextEditSelection(
-                    TextEditPos(3, 0),
-                    TextEditPos(0, 0)) == model->getSelection());
+                    TextEditPos(2, 3),
+                    TextEditPos(0, 3)) == selection2);
             }
             if (auto context = _context.lock())
             {
@@ -531,6 +531,54 @@ namespace ftk
                     TextEditPos(0, 4)));
                 model->key(Key::Delete);
                 FTK_ASSERT(text2[0] == "23");
+            }
+            if (auto context = _context.lock())
+            {
+                auto model = TextEditModel::create(context);
+                std::vector<std::string> text =
+                {
+                    "abc",
+                    "   ",
+                    "123"
+                };
+                model->setText(text);
+
+                std::vector<std::string> text2;
+                auto textObserver = ListObserver<std::string>::create(
+                    model->observeText(),
+                    [&text2](const std::vector<std::string>& value)
+                    {
+                        text2 = value;
+                    });
+                TextEditPos cursor2;
+                auto observer = ValueObserver<TextEditPos>::create(
+                    model->observeCursor(),
+                    [&cursor2](const TextEditPos& value)
+                    {
+                        cursor2 = value;
+                    });
+
+                model->key(Key::Return);
+                FTK_ASSERT(text2.size() == 4);
+                FTK_ASSERT(text2[0] == "");
+                FTK_ASSERT(cursor2 == TextEditPos(1, 0));
+
+                model->key(Key::Right);
+                model->key(Key::Return);
+                FTK_ASSERT(text2.size() == 5);
+                FTK_ASSERT(text2[0] == "");
+                FTK_ASSERT(text2[1] == "a");
+                FTK_ASSERT(text2[2] == "bc");
+                FTK_ASSERT(cursor2 == TextEditPos(2, 0));
+
+                model->key(Key::End);
+                model->key(Key::Return);
+                FTK_ASSERT(text2.size() == 6);
+                FTK_ASSERT(text2[0] == "");
+                FTK_ASSERT(text2[1] == "a");
+                FTK_ASSERT(text2[2] == "bc");
+                FTK_ASSERT(text2[3] == "");
+                FTK_ASSERT(cursor2 == TextEditPos(3, 0));
             }
         }
     }
