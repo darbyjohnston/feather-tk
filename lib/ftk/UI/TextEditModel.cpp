@@ -379,8 +379,11 @@ namespace ftk
             else
             {
                 const TextEditPos prev = _getPrev(cursor);
-                _replace(TextEditSelection(cursor, prev), {});
-                cursor = prev;
+                if (cursor != prev)
+                {
+                    _replace(TextEditSelection(cursor, prev), {});
+                    cursor = prev;
+                }
             }
             out = true;
             break;
@@ -396,7 +399,10 @@ namespace ftk
             else
             {
                 const TextEditPos next = _getNext(cursor);
-                _replace(TextEditSelection(cursor, next), {});
+                if (cursor != next)
+                {
+                    _replace(TextEditSelection(cursor, next), {});
+                }
             }
             out = true;
             break;
@@ -471,6 +477,7 @@ namespace ftk
                         const auto lines = _getSelection(selection);
                         text = join(lines, '\n');
                         _replace(selection, {});
+                        cursor = selection.min();
                         selection = TextEditSelection();
                     }
                     clipboard->setText(text);
@@ -493,12 +500,19 @@ namespace ftk
                         if (selection.isValid())
                         {
                             _replace(selection, lines);
-                            cursor = selection.max();
+                            cursor = selection.min();
                             selection = TextEditSelection();
                         }
                         else
                         {
-                            _insert(cursor, lines);
+                            _replace(TextEditSelection(cursor, cursor), lines);
+                        }
+                        if (1 == lines.size())
+                        {
+                            cursor.chr += static_cast<int>(lines.front().size());
+                        }
+                        else
+                        {
                             cursor.line += static_cast<int>(lines.size()) - 1;
                             cursor.chr = static_cast<int>(lines.back().size());
                         }
@@ -672,7 +686,7 @@ namespace ftk
         const TextEditPos max = selection.max();
         if (min.line == max.line)
         {
-            out.push_back(text[min.line].substr(min.chr, max.chr));
+            out.push_back(text[min.line].substr(min.chr, max.chr - min.chr));
         }
         else
         {
@@ -689,39 +703,6 @@ namespace ftk
         return out;
     }
 
-    void TextEditModel::_insert(
-        const TextEditPos& pos,
-        const std::vector<std::string>& value)
-    {
-        FTK_P();
-        const auto& text = p.text->get();
-        if (text.empty())
-        {
-            p.text->setIfChanged(value);
-        }
-        else if (1 == value.size())
-        {
-            const std::string& line = text[pos.line];
-            const std::string tmp =
-                line.substr(0, pos.chr) +
-                value.front() +
-                line.substr(pos.chr);
-            p.text->setItem(pos.line, tmp);
-        }
-        else
-        {
-            std::vector<std::string> tmp;
-            const std::string& line = text[pos.line];
-            tmp.push_back(line.substr(0, pos.chr) + value.front());
-            for (size_t i = 1; !value.empty() && i < value.size() - 1; ++i)
-            {
-                tmp.push_back(value[i]);
-            }
-            tmp.push_back(line.substr(pos.chr) + value.back());
-            p.text->replaceItems(pos.line, pos.line + 1, tmp);
-        }
-    }
-
     void TextEditModel::_replace(
         const TextEditSelection& selection,
         const std::vector<std::string>& value)
@@ -730,7 +711,7 @@ namespace ftk
         const TextEditPos min = selection.min();
         const TextEditPos max = selection.max();
         const auto& text = p.text->get();
-        if (selection == _getSelectAll())
+        if (text.empty() || selection == _getSelectAll())
         {
             p.text->setIfChanged(value);
         }
@@ -755,11 +736,14 @@ namespace ftk
             tmp.push_back(line.substr(max.chr) + value.back());
             p.text->replaceItems(min.line, min.line + 1, tmp);
         }
-        else if (0 == value.size() && max.line < static_cast<int>(text.size()))
+        else if (value.size() <= 1)
         {
-            const std::string tmp =
-                text[min.line].substr(0, min.chr) +
-                text[max.line].substr(max.chr);
+            std::string tmp = text[min.line].substr(0, min.chr);
+            if (!value.empty())
+            {
+                tmp += value.front();
+            }
+            tmp += text[max.line].substr(max.chr);
             p.text->replaceItems(min.line, max.line + 1, { tmp });
         }
         else

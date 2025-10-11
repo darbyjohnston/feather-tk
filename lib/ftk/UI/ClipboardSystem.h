@@ -23,10 +23,7 @@ namespace ftk
             const std::shared_ptr<Context>&);
 
         //! Get the clipboard text.
-        const std::string& getText() const;
-
-        //! Observe the clipboard text.
-        std::shared_ptr<IObservableValue<std::string> > observeText() const;
+        std::string getText() const;
 
         //! Set the clipboard text.
         void setText(const std::string&);

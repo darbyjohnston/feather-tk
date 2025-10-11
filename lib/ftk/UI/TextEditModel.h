@@ -141,9 +141,6 @@ namespace ftk
         TextEditSelection _getSelectAll() const;
         std::vector<std::string> _getSelection(const TextEditSelection&) const;
 
-        void _insert(
-            const TextEditPos&,
-            const std::vector<std::string>&);
         void _replace(
             const TextEditSelection&,
             const std::vector<std::string>&);
