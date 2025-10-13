@@ -51,6 +51,7 @@ namespace ftk
         void drawEvent(const Box2I&, const DrawEvent&) override;
         void mouseMoveEvent(MouseMoveEvent&) override;
         void mousePressEvent(MouseClickEvent&) override;
+        void mouseReleaseEvent(MouseClickEvent&) override;
         void keyFocusEvent(bool) override;
         void keyPressEvent(KeyEvent&) override;
         void keyReleaseEvent(KeyEvent&) override;
@@ -60,6 +61,33 @@ namespace ftk
         TextEditPos _getCursorPos(const V2I&) const;
         void _cursorReset();
 
+        FTK_PRIVATE();
+    };
+
+    class TextEditLineWidget : public IWidget
+    {
+    protected:
+        void _init(
+            const std::shared_ptr<Context>&,
+            const std::shared_ptr<TextEditModel>&,
+            const std::shared_ptr<IWidget>& parent);
+
+        TextEditLineWidget();
+
+    public:
+        virtual ~TextEditLineWidget();
+
+        static std::shared_ptr<TextEditLineWidget> create(
+            const std::shared_ptr<Context>&,
+            const std::shared_ptr<TextEditModel>&,
+            const std::shared_ptr<IWidget>& parent = nullptr);
+
+        void setOptions(const TextEditOptions&);
+
+        void sizeHintEvent(const SizeHintEvent&) override;
+        void drawEvent(const Box2I&, const DrawEvent&) override;
+
+    private:
         FTK_PRIVATE();
     };
 }

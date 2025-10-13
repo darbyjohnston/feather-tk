@@ -53,7 +53,7 @@ namespace ftk
     template<typename T, typename U>
     inline bool LRUCache<T, U>::get(const T& key, U& value)
     {
-        auto i = _map.find(key);
+        const auto i = _map.find(key);
         if (i != _map.end())
         {
             value = i->second.first;
@@ -70,7 +70,7 @@ namespace ftk
     template<typename T, typename U>
     inline bool LRUCache<T, U>::touch(const T& key)
     {
-        auto i = _map.find(key);
+        const auto i = _map.find(key);
         if (i != _map.end())
         {
             auto j = _counts.find(key);

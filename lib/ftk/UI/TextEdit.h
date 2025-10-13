@@ -15,8 +15,10 @@ namespace ftk
     //! Text edit options.
     struct TextEditOptions
     {
-        bool     lineNumbers = false;
-        FontInfo fontInfo    = FontInfo(getFont(Font::Mono), 12);
+        bool     lineNumbers       = false;
+        FontInfo fontInfo          = FontInfo(getFont(Font::Mono), 12);
+        float    cursorBlink       = .5F;
+        float    autoScrollTimeout = .05F;
 
         bool operator == (const TextEditOptions&) const;
         bool operator != (const TextEditOptions&) const;
@@ -82,6 +84,8 @@ namespace ftk
         void sizeHintEvent(const SizeHintEvent&) override;
 
     private:
+        void _widgetUpdate();
+
         FTK_PRIVATE();
     };
         

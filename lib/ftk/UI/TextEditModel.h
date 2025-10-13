@@ -122,7 +122,7 @@ namespace ftk
         //! Handle keys.
         bool key(Key, int modifiers = 0);
 
-        //! Set the numner of rows in a page.
+        //! Set the number of rows in a page.
         void setPageRows(int);
 
         //! Get the options.

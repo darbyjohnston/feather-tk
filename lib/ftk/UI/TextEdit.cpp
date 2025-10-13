@@ -4,6 +4,8 @@
 
 #include <ftk/UI/TextEditPrivate.h>
 
+#include <ftk/UI/Divider.h>
+#include <ftk/UI/RowLayout.h>
 #include <ftk/UI/ScrollWidget.h>
 
 namespace ftk
@@ -12,7 +14,9 @@ namespace ftk
     {
         return
             lineNumbers == other.lineNumbers &&
-            fontInfo == other.fontInfo;
+            fontInfo == other.fontInfo &&
+            cursorBlink == other.cursorBlink &&
+            autoScrollTimeout == other.autoScrollTimeout;
     }
 
     bool TextEditOptions::operator != (const TextEditOptions& other) const
@@ -25,6 +29,8 @@ namespace ftk
         std::shared_ptr<ObservableValue<TextEditOptions> > options;
         std::shared_ptr<TextEditModel> model;
         std::shared_ptr<TextEditWidget> widget;
+        std::shared_ptr<TextEditLineWidget> lineWidget;
+        std::shared_ptr<Divider> lineDivider;
         std::shared_ptr<ScrollWidget> scrollWidget;
 
         std::shared_ptr<ValueObserver<TextEditPos> > cursorObserver;
@@ -46,10 +52,21 @@ namespace ftk
             p.model = TextEditModel::create(context);
         }
 
+        p.lineWidget = TextEditLineWidget::create(context, p.model);
+        p.lineDivider = Divider::create(context, Orientation::Horizontal);
+
         p.widget = TextEditWidget::create(context, p.model);
 
         p.scrollWidget = ScrollWidget::create(context, ScrollType::Both, shared_from_this());
-        p.scrollWidget->setWidget(p.widget);
+        auto layout = HorizontalLayout::create(context);
+        layout->setSpacingRole(SizeRole::None);
+        layout->setBackgroundRole(ColorRole::Base);
+        p.lineWidget->setParent(layout);
+        p.lineDivider->setParent(layout);
+        p.widget->setParent(layout);
+        p.scrollWidget->setWidget(layout);
+
+        _widgetUpdate();
 
         p.widget->setFocusCallback(
             [this](bool value)
@@ -71,8 +88,7 @@ namespace ftk
     {}
 
     TextEdit::~TextEdit()
-    {
-    }
+    {}
 
     std::shared_ptr<TextEdit> TextEdit::create(
         const std::shared_ptr<Context>& context,
@@ -127,8 +143,12 @@ namespace ftk
     void TextEdit::setOptions(const TextEditOptions& value)
     {
         FTK_P();
-        p.options->setIfChanged(value);
-        p.widget->setOptions(value);
+        if (p.options->setIfChanged(value))
+        {
+            p.widget->setOptions(value);
+            p.lineWidget->setOptions(value);
+            _widgetUpdate();
+        }
     }
 
     SizeRole TextEdit::getMarginRole() const
@@ -151,5 +171,13 @@ namespace ftk
     {
         IWidget::sizeHintEvent(event);
         _setSizeHint(_p->scrollWidget->getSizeHint());
+    }
+
+    void TextEdit::_widgetUpdate()
+    {
+        FTK_P();
+        const bool lineNumbers = p.options->get().lineNumbers;
+        p.lineWidget->setVisible(lineNumbers);
+        p.lineDivider->setVisible(lineNumbers);
     }
 }
