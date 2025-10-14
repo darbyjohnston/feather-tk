@@ -94,8 +94,16 @@ namespace ftk
                     _accept();
                     action->doCheckedCallback(value);
                 });
+            button->setEnabledCallback(
+                [this, buttonWeak](bool value)
+                {
+                    if (!value && buttonWeak.lock() == _p->current)
+                    {
+                        _setCurrent(nullptr);
+                    }
+                });
 
-            if (!p.current)
+            if (!p.current && action->isEnabled())
             {
                 p.current = button;
                 _currentUpdate();
@@ -332,52 +340,52 @@ namespace ftk
             {
                 event.accept = true;
                 takeKeyFocus();
-                auto i = p.buttons.begin();
-                for (; i != p.buttons.end() && *i != p.current; ++i)
-                    ;
-                if (i != p.buttons.begin())
+                const auto enabled = _getEnabled();
+                auto i = std::find(enabled.begin(), enabled.end(), p.current);
+                if (i == enabled.end() && !enabled.empty())
+                {
+                    i = enabled.begin();
+                }
+                if (i != enabled.end() && i > enabled.begin())
                 {
                     --i;
                 }
-                if (i != p.buttons.end())
-                {
-                    _setCurrent(*i);
-                }
+                _setCurrent(i != enabled.end() && (*i)->isEnabled() ? *i : nullptr);
                 break;
             }
             case Key::Down:
             {
                 event.accept = true;
                 takeKeyFocus();
-                auto i = p.buttons.begin();
-                for (; i != p.buttons.end() && *i != p.current; ++i)
-                    ;
-                if (i != p.buttons.end())
+                const auto enabled = _getEnabled();
+                auto i = std::find(enabled.begin(), enabled.end(), p.current);
+                if (i == enabled.end() && !enabled.empty())
+                {
+                    i = enabled.begin();
+                }
+                if (i != enabled.end() && i < enabled.end() - 1)
                 {
                     ++i;
                 }
-                if (i != p.buttons.end())
-                {
-                    _setCurrent(*i);
-                }
+                _setCurrent(i != enabled.end() && (*i)->isEnabled() ? *i : nullptr);
                 break;
             }
             case Key::Home:
+            {
                 event.accept = true;
                 takeKeyFocus();
-                if (!p.buttons.empty())
-                {
-                    _setCurrent(*p.buttons.begin());
-                }
+                const auto enabled = _getEnabled();
+                _setCurrent(!enabled.empty() ? enabled.front() : nullptr);
                 break;
+            }
             case Key::End:
+            {
                 event.accept = true;
                 takeKeyFocus();
-                if (!p.buttons.empty())
-                {
-                    _setCurrent(*(p.buttons.end() - 1));
-                }
+                const auto enabled = _getEnabled();
+                _setCurrent(!enabled.empty() ? enabled.back() : nullptr);
                 break;
+            }
             default: break;
             }
         }
@@ -422,6 +430,20 @@ namespace ftk
             {
                 out = subMenu;
                 break;
+            }
+        }
+        return out;
+    }
+
+    std::vector<std::shared_ptr<MenuButton> > Menu::_getEnabled() const
+    {
+        FTK_P();
+        std::vector<std::shared_ptr<MenuButton> > out;
+        for (const auto& button : p.buttons)
+        {
+            if (button->isEnabled(false))
+            {
+                out.push_back(button);
             }
         }
         return out;

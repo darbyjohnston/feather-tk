@@ -21,6 +21,8 @@ namespace ftk
         std::string subMenuIcon;
         std::shared_ptr<Image> subMenuImage;
 
+        std::function<void(bool)> enabledCallback;
+
         std::shared_ptr<ValueObserver<std::string> > textObserver;
         std::shared_ptr<ValueObserver<std::string> > iconObserver;
         std::shared_ptr<ValueObserver<std::string> > checkedIconObserver;
@@ -173,6 +175,11 @@ namespace ftk
         p.subMenuImage.reset();
     }
 
+    void MenuButton::setEnabledCallback(const std::function<void(bool)>& value)
+    {
+        _p->enabledCallback = value;
+    }
+
     void MenuButton::setText(const std::string& value)
     {
         const bool changed = value != _text;
@@ -183,6 +190,20 @@ namespace ftk
             p.size.displayScale.reset();
             _setSizeUpdate();
             _setDrawUpdate();
+        }
+    }
+
+    void MenuButton::setEnabled(bool value)
+    {
+        const bool changed = value != isEnabled(false);
+        IWidget::setEnabled(value);
+        FTK_P();
+        if (changed)
+        {
+            if (p.enabledCallback)
+            {
+                p.enabledCallback(value);
+            }
         }
     }
 

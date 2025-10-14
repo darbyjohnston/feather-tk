@@ -32,8 +32,11 @@ namespace ftk
         void setShortcut(Key, int modifiers = 0);
         void setSubMenuIcon(const std::string&);
 
+        void setEnabledCallback(const std::function<void(bool)>&);
+
         void setText(const std::string&) override;
 
+        void setEnabled(bool) override;
         void setGeometry(const Box2I&) override;
         void sizeHintEvent(const SizeHintEvent&) override;
         void clipEvent(const Box2I&, bool) override;

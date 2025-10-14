@@ -80,6 +80,7 @@ namespace ftk
         void _currentUpdate();
 
         std::shared_ptr<Menu> _getOpenMenu() const;
+        std::vector<std::shared_ptr<MenuButton> > _getEnabled() const;
 
         void _accept();
 
