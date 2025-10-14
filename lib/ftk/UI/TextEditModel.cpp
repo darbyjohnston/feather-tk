@@ -100,7 +100,7 @@ namespace ftk
     {
         FTK_P();
         p.context = context;
-        p.text = ObservableList<std::string>::create();
+        p.text = ObservableList<std::string>::create(textEditClear);
         p.cursor = ObservableValue<TextEditPos>::create(TextEditPos(0, 0));
         p.selection = ObservableValue<TextEditSelection>::create();
     }
@@ -132,7 +132,7 @@ namespace ftk
     void TextEditModel::setText(const std::vector<std::string>& value)
     {
         FTK_P();
-        if (p.text->setIfChanged(value))
+        if (p.text->setIfChanged(!value.empty() ? value : textEditClear))
         {
             p.cursor->setIfChanged(TextEditPos(0, 0));
             p.selection->setIfChanged(TextEditSelection());
@@ -711,9 +711,9 @@ namespace ftk
         const TextEditPos min = selection.min();
         const TextEditPos max = selection.max();
         const auto& text = p.text->get();
-        if (text.empty() || selection == _getSelectAll())
+        if (selection == _getSelectAll())
         {
-            p.text->setIfChanged(value);
+            p.text->setIfChanged(!value.empty() ? value : textEditClear);
         }
         else if (min.line == max.line && value.size() <= 1)
         {

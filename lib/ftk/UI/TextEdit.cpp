@@ -56,6 +56,7 @@ namespace ftk
         p.lineDivider = Divider::create(context, Orientation::Horizontal);
 
         p.widget = TextEditWidget::create(context, p.model);
+        p.widget->setStretch(Stretch::Expanding);
 
         p.scrollWidget = ScrollWidget::create(context, ScrollType::Both, shared_from_this());
         auto layout = HorizontalLayout::create(context);

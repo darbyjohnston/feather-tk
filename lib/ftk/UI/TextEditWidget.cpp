@@ -452,11 +452,8 @@ namespace ftk
         {
             event.accept = true;
             p.mousePress = event.button;
-            if (1 == p.mousePress)
-            {
-                p.cursorStart = _getCursorPos(event.pos);
-                p.model->setCursor(p.cursorStart);
-            }
+            p.cursorStart = _getCursorPos(event.pos);
+            p.model->setCursor(p.cursorStart);
             takeKeyFocus();
         }
     }

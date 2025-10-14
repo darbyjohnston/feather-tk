@@ -14,6 +14,8 @@ namespace ftk
     //! \name Text Widgets
     ///@{
 
+    const std::vector<std::string> textEditClear({ "" });
+
     //! Text edit position.
     struct TextEditPos
     {

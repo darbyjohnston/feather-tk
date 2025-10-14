@@ -18,7 +18,7 @@ namespace examples
         {
             _path = path;
 
-            _model = ftk::TextEditModel::create(context);
+            _model = TextEditModel::create(context);
         }
 
         Document::~Document()

@@ -52,7 +52,7 @@ namespace ftk
                     });
                 FTK_ASSERT(text2 == text);
                 model->clearText();
-                FTK_ASSERT(text2.empty());
+                FTK_ASSERT(text2 == textEditClear);
             }
             if (auto context = _context.lock())
             {
@@ -293,7 +293,8 @@ namespace ftk
 
                 model->setSelection(TextEditSelection());
                 model->key(Key::X, static_cast<int>(KeyModifier::Control));
-                FTK_ASSERT(clipboard->getText().empty());
+                tmp = splitLines(clipboard->getText());
+                FTK_ASSERT(tmp == textEditClear);
 
                 model->setSelection(TextEditSelection(
                     TextEditPos(0, 0),
@@ -325,7 +326,7 @@ namespace ftk
                 FTK_ASSERT(tmp[0] == "!!!!!!!!!");
                 FTK_ASSERT(tmp[1] == "01234fghijklmnopqrstuvwxyz");
                 FTK_ASSERT(tmp[2] == "##########");
-                FTK_ASSERT(text2.empty());
+                FTK_ASSERT(text2 == textEditClear);
                 FTK_ASSERT(TextEditPos(0, 0) == cursor2);
                 FTK_ASSERT(!selection2.isValid());
             }
