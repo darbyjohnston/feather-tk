@@ -33,7 +33,7 @@ namespace examples
 
             std::weak_ptr<App> appWeak(app);
             _currentDocumentObserver = ftk::ValueObserver<int>::create(
-                app->getDocumentModel()->observeCurrent(),
+                app->getDocumentModel()->observeCurrentIndex(),
                 [this, appWeak](int index)
                 {
                     _textObserver.reset();
@@ -43,7 +43,7 @@ namespace examples
                         if (index >= 0 && index < documents.size())
                         {
                             const auto& document = documents[index];
-                            _textObserver = ftk::ListObserver<std::string>::create(
+                            _textObserver = ListObserver<std::string>::create(
                                 document->getModel()->observeText(),
                                 [this](const std::vector<std::string>& lines)
                                 {

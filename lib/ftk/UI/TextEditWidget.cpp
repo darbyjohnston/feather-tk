@@ -486,7 +486,19 @@ namespace ftk
         FTK_P();
         if (hasKeyFocus())
         {
-            event.accept = p.model->key(event.key, event.modifiers);
+            switch (event.key)
+            {
+            case Key::Escape:
+                event.accept = true;
+                if (auto window = getWindow())
+                {
+                    window->setKeyFocus(window->getNextKeyFocus(shared_from_this()));
+                }
+                break;
+            default:
+                event.accept = p.model->key(event.key, event.modifiers);
+                break;
+            }
         }
         if (!event.accept)
         {

@@ -18,19 +18,8 @@ namespace examples
             const std::shared_ptr<IWidget>& parent)
         {
             ftk::MenuBar::_init(context, parent);
-
-            _menus["File"] = Menu::create(context);
-            _menus["File"]->addAction(actions->getAction("File/New"));
-            _menus["File"]->addAction(actions->getAction("File/Open"));
-            _menus["File"]->addAction(actions->getAction("File/Close"));
-            _menus["File"]->addAction(actions->getAction("File/CloseAll"));
-            _menus["File"]->addDivider();
-            _menus["File"]->addAction(actions->getAction("File/Exit"));
-            addMenu("File", _menus["File"]);
-
-            _menus["Edit"] = Menu::create(context);
-            _menus["Edit"]->addAction(actions->getAction("Edit/Settings"));
-            addMenu("Edit", _menus["Edit"]);
+            _createFileMenu(context, actions);
+            _createEditMenu(context, actions);
         }
 
         MenuBar::~MenuBar()
@@ -44,6 +33,36 @@ namespace examples
             auto out = std::shared_ptr<MenuBar>(new MenuBar);
             out->_init(context, actions, parent);
             return out;
+        }
+
+        void MenuBar::_createFileMenu(
+            const std::shared_ptr<ftk::Context>& context,
+            const std::shared_ptr<Actions>& actions)
+        {
+            _menus["File"] = Menu::create(context);
+            _menus["File"]->addAction(actions->getAction("File/New"));
+            _menus["File"]->addAction(actions->getAction("File/Open"));
+            _menus["File"]->addAction(actions->getAction("File/Close"));
+            _menus["File"]->addAction(actions->getAction("File/CloseAll"));
+            _menus["File"]->addDivider();
+            _menus["File"]->addAction(actions->getAction("File/Exit"));
+            addMenu("File", _menus["File"]);
+        }
+
+        void MenuBar::_createEditMenu(
+            const std::shared_ptr<ftk::Context>& context,
+            const std::shared_ptr<Actions>& actions)
+        {
+            _menus["Edit"] = Menu::create(context);
+            _menus["Edit"]->addAction(actions->getAction("Edit/Cut"));
+            _menus["Edit"]->addAction(actions->getAction("Edit/Copy"));
+            _menus["Edit"]->addAction(actions->getAction("Edit/Paste"));
+            _menus["Edit"]->addDivider();
+            _menus["Edit"]->addAction(actions->getAction("Edit/SelectAll"));
+            _menus["Edit"]->addAction(actions->getAction("Edit/ClearSelection"));
+            _menus["Edit"]->addDivider();
+            _menus["Edit"]->addAction(actions->getAction("Edit/Settings"));
+            addMenu("Edit", _menus["Edit"]);
         }
     }
 }

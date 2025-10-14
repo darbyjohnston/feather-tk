@@ -33,6 +33,13 @@ namespace examples
                 const std::shared_ptr<ftk::IWidget>& parent = nullptr);
 
         private:
+            void _createFileMenu(
+                const std::shared_ptr<ftk::Context>&,
+                const std::shared_ptr<Actions>&);
+            void _createEditMenu(
+                const std::shared_ptr<ftk::Context>&,
+                const std::shared_ptr<Actions>&);
+
             std::map<std::string, std::shared_ptr<ftk::Menu> > _menus;
         };
     }

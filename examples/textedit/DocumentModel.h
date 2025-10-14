@@ -36,16 +36,17 @@ namespace examples
             std::shared_ptr<ftk::IObservableValue<int> > observeClose() const;
             std::shared_ptr<ftk::IObservableValue<bool> > observeCloseAll() const;
 
-            int getCurrent() const;
-            std::shared_ptr<ftk::IObservableValue<int> > observeCurrent() const;
-            void setCurrent(int);
+            std::shared_ptr<Document> getCurrent() const;
+            int getCurrentIndex() const;
+            std::shared_ptr<ftk::IObservableValue<int> > observeCurrentIndex() const;
+            void setCurrentIndex(int);
 
         private:
             std::shared_ptr<ftk::ObservableList<std::shared_ptr<Document> > > _documents;
             std::shared_ptr<ftk::ObservableValue<std::shared_ptr<Document> > > _add;
             std::shared_ptr<ftk::ObservableValue<int> > _close;
             std::shared_ptr<ftk::ObservableValue<bool> > _closeAll;
-            std::shared_ptr<ftk::ObservableValue<int> > _current;
+            std::shared_ptr<ftk::ObservableValue<int> > _currentIndex;
         };
     }
 }

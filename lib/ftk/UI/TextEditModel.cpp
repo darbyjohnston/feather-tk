@@ -202,9 +202,7 @@ namespace ftk
     void TextEditModel::selectAll()
     {
         FTK_P();
-        const TextEditSelection selection = _getSelectAll();
-        p.selection->setIfChanged(selection);
-        p.cursor->setIfChanged(selection.second);
+        p.selection->setIfChanged(_getSelectAll());
     }
 
     void TextEditModel::clearSelection()

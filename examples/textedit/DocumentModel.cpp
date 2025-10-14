@@ -17,7 +17,7 @@ namespace examples
             _add = ObservableValue<std::shared_ptr<Document> >::create();
             _close = ObservableValue<int>::create(-1);
             _closeAll = ObservableValue<bool>::create(false);
-            _current = ObservableValue<int>::create(-1);
+            _currentIndex = ObservableValue<int>::create(-1);
         }
 
         DocumentModel::~DocumentModel()
@@ -46,7 +46,7 @@ namespace examples
             _documents->pushBack(document);
             _add->setAlways(document);
             _add->setAlways(nullptr);
-            _current->setIfChanged(_documents->getSize() - 1);
+            _currentIndex->setIfChanged(_documents->getSize() - 1);
         }
 
         std::shared_ptr<ftk::IObservableValue<std::shared_ptr<Document> > > DocumentModel::observeAdd() const
@@ -61,15 +61,15 @@ namespace examples
                 _documents->removeItem(index);
                 _close->setAlways(index);
 
-                if (index == _current->get())
+                if (index == _currentIndex->get())
                 {
-                    _current->setIfChanged(std::min(
+                    _currentIndex->setIfChanged(std::min(
                         index,
                         static_cast<int>(_documents->getSize()) - 1));
                 }
-                else if (index < _current->get())
+                else if (index < _currentIndex->get())
                 {
-                    _current->setIfChanged(_current->get() - 1);
+                    _currentIndex->setIfChanged(_currentIndex->get() - 1);
                 }
             }
         }
@@ -78,7 +78,7 @@ namespace examples
         {
             _documents->clear();
             _closeAll->setAlways(true);
-            _current->setIfChanged(-1);
+            _currentIndex->setIfChanged(-1);
         }
 
         std::shared_ptr<ftk::IObservableValue<int> > DocumentModel::observeClose() const
@@ -91,19 +91,26 @@ namespace examples
             return _closeAll;
         }
 
-        int DocumentModel::getCurrent() const
+        std::shared_ptr<Document> DocumentModel::getCurrent() const
         {
-            return _current->get();
+            const auto& docs = _documents->get();
+            const int index = _currentIndex->get();
+            return index >= 0 && index < docs.size() ? docs[index] : nullptr;
         }
 
-        std::shared_ptr<ftk::IObservableValue<int> > DocumentModel::observeCurrent() const
+        int DocumentModel::getCurrentIndex() const
         {
-            return _current;
+            return _currentIndex->get();
         }
 
-        void DocumentModel::setCurrent(int value)
+        std::shared_ptr<ftk::IObservableValue<int> > DocumentModel::observeCurrentIndex() const
         {
-            _current->setIfChanged(value);
+            return _currentIndex;
+        }
+
+        void DocumentModel::setCurrentIndex(int value)
+        {
+            _currentIndex->setIfChanged(value);
         }
     }
 }

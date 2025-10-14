@@ -20,8 +20,32 @@ namespace examples
             const std::shared_ptr<Context>& context,
             const std::shared_ptr<App>& app)
         {
+            _app = app;
+
             _createFileActions(context, app);
             _createEditActions(context, app);
+
+            _currentDocObserver = ValueObserver<int>::create(
+                app->getDocumentModel()->observeCurrentIndex(),
+                [this](int index)
+                {
+                    _selectionObserver.reset();
+                    if (auto app = _app.lock())
+                    {
+                        const auto& documents = app->getDocumentModel()->getList();
+                        if (index >= 0 && index < documents.size())
+                        {
+                            const auto& document = documents[index];
+                            _selectionObserver = ValueObserver<TextEditSelection>::create(
+                                document->getModel()->observeSelection(),
+                                [this](const TextEditSelection&)
+                                {
+                                    _actionsUpdate();
+                                });
+                        }
+                    }
+                    _actionsUpdate();
+                });
         }
 
         Actions::~Actions()
@@ -102,7 +126,7 @@ namespace examples
                     if (auto app = appWeak.lock())
                     {
                         app->getDocumentModel()->close(
-                            app->getDocumentModel()->getCurrent());
+                            app->getDocumentModel()->getCurrentIndex());
                     }
                 });
             _actions["File/Close"]->setTooltip("Close the current file");
@@ -140,6 +164,67 @@ namespace examples
             const std::shared_ptr<App>& app)
         {
             auto appWeak = std::weak_ptr<App>(app);
+            _actions["Edit/Cut"] = Action::create(
+                "Cut",
+                "Cut",
+                [appWeak]
+                {
+                    if (auto app = appWeak.lock())
+                    {
+                    }
+                });
+            _actions["Edit/Cut"]->setTooltip("Cut the selected text to the clipboard");
+
+            _actions["Edit/Copy"] = Action::create(
+                "Copy",
+                "Copy",
+                [appWeak]
+                {
+                    if (auto app = appWeak.lock())
+                    {
+                    }
+                });
+            _actions["Edit/Copy"]->setTooltip("Copy the selected text to the clipboard");
+
+            _actions["Edit/Paste"] = Action::create(
+                "Paste",
+                "Paste",
+                [appWeak]
+                {
+                    if (auto app = appWeak.lock())
+                    {
+                    }
+                });
+            _actions["Edit/Paste"]->setTooltip("Paste text from the clipboard");
+
+            _actions["Edit/SelectAll"] = Action::create(
+                "Select All",
+                [appWeak]
+                {
+                    if (auto app = appWeak.lock())
+                    {
+                        if (auto doc = app->getDocumentModel()->getCurrent())
+                        {
+                            doc->getModel()->selectAll();
+                        }
+                    }
+                });
+            _actions["Edit/SelectAll"]->setTooltip("Select all of the text");
+
+            _actions["Edit/ClearSelection"] = Action::create(
+                "Clear Selection",
+                [appWeak]
+                {
+                    if (auto app = appWeak.lock())
+                    {
+                        if (auto doc = app->getDocumentModel()->getCurrent())
+                        {
+                            doc->getModel()->clearSelection();
+                        }
+                    }
+                });
+            _actions["Edit/ClearSelection"]->setTooltip("Clear the selection");
+
             _actions["Edit/Settings"] = Action::create(
                 "Settings",
                 "Settings",
@@ -160,6 +245,26 @@ namespace examples
                 {
                     _actions["Edit/Settings"]->setChecked(value.settings);
                 });
+        }
+
+        void Actions::_actionsUpdate()
+        {
+            auto app = _app.lock();
+            auto doc = app->getDocumentModel()->getCurrent();
+            TextEditSelection selection;
+            if (doc)
+            {
+                selection = doc->getModel()->getSelection();
+            }
+
+            _actions["File/Close"]->setEnabled(doc.get());
+            _actions["File/CloseAll"]->setEnabled(doc.get());
+
+            _actions["Edit/Cut"]->setEnabled(doc.get() && selection.isValid());
+            _actions["Edit/Copy"]->setEnabled(doc.get() && selection.isValid());
+            _actions["Edit/Paste"]->setEnabled(doc.get());
+            _actions["Edit/SelectAll"]->setEnabled(doc.get());
+            _actions["Edit/ClearSelection"]->setEnabled(doc.get() && selection.isValid());
         }
     }
 }

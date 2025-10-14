@@ -32,7 +32,7 @@ namespace examples
                 {
                     if (auto app = appWeak.lock())
                     {
-                        app->getDocumentModel()->setCurrent(index);
+                        app->getDocumentModel()->setCurrentIndex(index);
                     }
                 });
             _tabWidget->setTabCloseCallback(
@@ -89,7 +89,7 @@ namespace examples
                 });
 
             _currentDocumentObserver = ftk::ValueObserver<int>::create(
-                app->getDocumentModel()->observeCurrent(),
+                app->getDocumentModel()->observeCurrentIndex(),
                 [this, appWeak](int index)
                 {
                     _tabWidget->setCurrentTab(index);

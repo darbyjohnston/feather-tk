@@ -42,8 +42,14 @@ namespace examples
                 const std::shared_ptr<ftk::Context>&,
                 const std::shared_ptr<App>&);
 
+            void _actionsUpdate();
+
+            std::weak_ptr<App> _app;
+
             std::map<std::string, std::shared_ptr<ftk::Action> > _actions;
 
+            std::shared_ptr<ftk::ValueObserver<int> > _currentDocObserver;
+            std::shared_ptr<ftk::ValueObserver<ftk::TextEditSelection> > _selectionObserver;
             std::shared_ptr<ftk::ValueObserver<WindowOptions> > _windowOptionsObserver;
         };
     }
