@@ -434,13 +434,11 @@ namespace ftk
                     p.autoScrollTimer = std::chrono::steady_clock::now();
                 }
             }
-            else
-            {
-                const TextEditPos cursor = _getCursorPos(event.pos);
-                p.model->setCursor(cursor);
-                p.model->setSelection(TextEditSelection(p.cursorStart, cursor));
-            }
             p.autoScroll = autoScroll;
+
+            const TextEditPos cursor = _getCursorPos(event.pos);
+            p.model->setCursor(cursor);
+            p.model->setSelection(TextEditSelection(p.cursorStart, cursor));
         }
     }
 
@@ -471,10 +469,6 @@ namespace ftk
     {
         IWidget::keyFocusEvent(value);
         FTK_P();
-        if (!value)
-        {
-            p.model->clearSelection();
-        }
         if (p.focusCallback)
         {
             p.focusCallback(value);

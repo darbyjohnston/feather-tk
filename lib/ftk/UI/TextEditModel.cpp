@@ -6,6 +6,7 @@
 
 #include <ftk/UI/ClipboardSystem.h>
 
+#include <ftk/Core/Assert.h>
 #include <ftk/Core/String.h>
 
 namespace ftk
@@ -182,21 +183,17 @@ namespace ftk
     void TextEditModel::setSelection(const TextEditSelection& value)
     {
         FTK_P();
+        const auto& text = p.text->get();
         TextEditSelection tmp = value;
-        if (tmp.isValid())
-        {
-            const auto& text = p.text->get();
-            tmp.first.line = clamp(tmp.first.line, 0, static_cast<int>(text.size()) - 1);
-            tmp.first.chr =  tmp.first.line < text.size() ?
-                clamp(tmp.first.chr, 0, static_cast<int>(text[tmp.first.line].size())) :
-                0;
-            tmp.second.line = clamp(tmp.second.line, 0, static_cast<int>(text.size()) - 1);
-            tmp.second.chr = tmp.second.line < text.size() ?
-                clamp(tmp.second.chr, 0, static_cast<int>(text[tmp.second.line].size())) :
-                0;
-        }
-        _p->selection->setIfChanged(tmp);
-        _p->cursor->setIfChanged(tmp.second);
+        tmp.first.line = clamp(tmp.first.line, 0, static_cast<int>(text.size()) - 1);
+        tmp.first.chr =  tmp.first.line < text.size() ?
+            clamp(tmp.first.chr, 0, static_cast<int>(text[tmp.first.line].size())) :
+            0;
+        tmp.second.line = clamp(tmp.second.line, 0, static_cast<int>(text.size()) - 1);
+        tmp.second.chr = tmp.second.line < text.size() ?
+            clamp(tmp.second.chr, 0, static_cast<int>(text[tmp.second.line].size())) :
+            0;
+        p.selection->setIfChanged(tmp);
     }
 
     void TextEditModel::selectAll()

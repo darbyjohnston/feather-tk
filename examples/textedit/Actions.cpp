@@ -30,19 +30,17 @@ namespace examples
                 [this](int index)
                 {
                     _selectionObserver.reset();
-                    if (auto app = _app.lock())
+                    auto app = _app.lock();
+                    const auto& documents = app->getDocumentModel()->getList();
+                    if (index >= 0 && index < documents.size())
                     {
-                        const auto& documents = app->getDocumentModel()->getList();
-                        if (index >= 0 && index < documents.size())
-                        {
-                            const auto& document = documents[index];
-                            _selectionObserver = ValueObserver<TextEditSelection>::create(
-                                document->getModel()->observeSelection(),
-                                [this](const TextEditSelection&)
-                                {
-                                    _actionsUpdate();
-                                });
-                        }
+                        const auto& document = documents[index];
+                        _selectionObserver = ValueObserver<TextEditSelection>::create(
+                            document->getModel()->observeSelection(),
+                            [this](const TextEditSelection&)
+                            {
+                                _actionsUpdate();
+                            });
                     }
                     _actionsUpdate();
                 });
@@ -83,11 +81,9 @@ namespace examples
                 static_cast<int>(KeyModifier::Control),
                 [appWeak]
                 {
-                    if (auto app = appWeak.lock())
-                    {
-                        auto document = Document::create(app->getContext(), "Untitled");
-                        app->getDocumentModel()->add(document);
-                    }
+                    auto app = appWeak.lock();
+                    auto document = Document::create(app->getContext(), "Untitled");
+                    app->getDocumentModel()->add(document);
                 });
             _actions["File/New"]->setTooltip("Create a new file");
 
@@ -98,21 +94,17 @@ namespace examples
                 static_cast<int>(KeyModifier::Control),
                 [this, appWeak]
                 {
-                    if (auto app = appWeak.lock())
-                    {
-                        if (auto fileBrowserSystem = app->getContext()->getSystem<FileBrowserSystem>())
+                    auto app = appWeak.lock();
+                    auto fileBrowserSystem = app->getContext()->getSystem<FileBrowserSystem>();
+                    fileBrowserSystem->open(
+                        app->getMainWindow(),
+                        [appWeak](const std::filesystem::path& value)
                         {
-                            fileBrowserSystem->open(
-                                app->getMainWindow(),
-                                [appWeak](const std::filesystem::path& value)
-                                {
-                                    if (auto app = appWeak.lock())
-                                    {
-                                        app->open(value);
-                                    }
-                                });
-                        }
-                    }
+                            if (auto app = appWeak.lock())
+                            {
+                                app->open(value);
+                            }
+                        });
                 });
             _actions["File/Open"]->setTooltip("Open a file");
 
@@ -123,11 +115,9 @@ namespace examples
                 static_cast<int>(KeyModifier::Control),
                 [appWeak]
                 {
-                    if (auto app = appWeak.lock())
-                    {
-                        app->getDocumentModel()->close(
-                            app->getDocumentModel()->getCurrentIndex());
-                    }
+                    auto app = appWeak.lock();
+                    app->getDocumentModel()->close(
+                        app->getDocumentModel()->getCurrentIndex());
                 });
             _actions["File/Close"]->setTooltip("Close the current file");
 
@@ -139,10 +129,8 @@ namespace examples
                 static_cast<int>(KeyModifier::Control),
                 [appWeak]
                 {
-                    if (auto app = appWeak.lock())
-                    {
-                        app->getDocumentModel()->closeAll();
-                    }
+                    auto app = appWeak.lock();
+                    app->getDocumentModel()->closeAll();
                 });
             _actions["File/CloseAll"]->setTooltip("Close all files");
 
@@ -152,10 +140,8 @@ namespace examples
                 static_cast<int>(KeyModifier::Control),
                 [appWeak]
                 {
-                    if (auto app = appWeak.lock())
-                    {
-                        app->exit();
-                    }
+                    auto app = appWeak.lock();
+                    app->exit();
                 });
         }
 
@@ -169,8 +155,10 @@ namespace examples
                 "Cut",
                 [appWeak]
                 {
-                    if (auto app = appWeak.lock())
+                    auto app = appWeak.lock();
+                    if (auto doc = app->getDocumentModel()->getCurrent())
                     {
+                        doc->getModel()->key(Key::X, static_cast<int>(KeyModifier::Control));
                     }
                 });
             _actions["Edit/Cut"]->setTooltip("Cut the selected text to the clipboard");
@@ -180,8 +168,10 @@ namespace examples
                 "Copy",
                 [appWeak]
                 {
-                    if (auto app = appWeak.lock())
+                    auto app = appWeak.lock();
+                    if (auto doc = app->getDocumentModel()->getCurrent())
                     {
+                        doc->getModel()->key(Key::C, static_cast<int>(KeyModifier::Control));
                     }
                 });
             _actions["Edit/Copy"]->setTooltip("Copy the selected text to the clipboard");
@@ -191,8 +181,10 @@ namespace examples
                 "Paste",
                 [appWeak]
                 {
-                    if (auto app = appWeak.lock())
+                    auto app = appWeak.lock();
+                    if (auto doc = app->getDocumentModel()->getCurrent())
                     {
+                        doc->getModel()->key(Key::V, static_cast<int>(KeyModifier::Control));
                     }
                 });
             _actions["Edit/Paste"]->setTooltip("Paste text from the clipboard");
@@ -201,12 +193,10 @@ namespace examples
                 "Select All",
                 [appWeak]
                 {
-                    if (auto app = appWeak.lock())
+                    auto app = appWeak.lock();
+                    if (auto doc = app->getDocumentModel()->getCurrent())
                     {
-                        if (auto doc = app->getDocumentModel()->getCurrent())
-                        {
-                            doc->getModel()->selectAll();
-                        }
+                        doc->getModel()->selectAll();
                     }
                 });
             _actions["Edit/SelectAll"]->setTooltip("Select all of the text");
@@ -215,12 +205,10 @@ namespace examples
                 "Clear Selection",
                 [appWeak]
                 {
-                    if (auto app = appWeak.lock())
+                    auto app = appWeak.lock();
+                    if (auto doc = app->getDocumentModel()->getCurrent())
                     {
-                        if (auto doc = app->getDocumentModel()->getCurrent())
-                        {
-                            doc->getModel()->clearSelection();
-                        }
+                        doc->getModel()->clearSelection();
                     }
                 });
             _actions["Edit/ClearSelection"]->setTooltip("Clear the selection");
@@ -230,12 +218,10 @@ namespace examples
                 "Settings",
                 [appWeak](bool value)
                 {
-                    if (auto app = appWeak.lock())
-                    {
-                        auto options = app->getSettingsModel()->getWindowOptions();
-                        options.settings = value;
-                        app->getSettingsModel()->setWindowOptions(options);
-                    }
+                    auto app = appWeak.lock();
+                    auto options = app->getSettingsModel()->getWindowOptions();
+                    options.settings = value;
+                    app->getSettingsModel()->setWindowOptions(options);
                 });
             _actions["Edit/Settings"]->setTooltip("Toggle the settings");
 
