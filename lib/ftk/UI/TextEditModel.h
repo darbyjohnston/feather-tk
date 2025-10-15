@@ -147,6 +147,10 @@ namespace ftk
         FTK_PRIVATE();
     };
 
+    void to_json(nlohmann::json&, const TextEditModelOptions&);
+
+    void from_json(const nlohmann::json&, TextEditModelOptions&);
+
     std::ostream& operator << (std::ostream&, const TextEditPos&);
     std::ostream& operator << (std::ostream&, const TextEditSelection&);
 

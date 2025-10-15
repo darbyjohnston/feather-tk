@@ -6,6 +6,7 @@
 
 #include "Document.h"
 
+#include <ftk/UI/Settings.h>
 #include <ftk/UI/TextEdit.h>
 
 namespace examples
@@ -14,8 +15,8 @@ namespace examples
     {
         struct WindowOptions
         {
-            bool settings = false;
-            float split = .7F;
+            bool  settings = false;
+            float split    = .7F;
 
             bool operator == (const WindowOptions&) const;
             bool operator != (const WindowOptions&) const;
@@ -42,9 +43,19 @@ namespace examples
             std::shared_ptr<ftk::IObservableValue<ftk::TextEditOptions> > observeTextEditOptions() const;
             void setTextEditOptions(const ftk::TextEditOptions&);
 
+            const ftk::TextEditModelOptions& getTextEditModelOptions() const;
+            std::shared_ptr<ftk::IObservableValue<ftk::TextEditModelOptions> > observeTextEditModelOptions() const;
+            void setTextEditModelOptions(const ftk::TextEditModelOptions&);
+
         private:
+            std::shared_ptr<ftk::Settings> _settings;
             std::shared_ptr<ftk::ObservableValue<WindowOptions> > _windowOptions;
             std::shared_ptr<ftk::ObservableValue<ftk::TextEditOptions> > _textEditOptions;
+            std::shared_ptr<ftk::ObservableValue<ftk::TextEditModelOptions> > _textEditModelOptions;
         };
+
+        void to_json(nlohmann::json&, const WindowOptions&);
+
+        void from_json(const nlohmann::json&, WindowOptions&);
     }
 }

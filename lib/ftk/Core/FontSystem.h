@@ -143,6 +143,10 @@ namespace ftk
         FTK_PRIVATE();
     };
 
+    void to_json(nlohmann::json&, const FontInfo&);
+
+    void from_json(const nlohmann::json&, FontInfo&);
+
     ///@}
 }
 

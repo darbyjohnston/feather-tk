@@ -31,6 +31,7 @@ namespace examples
             ftk::MainWindow::_init(context, app, name, size);
 
             _app = app;
+            _settingsModel = app->getSettingsModel();
 
             _actions = Actions::create(context, app);
 
@@ -59,7 +60,7 @@ namespace examples
             setWidget(_layout);
 
             _windowOptionsObserver = ValueObserver<WindowOptions>::create(
-                app->getSettingsModel()->observeWindowOptions(),
+                _settingsModel->observeWindowOptions(),
                 [this](const WindowOptions& value)
                 {
                     _splitter->setSplit(value.split);
@@ -69,12 +70,9 @@ namespace examples
 
         MainWindow::~MainWindow()
         {
-            if (auto app = _app.lock())
-            {
-                auto windowOptions = app->getSettingsModel()->getWindowOptions();
-                windowOptions.split = _splitter->getSplit();
-                app->getSettingsModel()->setWindowOptions(windowOptions);
-            }
+            auto windowOptions = _settingsModel->getWindowOptions();
+            windowOptions.split = _splitter->getSplit();
+            _settingsModel->setWindowOptions(windowOptions);
         }
 
         std::shared_ptr<MainWindow> MainWindow::create(

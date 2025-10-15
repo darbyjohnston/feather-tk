@@ -49,6 +49,7 @@ namespace examples
         private:
 
             std::weak_ptr<App> _app;
+            std::shared_ptr<SettingsModel> _settingsModel;
 
             std::shared_ptr<Actions> _actions;
             std::shared_ptr<MenuBar> _menuBar;

@@ -23,17 +23,19 @@ namespace examples
         {
             IWidget::_init(context, "examples::textedit::StatusBar", parent);
 
-            _cursorLabel = Label::create(context);
-            _cursorLabel->setMarginRole(SizeRole::MarginInside);
-
             _linesLabel = Label::create(context);
+            _linesLabel->setFontRole(FontRole::Mono);
             _linesLabel->setMarginRole(SizeRole::MarginInside);
+
+            _cursorLabel = Label::create(context);
+            _cursorLabel->setFontRole(FontRole::Mono);
+            _cursorLabel->setMarginRole(SizeRole::MarginInside);
 
             _layout = HorizontalLayout::create(context, shared_from_this());
             _layout->setSpacingRole(SizeRole::None);
             _layout->addSpacer(Stretch::Expanding);
-            _cursorLabel->setParent(_layout);
             _linesLabel->setParent(_layout);
+            _cursorLabel->setParent(_layout);
 
             std::weak_ptr<App> appWeak(app);
             _currentDocumentObserver = ftk::ValueObserver<int>::create(
@@ -59,16 +61,16 @@ namespace examples
                                 document->getModel()->observeCursor(),
                                 [this](const TextEditPos& value)
                                 {
-                                    _cursorLabel->setText(Format("Cursor: {0}, {1}").
-                                        arg(value.line + 1).
-                                        arg(value.chr + 1));
+                                    _cursorLabel->setText(Format("Line: {0} Character: {1}").
+                                        arg(value.line + 1, 4).
+                                        arg(value.chr + 1, 2));
                                 });
                         }
                     }
                     if (!_textObserver)
                     {
-                        _cursorLabel->setText(std::string());
                         _linesLabel->setText(std::string());
+                        _cursorLabel->setText(std::string());
                     }
                 });
         }

@@ -443,4 +443,16 @@ namespace ftk
             size.h = pos.y;
         }
     }
+
+    void to_json(nlohmann::json& json, const FontInfo& value)
+    {
+        json["Family"] = value.family;
+        json["Size"] = value.size;
+    }
+
+    void from_json(const nlohmann::json& json, FontInfo& value)
+    {
+        json.at("Family").get_to(value.family);
+        json.at("Size").get_to(value.size);
+    }
 }

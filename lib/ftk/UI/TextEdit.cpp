@@ -188,4 +188,20 @@ namespace ftk
         p.lineWidget->setVisible(lineNumbers);
         p.lineDivider->setVisible(lineNumbers);
     }
+
+    void to_json(nlohmann::json& json, const TextEditOptions& value)
+    {
+        json["LineNumbers"] = value.lineNumbers;
+        json["FontInfo"] = value.fontInfo;
+        json["CursorBlink"] = value.cursorBlink;
+        json["AutoScrollTimeout"] = value.autoScrollTimeout;
+    }
+
+    void from_json(const nlohmann::json& json, TextEditOptions& value)
+    {
+        json.at("LineNumbers").get_to(value.lineNumbers);
+        json.at("FontInfo").get_to(value.fontInfo);
+        json.at("CursorBlink").get_to(value.cursorBlink);
+        json.at("AutoScrollTimeout").get_to(value.autoScrollTimeout);
+    }
 }

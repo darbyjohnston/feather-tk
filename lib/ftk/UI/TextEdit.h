@@ -89,6 +89,10 @@ namespace ftk
 
         FTK_PRIVATE();
     };
+
+    void to_json(nlohmann::json&, const TextEditOptions&);
+
+    void from_json(const nlohmann::json&, TextEditOptions&);
         
     ///@}
 }

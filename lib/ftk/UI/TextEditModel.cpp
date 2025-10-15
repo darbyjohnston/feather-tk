@@ -756,6 +756,16 @@ namespace ftk
         }
     }
 
+    void to_json(nlohmann::json& json, const TextEditModelOptions& value)
+    {
+        json["TabSpaceCount"] = value.tabSpaceCount;
+    }
+
+    void from_json(const nlohmann::json& json, TextEditModelOptions& value)
+    {
+        json.at("TabSpaceCount").get_to(value.tabSpaceCount);
+    }
+
     std::ostream& operator << (std::ostream& os, const TextEditPos& value)
     {
         os << value.line << ":" << value.chr;
