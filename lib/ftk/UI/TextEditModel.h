@@ -14,8 +14,6 @@ namespace ftk
     //! \name Text Widgets
     ///@{
 
-    const std::vector<std::string> textEditClear({ "" });
-
     //! Text edit position.
     struct TextEditPos
     {
@@ -23,16 +21,15 @@ namespace ftk
         TextEditPos(int line, int chr);
 
         int line = -1;
-        int chr = -1;
+        int chr  = -1;
+
+        bool isValid() const;
 
         bool operator == (const TextEditPos&) const;
         bool operator != (const TextEditPos&) const;
         bool operator < (const TextEditPos&) const;
         bool operator > (const TextEditPos&) const;
     };
-
-    //! Invalid text edit position.
-    const TextEditPos textEditPosInvalid(-1, -1);
 
     //! Text edit selection.
     struct TextEditSelection
@@ -41,8 +38,8 @@ namespace ftk
         TextEditSelection(const TextEditPos&);
         TextEditSelection(const TextEditPos&, const TextEditPos&);
 
-        TextEditPos first = textEditPosInvalid;
-        TextEditPos second = textEditPosInvalid;
+        TextEditPos first;
+        TextEditPos second;
 
         //! Get whether the selection is valid.
         bool isValid() const;

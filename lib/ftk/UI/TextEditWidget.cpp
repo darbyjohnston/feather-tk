@@ -328,7 +328,7 @@ namespace ftk
                 boxes.push_back(Box2I(
                     g2.min.x + w0,
                     g2.min.y + min.line * p.size.fontMetrics.lineHeight,
-                    w1 - w0,
+                    std::max(w1 - w0, p.size.border * 2),
                     p.size.fontMetrics.lineHeight));
             }
             else
@@ -338,7 +338,7 @@ namespace ftk
                 boxes.push_back(Box2I(
                     g2.min.x + w0,
                     g2.min.y + min.line * p.size.fontMetrics.lineHeight,
-                    w1 - w0,
+                    std::max(w1 - w0, p.size.border * 2),
                     p.size.fontMetrics.lineHeight));
                 for (int i = min.line + 1; i < max.line; ++i)
                 {
@@ -346,14 +346,14 @@ namespace ftk
                     boxes.push_back(Box2I(
                         g2.min.x,
                         g2.min.y + i * p.size.fontMetrics.lineHeight,
-                        w0,
+                        std::max(w0, p.size.border * 2),
                         p.size.fontMetrics.lineHeight));
                 }
                 w0 = event.fontSystem->getSize(text[max.line].substr(0, max.chr), p.size.fontInfo).w;
                 boxes.push_back(Box2I(
                     g2.min.x,
                     g2.min.y + max.line * p.size.fontMetrics.lineHeight,
-                    w0,
+                    std::max(w0, p.size.border * 2),
                     p.size.fontMetrics.lineHeight));
             }
             for (const auto& box : boxes)

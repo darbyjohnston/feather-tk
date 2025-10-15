@@ -11,10 +11,20 @@
 
 namespace ftk
 {
+    namespace
+    {
+        const std::vector<std::string> textEditClear({ "" });
+    }
+
     TextEditPos::TextEditPos(int line, int chr) :
         line(line),
         chr(chr)
     {}
+
+    bool TextEditPos::isValid() const
+    {
+        return line != -1 && chr != -1;
+    }
 
     bool TextEditPos::operator == (const TextEditPos& other) const
     {
@@ -50,8 +60,8 @@ namespace ftk
     bool TextEditSelection::isValid() const
     {
         return
-            first != textEditPosInvalid &&
-            second != textEditPosInvalid &&
+            first.isValid() &&
+            second.isValid() &&
             first != second;
     }
 
