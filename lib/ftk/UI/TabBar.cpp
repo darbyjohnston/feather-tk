@@ -414,6 +414,9 @@ namespace ftk
         for (size_t i = 0; i < p.buttons.size(); ++i)
         {
             p.buttons[i]->setCurrent(p.currentFocus == i && focus);
+        }
+        for (size_t i = 0; i < p.closeButtons.size(); ++i)
+        {
             p.closeButtons[i]->setButtonRole(p.currentTab == i ? ColorRole::Button : ColorRole::None);
         }
         if (p.currentFocus >= 0 && p.currentFocus < p.buttons.size())

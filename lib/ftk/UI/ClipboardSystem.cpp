@@ -27,11 +27,13 @@ namespace ftk
     std::string ClipboardSystem::getText() const
     {
         std::string out;
-        if (char* buf = SDL_GetClipboardText())
+        char* buf = SDL_GetClipboardText();
+        if (buf)
         {
             out = std::string(buf);
-            SDL_free(&buf);
         }
+        //! \bug This is causing segfaults in the tests on Linux:
+        //SDL_free(&buf);
         return out;
     }
 
