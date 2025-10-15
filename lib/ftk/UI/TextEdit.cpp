@@ -44,6 +44,8 @@ namespace ftk
         IWidget::_init(context, "ftk::TextEdit", parent);
         FTK_P();
 
+        setAcceptsKeyFocus(true);
+
         p.options = ObservableValue<TextEditOptions>::create();
 
         p.model = model;
@@ -160,6 +162,11 @@ namespace ftk
     void TextEdit::setMarginRole(SizeRole value)
     {
         _p->scrollWidget->setMarginRole(value);
+    }
+
+    void TextEdit::takeKeyFocus()
+    {
+        _p->widget->takeKeyFocus();
     }
 
     void TextEdit::setGeometry(const Box2I& value)

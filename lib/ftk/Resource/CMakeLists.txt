@@ -14,6 +14,7 @@ set(RESOURCES
     etc/Icons/Clear.svg
     etc/Icons/Close.svg
     etc/Icons/Copy.svg
+    etc/Icons/Cut.svg
     etc/Icons/Decrement.svg
     etc/Icons/Directory.svg
     etc/Icons/DirectoryBack.svg
@@ -42,6 +43,7 @@ set(RESOURCES
     etc/Icons/PanelLeft.svg
     etc/Icons/PanelRight.svg
     etc/Icons/PanelTop.svg
+    etc/Icons/Paste.svg
     etc/Icons/PlaybackForward.svg
     etc/Icons/PlaybackReverse.svg
     etc/Icons/PlaybackStop.svg

@@ -30,18 +30,14 @@ namespace examples
             _tabWidget->setCurrentTabCallback(
                 [appWeak](int index)
                 {
-                    if (auto app = appWeak.lock())
-                    {
-                        app->getDocumentModel()->setCurrentIndex(index);
-                    }
+                    auto app = appWeak.lock();
+                    app->getDocumentModel()->setCurrentIndex(index);
                 });
             _tabWidget->setTabCloseCallback(
                 [appWeak](int index)
                 {
-                    if (auto app = appWeak.lock())
-                    {
-                        app->getDocumentModel()->close(index);
-                    }
+                    auto app = appWeak.lock();
+                    app->getDocumentModel()->close(index);
                 });
 
             _addDocumentObserver = ftk::ValueObserver<std::shared_ptr<Document> >::create(
@@ -52,17 +48,15 @@ namespace examples
                     {
                         auto context = getContext();
                         auto app = appWeak.lock();
-                        if (context && app)
-                        {
-                            auto textEdit = TextEdit::create(context, document->getModel());
-                            textEdit->setOptions(app->getSettingsModel()->getTextEditOptions());
-                            textEdit->setMarginRole(SizeRole::MarginSmall);
-                            _textEdits.push_back(textEdit);
-                            _tabWidget->addTab(
-                                document->getName(),
-                                textEdit,
-                                document->getPath().u8string());
-                        }
+                        auto textEdit = TextEdit::create(context, document->getModel());
+                        textEdit->setOptions(app->getSettingsModel()->getTextEditOptions());
+                        textEdit->setMarginRole(SizeRole::MarginSmall);
+                        _textEdits.push_back(textEdit);
+                        _tabWidget->addTab(
+                            document->getName(),
+                            textEdit,
+                            document->getPath().u8string());
+                        textEdit->takeKeyFocus();
                     }
                 });
 

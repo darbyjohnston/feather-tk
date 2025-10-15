@@ -8,7 +8,7 @@
    version="1.1"
    id="svg8"
    inkscape:version="1.4.2 (ebf0e94, 2025-05-08)"
-   sodipodi:docname="Copy.svg"
+   sodipodi:docname="Paste.svg"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns="http://www.w3.org/2000/svg"
@@ -79,7 +79,7 @@
       <path
          id="path3"
          style="color:#000000;fill:#f0f0f0;fill-opacity:1"
-         d="m 1.4615706,294.29857 1.1192563,1.12721 -0.1875406,0.18504 -0.8001464,-0.8045 -0.00564,1.92907 -0.2635489,-7.7e-4 0.00563,-1.93062 -0.80710098,0.80129 -0.18671705,-0.18638 z"
+         d="m 1.4569899,296.79059 -1.12253993,-1.12394 0.187,-0.18559 0.80248993,0.80216 10e-6,-1.92908 h 0.26355 v 1.93063 l 0.80476,-0.80364 0.18726,0.18584 z"
          sodipodi:nodetypes="cccccccccc" />
     </g>
   </g>

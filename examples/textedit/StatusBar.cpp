@@ -23,13 +23,17 @@ namespace examples
         {
             IWidget::_init(context, "examples::textedit::StatusBar", parent);
 
-            _label = Label::create(context);
-            _label->setMarginRole(SizeRole::MarginInside);
+            _cursorLabel = Label::create(context);
+            _cursorLabel->setMarginRole(SizeRole::MarginInside);
+
+            _linesLabel = Label::create(context);
+            _linesLabel->setMarginRole(SizeRole::MarginInside);
 
             _layout = HorizontalLayout::create(context, shared_from_this());
             _layout->setSpacingRole(SizeRole::None);
             _layout->addSpacer(Stretch::Expanding);
-            _label->setParent(_layout);
+            _cursorLabel->setParent(_layout);
+            _linesLabel->setParent(_layout);
 
             std::weak_ptr<App> appWeak(app);
             _currentDocumentObserver = ftk::ValueObserver<int>::create(
@@ -47,13 +51,24 @@ namespace examples
                                 document->getModel()->observeText(),
                                 [this](const std::vector<std::string>& lines)
                                 {
-                                    _label->setText(Format("Lines: {0}").arg(lines.size()));
+                                    _linesLabel->setText(Format("Lines: {0}").
+                                        arg(lines.size()));
+                                });
+
+                            _cursorObserver = ValueObserver<TextEditPos>::create(
+                                document->getModel()->observeCursor(),
+                                [this](const TextEditPos& value)
+                                {
+                                    _cursorLabel->setText(Format("Cursor: {0}, {1}").
+                                        arg(value.line + 1).
+                                        arg(value.chr + 1));
                                 });
                         }
                     }
                     if (!_textObserver)
                     {
-                        _label->setText("Lines: 0");
+                        _cursorLabel->setText(std::string());
+                        _linesLabel->setText(std::string());
                     }
                 });
         }

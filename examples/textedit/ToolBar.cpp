@@ -36,7 +36,7 @@ namespace examples
 
             auto editToolBar = ftk::ToolBar::create(context, Orientation::Horizontal, _layout);
             for (const auto& key :
-                { "Edit/Settings" })
+                { "Edit/Cut", "Edit/Copy", "Edit/Paste" })
             {
                 editToolBar->addAction(actions->getAction(key));
             }

@@ -30,6 +30,7 @@ namespace ftk_resource
     extern std::vector<uint8_t> Clear;
     extern std::vector<uint8_t> Close;
     extern std::vector<uint8_t> Copy;
+    extern std::vector<uint8_t> Cut;
     extern std::vector<uint8_t> Decrement;
     extern std::vector<uint8_t> Directory;
     extern std::vector<uint8_t> DirectoryBack;
@@ -58,6 +59,7 @@ namespace ftk_resource
     extern std::vector<uint8_t> PanelLeft;
     extern std::vector<uint8_t> PanelRight;
     extern std::vector<uint8_t> PanelTop;
+    extern std::vector<uint8_t> Paste;
     extern std::vector<uint8_t> PlaybackForward;
     extern std::vector<uint8_t> PlaybackReverse;
     extern std::vector<uint8_t> PlaybackStop;
@@ -139,6 +141,7 @@ namespace ftk
         p.iconData["Clear"] = ftk_resource::Clear;
         p.iconData["Close"] = ftk_resource::Close;
         p.iconData["Copy"] = ftk_resource::Copy;
+        p.iconData["Cut"] = ftk_resource::Cut;
         p.iconData["Decrement"] = ftk_resource::Decrement;
         p.iconData["Directory"] = ftk_resource::Directory;
         p.iconData["DirectoryBack"] = ftk_resource::DirectoryBack;
@@ -167,6 +170,7 @@ namespace ftk
         p.iconData["PanelLeft"] = ftk_resource::PanelLeft;
         p.iconData["PanelRight"] = ftk_resource::PanelRight;
         p.iconData["PanelTop"] = ftk_resource::PanelTop;
+        p.iconData["Paste"] = ftk_resource::Paste;
         p.iconData["PlaybackForward"] = ftk_resource::PlaybackForward;
         p.iconData["PlaybackReverse"] = ftk_resource::PlaybackReverse;
         p.iconData["PlaybackStop"] = ftk_resource::PlaybackStop;

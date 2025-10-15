@@ -6,6 +6,7 @@
 
 #include <ftk/UI/Label.h>
 #include <ftk/UI/RowLayout.h>
+#include <ftk/UI/TextEditModel.h>
 
 namespace examples
 {
@@ -35,11 +36,13 @@ namespace examples
             void sizeHintEvent(const ftk::SizeHintEvent&) override;
 
         private:
-            std::shared_ptr<ftk::Label> _label;
+            std::shared_ptr<ftk::Label> _cursorLabel;
+            std::shared_ptr<ftk::Label> _linesLabel;
             std::shared_ptr<ftk::HorizontalLayout> _layout;
 
             std::shared_ptr<ftk::ValueObserver<int> > _currentDocumentObserver;
             std::shared_ptr<ftk::ListObserver<std::string> > _textObserver;
+            std::shared_ptr<ftk::ValueObserver<ftk::TextEditPos> > _cursorObserver;
         };
     }
 }

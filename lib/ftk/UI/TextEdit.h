@@ -80,6 +80,7 @@ namespace ftk
         //! Set the margin role.
         void setMarginRole(SizeRole);
 
+        void takeKeyFocus() override;
         void setGeometry(const Box2I&) override;
         void sizeHintEvent(const SizeHintEvent&) override;
 

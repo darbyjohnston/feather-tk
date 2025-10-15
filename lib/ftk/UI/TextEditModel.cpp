@@ -359,16 +359,8 @@ namespace ftk
             if (cursor.line < static_cast<int>(text.size()))
             {
                 // Move the cursor down a page.
-                cursor.line += p.pageRows;
-                if (cursor.line < static_cast<int>(text.size()))
-                {
-                    cursor.chr = std::min(cursor.chr, static_cast<int>(text[cursor.line].size()));
-                }
-                else
-                {
-                    cursor.line = static_cast<int>(text.size()) - 1;
-                    cursor.chr = static_cast<int>(text[cursor.line].size());
-                }
+                cursor.line = std::min(cursor.line + p.pageRows, static_cast<int>(text.size()) - 1);
+                cursor.chr = std::min(cursor.chr, static_cast<int>(text[cursor.line].size()));
             }
             out = true;
             break;

@@ -452,16 +452,19 @@ namespace ftk
                 FTK_ASSERT(TextEditSelection(cursor, TextEditPos(0, 0)) == selection2);
 
                 model->clearSelection();
+                cursor = TextEditPos(0, 0);
+                model->setCursor(cursor);
                 model->setPageRows(2);
                 model->key(Key::PageDown, static_cast<int>(KeyModifier::Shift));
                 model->key(Key::PageDown, static_cast<int>(KeyModifier::Shift));
-                FTK_ASSERT(TextEditSelection(TextEditPos(0, 0), cursor) == selection2);
+                FTK_ASSERT(TextEditSelection(cursor, cursor2) == selection2);
 
                 model->clearSelection();
+                cursor = cursor2;
                 model->setPageRows(2);
                 model->key(Key::PageUp, static_cast<int>(KeyModifier::Shift));
                 model->key(Key::PageUp, static_cast<int>(KeyModifier::Shift));
-                FTK_ASSERT(TextEditSelection(cursor, TextEditPos(0, cursor.chr)) == selection2);
+                FTK_ASSERT(TextEditSelection(cursor, cursor2) == selection2);
             }
             if (auto context = _context.lock())
             {
