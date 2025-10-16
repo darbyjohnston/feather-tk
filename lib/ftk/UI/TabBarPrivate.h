@@ -30,6 +30,8 @@ namespace ftk
 
         void setCurrent(bool);
 
+        void setText(const std::string&) override;
+
         void setGeometry(const Box2I&) override;
         void sizeHintEvent(const SizeHintEvent&) override;
         void clipEvent(const Box2I&, bool) override;

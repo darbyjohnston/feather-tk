@@ -169,6 +169,8 @@ namespace ftk
         void sizeHintEvent(const SizeHintEvent&) override;
 
     private:
+        void _accept(const std::string&);
+
         void _optionsUpdate();
         void _extensionsUpdate();
 

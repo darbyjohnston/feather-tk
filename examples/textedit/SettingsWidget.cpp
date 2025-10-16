@@ -40,6 +40,9 @@ namespace examples
             _fontSizeEdit = ftk::IntEdit::create(context);
             _fontSizeEdit->setRange(6, 64);
 
+            _tabSpacesEdit = ftk::IntEdit::create(context);
+            _tabSpacesEdit->setRange(1, 8);
+
             _layout = VerticalLayout::create(context, shared_from_this());
             _layout->setSpacingRole(SizeRole::None);
 
@@ -52,8 +55,12 @@ namespace examples
             auto formLayout = FormLayout::create(context, _layout);
             formLayout->setMarginRole(SizeRole::Margin);
             formLayout->addRow("Line numbers:", _lineNumbersCheckBox);
-            formLayout->addRow("Font:", _fontComboBox);
-            formLayout->addRow("Font size:", _fontSizeEdit);
+            hLayout = HorizontalLayout::create(context);
+            hLayout->setSpacingRole(SizeRole::SpacingSmall);
+            _fontComboBox->setParent(hLayout);
+            _fontSizeEdit->setParent(hLayout);
+            formLayout->addRow("Font:", hLayout);
+            formLayout->addRow("Tab spaces:", _tabSpacesEdit);
 
             std::weak_ptr<App> appWeak(app);
             closeButton->setClickedCallback(
@@ -100,6 +107,17 @@ namespace examples
                     }
                 });
 
+            _tabSpacesEdit->setCallback(
+                [appWeak](int value)
+                {
+                    if (auto app = appWeak.lock())
+                    {
+                        auto options = app->getSettingsModel()->getTextEditModelOptions();
+                        options.tabSpaces = value;
+                        app->getSettingsModel()->setTextEditModelOptions(options);
+                    }
+                });
+
             _textEditOptionsObserver = ValueObserver<TextEditOptions>::create(
                 app->getSettingsModel()->observeTextEditOptions(),
                 [this](const TextEditOptions& value)
@@ -116,6 +134,13 @@ namespace examples
                     }
                     _fontComboBox->setCurrentIndex(index);
                     _fontSizeEdit->setValue(value.fontInfo.size);
+                });
+
+            _textEditModelOptionsObserver = ValueObserver<TextEditModelOptions>::create(
+                app->getSettingsModel()->observeTextEditModelOptions(),
+                [this](const TextEditModelOptions& value)
+                {
+                    _tabSpacesEdit->setValue(value.tabSpaces);
                 });
         }
 

@@ -89,7 +89,7 @@ namespace ftk
 
     bool TextEditModelOptions::operator == (const TextEditModelOptions& other) const
     {
-        return tabSpaceCount == other.tabSpaceCount;
+        return tabSpaces == other.tabSpaces;
     }
 
     bool TextEditSelection::operator != (const TextEditSelection& other) const
@@ -104,16 +104,19 @@ namespace ftk
         std::shared_ptr<ObservableValue<TextEditPos> > cursor;
         std::shared_ptr<ObservableValue<TextEditSelection> > selection;
         int pageRows = 0;
-        TextEditModelOptions options;
+        std::shared_ptr<ObservableValue<TextEditModelOptions> > options;
     };
 
-    void TextEditModel::_init(const std::shared_ptr<Context>& context)
+    void TextEditModel::_init(
+        const std::shared_ptr<Context>& context,
+        const std::vector<std::string>& text)
     {
         FTK_P();
         p.context = context;
-        p.text = ObservableList<std::string>::create(textEditClear);
+        p.text = ObservableList<std::string>::create(!text.empty() ? text : textEditClear);
         p.cursor = ObservableValue<TextEditPos>::create(TextEditPos(0, 0));
         p.selection = ObservableValue<TextEditSelection>::create();
+        p.options = ObservableValue<TextEditModelOptions>::create();
     }
 
     TextEditModel::TextEditModel() :
@@ -123,10 +126,12 @@ namespace ftk
     TextEditModel::~TextEditModel()
     {}
 
-    std::shared_ptr<TextEditModel> TextEditModel::create(const std::shared_ptr<Context>& context)
+    std::shared_ptr<TextEditModel> TextEditModel::create(
+        const std::shared_ptr<Context>& context,
+        const std::vector<std::string>& text)
     {
         auto out = std::shared_ptr<TextEditModel>(new TextEditModel);
-        out->_init(context);
+        out->_init(context, text);
         return out;
     }
 
@@ -229,6 +234,7 @@ namespace ftk
         {
             // Replace the selection.
             _replace(selection, { value });
+            cursor = selection.min();
             cursor.chr += value.size();
             selection = TextEditSelection();
         }
@@ -530,15 +536,16 @@ namespace ftk
                 tmp.first.chr = 0;
                 tmp.second.chr = max.line < text.size() ? text[max.line].size() : 0;
                 std::vector<std::string> lines = _getSelection(tmp);
-                const std::string indent(p.options.tabSpaceCount, ' ');
+                const std::string indent = _getTabSpaces();
                 for (auto& line : lines)
                 {
                     line.insert(0, indent);
                 }
                 _replace(tmp, lines);
-                cursor.chr += p.options.tabSpaceCount;
-                selection.first.chr += p.options.tabSpaceCount;
-                selection.second.chr += p.options.tabSpaceCount;
+                const int tabSpaces = p.options->get().tabSpaces;
+                cursor.chr += tabSpaces;
+                selection.first.chr += tabSpaces;
+                selection.second.chr += tabSpaces;
             }
             else if (
                 static_cast<int>(KeyModifier::Shift) == modifiers &&
@@ -551,12 +558,13 @@ namespace ftk
                 tmp.first.chr = 0;
                 tmp.second.chr = max.line < text.size() ? text[max.line].size() : 0;
                 std::vector<std::string> lines = _getSelection(tmp);
+                const int tabSpaces = p.options->get().tabSpaces;
                 int lastSpacesRemoved = 0;
                 for (auto& line : lines)
                 {
                     int j = 0;
                     for (;
-                        j < p.options.tabSpaceCount &&
+                        j < tabSpaces &&
                         j < line.size() &&
                         ' ' == line[j];
                         ++j)
@@ -580,8 +588,8 @@ namespace ftk
             {
                 // Insert spaces.
                 std::string line = text[cursor.line];
-                line.insert(cursor.chr, std::string(p.options.tabSpaceCount, ' '));
-                cursor.chr += p.options.tabSpaceCount;
+                line.insert(cursor.chr, _getTabSpaces());
+                cursor.chr += p.options->get().tabSpaces;
                 p.text->setItem(cursor.line, line);
             }
             out = true;
@@ -617,6 +625,21 @@ namespace ftk
     void TextEditModel::setPageRows(int value)
     {
         _p->pageRows = value;
+    }
+
+    const TextEditModelOptions& TextEditModel::getOptions() const
+    {
+        return _p->options->get();
+    }
+
+    std::shared_ptr<IObservableValue<TextEditModelOptions> > TextEditModel::observeOptions() const
+    {
+        return _p->options;
+    }
+
+    void TextEditModel::setOptions(const TextEditModelOptions& value)
+    {
+        _p->options->setIfChanged(value);
     }
 
     TextEditPos TextEditModel::_getNext(const TextEditPos& value) const
@@ -700,6 +723,11 @@ namespace ftk
         return out;
     }
 
+    std::string TextEditModel::_getTabSpaces() const
+    {
+        return std::string(_p->options->get().tabSpaces, ' ');
+    }
+
     void TextEditModel::_replace(
         const TextEditSelection& selection,
         const std::vector<std::string>& value)
@@ -758,12 +786,12 @@ namespace ftk
 
     void to_json(nlohmann::json& json, const TextEditModelOptions& value)
     {
-        json["TabSpaceCount"] = value.tabSpaceCount;
+        json["TabSpaces"] = value.tabSpaces;
     }
 
     void from_json(const nlohmann::json& json, TextEditModelOptions& value)
     {
-        json.at("TabSpaceCount").get_to(value.tabSpaceCount);
+        json.at("TabSpaces").get_to(value.tabSpaces);
     }
 
     std::ostream& operator << (std::ostream& os, const TextEditPos& value)

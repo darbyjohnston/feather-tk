@@ -35,7 +35,7 @@ namespace examples
 
             _actions = Actions::create(context, app);
 
-            _menuBar = MenuBar::create(context, _actions);
+            _menuBar = MenuBar::create(context, app, _actions);
             setMenuBar(_menuBar);
 
             _tabs = DocumentTabs::create(context, app);

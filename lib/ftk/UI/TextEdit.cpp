@@ -103,6 +103,11 @@ namespace ftk
         return out;
     }
 
+    const std::shared_ptr<TextEditModel>& TextEdit::getModel() const
+    {
+        return _p->model;
+    }
+
     const std::vector<std::string>& TextEdit::getText() const
     {
         return _p->widget->getText();

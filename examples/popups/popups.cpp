@@ -123,12 +123,11 @@ FTK_MAIN()
         auto groupBox = GroupBox::create(context, "Combo Boxes", layout);
         auto vLayout = VerticalLayout::create(context, groupBox);
         auto comboBox = ComboBox::create(context, vLayout);
-        comboBox->setItems(
-            {
-                ComboBoxItem("Stop", "PlaybackStop"),
-                ComboBoxItem("Forward", "PlaybackForward"),
-                ComboBoxItem("Reverse", "PlaybackReverse")
-            });
+        comboBox->setItems({
+            ComboBoxItem("Stop", "PlaybackStop"),
+            ComboBoxItem("Forward", "PlaybackForward"),
+            ComboBoxItem("Reverse", "PlaybackReverse")
+        });
         comboBox->setTooltip("Playback");
         comboBox = ComboBox::create(context, getImageTypeLabels(), vLayout);
         comboBox->setTooltip("Image types");

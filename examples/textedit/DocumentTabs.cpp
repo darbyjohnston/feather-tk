@@ -42,32 +42,49 @@ namespace examples
 
             _addDocumentObserver = ftk::ValueObserver<std::shared_ptr<Document> >::create(
                 app->getDocumentModel()->observeAdd(),
-                [this, appWeak](const std::shared_ptr<Document>& document)
+                [this, appWeak](const std::shared_ptr<Document>& doc)
                 {
-                    if (document)
+                    if (doc)
                     {
                         auto context = getContext();
                         auto app = appWeak.lock();
-                        auto textEdit = TextEdit::create(context, document->getModel());
+                        auto textEdit = TextEdit::create(context, doc->getModel());
                         textEdit->setOptions(app->getSettingsModel()->getTextEditOptions());
+                        textEdit->getModel()->setOptions(app->getSettingsModel()->getTextEditModelOptions());
                         textEdit->setMarginRole(SizeRole::MarginSmall);
-                        _textEdits.push_back(textEdit);
-                        _tabWidget->addTab(
-                            document->getName(),
-                            textEdit,
-                            document->getPath().u8string());
+                        _textEdits[doc] = textEdit;
+                        _tabWidget->addTab(std::string(), textEdit);
                         textEdit->takeKeyFocus();
+
+                        _documentPathObservers[doc] = ValueObserver<std::filesystem::path>::create(
+                            doc->observePath(),
+                            [this, textEdit](const std::filesystem::path& path)
+                            {
+                                const std::string text = path.filename().u8string();
+                                const std::string tooltip = path.u8string();
+                                _tabWidget->setText(
+                                    textEdit,
+                                    !text.empty() ? text : "Untitled",
+                                    !tooltip.empty() ? tooltip : "Untitled");
+                            });
                     }
                 });
 
-            _removeDocumentObserver = ftk::ValueObserver<int>::create(
+            _removeDocumentObserver = ftk::ValueObserver<std::shared_ptr<Document> >::create(
                 app->getDocumentModel()->observeClose(),
-                [this](int index)
+                [this, appWeak](const std::shared_ptr<Document>& doc)
                 {
-                    if (index >= 0 && index < _textEdits.size())
+                    auto app = appWeak.lock();
+                    auto i = _textEdits.find(doc);
+                    if (i != _textEdits.end())
                     {
-                        _textEdits.erase(_textEdits.begin() + index);
-                        _tabWidget->removeTab(index);
+                        _tabWidget->removeTab(i->second);
+                        _textEdits.erase(i);
+                    }
+                    auto j = _documentPathObservers.find(doc);
+                    if (j != _documentPathObservers.end())
+                    {
+                        _documentPathObservers.erase(j);
                     }
                 });
 
@@ -79,6 +96,7 @@ namespace examples
                     {
                         _textEdits.clear();
                         _tabWidget->clearTabs();
+                        _documentPathObservers.clear();
                     }
                 });
 
@@ -93,9 +111,19 @@ namespace examples
                 app->getSettingsModel()->observeTextEditOptions(),
                 [this](const TextEditOptions& value)
                 {
-                    for (const auto& widget : _textEdits)
+                    for (auto i : _textEdits)
                     {
-                        widget->setOptions(value);
+                        i.second->setOptions(value);
+                    }
+                });
+
+            _textEditModelOptionsObserver = ValueObserver<TextEditModelOptions>::create(
+                app->getSettingsModel()->observeTextEditModelOptions(),
+                [this](const TextEditModelOptions& value)
+                {
+                    for (auto i : _textEdits)
+                    {
+                        i.second->getModel()->setOptions(value);
                     }
                 });
         }

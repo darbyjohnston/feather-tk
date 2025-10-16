@@ -49,6 +49,7 @@ namespace examples
             std::map<std::string, std::shared_ptr<ftk::Action> > _actions;
 
             std::shared_ptr<ftk::ValueObserver<int> > _currentDocObserver;
+            std::shared_ptr<ftk::ValueObserver<bool> > _changedObserver;
             std::shared_ptr<ftk::ValueObserver<ftk::TextEditSelection> > _selectionObserver;
             std::shared_ptr<ftk::ValueObserver<WindowOptions> > _windowOptionsObserver;
         };

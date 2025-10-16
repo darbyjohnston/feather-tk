@@ -239,7 +239,6 @@ namespace ftk
         p.buttons.clear();
         p.actionToButton.clear();
         p.current.reset();
-        p.parentMenu.reset();
         p.subMenus.clear();
         p.subMenuToButton.clear();
         p.buttonToSubMenu.clear();

@@ -36,8 +36,7 @@ namespace examples
             void sizeHintEvent(const ftk::SizeHintEvent&) override;
 
         private:
-            std::shared_ptr<ftk::Label> _linesLabel;
-            std::shared_ptr<ftk::Label> _cursorLabel;
+            std::map<std::string, std::shared_ptr<ftk::Label> > _labels;
             std::shared_ptr<ftk::HorizontalLayout> _layout;
 
             std::shared_ptr<ftk::ValueObserver<int> > _currentDocumentObserver;

@@ -16,9 +16,24 @@ namespace examples
             const std::shared_ptr<Context>& context,
             const std::filesystem::path& path)
         {
-            _path = path;
+            _path = ObservableValue<std::filesystem::path>::create(path);
 
-            _model = TextEditModel::create(context);
+            std::vector<std::string> lines;
+            if (!path.empty())
+            {
+                lines = readLines(path);
+            }
+            _model = TextEditModel::create(context, lines);
+
+            _changed = ObservableValue<bool>::create(false);
+
+            _textObserver = ListObserver<std::string>::create(
+                _model->observeText(),
+                [this](const std::vector<std::string>&)
+                {
+                    _changed->setIfChanged(true);
+                },
+                ObserverAction::Suppress);
         }
 
         Document::~Document()
@@ -35,17 +50,45 @@ namespace examples
 
         const std::filesystem::path& Document::getPath() const
         {
-            return _path;
+            return _path->get();
         }
 
-        std::string Document::getName() const
+        std::shared_ptr<ftk::IObservableValue<std::filesystem::path> > Document::observePath() const
         {
-            return _path.filename().u8string();
+            return _path;
         }
 
         const std::shared_ptr<ftk::TextEditModel>& Document::getModel() const
         {
             return _model;
+        }
+
+        bool Document::isChanged() const
+        {
+            return _changed->get();
+        }
+
+        std::shared_ptr<ftk::IObservableValue<bool> > Document::observeChanged() const
+        {
+            return _changed;
+        }
+
+        void Document::resetChanged()
+        {
+            _changed->setIfChanged(false);
+        }
+
+        void Document::save()
+        {
+            writeLines(_path->get(), _model->getText());
+            _changed->setIfChanged(false);
+        }
+
+        void Document::saveAs(const std::filesystem::path& path)
+        {
+            writeLines(path, _model->getText());
+            _path->setIfChanged(path);
+            _changed->setIfChanged(false);
         }
     }
 }

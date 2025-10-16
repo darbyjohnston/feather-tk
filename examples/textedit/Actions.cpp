@@ -29,12 +29,21 @@ namespace examples
                 app->getDocumentModel()->observeCurrentIndex(),
                 [this](int index)
                 {
+                    _changedObserver.reset();
                     _selectionObserver.reset();
+
                     auto app = _app.lock();
                     const auto& documents = app->getDocumentModel()->getList();
                     if (index >= 0 && index < documents.size())
                     {
                         const auto& document = documents[index];
+                        _changedObserver = ValueObserver<bool>::create(
+                            document->observeChanged(),
+                            [this](bool)
+                            {
+                                _actionsUpdate();
+                            });
+
                         _selectionObserver = ValueObserver<TextEditSelection>::create(
                             document->getModel()->observeSelection(),
                             [this](const TextEditSelection&)
@@ -42,7 +51,10 @@ namespace examples
                                 _actionsUpdate();
                             });
                     }
-                    _actionsUpdate();
+                    else
+                    {
+                        _actionsUpdate();
+                    }
                 });
         }
 
@@ -82,7 +94,7 @@ namespace examples
                 [appWeak]
                 {
                     auto app = appWeak.lock();
-                    auto document = Document::create(app->getContext(), "Untitled");
+                    auto document = Document::create(app->getContext());
                     app->getDocumentModel()->add(document);
                 });
             _actions["File/New"]->setTooltip("Create a new file");
@@ -133,6 +145,17 @@ namespace examples
                     app->getDocumentModel()->closeAll();
                 });
             _actions["File/CloseAll"]->setTooltip("Close all files");
+
+            _actions["File/Save"] = Action::create(
+                "Save",
+                Key::S,
+                static_cast<int>(KeyModifier::Control),
+                [appWeak]
+                {
+                    auto app = appWeak.lock();
+                    app->save();
+                });
+            _actions["File/Save"]->setTooltip("Save the current file");
 
             _actions["File/Exit"] = Action::create(
                 "Exit",
@@ -245,6 +268,7 @@ namespace examples
 
             _actions["File/Close"]->setEnabled(doc.get());
             _actions["File/CloseAll"]->setEnabled(doc.get());
+            _actions["File/Save"]->setEnabled(doc ? doc->isChanged() : false);
 
             _actions["Edit/Cut"]->setEnabled(doc.get() && selection.isValid());
             _actions["Edit/Copy"]->setEnabled(doc.get() && selection.isValid());

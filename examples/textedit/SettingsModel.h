@@ -35,6 +35,9 @@ namespace examples
             static std::shared_ptr<SettingsModel> create(
                 const std::shared_ptr<ftk::Context>&);
 
+            const std::vector<std::filesystem::path>& getRecentFiles() const;
+            void setRecentFiles(const std::vector<std::filesystem::path>&);
+
             const WindowOptions& getWindowOptions() const;
             std::shared_ptr<ftk::IObservableValue<WindowOptions> > observeWindowOptions() const;
             void setWindowOptions(const WindowOptions&);
@@ -49,6 +52,7 @@ namespace examples
 
         private:
             std::shared_ptr<ftk::Settings> _settings;
+            std::vector<std::filesystem::path> _recentFiles;
             std::shared_ptr<ftk::ObservableValue<WindowOptions> > _windowOptions;
             std::shared_ptr<ftk::ObservableValue<ftk::TextEditOptions> > _textEditOptions;
             std::shared_ptr<ftk::ObservableValue<ftk::TextEditModelOptions> > _textEditModelOptions;

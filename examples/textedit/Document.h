@@ -30,13 +30,24 @@ namespace examples
 
             const std::filesystem::path& getPath() const;
 
-            std::string getName() const;
+            std::shared_ptr<ftk::IObservableValue<std::filesystem::path> > observePath() const;
 
             const std::shared_ptr<ftk::TextEditModel>& getModel() const;
 
+            bool isChanged() const;
+
+            std::shared_ptr<ftk::IObservableValue<bool> > observeChanged() const;
+
+            void resetChanged();
+
+            void save();
+            void saveAs(const std::filesystem::path&);
+
         private:
-            std::filesystem::path _path;
+            std::shared_ptr<ftk::ObservableValue<std::filesystem::path> > _path;
             std::shared_ptr<ftk::TextEditModel> _model;
+            std::shared_ptr<ftk::ObservableValue<bool> > _changed;
+            std::shared_ptr<ftk::ListObserver<std::string> > _textObserver;
         };
     }
 }

@@ -257,6 +257,12 @@ namespace ftk
                 }
             });
 
+        p.fileEdit->setTextCallback(
+            [this](const std::string& text)
+            {
+                _accept(text);
+            });
+
         p.searchBox->setCallback(
             [this](const std::string& value)
             {
@@ -296,34 +302,7 @@ namespace ftk
         p.okButton->setClickedCallback(
             [this]
             {
-                FTK_P();
-                std::filesystem::path path;
-                const std::string& text = p.fileEdit->getText();
-                switch (p.mode)
-                {
-                case FileBrowserMode::File:
-                    if (!text.empty())
-                    {
-                        path = p.model->getPath() / std::filesystem::u8path(text);
-                    }
-                    break;
-                case FileBrowserMode::Dir:
-                    path = p.model->getPath();
-                    if (!text.empty())
-                    {
-                        path = path / std::filesystem::u8path(text);
-                    }
-                    break;
-                default: break;
-                }
-                if (!path.empty() && p.recentFilesModel)
-                {
-                    p.recentFilesModel->addRecent(path);
-                }
-                if (p.callback)
-                {
-                    p.callback(path);
-                }
+                _accept(_p->fileEdit->getText());
             });
 
         p.cancelButton->setClickedCallback(
@@ -390,9 +369,7 @@ namespace ftk
     {}
 
     FileBrowserWidget::~FileBrowserWidget()
-    {
-        FTK_P();
-    }
+    {}
 
     std::shared_ptr<FileBrowserWidget> FileBrowserWidget::create(
         const std::shared_ptr<Context>& context,
@@ -443,6 +420,37 @@ namespace ftk
     {
         IWidget::sizeHintEvent(value);
         _setSizeHint(_p->layout->getSizeHint());
+    }
+
+    void FileBrowserWidget::_accept(const std::string& text)
+    {
+        FTK_P();
+        std::filesystem::path path;
+        switch (p.mode)
+        {
+        case FileBrowserMode::File:
+            if (!text.empty())
+            {
+                path = p.model->getPath() / std::filesystem::u8path(text);
+            }
+            break;
+        case FileBrowserMode::Dir:
+            path = p.model->getPath();
+            if (!text.empty())
+            {
+                path = path / std::filesystem::u8path(text);
+            }
+            break;
+        default: break;
+        }
+        if (!path.empty() && p.recentFilesModel)
+        {
+            p.recentFilesModel->addRecent(path);
+        }
+        if (p.callback)
+        {
+            p.callback(path);
+        }
     }
 
     void FileBrowserWidget::_optionsUpdate()

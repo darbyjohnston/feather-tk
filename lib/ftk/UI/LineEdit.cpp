@@ -499,10 +499,10 @@ namespace ftk
         if (!value)
         {
             p.selection.clear();
-            if (p.textCallback)
-            {
-                p.textCallback(p.text);
-            }
+            //if (p.textCallback)
+            //{
+            //    p.textCallback(p.text);
+            //}
             _setDrawUpdate();
         }
         if (p.focusCallback)

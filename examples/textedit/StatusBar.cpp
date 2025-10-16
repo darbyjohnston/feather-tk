@@ -23,19 +23,22 @@ namespace examples
         {
             IWidget::_init(context, "examples::textedit::StatusBar", parent);
 
-            _linesLabel = Label::create(context);
-            _linesLabel->setFontRole(FontRole::Mono);
-            _linesLabel->setMarginRole(SizeRole::MarginInside);
+            _labels["Lines"] = Label::create(context, "Lines:");
+            _labels["Lines2"] = Label::create(context);
+            _labels["Lines2"]->setFontRole(FontRole::Mono);
 
-            _cursorLabel = Label::create(context);
-            _cursorLabel->setFontRole(FontRole::Mono);
-            _cursorLabel->setMarginRole(SizeRole::MarginInside);
+            _labels["Cursor"] = Label::create(context, "Cursor:");
+            _labels["Cursor2"] = Label::create(context);
+            _labels["Cursor2"]->setFontRole(FontRole::Mono);
 
             _layout = HorizontalLayout::create(context, shared_from_this());
-            _layout->setSpacingRole(SizeRole::None);
+            _layout->setMarginRole(SizeRole::MarginInside);
+            _layout->setSpacingRole(SizeRole::SpacingSmall);
             _layout->addSpacer(Stretch::Expanding);
-            _linesLabel->setParent(_layout);
-            _cursorLabel->setParent(_layout);
+            _labels["Lines"]->setParent(_layout);
+            _labels["Lines2"]->setParent(_layout);
+            _labels["Cursor"]->setParent(_layout);
+            _labels["Cursor2"]->setParent(_layout);
 
             std::weak_ptr<App> appWeak(app);
             _currentDocumentObserver = ftk::ValueObserver<int>::create(
@@ -43,34 +46,32 @@ namespace examples
                 [this, appWeak](int index)
                 {
                     _textObserver.reset();
-                    if (auto app = appWeak.lock())
+                    auto app = appWeak.lock();
+                    const auto& documents = app->getDocumentModel()->getList();
+                    if (index >= 0 && index < documents.size())
                     {
-                        const auto& documents = app->getDocumentModel()->getList();
-                        if (index >= 0 && index < documents.size())
-                        {
-                            const auto& document = documents[index];
-                            _textObserver = ListObserver<std::string>::create(
-                                document->getModel()->observeText(),
-                                [this](const std::vector<std::string>& lines)
-                                {
-                                    _linesLabel->setText(Format("Lines: {0}").
-                                        arg(lines.size()));
-                                });
+                        const auto& document = documents[index];
+                        _textObserver = ListObserver<std::string>::create(
+                            document->getModel()->observeText(),
+                            [this](const std::vector<std::string>& lines)
+                            {
+                                _labels["Lines2"]->setText(Format("{0}").
+                                    arg(lines.size()));
+                            });
 
-                            _cursorObserver = ValueObserver<TextEditPos>::create(
-                                document->getModel()->observeCursor(),
-                                [this](const TextEditPos& value)
-                                {
-                                    _cursorLabel->setText(Format("Line: {0} Character: {1}").
-                                        arg(value.line + 1, 4).
-                                        arg(value.chr + 1, 2));
-                                });
-                        }
+                        _cursorObserver = ValueObserver<TextEditPos>::create(
+                            document->getModel()->observeCursor(),
+                            [this](const TextEditPos& value)
+                            {
+                                _labels["Cursor2"]->setText(Format("{0}, {1}").
+                                    arg(value.line + 1, 4).
+                                    arg(value.chr + 1, 2));
+                            });
                     }
                     if (!_textObserver)
                     {
-                        _linesLabel->setText(std::string());
-                        _cursorLabel->setText(std::string());
+                        _labels["Lines2"]->setText(std::string());
+                        _labels["Cursor2"]->setText(std::string());
                     }
                 });
         }

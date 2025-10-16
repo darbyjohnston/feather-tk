@@ -188,6 +188,32 @@ namespace ftk
         _p->currentWidgetCallback = value;
     }
 
+    void TabWidget::setText(
+        int index,
+        const std::string& text,
+        const std::string& tooltip)
+    {
+        _p->tabs->setText(index, text, tooltip);
+    }
+
+    void TabWidget::setText(
+        const std::shared_ptr<IWidget>& widget,
+        const std::string& text,
+        const std::string& tooltip)
+    {
+        FTK_P();
+        const auto& children = p.stack->getChildren();
+        int i = 0;
+        for (auto j = children.begin(); j != children.end(); ++j, ++i)
+        {
+            if (*j == widget)
+            {
+                break;
+            }
+        }
+        setText(i, text, tooltip);
+    }
+
     bool TabWidget::areTabsClosable() const
     {
         return _p->tabs->areTabsClosable();

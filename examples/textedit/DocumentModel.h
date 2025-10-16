@@ -33,7 +33,7 @@ namespace examples
 
             void close(int);
             void closeAll();
-            std::shared_ptr<ftk::IObservableValue<int> > observeClose() const;
+            std::shared_ptr<ftk::IObservableValue<std::shared_ptr<Document> > > observeClose() const;
             std::shared_ptr<ftk::IObservableValue<bool> > observeCloseAll() const;
 
             std::shared_ptr<Document> getCurrent() const;
@@ -44,7 +44,7 @@ namespace examples
         private:
             std::shared_ptr<ftk::ObservableList<std::shared_ptr<Document> > > _documents;
             std::shared_ptr<ftk::ObservableValue<std::shared_ptr<Document> > > _add;
-            std::shared_ptr<ftk::ObservableValue<int> > _close;
+            std::shared_ptr<ftk::ObservableValue<std::shared_ptr<Document> > > _close;
             std::shared_ptr<ftk::ObservableValue<bool> > _closeAll;
             std::shared_ptr<ftk::ObservableValue<int> > _currentIndex;
         };

@@ -27,21 +27,40 @@ namespace examples
         {
             _settings = Settings::create(context, getSettingsPath("feather-tk", "textedit.json"));
 
+            nlohmann::json recentFiles;
+            _settings->get("/RecentFiles", recentFiles);
+            if (recentFiles.is_array())
+            {
+                for (const auto& i : recentFiles)
+                {
+                    if (i.is_string())
+                    {
+                        _recentFiles.push_back(i.get<std::string>());
+                    }
+                }
+            }
+
             WindowOptions windowOptions;
             _settings->getT("/WindowOptions", windowOptions);
             _windowOptions = ObservableValue<WindowOptions>::create(windowOptions);
 
             TextEditOptions textEditOptions;
             _settings->getT("/TextEditOptions", textEditOptions);
-            _textEditOptions = ObservableValue<TextEditOptions>::create();
+            _textEditOptions = ObservableValue<TextEditOptions>::create(textEditOptions);
 
             TextEditModelOptions textEditModelOptions;
             _settings->getT("/TextEditModelOptions", textEditModelOptions);
-            _textEditModelOptions = ObservableValue<TextEditModelOptions>::create();
+            _textEditModelOptions = ObservableValue<TextEditModelOptions>::create(textEditModelOptions);
         }
 
         SettingsModel::~SettingsModel()
         {
+            nlohmann::json recentFiles;
+            for (const auto& i : _recentFiles)
+            {
+                recentFiles.push_back(i);
+            }
+            _settings->set("/RecentFiles", recentFiles);
             _settings->setT("/WindowOptions", _windowOptions->get());
             _settings->setT("/TextEditOptions", _textEditOptions->get());
             _settings->setT("/TextEditModelOptions", _textEditModelOptions->get());
@@ -53,6 +72,16 @@ namespace examples
             auto out = std::shared_ptr<SettingsModel>(new SettingsModel);
             out->_init(context);
             return out;
+        }
+
+        const std::vector<std::filesystem::path>& SettingsModel::getRecentFiles() const
+        {
+            return _recentFiles;
+        }
+
+        void SettingsModel::setRecentFiles(const std::vector<std::filesystem::path>& value)
+        {
+            _recentFiles = value;
         }
 
         const WindowOptions& SettingsModel::getWindowOptions() const

@@ -15,7 +15,7 @@ namespace examples
         {
             _documents = ObservableList<std::shared_ptr<Document> >::create();
             _add = ObservableValue<std::shared_ptr<Document> >::create();
-            _close = ObservableValue<int>::create(-1);
+            _close = ObservableValue<std::shared_ptr<Document> >::create();
             _closeAll = ObservableValue<bool>::create(false);
             _currentIndex = ObservableValue<int>::create(-1);
         }
@@ -58,8 +58,9 @@ namespace examples
         {
             if (index >= 0 && index < _documents->getSize())
             {
+                _close->setAlways(_documents->getItem(index));
+                _close->setAlways(nullptr);
                 _documents->removeItem(index);
-                _close->setAlways(index);
 
                 if (index == _currentIndex->get())
                 {
@@ -81,7 +82,7 @@ namespace examples
             _currentIndex->setIfChanged(-1);
         }
 
-        std::shared_ptr<ftk::IObservableValue<int> > DocumentModel::observeClose() const
+        std::shared_ptr<ftk::IObservableValue<std::shared_ptr<Document> > > DocumentModel::observeClose() const
         {
             return _close;
         }

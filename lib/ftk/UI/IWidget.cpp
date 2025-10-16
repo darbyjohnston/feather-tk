@@ -330,7 +330,8 @@ namespace ftk
                 window->setKeyFocus(nullptr);
             }
         }
-        for (const auto& child : _children)
+        auto children = _children;
+        for (const auto& child : children)
         {
             child->releaseKeyFocus();
         }
@@ -492,7 +493,8 @@ namespace ftk
             _mousePress = false;
             _setDrawUpdate();
         }
-        for (const auto& child : _children)
+        auto children = _children;
+        for (const auto& child : children)
         {
             child->_releaseMouse();
         }

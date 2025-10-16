@@ -41,9 +41,11 @@ namespace examples
             std::shared_ptr<ftk::CheckBox> _lineNumbersCheckBox;
             std::shared_ptr<ftk::ComboBox> _fontComboBox;
             std::shared_ptr<ftk::IntEdit> _fontSizeEdit;
+            std::shared_ptr<ftk::IntEdit> _tabSpacesEdit;
             std::shared_ptr<ftk::VerticalLayout> _layout;
 
             std::shared_ptr<ftk::ValueObserver<ftk::TextEditOptions> > _textEditOptionsObserver;
+            std::shared_ptr<ftk::ValueObserver<ftk::TextEditModelOptions> > _textEditModelOptionsObserver;
         };
     }
 }

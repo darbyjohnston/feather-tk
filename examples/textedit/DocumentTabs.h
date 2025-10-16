@@ -39,13 +39,15 @@ namespace examples
 
         private:
             std::shared_ptr<ftk::TabWidget> _tabWidget;
-            std::vector<std::shared_ptr<ftk::TextEdit> > _textEdits;
+            std::map<std::shared_ptr<Document>, std::shared_ptr<ftk::TextEdit> > _textEdits;
 
             std::shared_ptr<ftk::ValueObserver<std::shared_ptr<Document> > > _addDocumentObserver;
-            std::shared_ptr<ftk::ValueObserver<int> > _removeDocumentObserver;
+            std::shared_ptr<ftk::ValueObserver<std::shared_ptr<Document> > > _removeDocumentObserver;
             std::shared_ptr<ftk::ValueObserver<bool> > _clearDocumentsObserver;
             std::shared_ptr<ftk::ValueObserver<int> > _currentDocumentObserver;
+            std::map<std::shared_ptr<Document>, std::shared_ptr<ftk::ValueObserver<std::filesystem::path> > > _documentPathObservers;
             std::shared_ptr<ftk::ValueObserver<ftk::TextEditOptions> > _textEditOptionsObserver;
+            std::shared_ptr<ftk::ValueObserver<ftk::TextEditModelOptions> > _textEditModelOptionsObserver;
         };
     }
 }

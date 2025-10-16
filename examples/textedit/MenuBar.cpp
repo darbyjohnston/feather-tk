@@ -5,6 +5,9 @@
 #include "MenuBar.h"
 
 #include "Actions.h"
+#include "App.h"
+
+#include <ftk/UI/RecentFilesModel.h>
 
 using namespace ftk;
 
@@ -14,12 +17,34 @@ namespace examples
     {
         void MenuBar::_init(
             const std::shared_ptr<Context>& context,
+            const std::shared_ptr<App>& app,
             const std::shared_ptr<Actions>& actions,
             const std::shared_ptr<IWidget>& parent)
         {
             ftk::MenuBar::_init(context, parent);
+
             _createFileMenu(context, actions);
             _createEditMenu(context, actions);
+
+            std::weak_ptr<App> appWeak(app);
+            _recentFilesObserver = ListObserver<std::filesystem::path>::create(
+                app->getRecentFilesModel()->observeRecent(),
+                [this, appWeak](const std::vector<std::filesystem::path>& value)
+                {
+                    _menus["File/Recent"]->clear();
+                    for (auto i = value.rbegin(); i != value.rend(); ++i)
+                    {
+                        const std::filesystem::path path = *i;
+                        auto action = Action::create(
+                            path.filename().u8string(),
+                            [appWeak, path]
+                            {
+                                auto app = appWeak.lock();
+                                app->open(path);
+                            });
+                        _menus["File/Recent"]->addAction(action);
+                    }
+                });
         }
 
         MenuBar::~MenuBar()
@@ -27,11 +52,12 @@ namespace examples
 
         std::shared_ptr<MenuBar> MenuBar::create(
             const std::shared_ptr<Context>& context,
+            const std::shared_ptr<App>& app,
             const std::shared_ptr<Actions>& actions,
             const std::shared_ptr<IWidget>& parent)
         {
             auto out = std::shared_ptr<MenuBar>(new MenuBar);
-            out->_init(context, actions, parent);
+            out->_init(context, app, actions, parent);
             return out;
         }
 
@@ -44,6 +70,9 @@ namespace examples
             _menus["File"]->addAction(actions->getAction("File/Open"));
             _menus["File"]->addAction(actions->getAction("File/Close"));
             _menus["File"]->addAction(actions->getAction("File/CloseAll"));
+            _menus["File"]->addAction(actions->getAction("File/Save"));
+            _menus["File"]->addDivider();
+            _menus["File/Recent"] = _menus["File"]->addSubMenu("Recent");
             _menus["File"]->addDivider();
             _menus["File"]->addAction(actions->getAction("File/Exit"));
             addMenu("File", _menus["File"]);

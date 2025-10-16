@@ -76,6 +76,19 @@ namespace ftk
         _setDrawUpdate();
     }
 
+    void TabBarButton::setText(const std::string& value)
+    {
+        const bool changed = value != _text;
+        IButton::setText(value);
+        FTK_P();
+        if (changed)
+        {
+            p.size.displayScale.reset();
+            _setSizeUpdate();
+            _setDrawUpdate();
+        }
+    }
+
     void TabBarButton::setGeometry(const Box2I& value)
     {
         const bool changed = value != getGeometry();

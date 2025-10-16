@@ -5,6 +5,7 @@
 #pragma once
 
 #include <ftk/UI/App.h>
+#include <ftk/UI/RecentFilesModel.h>
 #include <ftk/UI/Style.h>
 
 #include <ftk/Core/CmdLine.h>
@@ -30,7 +31,7 @@ namespace examples
             App() = default;
 
         public:
-            virtual ~App() = default;
+            ~App();
 
             static std::shared_ptr<App> create(
                 const std::shared_ptr<ftk::Context>&,
@@ -40,10 +41,13 @@ namespace examples
 
             const std::shared_ptr<DocumentModel>& getDocumentModel() const;
 
+            const std::shared_ptr<ftk::RecentFilesModel>& getRecentFilesModel() const;
+
             const std::shared_ptr<MainWindow>& getMainWindow() const;
 
             void open(const std::filesystem::path&);
             void open(const std::vector<std::filesystem::path>&);
+            void save();
 
         private:
             struct CmdLine
@@ -53,6 +57,7 @@ namespace examples
             CmdLine _cmdLine;
             std::shared_ptr<SettingsModel> _settingsModel;
             std::shared_ptr<DocumentModel> _documentModel;
+            std::shared_ptr<ftk::RecentFilesModel> _recentFilesModel;
             std::shared_ptr<MainWindow> _mainWindow;
         };
     }

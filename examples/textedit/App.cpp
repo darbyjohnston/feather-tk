@@ -11,8 +11,6 @@
 #include <ftk/UI/DialogSystem.h>
 #include <ftk/UI/FileBrowser.h>
 
-#include <ftk/Core/FileIO.h>
-
 using namespace ftk;
 
 namespace examples
@@ -41,6 +39,9 @@ namespace examples
 
             _documentModel = DocumentModel::create(context);
 
+            _recentFilesModel = RecentFilesModel::create(context);
+            _recentFilesModel->setRecent(_settingsModel->getRecentFiles());
+
             _mainWindow = MainWindow::create(
                 context,
                 std::dynamic_pointer_cast<App>(shared_from_this()),
@@ -57,6 +58,11 @@ namespace examples
             {
                 open(paths);
             }
+        }
+
+        App::~App()
+        {
+            _settingsModel->setRecentFiles(_recentFilesModel->getRecent());
         }
 
         std::shared_ptr<App> App::create(
@@ -78,6 +84,11 @@ namespace examples
             return _documentModel;
         }
 
+        const std::shared_ptr<ftk::RecentFilesModel>& App::getRecentFilesModel() const
+        {
+            return _recentFilesModel;
+        }
+
         const std::shared_ptr<MainWindow>& App::getMainWindow() const
         {
             return _mainWindow;
@@ -88,8 +99,8 @@ namespace examples
             try
             {
                 auto document = Document::create(_context, path);
-                document->getModel()->setText(readLines(path));
                 _documentModel->add(document);
+                _recentFilesModel->addRecent(path);
             }
             catch (const std::exception& e)
             {
@@ -105,8 +116,8 @@ namespace examples
                 try
                 {
                     auto document = Document::create(_context, path);
-                    document->getModel()->setText(readLines(path));
                     _documentModel->add(document);
+                    _recentFilesModel->addRecent(path);
                 }
                 catch (const std::exception& e)
                 {
@@ -116,6 +127,34 @@ namespace examples
             if (!errors.empty())
             {
                 _context->getSystem<DialogSystem>()->message("ERROR", join(errors, '\n') , _mainWindow);
+            }
+        }
+
+        void App::save()
+        {
+            try
+            {
+                if (auto doc = _documentModel->getCurrent())
+                {
+                    if (doc->getPath().empty())
+                    {
+                        auto fileBrowserSystem = _context->getSystem<FileBrowserSystem>();
+                        fileBrowserSystem->open(
+                            _mainWindow,
+                            [this, doc](const std::filesystem::path& path)
+                            {
+                                doc->saveAs(path);
+                            });
+                    }
+                    else
+                    {
+                        doc->save();
+                    }
+                }
+            }
+            catch (const std::exception& e)
+            {
+                _context->getSystem<DialogSystem>()->message("ERROR", e.what(), _mainWindow);
             }
         }
     }
