@@ -24,7 +24,7 @@
 namespace ftk_resource
 {
     extern std::vector<uint8_t> NotoSansBold;
-    extern std::vector<uint8_t> NotoSansMonoRegular;
+    extern std::vector<uint8_t> NotoMonoRegular;
     extern std::vector<uint8_t> NotoSansRegular;
 }
 
@@ -42,7 +42,7 @@ namespace ftk
         {
             "NotoSans-Regular",
             "NotoSans-Bold",
-            "NotoSansMono-Regular"
+            "NotoMono-Regular"
         };
         return data[static_cast<size_t>(value)];
     }
@@ -83,7 +83,7 @@ namespace ftk
 
         p.fontData[getFont(Font::Regular)] = ftk_resource::NotoSansRegular;
         p.fontData[getFont(Font::Bold)] = ftk_resource::NotoSansBold;
-        p.fontData[getFont(Font::Mono)] = ftk_resource::NotoSansMonoRegular;
+        p.fontData[getFont(Font::Mono)] = ftk_resource::NotoMonoRegular;
 
 #if defined(FTK_API_GLES_2)
         //! \bug Some GLES 2 implementations (Pi Zero W) only support RGBA?
@@ -198,7 +198,7 @@ namespace ftk
         return out;
     }
 
-    std::vector<Box2I> FontSystem::getBox(
+    std::vector<Box2I> FontSystem::getBoxes(
         const std::string& text,
         const FontInfo& fontInfo,
         int maxLineWidth)
@@ -454,5 +454,11 @@ namespace ftk
     {
         json.at("Family").get_to(value.family);
         json.at("Size").get_to(value.size);
+    }
+
+    std::ostream& operator << (std::ostream& os, const FontInfo& value)
+    {
+        os << value.family << ":" << value.size;
+        return os;
     }
 }

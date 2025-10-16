@@ -82,7 +82,14 @@ namespace ftk
             p.model->observeCursor(),
             [this](const TextEditPos&)
             {
-                _p->scrollWidget->scrollTo(_p->widget->getCursorBox(true));
+                const Box2I& g = _p->widget->getGeometry();
+                const Box2I& g2 = _p->lineWidget->getGeometry();
+                const Box2I& cursorBox = _p->widget->getCursorBox(true);
+                _p->scrollWidget->scrollTo(Box2I(
+                    cursorBox.min.x + (g.min.x - g2.min.x),
+                    cursorBox.min.y,
+                    cursorBox.w(),
+                    cursorBox.h()));
             });
     }
 

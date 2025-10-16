@@ -28,6 +28,13 @@ namespace ftk
         
         void FontSystemTest::run()
         {
+            _info();
+            _size();
+            _add();
+        }
+
+        void FontSystemTest::_info()
+        {
             {
                 const FontInfo a;
                 const FontInfo b(getFont(Font::Bold), 16);
@@ -42,31 +49,54 @@ namespace ftk
                 FTK_ASSERT(a != b);
                 FTK_ASSERT(a < b);
             }
+        }
+
+        void FontSystemTest::_size()
+        {
             if (auto context = _context.lock())
             {
                 auto fontSystem = context->getSystem<FontSystem>();
+                for (const auto& font : getFontEnums())
+                {
+                    const FontInfo info(getFont(font), 12);
+                    const FontMetrics metrics = fontSystem->getMetrics(info);
+                    _print(Format("{0}: ascender={1}, descender={2}, lineHeight={3}").
+                        arg(info).
+                        arg(metrics.ascender).
+                        arg(metrics.descender).
+                        arg(metrics.lineHeight));
 
-                FontInfo info;
-                FontMetrics metrics = fontSystem->getMetrics(info);
-                _print(Format("Metrics: ascender={0}, descender={1}, lineHeight={2}").
-                    arg(metrics.ascender).
-                    arg(metrics.descender).
-                    arg(metrics.lineHeight));
+                    std::string s = "0123";
+                    Size2I size = fontSystem->getSize(s, info);
+                    _print(Format("{0} size: {1}").arg(s).arg(size));
+                    auto boxes = fontSystem->getBoxes(s, info);
+                    auto glyphs = fontSystem->getGlyphs(s, info);
 
-                std::string s = "Hello\nworld";
-                Size2I size = fontSystem->getSize(s, info);
-                _print(Format("{0} size: {1}").arg(s).arg(size));
-                auto boxes = fontSystem->getBox(s, info);
-                auto glyphs = fontSystem->getGlyphs(s, info);
+                    s = "abcd";
+                    size = fontSystem->getSize(s, info);
+                    _print(Format("{0} size: {1}").arg(s).arg(size));
+                    boxes = fontSystem->getBoxes(s, info);
+                    glyphs = fontSystem->getGlyphs(s, info);
 
-                size = fontSystem->getSize(s, info, 1);
-                _print(Format("{0} size: {1}").arg(s).arg(size));
-                boxes = fontSystem->getBox(s, info, 1);
-                
-                _print(Format("Glyph cache: {0} {1}%").
-                    arg(fontSystem->getGlyphCacheSize()).
-                    arg(fontSystem->getGlyphCachePercentage()));
+                    s = "Hello\nworld";
+                    size = fontSystem->getSize(s, info);
+                    _print(Format("{0} size: {1}").arg(s).arg(size));
+                    boxes = fontSystem->getBoxes(s, info);
+                    glyphs = fontSystem->getGlyphs(s, info);
+
+                    size = fontSystem->getSize(s, info, 1);
+                    _print(Format("{0} size: {1}").arg(s).arg(size));
+                    boxes = fontSystem->getBoxes(s, info, 1);
+
+                    _print(Format("Glyph cache: {0} {1}%").
+                        arg(fontSystem->getGlyphCacheSize()).
+                        arg(fontSystem->getGlyphCachePercentage()));
+                }
             }
+        }
+
+        void FontSystemTest::_add()
+        {
             if (auto context = _context.lock())
             {
                 auto fontSystem = context->getSystem<FontSystem>();

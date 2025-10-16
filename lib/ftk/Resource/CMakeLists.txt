@@ -3,7 +3,7 @@ set(SOURCE)
 set(RESOURCES
     etc/Fonts/NotoSansBold.ttf
     etc/Fonts/NotoSansRegular.ttf
-    etc/Fonts/NotoSansMonoRegular.ttf
+    etc/Fonts/NotoMonoRegular.ttf
     etc/Icons/ArrowDown.svg
     etc/Icons/ArrowLeft.svg
     etc/Icons/ArrowRight.svg

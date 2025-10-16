@@ -122,7 +122,7 @@ namespace ftk
             int maxLineWidth = 0);
 
         //! Get the character boxes for the given string.
-        std::vector<Box2I> getBox(
+        std::vector<Box2I> getBoxes(
             const std::string&,
             const FontInfo&,
             int maxLineWidth = 0);
@@ -146,6 +146,8 @@ namespace ftk
     void to_json(nlohmann::json&, const FontInfo&);
 
     void from_json(const nlohmann::json&, FontInfo&);
+
+    std::ostream& operator << (std::ostream&, const FontInfo&);
 
     ///@}
 }

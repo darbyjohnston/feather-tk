@@ -424,7 +424,7 @@ namespace ftk
         if (!p.text.empty() && p.draw->glyphs.empty())
         {
             p.draw->glyphs = event.fontSystem->getGlyphs(p.text, p.size.fontInfo);
-            p.draw->glyphsBox = event.fontSystem->getBox(p.text, p.size.fontInfo);
+            p.draw->glyphsBox = event.fontSystem->getBoxes(p.text, p.size.fontInfo);
         }
         event.render->drawText(
             p.draw->glyphs,

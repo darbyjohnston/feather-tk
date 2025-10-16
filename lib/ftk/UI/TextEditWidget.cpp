@@ -525,7 +525,7 @@ namespace ftk
             static_cast<int>(text.size()) - 1);
         if (out.line >= 0 && out.line < text.size())
         {
-            const auto boxes = p.fontSystem->getBox(text[out.line], p.size.fontInfo);
+            const auto boxes = p.fontSystem->getBoxes(text[out.line], p.size.fontInfo);
             int end = value.x - g.min.x - p.size.margin;
             for (;
                 out.chr < boxes.size() && boxes[out.chr].max.x < end;
