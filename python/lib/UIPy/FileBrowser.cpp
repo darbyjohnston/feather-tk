@@ -60,7 +60,7 @@ namespace ftk
                 py::arg("window"),
                 py::arg("callback"),
                 py::arg("title") = "Open",
-                py::arg("fileName") = std::filesystem::path(),
+                py::arg("fileName") = std::string(),
                 py::arg("mode") = FileBrowserMode::File)
             .def_property(
                 "nativeFileDialog",
