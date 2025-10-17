@@ -4,7 +4,9 @@
 
 #include <UIPy/DialogSystem.h>
 
+#include <ftk/UI/ConfirmDialog.h>
 #include <ftk/UI/DialogSystem.h>
+#include <ftk/UI/MessageDialog.h>
 #include <ftk/UI/Window.h>
 
 #include <pybind11/pybind11.h>
@@ -31,6 +33,8 @@ namespace ftk
                 py::arg("title"),
                 py::arg("text"),
                 py::arg("window"),
-                py::arg("callback"));
+                py::arg("callback"),
+                py::arg("confirm") = "OK",
+                py::arg("cancel") = "Cancel");
     }
 }

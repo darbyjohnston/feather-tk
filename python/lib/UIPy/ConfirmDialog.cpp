@@ -23,6 +23,8 @@ namespace ftk
                 py::arg("context"),
                 py::arg("title"),
                 py::arg("text"),
+                py::arg("confirm") = "OK",
+                py::arg("cancel") = "Cancel",
                 py::arg("parent") = nullptr)
             .def("setCallback", &ConfirmDialog::setCallback);
     }
