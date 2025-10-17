@@ -14,6 +14,8 @@ namespace examples
     {
         class App;
 
+        //! This class provides actions that are used to populate the menus
+        //! and tool bars.
         class Actions : public std::enable_shared_from_this<Actions>
         {
         protected:
@@ -26,12 +28,15 @@ namespace examples
         public:
             virtual ~Actions();
 
+            //! Create new actions.
             static std::shared_ptr<Actions> create(
                 const std::shared_ptr<ftk::Context>&,
                 const std::shared_ptr<App>&);
 
+            //! Get the actions.
             const std::map<std::string, std::shared_ptr<ftk::Action> > getActions() const;
 
+            //! Get an action by name.
             std::shared_ptr<ftk::Action> getAction(const std::string&) const;
 
         private:
@@ -44,11 +49,10 @@ namespace examples
 
             void _actionsUpdate();
 
-            std::weak_ptr<App> _app;
-
             std::map<std::string, std::shared_ptr<ftk::Action> > _actions;
 
-            std::shared_ptr<ftk::ValueObserver<int> > _currentDocObserver;
+            std::weak_ptr<Document> _current;
+            std::shared_ptr<ftk::ValueObserver<std::shared_ptr<Document> > > _currentObserver;
             std::shared_ptr<ftk::ValueObserver<bool> > _changedObserver;
             std::shared_ptr<ftk::ValueObserver<ftk::TextEditSelection> > _selectionObserver;
             std::shared_ptr<ftk::ValueObserver<WindowOptions> > _windowOptionsObserver;

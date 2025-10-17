@@ -14,9 +14,10 @@ namespace examples
             const std::shared_ptr<Context>& context)
         {
             _documents = ObservableList<std::shared_ptr<Document> >::create();
-            _add = ObservableValue<std::shared_ptr<Document> >::create();
-            _close = ObservableValue<std::shared_ptr<Document> >::create();
+            _add = ObservableValue<std::weak_ptr<Document> >::create();
+            _close = ObservableValue<std::weak_ptr<Document> >::create();
             _closeAll = ObservableValue<bool>::create(false);
+            _current = ObservableValue<std::shared_ptr<Document> >::create();
             _currentIndex = ObservableValue<int>::create(-1);
         }
 
@@ -41,15 +42,15 @@ namespace examples
             return _documents;
         }
 
-        void DocumentModel::add(const std::shared_ptr<Document>& document)
+        void DocumentModel::add(const std::shared_ptr<Document>& doc)
         {
-            _documents->pushBack(document);
-            _add->setAlways(document);
-            _add->setAlways(nullptr);
-            _currentIndex->setIfChanged(_documents->getSize() - 1);
+            _documents->pushBack(doc);
+            _add->setAlways(doc);
+            _current->setAlways(doc);
+            _currentIndex->setAlways(_documents->getSize() - 1);
         }
 
-        std::shared_ptr<ftk::IObservableValue<std::shared_ptr<Document> > > DocumentModel::observeAdd() const
+        std::shared_ptr<ftk::IObservableValue<std::weak_ptr<Document> > > DocumentModel::observeAdd() const
         {
             return _add;
         }
@@ -59,9 +60,9 @@ namespace examples
             if (index >= 0 && index < _documents->getSize())
             {
                 _close->setAlways(_documents->getItem(index));
-                _close->setAlways(nullptr);
                 _documents->removeItem(index);
 
+                // Update the current document if necessary.
                 if (index == _currentIndex->get())
                 {
                     _currentIndex->setIfChanged(std::min(
@@ -72,6 +73,11 @@ namespace examples
                 {
                     _currentIndex->setIfChanged(_currentIndex->get() - 1);
                 }
+                _current->setIfChanged(
+                    _currentIndex->get() >= 0 &&
+                    _currentIndex->get() < _documents->getSize() ?
+                    _documents->getItem(_currentIndex->get()) :
+                    nullptr);
             }
         }
 
@@ -79,10 +85,11 @@ namespace examples
         {
             _documents->clear();
             _closeAll->setAlways(true);
+            _current->setIfChanged(nullptr);
             _currentIndex->setIfChanged(-1);
         }
 
-        std::shared_ptr<ftk::IObservableValue<std::shared_ptr<Document> > > DocumentModel::observeClose() const
+        std::shared_ptr<ftk::IObservableValue<std::weak_ptr<Document> > > DocumentModel::observeClose() const
         {
             return _close;
         }
@@ -94,14 +101,17 @@ namespace examples
 
         std::shared_ptr<Document> DocumentModel::getCurrent() const
         {
-            const auto& docs = _documents->get();
-            const int index = _currentIndex->get();
-            return index >= 0 && index < docs.size() ? docs[index] : nullptr;
+            return _current->get();
         }
 
         int DocumentModel::getCurrentIndex() const
         {
             return _currentIndex->get();
+        }
+
+        std::shared_ptr<ftk::IObservableValue<std::shared_ptr<Document> > > DocumentModel::observeCurrent() const
+        {
+            return _current;
         }
 
         std::shared_ptr<ftk::IObservableValue<int> > DocumentModel::observeCurrentIndex() const
@@ -111,7 +121,15 @@ namespace examples
 
         void DocumentModel::setCurrentIndex(int value)
         {
-            _currentIndex->setIfChanged(value);
+            const auto& docs = _documents->get();
+            const int tmp = clamp(value, 0, static_cast<int>(docs.size()) - 1);
+            if (_currentIndex->setIfChanged(tmp))
+            {
+                _current->setIfChanged(
+                    tmp >= 0 && tmp < docs.size() ?
+                    docs[tmp] :
+                    nullptr);
+            }
         }
 
         void DocumentModel::saveAll()

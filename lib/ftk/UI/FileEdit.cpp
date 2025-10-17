@@ -148,6 +148,7 @@ namespace ftk
                             p.callback(p.path);
                         }
                     },
+                    "File Browser",
                     std::filesystem::u8path(p.lineEdit->getText()),
                     p.mode);
             }

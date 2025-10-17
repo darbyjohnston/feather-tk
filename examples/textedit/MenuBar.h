@@ -15,6 +15,7 @@ namespace examples
         class Actions;
         class App;
 
+        //! Menu bar.
         class MenuBar : public ftk::MenuBar
         {
         protected:
@@ -29,6 +30,7 @@ namespace examples
         public:
             virtual ~MenuBar();
 
+            //! Create a new menu bar.
             static std::shared_ptr<MenuBar> create(
                 const std::shared_ptr<ftk::Context>&,
                 const std::shared_ptr<App>&,

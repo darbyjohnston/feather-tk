@@ -15,6 +15,7 @@ namespace examples
     {
         class App;
 
+        //! Settings widget.
         class SettingsWidget : public ftk::IWidget
         {
         protected:
@@ -28,6 +29,7 @@ namespace examples
         public:
             virtual ~SettingsWidget();
 
+            //! Create a new settings widget.
             static std::shared_ptr<SettingsWidget> create(
                 const std::shared_ptr<ftk::Context>&,
                 const std::shared_ptr<App>&,

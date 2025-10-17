@@ -16,21 +16,22 @@ namespace examples
             const std::shared_ptr<Context>& context,
             const std::filesystem::path& path)
         {
-            _path = ObservableValue<std::filesystem::path>::create(path);
-            _name = ObservableValue<std::string>::create();
-            _tooltip = ObservableValue<std::string>::create();
-
             std::vector<std::string> lines;
             if (!path.empty())
             {
+                // Read the file.
                 lines = readLines(path);
             }
             _model = TextEditModel::create(context, lines);
 
+            _path = ObservableValue<std::filesystem::path>::create(path);
+            _name = ObservableValue<std::string>::create();
+            _tooltip = ObservableValue<std::string>::create();
             _changed = ObservableValue<bool>::create(false);
 
             _nameUpdate();
 
+            // Observe changes to the text and update the name.
             _textObserver = ListObserver<std::string>::create(
                 _model->observeText(),
                 [this](const std::vector<std::string>&)

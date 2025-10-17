@@ -135,6 +135,7 @@ namespace ftk
                 auto model = FileBrowserModel::create(context);
                 auto fileBrowserWidget = FileBrowserWidget::create(
                     context,
+                    "Open",
                     path,
                     FileBrowserMode::File,
                     model,
@@ -178,7 +179,12 @@ namespace ftk
 
                 std::filesystem::path path = std::filesystem::current_path();
                 auto model = FileBrowserModel::create(context);
-                auto fileBrowser = FileBrowser::create(context, path, FileBrowserMode::File, model);
+                auto fileBrowser = FileBrowser::create(
+                    context,
+                    "Open",
+                    path,
+                    FileBrowserMode::File,
+                    model);
                 FileBrowserOptions options;
                 options.reverseSort = true;
                 model->setOptions(options);

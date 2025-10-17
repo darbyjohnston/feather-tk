@@ -163,7 +163,7 @@ namespace ftk
         void setTooltipsEnabled(bool);
 
         //! Exit the application.
-        void exit();
+        virtual void exit();
 
         //! Tick the event loop.
         void tick();

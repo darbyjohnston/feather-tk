@@ -13,6 +13,7 @@ namespace examples
 {
     namespace textedit
     {
+        //! Window options.
         struct WindowOptions
         {
             bool  settings = false;
@@ -22,6 +23,7 @@ namespace examples
             bool operator != (const WindowOptions&) const;
         };
 
+        //! Global settings that are save to file.
         class SettingsModel : public std::enable_shared_from_this<SettingsModel>
         {
         protected:
@@ -32,15 +34,29 @@ namespace examples
         public:
             virtual ~SettingsModel();
 
+            //! Create a new settings model.
             static std::shared_ptr<SettingsModel> create(
                 const std::shared_ptr<ftk::Context>&);
+
+            //! \name Recent Files
+            ///@{
 
             const std::vector<std::filesystem::path>& getRecentFiles() const;
             void setRecentFiles(const std::vector<std::filesystem::path>&);
 
+            ///@}
+
+            //! \name Window Options
+            ///@{
+
             const WindowOptions& getWindowOptions() const;
             std::shared_ptr<ftk::IObservableValue<WindowOptions> > observeWindowOptions() const;
             void setWindowOptions(const WindowOptions&);
+
+            ///@}
+
+            //! \name Text Edit Options
+            ///@{
 
             const ftk::TextEditOptions& getTextEditOptions() const;
             std::shared_ptr<ftk::IObservableValue<ftk::TextEditOptions> > observeTextEditOptions() const;
@@ -49,6 +65,8 @@ namespace examples
             const ftk::TextEditModelOptions& getTextEditModelOptions() const;
             std::shared_ptr<ftk::IObservableValue<ftk::TextEditModelOptions> > observeTextEditModelOptions() const;
             void setTextEditModelOptions(const ftk::TextEditModelOptions&);
+
+            ///@}
 
         private:
             std::shared_ptr<ftk::Settings> _settings;

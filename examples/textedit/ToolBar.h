@@ -13,6 +13,7 @@ namespace examples
     {
         class Actions;
 
+        //! Tool bar widget.
         class ToolBar : public ftk::IWidget
         {
         protected:
@@ -26,6 +27,7 @@ namespace examples
         public:
             virtual ~ToolBar();
 
+            //! Create a new tool bar.
             static std::shared_ptr<ToolBar> create(
                 const std::shared_ptr<ftk::Context>&,
                 const std::shared_ptr<Actions>&,

@@ -28,7 +28,7 @@ namespace ftk
         return std::shared_ptr<DialogSystem>(new DialogSystem(context));
     }
 
-    void DialogSystem::message(
+    std::shared_ptr<MessageDialog> DialogSystem::message(
         const std::string& title,
         const std::string& text,
         const std::shared_ptr<IWindow>& window)
@@ -49,9 +49,10 @@ namespace ftk
                     _p->messageDialog.reset();
                 });
         }
+        return p.messageDialog;
     }
 
-    void DialogSystem::confirm(
+    std::shared_ptr<ConfirmDialog> DialogSystem::confirm(
         const std::string& title,
         const std::string& text,
         const std::shared_ptr<IWindow>& window,
@@ -76,5 +77,6 @@ namespace ftk
                     _p->confirmDialog.reset();
                 });
         }
+        return p.confirmDialog;
     }
 }

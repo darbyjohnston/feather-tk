@@ -48,6 +48,7 @@ namespace ftk
 
     void FileBrowser::_init(
         const std::shared_ptr<Context>& context,
+        const std::string& title,
         const std::filesystem::path& fileName,
         FileBrowserMode mode,
         const std::shared_ptr<FileBrowserModel>& model,
@@ -58,6 +59,7 @@ namespace ftk
 
         p.widget = FileBrowserWidget::create(
             context,
+            title,
             fileName,
             mode,
             model,
@@ -79,14 +81,20 @@ namespace ftk
 
     std::shared_ptr<FileBrowser> FileBrowser::create(
         const std::shared_ptr<Context>& context,
+        const std::string& title,
         const std::filesystem::path& fileName,
         FileBrowserMode mode,
         const std::shared_ptr<FileBrowserModel>& model,
         const std::shared_ptr<IWidget>& parent)
     {
         auto out = std::shared_ptr<FileBrowser>(new FileBrowser);
-        out->_init(context, fileName, mode, model, parent);
+        out->_init(context, title, fileName, mode, model, parent);
         return out;
+    }
+
+    void FileBrowser::setTitle(const std::string& value)
+    {
+        _p->widget->setTitle(value);
     }
 
     void FileBrowser::setCallback(const std::function<void(const std::filesystem::path&)>& value)

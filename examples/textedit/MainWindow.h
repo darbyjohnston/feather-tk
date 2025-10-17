@@ -23,6 +23,7 @@ namespace examples
         class StatusBar;
         class ToolBar;
 
+        //! Main window.
         class MainWindow : public ftk::MainWindow
         {
         protected:
@@ -37,11 +38,14 @@ namespace examples
         public:
             virtual ~MainWindow();
 
+            //! Create a new window.
             static std::shared_ptr<MainWindow> create(
                 const std::shared_ptr<ftk::Context>&,
                 const std::shared_ptr<App>&,
                 const std::string& name,
                 const ftk::Size2I&);
+
+            void close() override;
 
         protected:
             void _drop(const std::vector<std::string>&);

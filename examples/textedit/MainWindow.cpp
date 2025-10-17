@@ -30,22 +30,22 @@ namespace examples
         {
             ftk::MainWindow::_init(context, app, name, size);
 
+            // Save pointers to the application and settings.
             _app = app;
             _settingsModel = app->getSettingsModel();
 
+            // Create the actions.
             _actions = Actions::create(context, app);
 
+            // Create the widgets.
             _menuBar = MenuBar::create(context, app, _actions);
             setMenuBar(_menuBar);
-
             _tabs = DocumentTabs::create(context, app);
-
             _settingsWidget = SettingsWidget::create(context, app);
-
             _toolBar = ToolBar::create(context, _actions);
-
             _statusBar = StatusBar::create(context, app);
 
+            // Layout the widgets.
             _layout = VerticalLayout::create(context, shared_from_this());
             _layout->setSpacingRole(SizeRole::None);
             _layout->setStretch(Stretch::Expanding);
@@ -59,6 +59,7 @@ namespace examples
             _statusBar->setParent(_layout);
             setWidget(_layout);
 
+            // Observe window options.
             _windowOptionsObserver = ValueObserver<WindowOptions>::create(
                 _settingsModel->observeWindowOptions(),
                 [this](const WindowOptions& value)
@@ -86,10 +87,14 @@ namespace examples
             return out;
         }
 
+        void MainWindow::close()
+        {}
+
         void MainWindow::_drop(const std::vector<std::string>& drops)
         {
             if (auto app = _app.lock())
             {
+                // Open dropped files.
                 std::vector<std::filesystem::path> paths;
                 for (const auto& drop : drops)
                 {

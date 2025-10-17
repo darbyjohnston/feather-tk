@@ -63,6 +63,7 @@ namespace ftk
 
     void FileBrowserWidget::_init(
         const std::shared_ptr<Context>& context,
+        const std::string& title,
         const std::filesystem::path& fileName,
         FileBrowserMode mode,
         const std::shared_ptr<FileBrowserModel>& model,
@@ -79,7 +80,7 @@ namespace ftk
         p.mode = mode;
         p.model = model;
 
-        p.titleLabel = Label::create(context, "File Browser");
+        p.titleLabel = Label::create(context, title);
         p.titleLabel->setMarginRole(SizeRole::MarginSmall);
         p.titleLabel->setBackgroundRole(ColorRole::Button);
 
@@ -373,14 +374,20 @@ namespace ftk
 
     std::shared_ptr<FileBrowserWidget> FileBrowserWidget::create(
         const std::shared_ptr<Context>& context,
+        const std::string& title,
         const std::filesystem::path& fileName,
         FileBrowserMode mode,
         const std::shared_ptr<FileBrowserModel>& model,
         const std::shared_ptr<IWidget>& parent)
     {
         auto out = std::shared_ptr<FileBrowserWidget>(new FileBrowserWidget);
-        out->_init(context,  fileName, mode, model, parent);
+        out->_init(context, title, fileName, mode, model, parent);
         return out;
+    }
+
+    void FileBrowserWidget::setTitle(const std::string& value)
+    {
+        _p->titleLabel->setText(value);
     }
 
     void FileBrowserWidget::setCallback(const std::function<void(const std::filesystem::path&)>& value)

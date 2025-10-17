@@ -10,6 +10,9 @@
 
 namespace ftk
 {
+    class ConfirmDialog;
+    class MessageDialog;
+
     //! \name Dialogs
     ///@{
 
@@ -27,13 +30,13 @@ namespace ftk
             const std::shared_ptr<Context>&);
 
         //! Open a message dialog.
-        void message(
+        std::shared_ptr<MessageDialog> message(
             const std::string& title,
             const std::string& text,
             const std::shared_ptr<IWindow>& window);
 
         //! Open a confirmation dialog.
-        void confirm(
+        std::shared_ptr<ConfirmDialog> confirm(
             const std::string& title,
             const std::string& text,
             const std::shared_ptr<IWindow>& window,

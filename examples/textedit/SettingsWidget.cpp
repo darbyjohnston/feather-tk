@@ -25,31 +25,32 @@ namespace examples
         {
             IWidget::_init(context, "examples::textedit::SettingsWidget", parent);
 
+            // Create the title label and close button.
             auto titleLabel = Label::create(context, "Settings");
             titleLabel->setMarginRole(SizeRole::MarginSmall);
             titleLabel->setHStretch(Stretch::Expanding);
             auto closeButton = ToolButton::create(context);
             closeButton->setIcon("Close");
 
+            // Create the font widgets.
             _fontComboBox = ComboBox::create(context);
             _fontComboBox->setItems(getFontLabels());
             _fontComboBox->setHStretch(Stretch::Expanding);
-
             _fontSizeEdit = ftk::IntEdit::create(context);
             _fontSizeEdit->setRange(6, 64);
 
+            // Create the tab widgets.
             _tabSpacesEdit = ftk::IntEdit::create(context);
             _tabSpacesEdit->setRange(1, 8);
 
+            // Layout the widgets.
             _layout = VerticalLayout::create(context, shared_from_this());
             _layout->setSpacingRole(SizeRole::None);
-
             auto hLayout = HorizontalLayout::create(context, _layout);
             hLayout->setSpacingRole(SizeRole::None);
             hLayout->setBackgroundRole(ColorRole::Button);
             titleLabel->setParent(hLayout);
             closeButton->setParent(hLayout);
-
             auto formLayout = FormLayout::create(context, _layout);
             formLayout->setMarginRole(SizeRole::Margin);
             hLayout = HorizontalLayout::create(context);
@@ -59,6 +60,7 @@ namespace examples
             formLayout->addRow("Font:", hLayout);
             formLayout->addRow("Tab spaces:", _tabSpacesEdit);
 
+            // Set the close callback.
             std::weak_ptr<App> appWeak(app);
             closeButton->setClickedCallback(
                 [appWeak]
@@ -71,6 +73,7 @@ namespace examples
                     }
                 });
 
+            // Set the font callbacks.
             _fontComboBox->setIndexCallback(
                 [appWeak](int index)
                 {
@@ -81,7 +84,6 @@ namespace examples
                         app->getSettingsModel()->setTextEditOptions(options);
                     }
                 });
-
             _fontSizeEdit->setCallback(
                 [appWeak](int value)
                 {
@@ -93,6 +95,7 @@ namespace examples
                     }
                 });
 
+            // Set the tab callbacks.
             _tabSpacesEdit->setCallback(
                 [appWeak](int value)
                 {
@@ -104,6 +107,7 @@ namespace examples
                     }
                 });
 
+            // Observe text edit options and update the widgets.
             _textEditOptionsObserver = ValueObserver<TextEditOptions>::create(
                 app->getSettingsModel()->observeTextEditOptions(),
                 [this](const TextEditOptions& value)
@@ -120,7 +124,6 @@ namespace examples
                     _fontComboBox->setCurrentIndex(index);
                     _fontSizeEdit->setValue(value.fontInfo.size);
                 });
-
             _textEditModelOptionsObserver = ValueObserver<TextEditModelOptions>::create(
                 app->getSettingsModel()->observeTextEditModelOptions(),
                 [this](const TextEditModelOptions& value)

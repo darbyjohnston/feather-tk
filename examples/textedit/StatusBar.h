@@ -13,7 +13,9 @@ namespace examples
     namespace textedit
     {
         class App;
+        class Document;
 
+        //! Status bar widget.
         class StatusBar : public ftk::IWidget
         {
         protected:
@@ -27,6 +29,7 @@ namespace examples
         public:
             virtual ~StatusBar();
 
+            //! Create a new widget.
             static std::shared_ptr<StatusBar> create(
                 const std::shared_ptr<ftk::Context>&,
                 const std::shared_ptr<App>&,
@@ -39,7 +42,7 @@ namespace examples
             std::map<std::string, std::shared_ptr<ftk::Label> > _labels;
             std::shared_ptr<ftk::HorizontalLayout> _layout;
 
-            std::shared_ptr<ftk::ValueObserver<int> > _currentDocumentObserver;
+            std::shared_ptr<ftk::ValueObserver<std::shared_ptr<Document> > > _currentObserver;
             std::shared_ptr<ftk::ListObserver<std::string> > _textObserver;
             std::shared_ptr<ftk::ValueObserver<ftk::TextEditPos> > _cursorObserver;
         };

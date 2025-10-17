@@ -22,9 +22,11 @@ namespace examples
         {
             IWidget::_init(context, "examples::textedit::ToolBar", parent);
 
+            // Create the layout.
             _layout = HorizontalLayout::create(context, shared_from_this());
             _layout->setSpacingRole(SizeRole::SpacingSmall);
 
+            // Create the file tool bar.
             auto fileToolBar = ftk::ToolBar::create(context, Orientation::Horizontal, _layout);
             for (const auto& key :
                 { "File/New", "File/Open", "File/Close", "File/CloseAll", "File/Save" })
@@ -34,6 +36,7 @@ namespace examples
 
             Divider::create(context, Orientation::Horizontal, _layout);
 
+            // Create the edit tool bar.
             auto editToolBar = ftk::ToolBar::create(context, Orientation::Horizontal, _layout);
             for (const auto& key :
                 { "Edit/Cut", "Edit/Copy", "Edit/Paste" })

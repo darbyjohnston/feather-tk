@@ -21,11 +21,13 @@ namespace examples
             const std::shared_ptr<Context>& context,
             const std::vector<std::string>& argv)
         {
+            // Create the command line arguments.
             _cmdLine.paths = CmdLineListArg<std::string>::create(
                 "inputs",
                 "Input paths.",
                 true);
 
+            // Initialize the base class.
             ftk::App::_init(
                 context,
                 argv,
@@ -33,15 +35,16 @@ namespace examples
                 "Text edit example",
                 { _cmdLine.paths });
 
+            // Turn off the native file dialog.
             context->getSystem<FileBrowserSystem>()->setNativeFileDialog(false);
 
+            // Create models.
             _settingsModel = SettingsModel::create(context);
-
             _documentModel = DocumentModel::create(context);
-
             _recentFilesModel = RecentFilesModel::create(context);
             _recentFilesModel->setRecent(_settingsModel->getRecentFiles());
 
+            // Create the main window.
             _mainWindow = MainWindow::create(
                 context,
                 std::dynamic_pointer_cast<App>(shared_from_this()),
@@ -49,6 +52,7 @@ namespace examples
                 Size2I(1280, 960));
             _mainWindow->show();
 
+            // Open command line arguments.
             std::vector<std::filesystem::path> paths;
             for (const std::string& path : _cmdLine.paths->getList())
             {
@@ -98,13 +102,16 @@ namespace examples
         {
             try
             {
-                auto document = Document::create(_context, path);
-                _documentModel->add(document);
+                auto doc = Document::create(_context, path);
+                _documentModel->add(doc);
                 _recentFilesModel->addRecent(path);
             }
             catch (const std::exception& e)
             {
-                _context->getSystem<DialogSystem>()->message("ERROR", e.what(), _mainWindow);
+                _context->getSystem<DialogSystem>()->message(
+                    "ERROR",
+                    e.what(),
+                    _mainWindow);
             }
         }
 
@@ -115,8 +122,8 @@ namespace examples
             {
                 try
                 {
-                    auto document = Document::create(_context, path);
-                    _documentModel->add(document);
+                    auto doc = Document::create(_context, path);
+                    _documentModel->add(doc);
                     _recentFilesModel->addRecent(path);
                 }
                 catch (const std::exception& e)
@@ -126,7 +133,10 @@ namespace examples
             }
             if (!errors.empty())
             {
-                _context->getSystem<DialogSystem>()->message("ERROR", join(errors, '\n') , _mainWindow);
+                _context->getSystem<DialogSystem>()->message(
+                    "ERROR",
+                    join(errors, '\n'),
+                    _mainWindow);
             }
         }
 
@@ -139,22 +149,14 @@ namespace examples
                 if (doc->isChanged())
                 {
                     _context->getSystem<DialogSystem>()->confirm(
-                        "Save File",
-                        "File has unsaved changes, would you like to save them?",
+                        "Unsaved Changes",
+                        "File has unsaved changes, are you sure you want to close it?",
                         _mainWindow,
                         [this, doc, index](bool value)
                         {
                             if (value)
                             {
-                                try
-                                {
-                                    doc->save();
-                                    _documentModel->close(index);
-                                }
-                                catch (const std::exception& e)
-                                {
-                                    _context->getSystem<DialogSystem>()->message("ERROR", e.what(), _mainWindow);
-                                }
+                                _documentModel->close(index);
                             }
                         },
                         "Yes",
@@ -177,22 +179,14 @@ namespace examples
             if (changed)
             {
                 _context->getSystem<DialogSystem>()->confirm(
-                    "Save Files",
-                    "Files have unsaved changes, would you like to save them?",
+                    "Unsaved Changes",
+                    "Files have unsaved changes, are you sure you want to close them?",
                     _mainWindow,
                     [this](bool value)
                     {
                         if (value)
                         {
-                            try
-                            {
-                                _documentModel->saveAll();
-                                _documentModel->closeAll();
-                            }
-                            catch (const std::exception& e)
-                            {
-                                _context->getSystem<DialogSystem>()->message("ERROR", e.what(), _mainWindow);
-                            }
+                            _documentModel->closeAll();
                         }
                     },
                     "Yes",
@@ -210,7 +204,24 @@ namespace examples
             {
                 if (doc->getPath().empty())
                 {
-                    saveAs();
+                    auto fileBrowserSystem = _context->getSystem<FileBrowserSystem>();
+                    fileBrowserSystem->open(
+                        _mainWindow,
+                        [this, doc](const std::filesystem::path& path)
+                        {
+                            try
+                            {
+                                doc->saveAs(path);
+                            }
+                            catch (const std::exception& e)
+                            {
+                                _context->getSystem<DialogSystem>()->message(
+                                    "ERROR",
+                                    e.what(),
+                                    _mainWindow);
+                            }
+                        },
+                        "Save");
                 }
                 else
                 {
@@ -220,7 +231,10 @@ namespace examples
                     }
                     catch (const std::exception& e)
                     {
-                        _context->getSystem<DialogSystem>()->message("ERROR", e.what(), _mainWindow);
+                        _context->getSystem<DialogSystem>()->message(
+                            "ERROR",
+                            e.what(),
+                            _mainWindow);
                     }
                 }
             }
@@ -241,9 +255,45 @@ namespace examples
                         }
                         catch (const std::exception& e)
                         {
-                            _context->getSystem<DialogSystem>()->message("ERROR", e.what(), _mainWindow);
+                            _context->getSystem<DialogSystem>()->message(
+                                "ERROR",
+                                e.what(),
+                                _mainWindow);
                         }
-                    });
+                    },
+                    "Save As");
+            }
+        }
+
+        void App::exit()
+        {
+            bool changed = false;
+            for (const auto& doc : _documentModel->getList())
+            {
+                changed |= doc->isChanged();
+            }
+            if (changed)
+            {
+                if (!_confirmDialog.lock())
+                {
+                    _confirmDialog = _context->getSystem<DialogSystem>()->confirm(
+                        "Unsaved Changes",
+                        "Files have unsaved changes, are you sure you want to exit?",
+                        _mainWindow,
+                        [this](bool value)
+                        {
+                            if (value)
+                            {
+                                ftk::App::exit();
+                            }
+                        },
+                        "Yes",
+                        "No");
+                }
+            }
+            else
+            {
+                ftk::App::exit();
             }
         }
     }

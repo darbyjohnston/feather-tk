@@ -16,6 +16,7 @@ namespace examples
         class App;
         class Document;
 
+        //! Document tabs widget.
         class DocumentTabs : public ftk::IWidget
         {
         protected:
@@ -29,6 +30,7 @@ namespace examples
         public:
             virtual ~DocumentTabs();
 
+            //! Create a new widget.
             static std::shared_ptr<DocumentTabs> create(
                 const std::shared_ptr<ftk::Context>&,
                 const std::shared_ptr<App>&,
@@ -41,10 +43,10 @@ namespace examples
             std::shared_ptr<ftk::TabWidget> _tabWidget;
             std::map<std::shared_ptr<Document>, std::shared_ptr<ftk::TextEdit> > _textEdits;
 
-            std::shared_ptr<ftk::ValueObserver<std::shared_ptr<Document> > > _addDocumentObserver;
-            std::shared_ptr<ftk::ValueObserver<std::shared_ptr<Document> > > _removeDocumentObserver;
-            std::shared_ptr<ftk::ValueObserver<bool> > _clearDocumentsObserver;
-            std::shared_ptr<ftk::ValueObserver<int> > _currentDocumentObserver;
+            std::shared_ptr<ftk::ValueObserver<std::weak_ptr<Document> > > _addObserver;
+            std::shared_ptr<ftk::ValueObserver<std::weak_ptr<Document> > > _closeObserver;
+            std::shared_ptr<ftk::ValueObserver<bool> > _clearObserver;
+            std::shared_ptr<ftk::ValueObserver<int> > _currentObserver;
             std::map<std::shared_ptr<Document>, std::shared_ptr<ftk::ValueObserver<std::string> > > _nameObservers;
             std::map<std::shared_ptr<Document>, std::shared_ptr<ftk::ValueObserver<std::string> > > _tooltipObservers;
             std::shared_ptr<ftk::ValueObserver<ftk::TextEditOptions> > _textEditOptionsObserver;

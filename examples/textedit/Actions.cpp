@@ -20,32 +20,27 @@ namespace examples
             const std::shared_ptr<Context>& context,
             const std::shared_ptr<App>& app)
         {
-            _app = app;
-
+            // Create the actions.
             _createFileActions(context, app);
             _createEditActions(context, app);
+            _actionsUpdate();
 
-            _currentDocObserver = ValueObserver<int>::create(
-                app->getDocumentModel()->observeCurrentIndex(),
-                [this](int index)
+            // Observe the current document to update the state of the actions.
+            _currentObserver = ValueObserver<std::shared_ptr<Document> >::create(
+                app->getDocumentModel()->observeCurrent(),
+                [this](const std::shared_ptr<Document>& doc)
                 {
-                    _changedObserver.reset();
-                    _selectionObserver.reset();
-
-                    auto app = _app.lock();
-                    const auto& documents = app->getDocumentModel()->getList();
-                    if (index >= 0 && index < documents.size())
+                    _current = doc;
+                    if (doc)
                     {
-                        const auto& document = documents[index];
                         _changedObserver = ValueObserver<bool>::create(
-                            document->observeChanged(),
+                            doc->observeChanged(),
                             [this](bool)
                             {
                                 _actionsUpdate();
                             });
-
                         _selectionObserver = ValueObserver<TextEditSelection>::create(
-                            document->getModel()->observeSelection(),
+                            doc->getModel()->observeSelection(),
                             [this](const TextEditSelection&)
                             {
                                 _actionsUpdate();
@@ -53,6 +48,8 @@ namespace examples
                     }
                     else
                     {
+                        _changedObserver.reset();
+                        _selectionObserver.reset();
                         _actionsUpdate();
                     }
                 });
@@ -281,24 +278,24 @@ namespace examples
 
         void Actions::_actionsUpdate()
         {
-            auto app = _app.lock();
-            auto doc = app->getDocumentModel()->getCurrent();
+            auto doc = _current.lock();
+            const bool current = doc.get();
             TextEditSelection selection;
             if (doc)
             {
                 selection = doc->getModel()->getSelection();
             }
 
-            _actions["File/Close"]->setEnabled(doc.get());
-            _actions["File/CloseAll"]->setEnabled(doc.get());
+            _actions["File/Close"]->setEnabled(current);
+            _actions["File/CloseAll"]->setEnabled(current);
             _actions["File/Save"]->setEnabled(doc ? doc->isChanged() : false);
-            _actions["File/SaveAs"]->setEnabled(doc.get());
+            _actions["File/SaveAs"]->setEnabled(current);
 
-            _actions["Edit/Cut"]->setEnabled(doc.get() && selection.isValid());
-            _actions["Edit/Copy"]->setEnabled(doc.get() && selection.isValid());
-            _actions["Edit/Paste"]->setEnabled(doc.get());
-            _actions["Edit/SelectAll"]->setEnabled(doc.get());
-            _actions["Edit/ClearSelection"]->setEnabled(doc.get() && selection.isValid());
+            _actions["Edit/Cut"]->setEnabled(current && selection.isValid());
+            _actions["Edit/Copy"]->setEnabled(current && selection.isValid());
+            _actions["Edit/Paste"]->setEnabled(current);
+            _actions["Edit/SelectAll"]->setEnabled(current);
+            _actions["Edit/ClearSelection"]->setEnabled(current && selection.isValid());
         }
     }
 }

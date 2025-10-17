@@ -26,6 +26,7 @@ namespace examples
             _tabWidget = TabWidget::create(context, shared_from_this());
             _tabWidget->setTabsClosable(true);
 
+            // Set tab callbacks.
             auto appWeak = std::weak_ptr<App>(app);
             _tabWidget->setCurrentTabCallback(
                 [appWeak](int index)
@@ -40,12 +41,14 @@ namespace examples
                     app->close(index);
                 });
 
-            _addDocumentObserver = ftk::ValueObserver<std::shared_ptr<Document> >::create(
+            // Observe when documents are added.
+            _addObserver = ftk::ValueObserver<std::weak_ptr<Document> >::create(
                 app->getDocumentModel()->observeAdd(),
-                [this, appWeak](const std::shared_ptr<Document>& doc)
+                [this, appWeak](const std::weak_ptr<Document>& docWeak)
                 {
-                    if (doc)
+                    if (auto doc = docWeak.lock())
                     {
+                        // Create a new text editor.
                         auto context = getContext();
                         auto app = appWeak.lock();
                         auto textEdit = TextEdit::create(context, doc->getModel());
@@ -56,13 +59,13 @@ namespace examples
                         _tabWidget->addTab(std::string(), textEdit);
                         textEdit->takeKeyFocus();
 
+                        // Observe the document to update the tab text and tooltip.
                         _nameObservers[doc] = ValueObserver<std::string>::create(
                             doc->observeName(),
                             [this, textEdit](const std::string& value)
                             {
                                 _tabWidget->setTabText(textEdit, value);
                             });
-
                         _tooltipObservers[doc] = ValueObserver<std::string>::create(
                             doc->observeTooltip(),
                             [this, textEdit](const std::string& value)
@@ -72,30 +75,37 @@ namespace examples
                     }
                 });
 
-            _removeDocumentObserver = ftk::ValueObserver<std::shared_ptr<Document> >::create(
+            // Observe when documents are closed.
+            _closeObserver = ftk::ValueObserver<std::weak_ptr<Document> >::create(
                 app->getDocumentModel()->observeClose(),
-                [this, appWeak](const std::shared_ptr<Document>& doc)
+                [this](const std::weak_ptr<Document>& docWeak)
                 {
-                    auto app = appWeak.lock();
-                    auto i = _textEdits.find(doc);
-                    if (i != _textEdits.end())
+                    if (auto doc = docWeak.lock())
                     {
-                        _tabWidget->removeTab(i->second);
-                        _textEdits.erase(i);
-                    }
-                    auto j = _nameObservers.find(doc);
-                    if (j != _nameObservers.end())
-                    {
-                        _nameObservers.erase(j);
-                    }
-                    auto k = _tooltipObservers.find(doc);
-                    if (k != _tooltipObservers.end())
-                    {
-                        _tooltipObservers.erase(k);
+                        // Remove the text editor.
+                        auto i = _textEdits.find(doc);
+                        if (i != _textEdits.end())
+                        {
+                            _tabWidget->removeTab(i->second);
+                            _textEdits.erase(i);
+                        }
+
+                        // Remove the observers.
+                        auto j = _nameObservers.find(doc);
+                        if (j != _nameObservers.end())
+                        {
+                            _nameObservers.erase(j);
+                        }
+                        auto k = _tooltipObservers.find(doc);
+                        if (k != _tooltipObservers.end())
+                        {
+                            _tooltipObservers.erase(k);
+                        }
                     }
                 });
 
-            _clearDocumentsObserver = ftk::ValueObserver<bool>::create(
+            // Observe when all the documents are closed.
+            _clearObserver = ftk::ValueObserver<bool>::create(
                 app->getDocumentModel()->observeCloseAll(),
                 [this](bool value)
                 {
@@ -108,13 +118,15 @@ namespace examples
                     }
                 });
 
-            _currentDocumentObserver = ftk::ValueObserver<int>::create(
+            // Observe the current document and update the current tab.
+            _currentObserver = ftk::ValueObserver<int>::create(
                 app->getDocumentModel()->observeCurrentIndex(),
                 [this, appWeak](int index)
                 {
                     _tabWidget->setCurrentTab(index);
                 });
 
+            // Observe text editor options.
             _textEditOptionsObserver = ValueObserver<TextEditOptions>::create(
                 app->getSettingsModel()->observeTextEditOptions(),
                 [this](const TextEditOptions& value)
@@ -124,7 +136,6 @@ namespace examples
                         i.second->setOptions(value);
                     }
                 });
-
             _textEditModelOptionsObserver = ValueObserver<TextEditModelOptions>::create(
                 app->getSettingsModel()->observeTextEditModelOptions(),
                 [this](const TextEditModelOptions& value)

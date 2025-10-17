@@ -58,6 +58,7 @@ namespace ftk
     void FileBrowserSystem::open(
         const std::shared_ptr<IWindow>& window,
         const std::function<void(const std::filesystem::path&)>& callback,
+        const std::string& title,
         const std::filesystem::path& fileName,
         FileBrowserMode mode)
     {
@@ -94,14 +95,14 @@ namespace ftk
                 {
                     p.fileBrowser = FileBrowser::create(
                         context,
+                        title,
                         fileName,
                         mode,
                         p.model);
                 }
+                p.fileBrowser->setTitle(title);
                 p.fileBrowser->setRecentFilesModel(p.recentFilesModel);
-
                 p.fileBrowser->open(window);
-
                 p.fileBrowser->setCallback(
                     [this, callback](const std::filesystem::path& value)
                     {

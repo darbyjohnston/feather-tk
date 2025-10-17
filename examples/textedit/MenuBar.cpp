@@ -23,9 +23,11 @@ namespace examples
         {
             ftk::MenuBar::_init(context, parent);
 
+            // Create the menus.
             _createFileMenu(context, actions);
             _createEditMenu(context, actions);
 
+            // Observe the recent files and update the menu.
             std::weak_ptr<App> appWeak(app);
             _recentFilesObserver = ListObserver<std::filesystem::path>::create(
                 app->getRecentFilesModel()->observeRecent(),

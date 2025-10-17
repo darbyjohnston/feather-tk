@@ -23,14 +23,17 @@ namespace examples
         {
             IWidget::_init(context, "examples::textedit::StatusBar", parent);
 
+            // Create the lines labels.
             _labels["Lines"] = Label::create(context, "Lines:");
             _labels["Lines2"] = Label::create(context);
             _labels["Lines2"]->setFontRole(FontRole::Mono);
 
+            // Create the cursor labels.
             _labels["Cursor"] = Label::create(context, "Cursor:");
             _labels["Cursor2"] = Label::create(context);
             _labels["Cursor2"]->setFontRole(FontRole::Mono);
 
+            // Layout the widgets.
             _layout = HorizontalLayout::create(context, shared_from_this());
             _layout->setMarginRole(SizeRole::MarginInside);
             _layout->setSpacingRole(SizeRole::SpacingSmall);
@@ -40,27 +43,23 @@ namespace examples
             _labels["Cursor"]->setParent(_layout);
             _labels["Cursor2"]->setParent(_layout);
 
+            // Observe the current document and update the widgets.
             std::weak_ptr<App> appWeak(app);
-            _currentDocumentObserver = ftk::ValueObserver<int>::create(
-                app->getDocumentModel()->observeCurrentIndex(),
-                [this, appWeak](int index)
+            _currentObserver = ftk::ValueObserver<std::shared_ptr<Document> >::create(
+                app->getDocumentModel()->observeCurrent(),
+                [this, appWeak](const std::shared_ptr<Document>& doc)
                 {
-                    _textObserver.reset();
-                    auto app = appWeak.lock();
-                    const auto& documents = app->getDocumentModel()->getList();
-                    if (index >= 0 && index < documents.size())
+                    if (doc)
                     {
-                        const auto& document = documents[index];
                         _textObserver = ListObserver<std::string>::create(
-                            document->getModel()->observeText(),
+                            doc->getModel()->observeText(),
                             [this](const std::vector<std::string>& lines)
                             {
                                 _labels["Lines2"]->setText(Format("{0}").
                                     arg(lines.size()));
                             });
-
                         _cursorObserver = ValueObserver<TextEditPos>::create(
-                            document->getModel()->observeCursor(),
+                            doc->getModel()->observeCursor(),
                             [this](const TextEditPos& value)
                             {
                                 _labels["Cursor2"]->setText(Format("{0}, {1}").
@@ -68,8 +67,9 @@ namespace examples
                                     arg(value.chr + 1, 2));
                             });
                     }
-                    if (!_textObserver)
+                    else
                     {
+                        _textObserver.reset();
                         _labels["Lines2"]->setText(std::string());
                         _labels["Cursor2"]->setText(std::string());
                     }

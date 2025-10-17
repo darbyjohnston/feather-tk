@@ -132,6 +132,7 @@ namespace ftk
     protected:
         void _init(
             const std::shared_ptr<Context>&,
+            const std::string& title,
             const std::filesystem::path&,
             FileBrowserMode,
             const std::shared_ptr<FileBrowserModel>& model,
@@ -145,10 +146,14 @@ namespace ftk
         //! Create a new widget.
         static std::shared_ptr<FileBrowserWidget> create(
             const std::shared_ptr<Context>&,
+            const std::string& title = "Open",
             const std::filesystem::path& fileName = std::filesystem::path(),
             FileBrowserMode = FileBrowserMode::File,
             const std::shared_ptr<FileBrowserModel>& model = nullptr,
             const std::shared_ptr<IWidget>& parent = nullptr);
+
+        //! Set the title.
+        void setTitle(const std::string&);
 
         //! Set the callback.
         void setCallback(const std::function<void(const std::filesystem::path&)>&);
@@ -183,6 +188,7 @@ namespace ftk
     protected:
         void _init(
             const std::shared_ptr<Context>&,
+            const std::string& title,
             const std::filesystem::path&,
             FileBrowserMode,
             const std::shared_ptr<FileBrowserModel>& model,
@@ -196,10 +202,14 @@ namespace ftk
         //! Create a new dialog.
         static std::shared_ptr<FileBrowser> create(
             const std::shared_ptr<Context>&,
+            const std::string& title = "Open",
             const std::filesystem::path& fileName = std::filesystem::path(),
             FileBrowserMode = FileBrowserMode::File,
             const std::shared_ptr<FileBrowserModel>& model = nullptr,
             const std::shared_ptr<IWidget>& parent = nullptr);
+
+        //! Set the title.
+        void setTitle(const std::string&);
 
         //! Set the callback.
         void setCallback(const std::function<void(const std::filesystem::path&)>&);
@@ -234,6 +244,7 @@ namespace ftk
         void open(
             const std::shared_ptr<IWindow>&,
             const std::function<void(const std::filesystem::path&)>&,
+            const std::string& title = "Open",
             const std::filesystem::path& fileName = std::filesystem::path(),
             FileBrowserMode = FileBrowserMode::File);
 
