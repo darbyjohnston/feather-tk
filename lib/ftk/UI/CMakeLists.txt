@@ -183,7 +183,6 @@ set(SOURCE
     TabBarButton.cpp
     TabWidget.cpp
     TextEdit.cpp
-    TextEditLineWidget.cpp
     TextEditModel.cpp
     TextEditWidget.cpp
     ToolBar.cpp

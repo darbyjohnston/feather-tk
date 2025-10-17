@@ -4,8 +4,6 @@
 
 #include <ftk/UI/TextEditPrivate.h>
 
-#include <ftk/UI/Divider.h>
-#include <ftk/UI/RowLayout.h>
 #include <ftk/UI/ScrollWidget.h>
 
 namespace ftk
@@ -13,7 +11,6 @@ namespace ftk
     bool TextEditOptions::operator == (const TextEditOptions& other) const
     {
         return
-            lineNumbers == other.lineNumbers &&
             fontInfo == other.fontInfo &&
             cursorBlink == other.cursorBlink &&
             autoScrollTimeout == other.autoScrollTimeout;
@@ -29,8 +26,6 @@ namespace ftk
         std::shared_ptr<ObservableValue<TextEditOptions> > options;
         std::shared_ptr<TextEditModel> model;
         std::shared_ptr<TextEditWidget> widget;
-        std::shared_ptr<TextEditLineWidget> lineWidget;
-        std::shared_ptr<Divider> lineDivider;
         std::shared_ptr<ScrollWidget> scrollWidget;
 
         std::shared_ptr<ValueObserver<TextEditPos> > cursorObserver;
@@ -54,22 +49,11 @@ namespace ftk
             p.model = TextEditModel::create(context);
         }
 
-        p.lineWidget = TextEditLineWidget::create(context, p.model);
-        p.lineDivider = Divider::create(context, Orientation::Horizontal);
-
         p.widget = TextEditWidget::create(context, p.model);
         p.widget->setStretch(Stretch::Expanding);
 
         p.scrollWidget = ScrollWidget::create(context, ScrollType::Both, shared_from_this());
-        auto layout = HorizontalLayout::create(context);
-        layout->setSpacingRole(SizeRole::None);
-        layout->setBackgroundRole(ColorRole::Base);
-        p.lineWidget->setParent(layout);
-        p.lineDivider->setParent(layout);
-        p.widget->setParent(layout);
-        p.scrollWidget->setWidget(layout);
-
-        _widgetUpdate();
+        p.scrollWidget->setWidget(p.widget);
 
         p.widget->setFocusCallback(
             [this](bool value)
@@ -82,14 +66,7 @@ namespace ftk
             p.model->observeCursor(),
             [this](const TextEditPos&)
             {
-                const Box2I& g = _p->widget->getGeometry();
-                const Box2I& g2 = _p->lineWidget->getGeometry();
-                const Box2I& cursorBox = _p->widget->getCursorBox(true);
-                _p->scrollWidget->scrollTo(Box2I(
-                    cursorBox.min.x + (g.min.x - g2.min.x),
-                    cursorBox.min.y,
-                    cursorBox.w(),
-                    cursorBox.h()));
+                _p->scrollWidget->scrollTo(_p->widget->getCursorBox(true));
             });
     }
 
@@ -161,8 +138,6 @@ namespace ftk
         if (p.options->setIfChanged(value))
         {
             p.widget->setOptions(value);
-            p.lineWidget->setOptions(value);
-            _widgetUpdate();
         }
     }
 
@@ -193,17 +168,8 @@ namespace ftk
         _setSizeHint(_p->scrollWidget->getSizeHint());
     }
 
-    void TextEdit::_widgetUpdate()
-    {
-        FTK_P();
-        const bool lineNumbers = p.options->get().lineNumbers;
-        p.lineWidget->setVisible(lineNumbers);
-        p.lineDivider->setVisible(lineNumbers);
-    }
-
     void to_json(nlohmann::json& json, const TextEditOptions& value)
     {
-        json["LineNumbers"] = value.lineNumbers;
         json["FontInfo"] = value.fontInfo;
         json["CursorBlink"] = value.cursorBlink;
         json["AutoScrollTimeout"] = value.autoScrollTimeout;
@@ -211,7 +177,6 @@ namespace ftk
 
     void from_json(const nlohmann::json& json, TextEditOptions& value)
     {
-        json.at("LineNumbers").get_to(value.lineNumbers);
         json.at("FontInfo").get_to(value.fontInfo);
         json.at("CursorBlink").get_to(value.cursorBlink);
         json.at("AutoScrollTimeout").get_to(value.autoScrollTimeout);

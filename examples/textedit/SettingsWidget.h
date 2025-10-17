@@ -4,7 +4,6 @@
 
 #pragma once
 
-#include <ftk/UI/CheckBox.h>
 #include <ftk/UI/ComboBox.h>
 #include <ftk/UI/IntEdit.h>
 #include <ftk/UI/RowLayout.h>
@@ -38,7 +37,6 @@ namespace examples
             void sizeHintEvent(const ftk::SizeHintEvent&) override;
 
         private:
-            std::shared_ptr<ftk::CheckBox> _lineNumbersCheckBox;
             std::shared_ptr<ftk::ComboBox> _fontComboBox;
             std::shared_ptr<ftk::IntEdit> _fontSizeEdit;
             std::shared_ptr<ftk::IntEdit> _tabSpacesEdit;

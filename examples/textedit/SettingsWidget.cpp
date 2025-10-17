@@ -31,8 +31,6 @@ namespace examples
             auto closeButton = ToolButton::create(context);
             closeButton->setIcon("Close");
 
-            _lineNumbersCheckBox = CheckBox::create(context);
-
             _fontComboBox = ComboBox::create(context);
             _fontComboBox->setItems(getFontLabels());
             _fontComboBox->setHStretch(Stretch::Expanding);
@@ -54,7 +52,6 @@ namespace examples
 
             auto formLayout = FormLayout::create(context, _layout);
             formLayout->setMarginRole(SizeRole::Margin);
-            formLayout->addRow("Line numbers:", _lineNumbersCheckBox);
             hLayout = HorizontalLayout::create(context);
             hLayout->setSpacingRole(SizeRole::SpacingSmall);
             _fontComboBox->setParent(hLayout);
@@ -71,17 +68,6 @@ namespace examples
                         auto windowOptions = app->getSettingsModel()->getWindowOptions();
                         windowOptions.settings = false;
                         app->getSettingsModel()->setWindowOptions(windowOptions);
-                    }
-                });
-
-            _lineNumbersCheckBox->setCheckedCallback(
-                [appWeak](bool value)
-                {
-                    if (auto app = appWeak.lock())
-                    {
-                        auto options = app->getSettingsModel()->getTextEditOptions();
-                        options.lineNumbers = value;
-                        app->getSettingsModel()->setTextEditOptions(options);
                     }
                 });
 
@@ -122,7 +108,6 @@ namespace examples
                 app->getSettingsModel()->observeTextEditOptions(),
                 [this](const TextEditOptions& value)
                 {
-                    _lineNumbersCheckBox->setChecked(value.lineNumbers);
                     int index = -1;
                     for (int i = 0; i < static_cast<int>(Font::Count); ++i)
                     {

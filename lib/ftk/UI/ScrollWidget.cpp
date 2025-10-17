@@ -24,8 +24,8 @@ namespace ftk
 
         std::shared_ptr<IWidget> widget;
         std::shared_ptr<ScrollArea> scrollArea;
-        std::shared_ptr<ScrollBar> horizontalScrollBar;
-        std::shared_ptr<ScrollBar> verticalScrollBar;
+        std::shared_ptr<ScrollBar> hScrollBar;
+        std::shared_ptr<ScrollBar> vScrollBar;
         std::shared_ptr<GridLayout> layout;
 
         std::function<void(const V2I&)> scrollPosCallback;
@@ -50,71 +50,51 @@ namespace ftk
         p.scrollArea = ScrollArea::create(context, scrollType);
         p.scrollArea->setStretch(Stretch::Expanding);
 
-        p.horizontalScrollBar = ScrollBar::create(context, Orientation::Horizontal);
-        p.verticalScrollBar = ScrollBar::create(context, Orientation::Vertical);
+        p.hScrollBar = ScrollBar::create(context, Orientation::Horizontal);
+        p.vScrollBar = ScrollBar::create(context, Orientation::Vertical);
 
         p.layout = GridLayout::create(context, shared_from_this());
         p.layout->setSpacingRole(SizeRole::None);
         p.scrollArea->setParent(p.layout);
         p.layout->setGridPos(p.scrollArea, 0, 0);
-        p.horizontalScrollBar->setParent(p.layout);
-        p.layout->setGridPos(p.horizontalScrollBar, 1, 0);
-        p.verticalScrollBar->setParent(p.layout);
-        p.layout->setGridPos(p.verticalScrollBar, 0, 1);
+        p.hScrollBar->setParent(p.layout);
+        p.layout->setGridPos(p.hScrollBar, 1, 0);
+        p.vScrollBar->setParent(p.layout);
+        p.layout->setGridPos(p.vScrollBar, 0, 1);
 
         _scrollBarsUpdate();
 
-        p.horizontalScrollBar->setScrollPosCallback(
+        p.hScrollBar->setScrollPosCallback(
             [this](int value)
             {
-                V2I scrollPos;
-                scrollPos.x = value;
-                if (_p->verticalScrollBar)
-                {
-                    scrollPos.y = _p->verticalScrollBar->getScrollPos();
-                }
-                _p->scrollArea->setScrollPos(scrollPos);
+                FTK_P();
+                p.scrollArea->setScrollPos(V2I(value, p.vScrollBar->getScrollPos()));
             });
 
-        p.verticalScrollBar->setScrollPosCallback(
+        p.vScrollBar->setScrollPosCallback(
             [this](int value)
             {
-                V2I scrollPos;
-                if (_p->horizontalScrollBar)
-                {
-                    scrollPos.x = _p->horizontalScrollBar->getScrollPos();
-                }
-                scrollPos.y = value;
-                _p->scrollArea->setScrollPos(scrollPos);
+                FTK_P();
+                p.scrollArea->setScrollPos(V2I(p.hScrollBar->getScrollPos(), value));
             });
 
         p.scrollArea->setScrollSizeCallback(
             [this](const Size2I& value)
             {
-                if (_p->horizontalScrollBar)
-                {
-                    _p->horizontalScrollBar->setScrollSize(value.w);
-                }
-                if (_p->verticalScrollBar)
-                {
-                    _p->verticalScrollBar->setScrollSize(value.h);
-                }
+                FTK_P();
+                p.hScrollBar->setScrollSize(value.w);
+                p.vScrollBar->setScrollSize(value.h);
             });
 
         p.scrollArea->setScrollPosCallback(
             [this](const V2I& value)
             {
-                if (_p->horizontalScrollBar)
+                FTK_P();
+                p.hScrollBar->setScrollPos(value.x);
+                p.vScrollBar->setScrollPos(value.y);
+                if (p.scrollPosCallback)
                 {
-                    _p->horizontalScrollBar->setScrollPos(value.x);
-                }
-                if (_p->verticalScrollBar)
-                {
-                    _p->verticalScrollBar->setScrollPos(value.y);
-                }
-                if (_p->scrollPosCallback)
-                {
-                    _p->scrollPosCallback(value);
+                    p.scrollPosCallback(value);
                 }
             });
     }
@@ -421,7 +401,6 @@ namespace ftk
         FTK_P();
         const Size2I scrollSize = p.scrollArea->getScrollSize();
         const Size2I scrollAreaSize = p.scrollArea->getGeometry().size();
-
         bool hVisible = p.scrollBarsVisible;
         bool vVisible = p.scrollBarsVisible;
         switch (p.scrollArea->getScrollType())
@@ -440,7 +419,7 @@ namespace ftk
             hVisible &= scrollSize.w > scrollAreaSize.w;
             vVisible &= scrollSize.h > scrollAreaSize.h;
         }
-        p.horizontalScrollBar->setVisible(hVisible);
-        p.verticalScrollBar->setVisible(vVisible);
+        p.hScrollBar->setVisible(hVisible);
+        p.vScrollBar->setVisible(vVisible);
     }
 }
