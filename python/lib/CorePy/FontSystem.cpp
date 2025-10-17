@@ -62,8 +62,8 @@ namespace ftk
                 py::arg("fontInfo"),
                 py::arg("maxLineWidth") = 0)
             .def(
-                "getBox",
-                &FontSystem::getBox,
+                "getBoxes",
+                &FontSystem::getBoxes,
                 py::arg("text"),
                 py::arg("fontInfo"),
                 py::arg("maxLineWidth") = 0)
