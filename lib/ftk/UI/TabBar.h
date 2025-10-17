@@ -60,10 +60,10 @@ namespace ftk
         void setCallback(const std::function<void(int)>&);
 
         //! Set the tab text.
-        void setText(
-            int index,
-            const std::string& text,
-            const std::string& tooltip = std::string());
+        void setTabText(int index, const std::string&);
+
+        //! Set the tab tooltip.
+        void setTabTooltip(int index, const std::string&);
 
         //! Get whether the tabs are closable.
         bool areTabsClosable() const;

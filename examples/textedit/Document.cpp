@@ -17,6 +17,8 @@ namespace examples
             const std::filesystem::path& path)
         {
             _path = ObservableValue<std::filesystem::path>::create(path);
+            _name = ObservableValue<std::string>::create();
+            _tooltip = ObservableValue<std::string>::create();
 
             std::vector<std::string> lines;
             if (!path.empty())
@@ -27,11 +29,16 @@ namespace examples
 
             _changed = ObservableValue<bool>::create(false);
 
+            _nameUpdate();
+
             _textObserver = ListObserver<std::string>::create(
                 _model->observeText(),
                 [this](const std::vector<std::string>&)
                 {
-                    _changed->setIfChanged(true);
+                    if (_changed->setIfChanged(true))
+                    {
+                        _nameUpdate();
+                    }
                 },
                 ObserverAction::Suppress);
         }
@@ -58,6 +65,16 @@ namespace examples
             return _path;
         }
 
+        std::shared_ptr<ftk::IObservableValue<std::string> > Document::observeName() const
+        {
+            return _name;
+        }
+
+        std::shared_ptr<ftk::IObservableValue<std::string> > Document::observeTooltip() const
+        {
+            return _tooltip;
+        }
+
         const std::shared_ptr<ftk::TextEditModel>& Document::getModel() const
         {
             return _model;
@@ -82,6 +99,7 @@ namespace examples
         {
             writeLines(_path->get(), _model->getText());
             _changed->setIfChanged(false);
+            _nameUpdate();
         }
 
         void Document::saveAs(const std::filesystem::path& path)
@@ -89,6 +107,19 @@ namespace examples
             writeLines(path, _model->getText());
             _path->setIfChanged(path);
             _changed->setIfChanged(false);
+            _nameUpdate();
+        }
+
+        void Document::_nameUpdate()
+        {
+            const std::filesystem::path& path = _path->get();
+            std::string name = !path.empty() ? path.filename().u8string() : "Untitled";
+            if (_changed->get())
+            {
+                name += "*";
+            }
+            _name->setIfChanged(name);
+            _tooltip->setIfChanged(!path.empty() ? path.u8string() : "Untitled");
         }
     }
 }

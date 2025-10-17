@@ -74,13 +74,20 @@
       <path
          id="rect1"
          style="fill:#f0f0f0;fill-opacity:1;stroke-width:1.17989"
-         d="m 2.9104165,292.23748 v 2.91042 l 2.1166666,1e-5 v -2.91043 H 4.4979165 v -0.26459 H 3.4395832 v 0.26459 z m 0.2645834,0.26458 h 1.5874999 l 0,2.38127 -1.5875,-10e-6 z"
-         sodipodi:nodetypes="cccccccccccccc" />
+         d="m 2.9104165,292.50206 0,2.64584 2.1166666,1e-5 0,-2.64585 H 4.4979165 l 0,-0.52917 H 3.4395832 l 0,0.52917 z"
+         sodipodi:nodetypes="ccccccccc" />
       <path
          id="path3"
          style="color:#000000;fill:#f0f0f0;fill-opacity:1"
          d="m 1.4615706,294.29857 1.1192563,1.12721 -0.1875406,0.18504 -0.8001464,-0.8045 -0.00564,1.92907 -0.2635489,-7.7e-4 0.00563,-1.93062 -0.80710098,0.80129 -0.18671705,-0.18638 z"
          sodipodi:nodetypes="cccccccccc" />
+      <rect
+         style="fill:#3c3c3c;fill-opacity:1;stroke-width:1.24725"
+         id="rect6"
+         width="1.5875"
+         height="2.1166441"
+         x="3.175"
+         y="292.76663" />
     </g>
   </g>
 </svg>

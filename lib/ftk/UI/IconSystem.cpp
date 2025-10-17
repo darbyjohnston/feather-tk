@@ -45,6 +45,7 @@ namespace ftk_resource
     extern std::vector<uint8_t> FileNew;
     extern std::vector<uint8_t> FileOpen;
     extern std::vector<uint8_t> FileReload;
+    extern std::vector<uint8_t> FileSave;
     extern std::vector<uint8_t> FrameEnd;
     extern std::vector<uint8_t> FrameInOut;
     extern std::vector<uint8_t> FrameNext;
@@ -156,6 +157,7 @@ namespace ftk
         p.iconData["FileNew"] = ftk_resource::FileNew;
         p.iconData["FileOpen"] = ftk_resource::FileOpen;
         p.iconData["FileReload"] = ftk_resource::FileReload;
+        p.iconData["FileSave"] = ftk_resource::FileSave;
         p.iconData["FrameEnd"] = ftk_resource::FrameEnd;
         p.iconData["FrameInOut"] = ftk_resource::FrameInOut;
         p.iconData["FrameNext"] = ftk_resource::FrameNext;

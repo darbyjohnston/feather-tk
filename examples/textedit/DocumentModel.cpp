@@ -113,5 +113,16 @@ namespace examples
         {
             _currentIndex->setIfChanged(value);
         }
+
+        void DocumentModel::saveAll()
+        {
+            for (auto doc : _documents->get())
+            {
+                if (doc->isChanged())
+                {
+                    doc->save();
+                }
+            }
+        }
     }
 }

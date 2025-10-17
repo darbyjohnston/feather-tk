@@ -72,15 +72,22 @@
        inkscape:export-xdpi="96"
        inkscape:export-ydpi="96">
       <path
-         id="rect1"
-         style="fill:#f0f0f0;fill-opacity:1;stroke-width:1.17989"
-         d="m 2.9104165,292.23748 v 2.91042 l 2.1166666,1e-5 v -2.91043 H 4.4979165 v -0.26459 H 3.4395832 v 0.26459 z m 0.2645834,0.26458 h 1.5874999 l 0,2.38127 -1.5875,-10e-6 z"
-         sodipodi:nodetypes="cccccccccccccc" />
-      <path
          id="path3"
          style="color:#000000;fill:#f0f0f0;fill-opacity:1"
          d="m 1.4569899,296.79059 -1.12253993,-1.12394 0.187,-0.18559 0.80248993,0.80216 10e-6,-1.92908 h 0.26355 v 1.93063 l 0.80476,-0.80364 0.18726,0.18584 z"
          sodipodi:nodetypes="cccccccccc" />
+      <path
+         id="rect1"
+         style="fill:#f0f0f0;fill-opacity:1;stroke-width:1.17989"
+         d="m 2.9104165,292.50206 0,2.64584 2.1166666,1e-5 0,-2.64585 H 4.4979165 l 0,-0.52917 H 3.4395832 l 0,0.52917 z"
+         sodipodi:nodetypes="ccccccccc" />
+      <rect
+         style="fill:#3c3c3c;fill-opacity:1;stroke-width:1.24726"
+         id="rect6"
+         width="1.5875"
+         height="2.1166513"
+         x="3.175"
+         y="292.76663" />
     </g>
   </g>
 </svg>

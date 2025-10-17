@@ -45,7 +45,8 @@ namespace examples
             std::shared_ptr<ftk::ValueObserver<std::shared_ptr<Document> > > _removeDocumentObserver;
             std::shared_ptr<ftk::ValueObserver<bool> > _clearDocumentsObserver;
             std::shared_ptr<ftk::ValueObserver<int> > _currentDocumentObserver;
-            std::map<std::shared_ptr<Document>, std::shared_ptr<ftk::ValueObserver<std::filesystem::path> > > _documentPathObservers;
+            std::map<std::shared_ptr<Document>, std::shared_ptr<ftk::ValueObserver<std::string> > > _nameObservers;
+            std::map<std::shared_ptr<Document>, std::shared_ptr<ftk::ValueObserver<std::string> > > _tooltipObservers;
             std::shared_ptr<ftk::ValueObserver<ftk::TextEditOptions> > _textEditOptionsObserver;
             std::shared_ptr<ftk::ValueObserver<ftk::TextEditModelOptions> > _textEditModelOptionsObserver;
         };

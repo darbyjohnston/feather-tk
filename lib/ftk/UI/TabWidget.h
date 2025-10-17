@@ -66,16 +66,16 @@ namespace ftk
         void setCurrentWidgetCallback(const std::function<void(const std::shared_ptr<IWidget>&)>&);
 
         //! Set the tab text.
-        void setText(
-            int index,
-            const std::string& text,
-            const std::string& tooltip = std::string());
+        void setTabText(int index, const std::string&);
 
         //! Set the tab text.
-        void setText(
-            const std::shared_ptr<IWidget>& widget,
-            const std::string& text,
-            const std::string& tooltip = std::string());
+        void setTabText(const std::shared_ptr<IWidget>&, const std::string&);
+
+        //! Set the tab tooltip.
+        void setTabTooltip(int index, const std::string&);
+
+        //! Set the tab tooltip.
+        void setTabTooltip(const std::shared_ptr<IWidget>&, const std::string&);
 
         //! Get whether the tabs are closable.
         bool areTabsClosable() const;

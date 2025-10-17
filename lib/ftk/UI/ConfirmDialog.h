@@ -19,6 +19,8 @@ namespace ftk
             const std::shared_ptr<Context>&,
             const std::string& title,
             const std::string& text,
+            const std::string& confirm,
+            const std::string& cancel,
             const std::shared_ptr<IWidget>& parent);
 
         ConfirmDialog();
@@ -31,6 +33,8 @@ namespace ftk
             const std::shared_ptr<Context>&,
             const std::string& title,
             const std::string& text,
+            const std::string& confirm = "OK",
+            const std::string& cancel = "Cancel",
             const std::shared_ptr<IWidget>& parent = nullptr);
 
         //! Set the callback.

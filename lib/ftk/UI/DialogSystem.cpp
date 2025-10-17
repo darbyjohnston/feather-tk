@@ -55,12 +55,14 @@ namespace ftk
         const std::string& title,
         const std::string& text,
         const std::shared_ptr<IWindow>& window,
-        const std::function<void(bool)>& callback)
+        const std::function<void(bool)>& callback,
+        const std::string& confirm,
+        const std::string& cancel)
     {
         FTK_P();
         if (auto context = _context.lock())
         {
-            p.confirmDialog = ConfirmDialog::create(context, title, text);
+            p.confirmDialog = ConfirmDialog::create(context, title, text, confirm, cancel);
             p.confirmDialog->open(window);
             p.confirmDialog->setCallback(
                 [this, callback](bool value)

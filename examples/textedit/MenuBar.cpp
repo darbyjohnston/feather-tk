@@ -71,6 +71,7 @@ namespace examples
             _menus["File"]->addAction(actions->getAction("File/Close"));
             _menus["File"]->addAction(actions->getAction("File/CloseAll"));
             _menus["File"]->addAction(actions->getAction("File/Save"));
+            _menus["File"]->addAction(actions->getAction("File/SaveAs"));
             _menus["File"]->addDivider();
             _menus["File/Recent"] = _menus["File"]->addSubMenu("Recent");
             _menus["File"]->addDivider();

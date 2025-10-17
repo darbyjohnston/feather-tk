@@ -251,20 +251,26 @@ namespace ftk
         _p->callback = value;
     }
 
-    void TabBar::setText(
-        int index,
-        const std::string& text,
-        const std::string& tooltip)
+    void TabBar::setTabText(int index, const std::string& text)
     {
         FTK_P();
         if (index >= 0 &&
             index < p.text.size() &&
-            index < p.tooltips.size() &&
             index < p.buttons.size())
         {
             p.text[index] = text;
-            p.tooltips[index] = tooltip;
             p.buttons[index]->setText(text);
+        }
+    }
+
+    void TabBar::setTabTooltip(int index, const std::string& tooltip)
+    {
+        FTK_P();
+        if (index >= 0 &&
+            index < p.tooltips.size() &&
+            index < p.buttons.size())
+        {
+            p.tooltips[index] = tooltip;
             p.buttons[index]->setTooltip(tooltip);
         }
     }

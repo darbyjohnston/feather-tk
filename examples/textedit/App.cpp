@@ -130,31 +130,120 @@ namespace examples
             }
         }
 
+        void App::close(int index)
+        {
+            auto& docs = _documentModel->getList();
+            if (index >= 0 && index < docs.size())
+            {
+                auto doc = docs[index];
+                if (doc->isChanged())
+                {
+                    _context->getSystem<DialogSystem>()->confirm(
+                        "Save File",
+                        "File has unsaved changes, would you like to save them?",
+                        _mainWindow,
+                        [this, doc, index](bool value)
+                        {
+                            if (value)
+                            {
+                                try
+                                {
+                                    doc->save();
+                                    _documentModel->close(index);
+                                }
+                                catch (const std::exception& e)
+                                {
+                                    _context->getSystem<DialogSystem>()->message("ERROR", e.what(), _mainWindow);
+                                }
+                            }
+                        },
+                        "Yes",
+                        "No");
+                }
+                else
+                {
+                    _documentModel->close(index);
+                }
+            }
+        }
+
+        void App::closeAll()
+        {
+            bool changed = false;
+            for (const auto& doc : _documentModel->getList())
+            {
+                changed |= doc->isChanged();
+            }
+            if (changed)
+            {
+                _context->getSystem<DialogSystem>()->confirm(
+                    "Save Files",
+                    "Files have unsaved changes, would you like to save them?",
+                    _mainWindow,
+                    [this](bool value)
+                    {
+                        if (value)
+                        {
+                            try
+                            {
+                                _documentModel->saveAll();
+                                _documentModel->closeAll();
+                            }
+                            catch (const std::exception& e)
+                            {
+                                _context->getSystem<DialogSystem>()->message("ERROR", e.what(), _mainWindow);
+                            }
+                        }
+                    },
+                    "Yes",
+                    "No");
+            }
+            else
+            {
+                _documentModel->closeAll();
+            }
+        }
+
         void App::save()
         {
-            try
+            if (auto doc = _documentModel->getCurrent())
             {
-                if (auto doc = _documentModel->getCurrent())
+                if (doc->getPath().empty())
                 {
-                    if (doc->getPath().empty())
-                    {
-                        auto fileBrowserSystem = _context->getSystem<FileBrowserSystem>();
-                        fileBrowserSystem->open(
-                            _mainWindow,
-                            [this, doc](const std::filesystem::path& path)
-                            {
-                                doc->saveAs(path);
-                            });
-                    }
-                    else
+                    saveAs();
+                }
+                else
+                {
+                    try
                     {
                         doc->save();
                     }
+                    catch (const std::exception& e)
+                    {
+                        _context->getSystem<DialogSystem>()->message("ERROR", e.what(), _mainWindow);
+                    }
                 }
             }
-            catch (const std::exception& e)
+        }
+
+        void App::saveAs()
+        {
+            if (auto doc = _documentModel->getCurrent())
             {
-                _context->getSystem<DialogSystem>()->message("ERROR", e.what(), _mainWindow);
+                auto fileBrowserSystem = _context->getSystem<FileBrowserSystem>();
+                fileBrowserSystem->open(
+                    _mainWindow,
+                    [this, doc](const std::filesystem::path& path)
+                    {
+                        try
+                        {
+                            doc->saveAs(path);
+                        }
+                        catch (const std::exception& e)
+                        {
+                            _context->getSystem<DialogSystem>()->message("ERROR", e.what(), _mainWindow);
+                        }
+                    });
             }
         }
     }

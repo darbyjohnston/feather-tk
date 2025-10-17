@@ -38,16 +38,17 @@ namespace examples
                 const std::vector<std::string>&);
 
             const std::shared_ptr<SettingsModel>& getSettingsModel() const;
-
             const std::shared_ptr<DocumentModel>& getDocumentModel() const;
-
             const std::shared_ptr<ftk::RecentFilesModel>& getRecentFilesModel() const;
 
             const std::shared_ptr<MainWindow>& getMainWindow() const;
 
             void open(const std::filesystem::path&);
             void open(const std::vector<std::filesystem::path>&);
+            void close(int);
+            void closeAll();
             void save();
+            void saveAs();
 
         private:
             struct CmdLine

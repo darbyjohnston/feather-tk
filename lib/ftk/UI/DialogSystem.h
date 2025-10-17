@@ -37,7 +37,9 @@ namespace ftk
             const std::string& title,
             const std::string& text,
             const std::shared_ptr<IWindow>& window,
-            const std::function<void(bool)>& callback);
+            const std::function<void(bool)>& callback,
+            const std::string& confirm = "OK",
+            const std::string& cancel = "Cancel");
 
     private:
         FTK_PRIVATE();

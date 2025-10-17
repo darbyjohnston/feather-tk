@@ -37,7 +37,7 @@ namespace examples
                 [appWeak](int index)
                 {
                     auto app = appWeak.lock();
-                    app->getDocumentModel()->close(index);
+                    app->close(index);
                 });
 
             _addDocumentObserver = ftk::ValueObserver<std::shared_ptr<Document> >::create(
@@ -56,16 +56,18 @@ namespace examples
                         _tabWidget->addTab(std::string(), textEdit);
                         textEdit->takeKeyFocus();
 
-                        _documentPathObservers[doc] = ValueObserver<std::filesystem::path>::create(
-                            doc->observePath(),
-                            [this, textEdit](const std::filesystem::path& path)
+                        _nameObservers[doc] = ValueObserver<std::string>::create(
+                            doc->observeName(),
+                            [this, textEdit](const std::string& value)
                             {
-                                const std::string text = path.filename().u8string();
-                                const std::string tooltip = path.u8string();
-                                _tabWidget->setText(
-                                    textEdit,
-                                    !text.empty() ? text : "Untitled",
-                                    !tooltip.empty() ? tooltip : "Untitled");
+                                _tabWidget->setTabText(textEdit, value);
+                            });
+
+                        _tooltipObservers[doc] = ValueObserver<std::string>::create(
+                            doc->observeTooltip(),
+                            [this, textEdit](const std::string& value)
+                            {
+                                _tabWidget->setTabTooltip(textEdit, value);
                             });
                     }
                 });
@@ -81,10 +83,15 @@ namespace examples
                         _tabWidget->removeTab(i->second);
                         _textEdits.erase(i);
                     }
-                    auto j = _documentPathObservers.find(doc);
-                    if (j != _documentPathObservers.end())
+                    auto j = _nameObservers.find(doc);
+                    if (j != _nameObservers.end())
                     {
-                        _documentPathObservers.erase(j);
+                        _nameObservers.erase(j);
+                    }
+                    auto k = _tooltipObservers.find(doc);
+                    if (k != _tooltipObservers.end())
+                    {
+                        _tooltipObservers.erase(k);
                     }
                 });
 
@@ -96,7 +103,8 @@ namespace examples
                     {
                         _textEdits.clear();
                         _tabWidget->clearTabs();
-                        _documentPathObservers.clear();
+                        _nameObservers.clear();
+                        _tooltipObservers.clear();
                     }
                 });
 

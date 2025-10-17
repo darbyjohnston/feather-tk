@@ -128,8 +128,7 @@ namespace examples
                 [appWeak]
                 {
                     auto app = appWeak.lock();
-                    app->getDocumentModel()->close(
-                        app->getDocumentModel()->getCurrentIndex());
+                    app->close(app->getDocumentModel()->getCurrentIndex());
                 });
             _actions["File/Close"]->setTooltip("Close the current file");
 
@@ -142,12 +141,13 @@ namespace examples
                 [appWeak]
                 {
                     auto app = appWeak.lock();
-                    app->getDocumentModel()->closeAll();
+                    app->closeAll();
                 });
             _actions["File/CloseAll"]->setTooltip("Close all files");
 
             _actions["File/Save"] = Action::create(
                 "Save",
+                "FileSave",
                 Key::S,
                 static_cast<int>(KeyModifier::Control),
                 [appWeak]
@@ -156,6 +156,18 @@ namespace examples
                     app->save();
                 });
             _actions["File/Save"]->setTooltip("Save the current file");
+
+            _actions["File/SaveAs"] = Action::create(
+                "Save As",
+                Key::S,
+                static_cast<int>(KeyModifier::Shift) |
+                static_cast<int>(KeyModifier::Control),
+                [appWeak]
+                {
+                    auto app = appWeak.lock();
+                    app->saveAs();
+                });
+            _actions["File/SaveAs"]->setTooltip("Save the current file with a new name");
 
             _actions["File/Exit"] = Action::create(
                 "Exit",
@@ -176,6 +188,8 @@ namespace examples
             _actions["Edit/Cut"] = Action::create(
                 "Cut",
                 "Cut",
+                Key::X,
+                static_cast<int>(KeyModifier::Control),
                 [appWeak]
                 {
                     auto app = appWeak.lock();
@@ -189,6 +203,8 @@ namespace examples
             _actions["Edit/Copy"] = Action::create(
                 "Copy",
                 "Copy",
+                Key::C,
+                static_cast<int>(KeyModifier::Control),
                 [appWeak]
                 {
                     auto app = appWeak.lock();
@@ -202,6 +218,8 @@ namespace examples
             _actions["Edit/Paste"] = Action::create(
                 "Paste",
                 "Paste",
+                Key::V,
+                static_cast<int>(KeyModifier::Control),
                 [appWeak]
                 {
                     auto app = appWeak.lock();
@@ -214,6 +232,8 @@ namespace examples
 
             _actions["Edit/SelectAll"] = Action::create(
                 "Select All",
+                Key::A,
+                static_cast<int>(KeyModifier::Control),
                 [appWeak]
                 {
                     auto app = appWeak.lock();
@@ -226,6 +246,9 @@ namespace examples
 
             _actions["Edit/ClearSelection"] = Action::create(
                 "Clear Selection",
+                Key::A,
+                static_cast<int>(KeyModifier::Shift) |
+                static_cast<int>(KeyModifier::Control),
                 [appWeak]
                 {
                     auto app = appWeak.lock();
@@ -269,6 +292,7 @@ namespace examples
             _actions["File/Close"]->setEnabled(doc.get());
             _actions["File/CloseAll"]->setEnabled(doc.get());
             _actions["File/Save"]->setEnabled(doc ? doc->isChanged() : false);
+            _actions["File/SaveAs"]->setEnabled(doc.get());
 
             _actions["Edit/Cut"]->setEnabled(doc.get() && selection.isValid());
             _actions["Edit/Copy"]->setEnabled(doc.get() && selection.isValid());

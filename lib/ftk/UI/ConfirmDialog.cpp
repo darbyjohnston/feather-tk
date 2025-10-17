@@ -19,6 +19,8 @@ namespace ftk
             const std::shared_ptr<Context>&,
             const std::string& title,
             const std::string& text,
+            const std::string& confirm,
+            const std::string& cancel,
             const std::shared_ptr<IWidget>& parent);
 
         ConfirmDialogWidget();
@@ -30,6 +32,8 @@ namespace ftk
             const std::shared_ptr<Context>&,
             const std::string& title,
             const std::string& text,
+            const std::string& confirm,
+            const std::string& cancel,
             const std::shared_ptr<IWidget>& parent = nullptr);
 
         void setCallback(const std::function<void(bool)>&);
@@ -51,6 +55,8 @@ namespace ftk
         const std::shared_ptr<Context>& context,
         const std::string& title,
         const std::string& text,
+        const std::string& confirm,
+        const std::string& cancel,
         const std::shared_ptr<IWidget>& parent)
     {
         IWidget::_init(context, "ftk::ConfirmDialogWidget", parent);
@@ -71,8 +77,8 @@ namespace ftk
         _scrollWidget->setSizeHintRole(SizeRole::ScrollAreaSmall);
         _scrollWidget->setWidget(_label);
 
-        _okButton = PushButton::create(context, "OK");
-        _cancelButton = PushButton::create(context, "Cancel");
+        _okButton = PushButton::create(context, confirm);
+        _cancelButton = PushButton::create(context, cancel);
 
         _layout = VerticalLayout::create(context, shared_from_this());
         _layout->setSpacingRole(SizeRole::None);
@@ -116,10 +122,12 @@ namespace ftk
         const std::shared_ptr<Context>& context,
         const std::string& title,
         const std::string& text,
+        const std::string& confirm,
+        const std::string& cancel,
         const std::shared_ptr<IWidget>& parent)
     {
         auto out = std::shared_ptr<ConfirmDialogWidget>(new ConfirmDialogWidget);
-        out->_init(context, title, text, parent);
+        out->_init(context, title, text, confirm, cancel, parent);
         return out;
     }
 
@@ -154,12 +162,14 @@ namespace ftk
         const std::shared_ptr<Context>& context,
         const std::string& title,
         const std::string& text,
+        const std::string& confirm,
+        const std::string& cancel,
         const std::shared_ptr<IWidget>& parent)
     {
         IDialog::_init(context, "ftk::ConfirmDialog", parent);
         FTK_P();
 
-        p.widget = ConfirmDialogWidget::create(context, title, text, shared_from_this());
+        p.widget = ConfirmDialogWidget::create(context, title, text, confirm, cancel, shared_from_this());
 
         p.widget->setCallback(
             [this](bool value)
@@ -182,10 +192,12 @@ namespace ftk
         const std::shared_ptr<Context>& context,
         const std::string& title,
         const std::string& text,
+        const std::string& confirm,
+        const std::string& cancel,
         const std::shared_ptr<IWidget>& parent)
     {
         auto out = std::shared_ptr<ConfirmDialog>(new ConfirmDialog);
-        out->_init(context, title, text, parent);
+        out->_init(context, title, text, confirm, cancel, parent);
         return out;
     }
 
