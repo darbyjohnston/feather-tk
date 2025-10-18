@@ -76,42 +76,13 @@
          style="fill:#f0f0f0;stroke-width:2.64583;fill-opacity:1"
          d="M 1.4552083 294.35414 A 1.190625 1.190625 0 0 0 0.26458333 295.54477 A 1.190625 1.190625 0 0 0 1.4552083 296.73539 A 1.190625 1.190625 0 0 0 2.6458333 295.54477 L 2.3812499 295.54477 A 0.92604166 0.9260416 0 0 1 1.4552083 296.47081 A 0.92604166 0.9260416 0 0 1 0.52916666 295.54477 A 0.92604166 0.9260416 0 0 1 1.4552083 294.61873 A 0.92604166 0.9260416 0 0 1 1.4614095 294.61924 L 1.4614095 294.35414 A 1.190625 1.190625 0 0 0 1.4552083 294.35414 z " />
       <path
-         style="fill:#f0f0f0;fill-opacity:1;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-         d="m 2.9104166,291.97289 v 3.175 h 2.1166666 v -2.38125 l -0.7937499,-0.79375 z"
          id="path1088"
-         sodipodi:nodetypes="cccccc" />
+         style="fill:#f0f0f0;fill-opacity:1;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         d="M 2.9104166 291.97289 L 2.9104166 295.14789 L 5.0270832 295.14789 L 5.0270832 292.76664 L 4.2333332 291.97289 L 2.9104166 291.97289 z M 3.1749999 292.76664 L 4.7624999 292.76664 L 4.7624999 293.03123 L 3.1749999 293.03123 L 3.1749999 292.76664 z M 3.1749999 293.29581 L 4.7624999 293.29581 L 4.7624999 293.56039 L 3.1749999 293.56039 L 3.1749999 293.29581 z M 3.1749999 293.82498 L 4.7624999 293.82498 L 4.7624999 294.08956 L 3.1749999 294.08956 L 3.1749999 293.82498 z M 3.1749999 294.35414 L 4.7624999 294.35414 L 4.7624999 294.61873 L 3.1749999 294.61873 L 3.1749999 294.35414 z " />
       <path
          style="fill:#f0f0f0;fill-opacity:1;stroke-width:3.18444"
          d="m 2.3812499,294.48644 -0.9198404,-0.66146 v 1.32291 z"
          id="path2" />
-      <rect
-         style="fill:#3c3c3c;fill-opacity:1;stroke:none;stroke-width:1.39209"
-         id="rect1"
-         width="1.5875"
-         height="0.26458332"
-         x="3.175"
-         y="293.82495" />
-      <rect
-         style="fill:#3c3c3c;fill-opacity:1;stroke:none;stroke-width:1.39209"
-         id="rect2"
-         width="1.5875"
-         height="0.26458332"
-         x="3.175"
-         y="294.35413" />
-      <rect
-         style="fill:#3c3c3c;fill-opacity:1;stroke:none;stroke-width:1.39209"
-         id="rect3"
-         width="1.5875"
-         height="0.26458332"
-         x="3.175"
-         y="293.29581" />
-      <rect
-         style="fill:#3c3c3c;fill-opacity:1;stroke:none;stroke-width:1.39209"
-         id="rect4"
-         width="1.5875"
-         height="0.26458332"
-         x="3.175"
-         y="292.76663" />
     </g>
   </g>
 </svg>

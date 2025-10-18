@@ -55,7 +55,7 @@ namespace examples
             std::shared_ptr<ftk::ValueObserver<std::shared_ptr<Document> > > _currentObserver;
             std::shared_ptr<ftk::ValueObserver<bool> > _changedObserver;
             std::shared_ptr<ftk::ValueObserver<ftk::TextEditSelection> > _selectionObserver;
-            std::shared_ptr<ftk::ValueObserver<WindowOptions> > _windowOptionsObserver;
+            std::shared_ptr<ftk::ValueObserver<WindowSettings> > _windowSettingsObserver;
         };
     }
 }

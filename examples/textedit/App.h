@@ -4,6 +4,8 @@
 
 #pragma once
 
+#include "SettingsModel.h"
+
 #include <ftk/UI/App.h>
 #include <ftk/UI/DialogSystem.h>
 #include <ftk/UI/RecentFilesModel.h>
@@ -18,7 +20,6 @@ namespace examples
     {
         class DocumentModel;
         class MainWindow;
-        class SettingsModel;
 
         //! Application.
         class App : public ftk::App
@@ -80,8 +81,11 @@ namespace examples
             std::shared_ptr<SettingsModel> _settingsModel;
             std::shared_ptr<DocumentModel> _documentModel;
             std::shared_ptr<ftk::RecentFilesModel> _recentFilesModel;
+
             std::shared_ptr<MainWindow> _mainWindow;
             std::weak_ptr<ftk::ConfirmDialog> _confirmDialog;
+
+            std::shared_ptr<ftk::ValueObserver<StyleSettings> > _styleSettingsObserver;
         };
     }
 }

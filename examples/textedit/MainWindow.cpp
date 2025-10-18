@@ -59,10 +59,10 @@ namespace examples
             _statusBar->setParent(_layout);
             setWidget(_layout);
 
-            // Observe window options.
-            _windowOptionsObserver = ValueObserver<WindowOptions>::create(
-                _settingsModel->observeWindowOptions(),
-                [this](const WindowOptions& value)
+            // Observe window settings.
+            _windowSettingsObserver = ValueObserver<WindowSettings>::create(
+                _settingsModel->observeWindow(),
+                [this](const WindowSettings& value)
                 {
                     _splitter->setSplit(value.split);
                     _settingsWidget->setVisible(value.settings);
@@ -71,9 +71,9 @@ namespace examples
 
         MainWindow::~MainWindow()
         {
-            auto windowOptions = _settingsModel->getWindowOptions();
-            windowOptions.split = _splitter->getSplit();
-            _settingsModel->setWindowOptions(windowOptions);
+            auto window = _settingsModel->getWindow();
+            window.split = _splitter->getSplit();
+            _settingsModel->setWindow(window);
         }
 
         std::shared_ptr<MainWindow> MainWindow::create(

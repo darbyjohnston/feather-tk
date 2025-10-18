@@ -262,15 +262,15 @@ namespace examples
                 [appWeak](bool value)
                 {
                     auto app = appWeak.lock();
-                    auto options = app->getSettingsModel()->getWindowOptions();
-                    options.settings = value;
-                    app->getSettingsModel()->setWindowOptions(options);
+                    auto window = app->getSettingsModel()->getWindow();
+                    window.settings = value;
+                    app->getSettingsModel()->setWindow(window);
                 });
             _actions["Edit/Settings"]->setTooltip("Toggle the settings");
 
-            _windowOptionsObserver = ValueObserver<WindowOptions>::create(
-                app->getSettingsModel()->observeWindowOptions(),
-                [this](const WindowOptions& value)
+            _windowSettingsObserver = ValueObserver<WindowSettings>::create(
+                app->getSettingsModel()->observeWindow(),
+                [this](const WindowSettings& value)
                 {
                     _actions["Edit/Settings"]->setChecked(value.settings);
                 });

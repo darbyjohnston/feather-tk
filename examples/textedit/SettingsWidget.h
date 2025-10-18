@@ -4,9 +4,12 @@
 
 #pragma once
 
+#include "SettingsModel.h"
+
 #include <ftk/UI/ComboBox.h>
 #include <ftk/UI/IntEdit.h>
 #include <ftk/UI/RowLayout.h>
+#include <ftk/UI/ScrollWidget.h>
 #include <ftk/UI/TextEdit.h>
 
 namespace examples
@@ -42,10 +45,15 @@ namespace examples
             std::shared_ptr<ftk::ComboBox> _fontComboBox;
             std::shared_ptr<ftk::IntEdit> _fontSizeEdit;
             std::shared_ptr<ftk::IntEdit> _tabSpacesEdit;
+            std::shared_ptr<ftk::ComboBox> _colorStyleComboBox;
+            std::vector<float> _displayScales;
+            std::shared_ptr<ftk::ComboBox> _displayScaleComboBox;
+            std::shared_ptr<ftk::ScrollWidget> _scrollWidget;
             std::shared_ptr<ftk::VerticalLayout> _layout;
 
             std::shared_ptr<ftk::ValueObserver<ftk::TextEditOptions> > _textEditOptionsObserver;
             std::shared_ptr<ftk::ValueObserver<ftk::TextEditModelOptions> > _textEditModelOptionsObserver;
+            std::shared_ptr<ftk::ValueObserver<StyleSettings> > _styleSettingsObserver;
         };
     }
 }

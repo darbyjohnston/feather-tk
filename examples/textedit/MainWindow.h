@@ -64,7 +64,7 @@ namespace examples
             std::shared_ptr<ftk::Splitter> _splitter;
             std::shared_ptr<ftk::VerticalLayout> _layout;
 
-            std::shared_ptr<ftk::ValueObserver<WindowOptions> > _windowOptionsObserver;
+            std::shared_ptr<ftk::ValueObserver<WindowSettings> > _windowSettingsObserver;
         };
     }
 }

@@ -52,6 +52,9 @@ namespace ftk
     //! Get custom color roles.
     std::map<ColorRole, Color4F> getCustomColorRoles();
 
+    //! Get display scales.
+    std::vector<float> getDisplayScales();
+
     //! Base class for user interface applications.
     class App : public IApp
     {

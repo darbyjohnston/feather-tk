@@ -6,7 +6,6 @@
 
 #include "DocumentModel.h"
 #include "MainWindow.h"
-#include "SettingsModel.h"
 
 #include <ftk/UI/DialogSystem.h>
 #include <ftk/UI/FileBrowser.h>
@@ -39,7 +38,7 @@ namespace examples
             context->getSystem<FileBrowserSystem>()->setNativeFileDialog(false);
 
             // Create models.
-            _settingsModel = SettingsModel::create(context);
+            _settingsModel = SettingsModel::create(context, getDefaultDisplayScale());
             _documentModel = DocumentModel::create(context);
             _recentFilesModel = RecentFilesModel::create(context);
             _recentFilesModel->setRecent(_settingsModel->getRecentFiles());
@@ -51,6 +50,15 @@ namespace examples
                 "textedit",
                 Size2I(1280, 960));
             _mainWindow->show();
+
+            // Observe style settings.
+            _styleSettingsObserver = ValueObserver<StyleSettings>::create(
+                _settingsModel->observeStyle(),
+                [this](const StyleSettings& value)
+                {
+                    setColorStyle(value.colorStyle);
+                    setDisplayScale(value.displayScale);
+                });
 
             // Open command line arguments.
             std::vector<std::filesystem::path> paths;

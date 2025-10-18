@@ -24,6 +24,7 @@ namespace ftk
 
             Box2I g = Box2I(0, 0, -1, -1);
             Box2I g2;
+            Box2I g3;
         };
         SizeData size;
 
@@ -127,7 +128,12 @@ namespace ftk
                     p.size.handle,
                     g.h());
                 p.size.g2 = Box2I(
-                    p.size.g.min.x + p.size.g.w() / 2 - p.size.border / 2,
+                    p.size.g.min.x,
+                    p.size.g.min.y,
+                    p.size.border,
+                    p.size.g.h());
+                p.size.g3 = Box2I(
+                    p.size.g.max.x + 1 - p.size.border,
                     p.size.g.min.y,
                     p.size.border,
                     p.size.g.h());
@@ -153,7 +159,12 @@ namespace ftk
                     p.size.handle);
                 p.size.g2 = Box2I(
                     p.size.g.min.x,
-                    p.size.g.min.y + p.size.g.h() / 2 - p.size.border / 2,
+                    p.size.g.min.y,
+                    p.size.g.w(),
+                    p.size.border);
+                p.size.g3 = Box2I(
+                    p.size.g.min.x,
+                    p.size.g.max.y + 1 - p.size.border,
                     p.size.g.w(),
                     p.size.border);
                 break;
@@ -216,9 +227,6 @@ namespace ftk
         FTK_P();
         if (p.size.g.isValid())
         {
-            event.render->drawRect(
-                p.size.g2,
-                event.style->getColorRole(ColorRole::Border));
             if (p.mouse.pressedHandle)
             {
                 event.render->drawRect(
@@ -231,6 +239,12 @@ namespace ftk
                     p.size.g,
                     event.style->getColorRole(ColorRole::Hover));
             }
+            event.render->drawRect(
+                p.size.g2,
+                event.style->getColorRole(ColorRole::Border));
+            event.render->drawRect(
+                p.size.g3,
+                event.style->getColorRole(ColorRole::Border));
         }
     }
 
