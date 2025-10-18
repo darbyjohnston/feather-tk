@@ -6,9 +6,11 @@
 
 #include "Document.h"
 
+#include <ftk/Core/ObservableValue.h>
+
 namespace examples
 {
-    namespace textedit
+    namespace objview
     {
         //! Document model.
         class DocumentModel : public std::enable_shared_from_this<DocumentModel>
@@ -59,13 +61,6 @@ namespace examples
             std::shared_ptr<ftk::IObservableValue<std::shared_ptr<Document> > > observeCurrent() const;
             std::shared_ptr<ftk::IObservableValue<int> > observeCurrentIndex() const;
             void setCurrentIndex(int);
-
-            ///@}
-
-            //! \name Save
-            ///@{
-
-            void saveAll();
 
             ///@}
 

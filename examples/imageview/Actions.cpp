@@ -14,7 +14,7 @@ using namespace ftk;
 
 namespace examples
 {
-    namespace textedit
+    namespace imageview
     {
         void Actions::_init(
             const std::shared_ptr<Context>& context,
@@ -35,23 +35,9 @@ namespace examples
                     _current = doc;
                     if (doc)
                     {
-                        _changedObserver = ValueObserver<bool>::create(
-                            doc->observeChanged(),
-                            [this](bool)
-                            {
-                                _actionsUpdate();
-                            });
-                        _selectionObserver = ValueObserver<TextEditSelection>::create(
-                            doc->getModel()->observeSelection(),
-                            [this](const TextEditSelection&)
-                            {
-                                _actionsUpdate();
-                            });
                     }
                     else
                     {
-                        _changedObserver.reset();
-                        _selectionObserver.reset();
                         _actionsUpdate();
                     }
                 });
@@ -86,19 +72,6 @@ namespace examples
             const std::shared_ptr<App>& app)
         {
             auto appWeak = std::weak_ptr<App>(app);
-            _actions["File/New"] = Action::create(
-                "New",
-                "FileNew",
-                Key::N,
-                static_cast<int>(KeyModifier::Control),
-                [appWeak]
-                {
-                    auto app = appWeak.lock();
-                    auto document = Document::create(app->getContext());
-                    app->getDocumentModel()->add(document);
-                });
-            _actions["File/New"]->setTooltip("Create a new file");
-
             _actions["File/Open"] = Action::create(
                 "Open",
                 "FileOpen",
@@ -145,30 +118,6 @@ namespace examples
                 });
             _actions["File/CloseAll"]->setTooltip("Close all files");
 
-            _actions["File/Save"] = Action::create(
-                "Save",
-                "FileSave",
-                Key::S,
-                static_cast<int>(KeyModifier::Control),
-                [appWeak]
-                {
-                    auto app = appWeak.lock();
-                    app->save();
-                });
-            _actions["File/Save"]->setTooltip("Save the current file");
-
-            _actions["File/SaveAs"] = Action::create(
-                "Save As",
-                Key::S,
-                static_cast<int>(KeyModifier::Shift) |
-                static_cast<int>(KeyModifier::Control),
-                [appWeak]
-                {
-                    auto app = appWeak.lock();
-                    app->saveAs();
-                });
-            _actions["File/SaveAs"]->setTooltip("Save the current file with a new name");
-
             _actions["File/Exit"] = Action::create(
                 "Exit",
                 Key::Q,
@@ -185,110 +134,6 @@ namespace examples
             const std::shared_ptr<App>& app)
         {
             auto appWeak = std::weak_ptr<App>(app);
-            _actions["Edit/Undo"] = Action::create(
-                "Undo",
-                "Undo",
-                Key::Z,
-                static_cast<int>(KeyModifier::Control),
-                [appWeak]
-                {
-                    auto app = appWeak.lock();
-                    if (auto doc = app->getDocumentModel()->getCurrent())
-                    {
-                        doc->getModel()->undo();
-                    }
-                });
-            _actions["Edit/Undo"]->setTooltip("Undo");
-
-            _actions["Edit/Redo"] = Action::create(
-                "Redo",
-                "Redo",
-                Key::Y,
-                static_cast<int>(KeyModifier::Control),
-                [appWeak]
-                {
-                    auto app = appWeak.lock();
-                    if (auto doc = app->getDocumentModel()->getCurrent())
-                    {
-                        doc->getModel()->redo();
-                    }
-                });
-            _actions["Edit/Redo"]->setTooltip("Redo");
-
-            _actions["Edit/Cut"] = Action::create(
-                "Cut",
-                "Cut",
-                Key::X,
-                static_cast<int>(KeyModifier::Control),
-                [appWeak]
-                {
-                    auto app = appWeak.lock();
-                    if (auto doc = app->getDocumentModel()->getCurrent())
-                    {
-                        doc->getModel()->cut();
-                    }
-                });
-            _actions["Edit/Cut"]->setTooltip("Cut the selected text to the clipboard");
-
-            _actions["Edit/Copy"] = Action::create(
-                "Copy",
-                "Copy",
-                Key::C,
-                static_cast<int>(KeyModifier::Control),
-                [appWeak]
-                {
-                    auto app = appWeak.lock();
-                    if (auto doc = app->getDocumentModel()->getCurrent())
-                    {
-                        doc->getModel()->copy();
-                    }
-                });
-            _actions["Edit/Copy"]->setTooltip("Copy the selected text to the clipboard");
-
-            _actions["Edit/Paste"] = Action::create(
-                "Paste",
-                "Paste",
-                Key::V,
-                static_cast<int>(KeyModifier::Control),
-                [appWeak]
-                {
-                    auto app = appWeak.lock();
-                    if (auto doc = app->getDocumentModel()->getCurrent())
-                    {
-                        doc->getModel()->paste();
-                    }
-                });
-            _actions["Edit/Paste"]->setTooltip("Paste text from the clipboard");
-
-            _actions["Edit/SelectAll"] = Action::create(
-                "Select All",
-                Key::A,
-                static_cast<int>(KeyModifier::Control),
-                [appWeak]
-                {
-                    auto app = appWeak.lock();
-                    if (auto doc = app->getDocumentModel()->getCurrent())
-                    {
-                        doc->getModel()->selectAll();
-                    }
-                });
-            _actions["Edit/SelectAll"]->setTooltip("Select all of the text");
-
-            _actions["Edit/ClearSelection"] = Action::create(
-                "Clear Selection",
-                Key::A,
-                static_cast<int>(KeyModifier::Shift) |
-                static_cast<int>(KeyModifier::Control),
-                [appWeak]
-                {
-                    auto app = appWeak.lock();
-                    if (auto doc = app->getDocumentModel()->getCurrent())
-                    {
-                        doc->getModel()->clearSelection();
-                    }
-                });
-            _actions["Edit/ClearSelection"]->setTooltip("Clear the selection");
-
             _actions["Edit/Settings"] = Action::create(
                 "Settings",
                 "Settings",
@@ -341,24 +186,9 @@ namespace examples
         {
             const auto doc = _current.lock();
             const bool current = doc.get();
-            TextEditSelection selection;
-            if (doc)
-            {
-                selection = doc->getModel()->getSelection();
-            }
 
             _actions["File/Close"]->setEnabled(current);
             _actions["File/CloseAll"]->setEnabled(current);
-            _actions["File/Save"]->setEnabled(doc ? doc->isChanged() : false);
-            _actions["File/SaveAs"]->setEnabled(current);
-
-            _actions["Edit/Undo"]->setEnabled(false);
-            _actions["Edit/Redo"]->setEnabled(false);
-            _actions["Edit/Cut"]->setEnabled(current && selection.isValid());
-            _actions["Edit/Copy"]->setEnabled(current && selection.isValid());
-            _actions["Edit/Paste"]->setEnabled(current);
-            _actions["Edit/SelectAll"]->setEnabled(current);
-            _actions["Edit/ClearSelection"]->setEnabled(current && selection.isValid());
         }
     }
 }
