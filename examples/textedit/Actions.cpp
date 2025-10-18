@@ -18,11 +18,13 @@ namespace examples
     {
         void Actions::_init(
             const std::shared_ptr<Context>& context,
-            const std::shared_ptr<App>& app)
+            const std::shared_ptr<App>& app,
+            const std::shared_ptr<MainWindow>& mainWindow)
         {
             // Create the actions.
             _createFileActions(context, app);
             _createEditActions(context, app);
+            _createWindowActions(context, app, mainWindow);
             _actionsUpdate();
 
             // Observe the current document to update the state of the actions.
@@ -60,26 +62,27 @@ namespace examples
 
         std::shared_ptr<Actions> Actions::create(
             const std::shared_ptr<Context>& context,
-            const std::shared_ptr<App>& app)
+            const std::shared_ptr<App>& app,
+            const std::shared_ptr<MainWindow>& mainWindow)
         {
             auto out = std::shared_ptr<Actions>(new Actions);
-            out->_init(context, app);
+            out->_init(context, app, mainWindow);
             return out;
         }
 
-        const std::map<std::string, std::shared_ptr<ftk::Action> > Actions::getActions() const
+        const std::map<std::string, std::shared_ptr<Action> > Actions::getActions() const
         {
             return _actions;
         }
 
-        std::shared_ptr<ftk::Action> Actions::getAction(const std::string& name) const
+        std::shared_ptr<Action> Actions::getAction(const std::string& name) const
         {
             const auto i = _actions.find(name);
             return i != _actions.end() ? i->second : nullptr;
         }
 
         void Actions::_createFileActions(
-            const std::shared_ptr<ftk::Context>& context,
+            const std::shared_ptr<Context>& context,
             const std::shared_ptr<App>& app)
         {
             auto appWeak = std::weak_ptr<App>(app);
@@ -178,7 +181,7 @@ namespace examples
         }
 
         void Actions::_createEditActions(
-            const std::shared_ptr<ftk::Context>& context,
+            const std::shared_ptr<Context>& context,
             const std::shared_ptr<App>& app)
         {
             auto appWeak = std::weak_ptr<App>(app);
@@ -273,6 +276,34 @@ namespace examples
                 [this](const WindowSettings& value)
                 {
                     _actions["Edit/Settings"]->setChecked(value.settings);
+                });
+        }
+
+        void Actions::_createWindowActions(
+            const std::shared_ptr<Context>& context,
+            const std::shared_ptr<App>& app,
+            const std::shared_ptr<MainWindow>& mainWindow)
+        {
+            std::weak_ptr<MainWindow> mainWindowWeak(mainWindow);
+            _actions["Window/FullScreen"] = Action::create(
+                "Full Screen",
+                "WindowFullScreen",
+                Key::U,
+                static_cast<int>(KeyModifier::Control),
+                [mainWindowWeak](bool value)
+                {
+                    if (auto mainWindow = mainWindowWeak.lock())
+                    {
+                        mainWindow->setFullScreen(value);
+                    }
+                });
+            _actions["Window/FullScreen"]->setTooltip("Toggle full screen mode");
+
+            _fullScreenObserver = ValueObserver<bool>::create(
+                mainWindow->observeFullScreen(),
+                [this](bool value)
+                {
+                    _actions["Window/FullScreen"]->setChecked(value);
                 });
         }
 

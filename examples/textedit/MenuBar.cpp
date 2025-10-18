@@ -26,6 +26,7 @@ namespace examples
             // Create the menus.
             _createFileMenu(context, actions);
             _createEditMenu(context, actions);
+            _createWindowMenu(context, actions);
 
             // Observe the recent files and update the menu.
             std::weak_ptr<App> appWeak(app);
@@ -95,6 +96,15 @@ namespace examples
             _menus["Edit"]->addDivider();
             _menus["Edit"]->addAction(actions->getAction("Edit/Settings"));
             addMenu("Edit", _menus["Edit"]);
+        }
+
+        void MenuBar::_createWindowMenu(
+            const std::shared_ptr<ftk::Context>& context,
+            const std::shared_ptr<Actions>& actions)
+        {
+            _menus["Window"] = Menu::create(context);
+            _menus["Window"]->addAction(actions->getAction("Window/FullScreen"));
+            addMenu("Window", _menus["Window"]);
         }
     }
 }

@@ -35,7 +35,10 @@ namespace examples
             _settingsModel = app->getSettingsModel();
 
             // Create the actions.
-            _actions = Actions::create(context, app);
+            _actions = Actions::create(
+                context,
+                app,
+                std::dynamic_pointer_cast<MainWindow>(shared_from_this()));
 
             // Create the widgets.
             _menuBar = MenuBar::create(context, app, _actions);

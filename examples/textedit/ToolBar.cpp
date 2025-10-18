@@ -43,6 +43,16 @@ namespace examples
             {
                 editToolBar->addAction(actions->getAction(key));
             }
+
+            Divider::create(context, Orientation::Horizontal, _layout);
+
+            // Create the window tool bar.
+            auto windowToolBar = ftk::ToolBar::create(context, Orientation::Horizontal, _layout);
+            for (const auto& key :
+                { "Window/FullScreen" })
+            {
+                windowToolBar->addAction(actions->getAction(key));
+            }
         }
 
         ToolBar::~ToolBar()

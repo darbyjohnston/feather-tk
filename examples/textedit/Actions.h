@@ -13,6 +13,7 @@ namespace examples
     namespace textedit
     {
         class App;
+        class MainWindow;
 
         //! This class provides actions that are used to populate the menus
         //! and tool bars.
@@ -21,7 +22,8 @@ namespace examples
         protected:
             void _init(
                 const std::shared_ptr<ftk::Context>&,
-                const std::shared_ptr<App>&);
+                const std::shared_ptr<App>&,
+                const std::shared_ptr<MainWindow>&);
 
             Actions() = default;
 
@@ -31,7 +33,8 @@ namespace examples
             //! Create new actions.
             static std::shared_ptr<Actions> create(
                 const std::shared_ptr<ftk::Context>&,
-                const std::shared_ptr<App>&);
+                const std::shared_ptr<App>&,
+                const std::shared_ptr<MainWindow>&);
 
             //! Get the actions.
             const std::map<std::string, std::shared_ptr<ftk::Action> > getActions() const;
@@ -46,6 +49,10 @@ namespace examples
             void _createEditActions(
                 const std::shared_ptr<ftk::Context>&,
                 const std::shared_ptr<App>&);
+            void _createWindowActions(
+                const std::shared_ptr<ftk::Context>&,
+                const std::shared_ptr<App>&,
+                const std::shared_ptr<MainWindow>&);
 
             void _actionsUpdate();
 
@@ -56,6 +63,7 @@ namespace examples
             std::shared_ptr<ftk::ValueObserver<bool> > _changedObserver;
             std::shared_ptr<ftk::ValueObserver<ftk::TextEditSelection> > _selectionObserver;
             std::shared_ptr<ftk::ValueObserver<WindowSettings> > _windowSettingsObserver;
+            std::shared_ptr<ftk::ValueObserver<bool> > _fullScreenObserver;
         };
     }
 }
