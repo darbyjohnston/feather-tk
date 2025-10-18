@@ -144,38 +144,38 @@ namespace ftk
                         text2 = value;
                     });
 
-                model->text("345");
+                model->input("345");
                 FTK_ASSERT(text2[0] == "345abcdefghijklmnopqrstuvwxyz");
                 model->setCursor(TextEditPos(0, 0));
-                model->text("012");
+                model->input("012");
                 FTK_ASSERT(text2[0] == "012345abcdefghijklmnopqrstuvwxyz");
                 model->setCursor(TextEditPos(0, 6));
-                model->text("6789");
+                model->input("6789");
                 FTK_ASSERT(text2[0] == "0123456789abcdefghijklmnopqrstuvwxyz");
 
                 model->selectAll();
-                model->text("abcdefghijklmnopqrstuvwxyz");
+                model->input("abcdefghijklmnopqrstuvwxyz");
                 FTK_ASSERT(text2[0] == "abcdefghijklmnopqrstuvwxyz");
                 FTK_ASSERT(!model->getSelection().isValid());
 
                 model->setSelection(TextEditSelection(
                     TextEditPos(0, 0),
                     TextEditPos(0, 1)));
-                model->text("0");
+                model->input("0");
                 FTK_ASSERT(text2[0] == "0bcdefghijklmnopqrstuvwxyz");
                 FTK_ASSERT(!model->getSelection().isValid());
 
                 model->setSelection(TextEditSelection(
                     TextEditPos(0, 1),
                     TextEditPos(0, 23)));
-                model->text("123456789");
+                model->input("123456789");
                 FTK_ASSERT(text2[0] == "0123456789xyz");
                 FTK_ASSERT(!model->getSelection().isValid());
 
                 model->setSelection(TextEditSelection(
                     TextEditPos(0, 9),
                     TextEditPos(0, 13)));
-                model->text("9");
+                model->input("9");
                 FTK_ASSERT(text2[0] == "0123456789");
                 FTK_ASSERT(!model->getSelection().isValid());
             }

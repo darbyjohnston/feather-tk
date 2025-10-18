@@ -185,6 +185,36 @@ namespace examples
             const std::shared_ptr<App>& app)
         {
             auto appWeak = std::weak_ptr<App>(app);
+            _actions["Edit/Undo"] = Action::create(
+                "Undo",
+                "Undo",
+                Key::Z,
+                static_cast<int>(KeyModifier::Control),
+                [appWeak]
+                {
+                    auto app = appWeak.lock();
+                    if (auto doc = app->getDocumentModel()->getCurrent())
+                    {
+                        doc->getModel()->undo();
+                    }
+                });
+            _actions["Edit/Undo"]->setTooltip("Undo");
+
+            _actions["Edit/Redo"] = Action::create(
+                "Redo",
+                "Redo",
+                Key::Y,
+                static_cast<int>(KeyModifier::Control),
+                [appWeak]
+                {
+                    auto app = appWeak.lock();
+                    if (auto doc = app->getDocumentModel()->getCurrent())
+                    {
+                        doc->getModel()->redo();
+                    }
+                });
+            _actions["Edit/Redo"]->setTooltip("Redo");
+
             _actions["Edit/Cut"] = Action::create(
                 "Cut",
                 "Cut",
@@ -195,7 +225,7 @@ namespace examples
                     auto app = appWeak.lock();
                     if (auto doc = app->getDocumentModel()->getCurrent())
                     {
-                        doc->getModel()->key(Key::X, static_cast<int>(KeyModifier::Control));
+                        doc->getModel()->cut();
                     }
                 });
             _actions["Edit/Cut"]->setTooltip("Cut the selected text to the clipboard");
@@ -210,7 +240,7 @@ namespace examples
                     auto app = appWeak.lock();
                     if (auto doc = app->getDocumentModel()->getCurrent())
                     {
-                        doc->getModel()->key(Key::C, static_cast<int>(KeyModifier::Control));
+                        doc->getModel()->copy();
                     }
                 });
             _actions["Edit/Copy"]->setTooltip("Copy the selected text to the clipboard");
@@ -225,7 +255,7 @@ namespace examples
                     auto app = appWeak.lock();
                     if (auto doc = app->getDocumentModel()->getCurrent())
                     {
-                        doc->getModel()->key(Key::V, static_cast<int>(KeyModifier::Control));
+                        doc->getModel()->paste();
                     }
                 });
             _actions["Edit/Paste"]->setTooltip("Paste text from the clipboard");
@@ -322,6 +352,8 @@ namespace examples
             _actions["File/Save"]->setEnabled(doc ? doc->isChanged() : false);
             _actions["File/SaveAs"]->setEnabled(current);
 
+            _actions["Edit/Undo"]->setEnabled(false);
+            _actions["Edit/Redo"]->setEnabled(false);
             _actions["Edit/Cut"]->setEnabled(current && selection.isValid());
             _actions["Edit/Copy"]->setEnabled(current && selection.isValid());
             _actions["Edit/Paste"]->setEnabled(current);

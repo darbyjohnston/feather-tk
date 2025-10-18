@@ -33,17 +33,15 @@ namespace examples
             {
                 fileToolBar->addAction(actions->getAction(key));
             }
-
             Divider::create(context, Orientation::Horizontal, _layout);
 
             // Create the edit tool bar.
             auto editToolBar = ftk::ToolBar::create(context, Orientation::Horizontal, _layout);
             for (const auto& key :
-                { "Edit/Cut", "Edit/Copy", "Edit/Paste" })
+                { "Edit/Undo", "Edit/Redo", "Edit/Cut", "Edit/Copy", "Edit/Paste" })
             {
                 editToolBar->addAction(actions->getAction(key));
             }
-
             Divider::create(context, Orientation::Horizontal, _layout);
 
             // Create the window tool bar.

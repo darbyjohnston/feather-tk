@@ -223,7 +223,90 @@ namespace ftk
         p.selection->setIfChanged(TextEditSelection());
     }
 
-    void TextEditModel::text(const std::string& value)
+    void TextEditModel::undo()
+    {}
+
+    void TextEditModel::redo()
+    {}
+
+    void TextEditModel::cut()
+    {
+        FTK_P();
+        if (auto context = p.context.lock())
+        {
+            auto clipboard = context->getSystem<ClipboardSystem>();
+            std::string clipboardText;
+            TextEditPos cursor = p.cursor->get();
+            TextEditSelection selection = p.selection->get();
+            if (selection.isValid())
+            {
+                const auto lines = _getSelection(selection);
+                clipboardText = join(lines, '\n');
+                _replace(selection, {});
+                cursor = selection.min();
+                selection = TextEditSelection();
+            }
+            clipboard->setText(clipboardText);
+            p.cursor->setIfChanged(cursor);
+            p.selection->setIfChanged(selection);
+        }
+    }
+
+    void TextEditModel::copy()
+    {
+        FTK_P();
+        if (auto context = p.context.lock())
+        {
+            auto clipboard = context->getSystem<ClipboardSystem>();
+            std::string clipboardText;
+            const TextEditSelection& selection = p.selection->get();
+            if (selection.isValid())
+            {
+                const auto lines = _getSelection(selection);
+                clipboardText = join(lines, '\n');
+            }
+            clipboard->setText(clipboardText);
+        }
+    }
+
+    void TextEditModel::paste()
+    {
+        FTK_P();
+        if (auto context = p.context.lock())
+        {
+            auto clipboard = context->getSystem<ClipboardSystem>();
+            const std::string clipboardText = clipboard->getText();
+            if (!clipboardText.empty())
+            {
+                const auto lines = splitLines(clipboardText);
+                TextEditPos cursor = p.cursor->get();
+                TextEditSelection selection = p.selection->get();
+                if (selection.isValid())
+                {
+                    _replace(selection, lines);
+                    cursor = selection.min();
+                    selection = TextEditSelection();
+                }
+                else
+                {
+                    _replace(TextEditSelection(cursor, cursor), lines);
+                }
+                if (1 == lines.size())
+                {
+                    cursor.chr += static_cast<int>(lines.front().size());
+                }
+                else
+                {
+                    cursor.line += static_cast<int>(lines.size()) - 1;
+                    cursor.chr = static_cast<int>(lines.back().size());
+                }
+                p.cursor->setIfChanged(cursor);
+                p.selection->setIfChanged(selection);
+            }
+        }
+    }
+
+    void TextEditModel::input(const std::string& value)
     {
         FTK_P();
         const auto& text = p.text->get();
@@ -451,18 +534,7 @@ namespace ftk
         case Key::C:
             if (static_cast<int>(KeyModifier::Control) == modifiers)
             {
-                if (auto context = p.context.lock())
-                {
-                    // Copy.
-                    auto clipboard = context->getSystem<ClipboardSystem>();
-                    std::string text;
-                    if (selection.isValid())
-                    {
-                        const auto lines = _getSelection(selection);
-                        text = join(lines, '\n');
-                    }
-                    clipboard->setText(text);
-                }
+                copy();
                 out = true;
             }
             break;
@@ -470,21 +542,7 @@ namespace ftk
         case Key::X:
             if (static_cast<int>(KeyModifier::Control) == modifiers)
             {
-                if (auto context = p.context.lock())
-                {
-                    // Cut.
-                    auto clipboard = context->getSystem<ClipboardSystem>();
-                    std::string text;
-                    if (selection.isValid())
-                    {
-                        const auto lines = _getSelection(selection);
-                        text = join(lines, '\n');
-                        _replace(selection, {});
-                        cursor = selection.min();
-                        selection = TextEditSelection();
-                    }
-                    clipboard->setText(text);
-                }
+                cut();
                 out = true;
             }
             break;
@@ -492,35 +550,23 @@ namespace ftk
         case Key::V:
             if (static_cast<int>(KeyModifier::Control) == modifiers)
             {
-                // Paste.
-                if (auto context = p.context.lock())
-                {
-                    auto clipboard = context->getSystem<ClipboardSystem>();
-                    const std::string clipboardText = clipboard->getText();
-                    if (!clipboardText.empty())
-                    {
-                        const auto lines = splitLines(clipboardText);
-                        if (selection.isValid())
-                        {
-                            _replace(selection, lines);
-                            cursor = selection.min();
-                            selection = TextEditSelection();
-                        }
-                        else
-                        {
-                            _replace(TextEditSelection(cursor, cursor), lines);
-                        }
-                        if (1 == lines.size())
-                        {
-                            cursor.chr += static_cast<int>(lines.front().size());
-                        }
-                        else
-                        {
-                            cursor.line += static_cast<int>(lines.size()) - 1;
-                            cursor.chr = static_cast<int>(lines.back().size());
-                        }
-                    }
-                }
+                paste();
+                out = true;
+            }
+            break;
+
+        case Key::Y:
+            if (static_cast<int>(KeyModifier::Control) == modifiers)
+            {
+                redo();
+                out = true;
+            }
+            break;
+
+        case Key::Z:
+            if (static_cast<int>(KeyModifier::Control) == modifiers)
+            {
+                undo();
                 out = true;
             }
             break;
@@ -622,11 +668,6 @@ namespace ftk
         return out;
     }
 
-    void TextEditModel::setPageRows(int value)
-    {
-        _p->pageRows = value;
-    }
-
     const TextEditModelOptions& TextEditModel::getOptions() const
     {
         return _p->options->get();
@@ -640,6 +681,11 @@ namespace ftk
     void TextEditModel::setOptions(const TextEditModelOptions& value)
     {
         _p->options->setIfChanged(value);
+    }
+
+    void TextEditModel::setPageRows(int value)
+    {
+        _p->pageRows = value;
     }
 
     TextEditPos TextEditModel::_getNext(const TextEditPos& value) const

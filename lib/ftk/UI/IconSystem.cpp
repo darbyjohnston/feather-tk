@@ -65,6 +65,7 @@ namespace ftk_resource
     extern std::vector<uint8_t> PlaybackReverse;
     extern std::vector<uint8_t> PlaybackStop;
     extern std::vector<uint8_t> Prev;
+    extern std::vector<uint8_t> Redo;
     extern std::vector<uint8_t> Reload;
     extern std::vector<uint8_t> Reset;
     extern std::vector<uint8_t> ReverseSort;
@@ -73,6 +74,7 @@ namespace ftk_resource
     extern std::vector<uint8_t> SubMenuArrow;
     extern std::vector<uint8_t> TimeEnd;
     extern std::vector<uint8_t> TimeStart;
+    extern std::vector<uint8_t> Undo;
     extern std::vector<uint8_t> ViewFrame;
     extern std::vector<uint8_t> ViewZoomIn;
     extern std::vector<uint8_t> ViewZoomOut;
@@ -177,6 +179,7 @@ namespace ftk
         p.iconData["PlaybackReverse"] = ftk_resource::PlaybackReverse;
         p.iconData["PlaybackStop"] = ftk_resource::PlaybackStop;
         p.iconData["Prev"] = ftk_resource::Prev;
+        p.iconData["Redo"] = ftk_resource::Redo;
         p.iconData["Reload"] = ftk_resource::Reload;
         p.iconData["Reset"] = ftk_resource::Reset;
         p.iconData["ReverseSort"] = ftk_resource::ReverseSort;
@@ -185,6 +188,7 @@ namespace ftk
         p.iconData["SubMenuArrow"] = ftk_resource::SubMenuArrow;
         p.iconData["TimeEnd"] = ftk_resource::TimeEnd;
         p.iconData["TimeStart"] = ftk_resource::TimeStart;
+        p.iconData["Undo"] = ftk_resource::Undo;
         p.iconData["ViewFrame"] = ftk_resource::ViewFrame;
         p.iconData["ViewZoomIn"] = ftk_resource::ViewZoomIn;
         p.iconData["ViewZoomOut"] = ftk_resource::ViewZoomOut;

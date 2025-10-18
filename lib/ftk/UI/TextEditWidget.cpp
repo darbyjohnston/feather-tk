@@ -510,7 +510,7 @@ namespace ftk
     {
         IWidget::textEvent(event);
         event.accept = true;
-        _p->model->text(event.text);
+        _p->model->input(event.text);
     }
 
     TextEditPos TextEditWidget::_getCursorPos(const V2I& value) const

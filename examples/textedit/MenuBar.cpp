@@ -87,6 +87,9 @@ namespace examples
             const std::shared_ptr<Actions>& actions)
         {
             _menus["Edit"] = Menu::create(context);
+            _menus["Edit"]->addAction(actions->getAction("Edit/Undo"));
+            _menus["Edit"]->addAction(actions->getAction("Edit/Redo"));
+            _menus["Edit"]->addDivider();
             _menus["Edit"]->addAction(actions->getAction("Edit/Cut"));
             _menus["Edit"]->addAction(actions->getAction("Edit/Copy"));
             _menus["Edit"]->addAction(actions->getAction("Edit/Paste"));

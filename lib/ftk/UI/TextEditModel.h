@@ -81,61 +81,81 @@ namespace ftk
             const std::shared_ptr<Context>&,
             const std::vector<std::string>& = {});
 
-        //! Get the text.
-        const std::vector<std::string>& getText() const;
+        //! \name Text
+        ///@{
 
-        //! Observer the text.
+        const std::vector<std::string>& getText() const;
         std::shared_ptr<IObservableList<std::string> > observeText() const;
 
         //! Set the text. Setting the text will also set the cursor to the
-        //! beginning of the text and clear the selection.
+        //! beginning and clear the selection.
         void setText(const std::vector<std::string>&);
 
-        //! Clear the text.
         void clearText();
 
-        //! Get the cursor.
-        const TextEditPos& getCursor() const;
+        ///@}
 
-        //! Observe the cursor.
+        //! \name Cursor
+        ///@{
+
+        const TextEditPos& getCursor() const;
         std::shared_ptr<IObservableValue<TextEditPos> > observeCursor() const;
 
         //! Set the cursor. Setting the cursor clears the selection.
         void setCursor(const TextEditPos&);
 
-        //! Get the selection.
+        ///@}
+
+        //! \name Selection
+        ///@{
+
         const TextEditSelection& getSelection() const;
-
-        //! Observer the selection.
         std::shared_ptr<IObservableValue<TextEditSelection> > observeSelection() const;
-
-        //! Set the selection. Setting the selection also sets the cursor to
-        //! the end of the selection.
         void setSelection(const TextEditSelection&);
-
-        //! Select all.
         void selectAll();
-
-        //! Clear the selection.
         void clearSelection();
 
-        //! Add text.
-        void text(const std::string&);
+        ///@}
 
-        //! Handle keys.
+        //! \name Undo
+        ///@{
+
+        void undo();
+        void redo();
+
+        ///@}
+
+        //! \name Clipboard
+        ///@{
+
+        void cut();
+        void copy();
+        void paste();
+
+        ///@}
+
+        //! \name Input
+        ///@{
+
+        //! Handle text input.
+        void input(const std::string&);
+
+        //! Handle key input.
         bool key(Key, int modifiers = 0);
+
+        ///@}
+
+        //! \name Options
+        ///@{
+
+        const TextEditModelOptions& getOptions() const;
+        std::shared_ptr<IObservableValue<TextEditModelOptions> > observeOptions() const;
+        void setOptions(const TextEditModelOptions&);
+
+        ///@}
 
         //! Set the number of rows in a page.
         void setPageRows(int);
-
-        //! Get the options.
-        const TextEditModelOptions& getOptions() const;
-
-        //! Observe the options.
-        std::shared_ptr<IObservableValue<TextEditModelOptions> > observeOptions() const;
-
-        //! Set the options.
-        void setOptions(const TextEditModelOptions&);
 
     private:
         TextEditPos _getNext(const TextEditPos&) const;

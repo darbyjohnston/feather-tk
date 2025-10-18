@@ -49,6 +49,7 @@ set(RESOURCES
     etc/Icons/PlaybackReverse.svg
     etc/Icons/PlaybackStop.svg
     etc/Icons/Prev.svg
+    etc/Icons/Redo.svg
     etc/Icons/Reload.svg
     etc/Icons/Reset.svg
     etc/Icons/ReverseSort.svg
@@ -57,6 +58,7 @@ set(RESOURCES
     etc/Icons/SubMenuArrow.svg
     etc/Icons/TimeEnd.svg
     etc/Icons/TimeStart.svg
+    etc/Icons/Undo.svg
     etc/Icons/ViewFrame.svg
     etc/Icons/ViewZoomIn.svg
     etc/Icons/ViewZoomOut.svg
