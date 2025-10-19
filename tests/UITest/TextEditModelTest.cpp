@@ -211,7 +211,7 @@ namespace ftk
                 auto clipboard = context->getSystem<ClipboardSystem>();
                 clipboard->setText("\n0123456789\nabcdefghijklmnopqrstuvwxyz\n");
 
-                model->key(Key::V, static_cast<int>(KeyModifier::Control));
+                model->paste();
                 FTK_ASSERT(text2[0] == "");
                 FTK_ASSERT(text2[1] == "0123456789");
                 FTK_ASSERT(text2[2] == "abcdefghijklmnopqrstuvwxyz");
@@ -219,7 +219,7 @@ namespace ftk
                 FTK_ASSERT(TextEditPos(3, 0) == cursor2);
                 
                 model->selectAll();
-                model->key(Key::V, static_cast<int>(KeyModifier::Control));
+                model->paste();
                 FTK_ASSERT(text2[0] == "");
                 FTK_ASSERT(text2[1] == "0123456789");
                 FTK_ASSERT(text2[2] == "abcdefghijklmnopqrstuvwxyz");
@@ -229,7 +229,7 @@ namespace ftk
                 model->selectAll();
                 model->setText({ "!!!!!!!!!!" });
                 model->setCursor(TextEditPos(0, 5));
-                model->key(Key::V, static_cast<int>(KeyModifier::Control));
+                model->paste();
                 FTK_ASSERT(text2[0] == "!!!!!");
                 FTK_ASSERT(text2[1] == "0123456789");
                 FTK_ASSERT(text2[2] == "abcdefghijklmnopqrstuvwxyz");
@@ -241,7 +241,7 @@ namespace ftk
                 model->setSelection(TextEditSelection(
                     TextEditPos(0, 1),
                     TextEditPos(0, 9)));
-                model->key(Key::V, static_cast<int>(KeyModifier::Control));
+                model->paste();
                 FTK_ASSERT(text2[0] == "!");
                 FTK_ASSERT(text2[1] == "0123456789");
                 FTK_ASSERT(text2[2] == "abcdefghijklmnopqrstuvwxyz");
@@ -254,7 +254,7 @@ namespace ftk
                 model->setSelection(TextEditSelection(
                     TextEditPos(0, 5),
                     TextEditPos(1, 5)));
-                model->key(Key::V, static_cast<int>(KeyModifier::Control));
+                model->paste();
                 FTK_ASSERT(text2[0] == "!!!!!");
                 FTK_ASSERT(text2[1] == "0123456789");
                 FTK_ASSERT(text2[2] == "abcdefghijklmnopqrstuvwxyz");
@@ -268,38 +268,38 @@ namespace ftk
                     TextEditPos(0, 5),
                     TextEditPos(1, 5)));
                 clipboard->setText("0123456789");
-                model->key(Key::V, static_cast<int>(KeyModifier::Control));
+                model->paste();
                 FTK_ASSERT(text2[0] == "!!!!!0123456789#####");
                 FTK_ASSERT(TextEditPos(0, 15) == cursor2);
                 FTK_ASSERT(!selection2.isValid());
 
                 model->setText({ "!!!!!!!!!!", "0123456789", "abcdefghijklmnopqrstuvwxyz", "##########" });
                 model->setSelection(TextEditSelection());
-                model->key(Key::C, static_cast<int>(KeyModifier::Control));
+                model->copy();
                 FTK_ASSERT(clipboard->getText().empty());
 
                 model->setSelection(TextEditSelection(
                     TextEditPos(0, 0),
                     TextEditPos(0, 1)));
-                model->key(Key::C, static_cast<int>(KeyModifier::Control));
+                model->copy();
                 FTK_ASSERT("!" == clipboard->getText());
 
                 model->setSelection(TextEditSelection(
                     TextEditPos(1, 5),
                     TextEditPos(2, 5)));
-                model->key(Key::C, static_cast<int>(KeyModifier::Control));
+                model->copy();
                 auto tmp = splitLines(clipboard->getText());
                 FTK_ASSERT(tmp == std::vector<std::string>({ "56789", "abcde" }));
 
                 model->setSelection(TextEditSelection());
-                model->key(Key::X, static_cast<int>(KeyModifier::Control));
+                model->cut();
                 tmp = splitLines(clipboard->getText());
                 FTK_ASSERT(tmp == std::vector<std::string>({ "" }));
 
                 model->setSelection(TextEditSelection(
                     TextEditPos(0, 0),
                     TextEditPos(0, 1)));
-                model->key(Key::X, static_cast<int>(KeyModifier::Control));
+                model->cut();
                 FTK_ASSERT("!" == clipboard->getText());
                 FTK_ASSERT(text2[0] == "!!!!!!!!!");
                 FTK_ASSERT(text2[1] == "0123456789");
@@ -311,7 +311,7 @@ namespace ftk
                 model->setSelection(TextEditSelection(
                     TextEditPos(1, 5),
                     TextEditPos(2, 5)));
-                model->key(Key::X, static_cast<int>(KeyModifier::Control));
+                model->cut();
                 tmp = splitLines(clipboard->getText());
                 FTK_ASSERT(tmp == std::vector<std::string>({ "56789", "abcde" }));
                 FTK_ASSERT(text2[0] == "!!!!!!!!!");
@@ -321,7 +321,7 @@ namespace ftk
                 FTK_ASSERT(!selection2.isValid());
 
                 model->selectAll();
-                model->key(Key::X, static_cast<int>(KeyModifier::Control));
+                model->cut();
                 tmp = splitLines(clipboard->getText());
                 FTK_ASSERT(tmp[0] == "!!!!!!!!!");
                 FTK_ASSERT(tmp[1] == "01234fghijklmnopqrstuvwxyz");

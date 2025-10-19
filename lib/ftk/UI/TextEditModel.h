@@ -166,6 +166,12 @@ namespace ftk
 
         std::string _getTabSpaces() const;
 
+        void _move(Key, int modifiers);
+        void _backspace();
+        void _delete();
+        void _return();
+        void _tab(int modifiers);
+
         void _replace(
             const TextEditSelection&,
             const std::vector<std::string>&);
