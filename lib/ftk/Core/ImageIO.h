@@ -65,12 +65,16 @@ namespace ftk
             FTK_NON_COPYABLE(IImagePlugin);
 
         protected:
-            IImagePlugin(const std::string& name);
+            IImagePlugin(
+                const std::string& name,
+                const std::vector<std::string>& extensions);
 
         public:
             virtual ~IImagePlugin() = 0;
-            
+
             const std::string& getName() const;
+
+            const std::vector<std::string>& getExtensions() const;
             
             virtual bool canRead(
                 const std::filesystem::path&,
@@ -97,6 +101,7 @@ namespace ftk
                 
         private:
             std::string _name;
+            std::vector<std::string> _extensions;
         };
         
         //! Image I/O system.

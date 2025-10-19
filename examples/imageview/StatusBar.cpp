@@ -23,11 +23,15 @@ namespace examples
         {
             IWidget::_init(context, "examples::imageview::StatusBar", parent);
 
+            // Create the labels.
+            _labels["Size"] = Label::create(context);
+
             // Layout the widgets.
             _layout = HorizontalLayout::create(context, shared_from_this());
             _layout->setMarginRole(SizeRole::MarginInside);
             _layout->setSpacingRole(SizeRole::SpacingSmall);
             _layout->addSpacer(Stretch::Expanding);
+            _labels["Size"]->setParent(_layout);
 
             // Observe the current document and update the widgets.
             std::weak_ptr<App> appWeak(app);
@@ -35,12 +39,15 @@ namespace examples
                 app->getDocumentModel()->observeCurrent(),
                 [this, appWeak](const std::shared_ptr<Document>& doc)
                 {
+                    std::string size;
                     if (doc)
                     {
+                        if (auto image = doc->getImage())
+                        {
+                            size = Format("Size: {0}").arg(image->getSize());
+                        }
                     }
-                    else
-                    {
-                    }
+                    _labels["Size"]->setText(size);
                 });
         }
 

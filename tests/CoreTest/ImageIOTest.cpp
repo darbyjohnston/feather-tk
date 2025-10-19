@@ -38,7 +38,7 @@ namespace ftk
             {
             protected:
                 DummyPlugin() :
-                    IImagePlugin("Dummy")
+                    IImagePlugin("Dummy", { ".dum" })
                 {}
 
             public:

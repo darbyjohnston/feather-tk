@@ -56,9 +56,6 @@ namespace ftk
 
             virtual ~ImagePlugin();
 
-            bool canRead(
-                const std::filesystem::path&,
-                const ImageIOOptions& = ImageIOOptions()) override;
             std::shared_ptr<IImageReader> read(
                 const std::filesystem::path&,
                 const ImageIOOptions& = ImageIOOptions()) override;

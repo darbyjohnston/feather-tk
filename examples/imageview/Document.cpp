@@ -4,7 +4,7 @@
 
 #include "Document.h"
 
-#include <ftk/Core/FileIO.h>
+#include <ftk/Core/ImageIO.h>
 
 using namespace ftk;
 
@@ -17,6 +17,10 @@ namespace examples
             const std::filesystem::path& path)
         {
             _path = path;
+
+            auto io = context->getSystem<ImageIO>();
+            auto read = io->read(path);
+            _image = read->read();
         }
 
         Document::~Document()
@@ -44,6 +48,11 @@ namespace examples
         std::string Document::getTooltip() const
         {
             return _path.u8string();
+        }
+
+        const std::shared_ptr<ftk::Image>& Document::getImage() const
+        {
+            return _image;
         }
     }
 }

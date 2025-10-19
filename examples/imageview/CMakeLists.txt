@@ -4,6 +4,7 @@ set(HEADERS
     Document.h
     DocumentModel.h
     DocumentTabs.h
+    ImageView.h
     MainWindow.h
     MenuBar.h
     SettingsModel.h
@@ -17,6 +18,7 @@ set(SOURCE
     Document.cpp
     DocumentModel.cpp
     DocumentTabs.cpp
+    ImageView.cpp
     MainWindow.cpp
     MenuBar.cpp
     SettingsModel.cpp

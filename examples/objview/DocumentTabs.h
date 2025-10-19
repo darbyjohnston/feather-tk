@@ -4,8 +4,6 @@
 
 #pragma once
 
-#include <ftk/UI/Label.h>
-#include <ftk/UI/RowLayout.h>
 #include <ftk/UI/TabWidget.h>
 
 namespace examples
@@ -40,7 +38,7 @@ namespace examples
 
         private:
             std::shared_ptr<ftk::TabWidget> _tabWidget;
-            std::map<std::shared_ptr<Document>, std::shared_ptr<ftk::IWidget> > _views;
+            std::map<std::shared_ptr<Document>, std::shared_ptr<IWidget> > _views;
 
             std::shared_ptr<ftk::ValueObserver<std::weak_ptr<Document> > > _addObserver;
             std::shared_ptr<ftk::ValueObserver<std::weak_ptr<Document> > > _closeObserver;

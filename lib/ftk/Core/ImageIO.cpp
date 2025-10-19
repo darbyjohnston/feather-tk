@@ -39,8 +39,11 @@ namespace ftk
     IImageWriter::~IImageWriter()
     {}
 
-    IImagePlugin::IImagePlugin(const std::string& name) :
-        _name(name)
+    IImagePlugin::IImagePlugin(
+        const std::string& name,
+        const std::vector<std::string>& extensions) :
+        _name(name),
+        _extensions(extensions)
     {}
 
     IImagePlugin::~IImagePlugin()
@@ -51,11 +54,29 @@ namespace ftk
         return _name;
     }
 
+    const std::vector<std::string>& IImagePlugin::getExtensions() const
+    {
+        return _extensions;
+    }
+
     bool IImagePlugin::canRead(
-        const std::filesystem::path&,
+        const std::filesystem::path& path,
         const ImageIOOptions&)
     {
-        return false;
+        bool out = false;
+        const std::string extension = path.extension().u8string();
+        for (const auto& extension2 : _extensions)
+        {
+            if (compare(
+                extension,
+                extension2,
+                CaseCompare::Insensitive))
+            {
+                out = true;
+                break;
+            }
+        }
+        return out;
     }
 
     std::shared_ptr<IImageReader> IImagePlugin::read(
@@ -74,11 +95,24 @@ namespace ftk
     }
 
     bool IImagePlugin::canWrite(
-        const std::filesystem::path&,
+        const std::filesystem::path& path,
         const ImageInfo&,
         const ImageIOOptions&)
     {
-        return false;
+        bool out = false;
+        const std::string extension = path.extension().u8string();
+        for (const auto& extension2 : _extensions)
+        {
+            if (compare(
+                extension,
+                extension2,
+                CaseCompare::Insensitive))
+            {
+                out = true;
+                break;
+            }
+        }
+        return out;
     }
 
     std::shared_ptr<IImageWriter> IImagePlugin::write(

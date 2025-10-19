@@ -257,15 +257,18 @@ namespace ftk
     template<typename T>
     constexpr Matrix<4, 4, T> perspective(T fov, T aspect, T nearClip, T farClip)
     {
-        const T f = T(1) / std::tan(deg2rad(fov) / T(2));
-        const T a = f / aspect;
-        const T b = (farClip + nearClip) / (nearClip - farClip);
-        const T c = T(2) * farClip * nearClip / (nearClip - farClip);
+        const T t = std::tan(deg2rad(fov) / T(2));
+        const T top = nearClip * t;
+        const T right = top * aspect;
+        const T a = nearClip / right;
+        const T b = nearClip / top;
+        const T c = -(farClip + nearClip) / (farClip - nearClip);
+        const T d = -(2 * farClip * nearClip) / (farClip - nearClip);
         return Matrix<4, 4, T>(
-            a,    T(0), T(0), T(0),
-            T(0), f,    T(0), T(0),
-            T(0), T(0), b,    T(-1),
-            T(0), T(0), c,    T(0));
+            a, T(0), T(0), T(0),
+            T(0), b, T(0), T(0),
+            T(0), T(0), c, T(-1),
+            T(0), T(0), d, T(0));
     }
 
     template<typename T>

@@ -6,9 +6,10 @@
 
 #include "App.h"
 #include "DocumentModel.h"
+#include "ObjView.h"
 #include "SettingsModel.h"
 
-#include <ftk/UI/Label.h>
+#include <ftk/UI/ScrollWidget.h>
 
 using namespace ftk;
 
@@ -53,10 +54,13 @@ namespace examples
                         // Create a new view.
                         auto context = getContext();
                         auto app = appWeak.lock();
-                        auto view = Label::create(context, "View");
-                        _views[doc] = view;
-                        _tabWidget->addTab(doc->getName(), view, doc->getTooltip());
+                        auto view = ObjView::create(context, doc);
+                        auto scrollWidget = ScrollWidget::create(context);
+                        scrollWidget->setBorder(false);
+                        scrollWidget->setWidget(view);
+                        _tabWidget->addTab(doc->getName(), scrollWidget, doc->getTooltip());
                         view->takeKeyFocus();
+                        _views[doc] = scrollWidget;
                     }
                 });
 

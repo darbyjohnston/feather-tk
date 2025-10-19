@@ -33,13 +33,7 @@ namespace examples
                 [this](const std::shared_ptr<Document>& doc)
                 {
                     _current = doc;
-                    if (doc)
-                    {
-                    }
-                    else
-                    {
-                        _actionsUpdate();
-                    }
+                    _actionsUpdate();
                 });
         }
 
@@ -81,6 +75,7 @@ namespace examples
                 {
                     auto app = appWeak.lock();
                     auto fileBrowserSystem = app->getContext()->getSystem<FileBrowserSystem>();
+                    fileBrowserSystem->getModel()->setExtensions({ ".obj" });
                     fileBrowserSystem->open(
                         app->getMainWindow(),
                         [appWeak](const std::filesystem::path& value)

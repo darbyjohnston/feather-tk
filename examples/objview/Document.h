@@ -5,6 +5,7 @@
 #pragma once
 
 #include <ftk/Core/Context.h>
+#include <ftk/Core/Mesh.h>
 
 #include <filesystem>
 
@@ -39,8 +40,16 @@ namespace examples
 
             ///@}
 
+            //! \name Mesh
+            ///@{
+
+            const std::shared_ptr<ftk::TriMesh3F>& getMesh() const;
+
+            ///@}
+
         private:
             std::filesystem::path _path;
+            std::shared_ptr<ftk::TriMesh3F> _mesh;
         };
     }
 }

@@ -10,6 +10,8 @@
 
 #include <ftk/UI/FileBrowser.h>
 
+#include <ftk/Core/ImageIO.h>
+
 using namespace ftk;
 
 namespace examples
@@ -33,13 +35,7 @@ namespace examples
                 [this](const std::shared_ptr<Document>& doc)
                 {
                     _current = doc;
-                    if (doc)
-                    {
-                    }
-                    else
-                    {
-                        _actionsUpdate();
-                    }
+                    _actionsUpdate();
                 });
         }
 
@@ -81,6 +77,14 @@ namespace examples
                 {
                     auto app = appWeak.lock();
                     auto fileBrowserSystem = app->getContext()->getSystem<FileBrowserSystem>();
+                    auto ioSystem = app->getContext()->getSystem<ImageIO>();
+                    std::vector<std::string> extensions;
+                    for (const auto& plugin : ioSystem->getPlugins())
+                    {
+                        const std::vector<std::string>& extensions2 = plugin->getExtensions();
+                        extensions.insert(extensions.end(), extensions2.begin(), extensions2.end());
+                    }
+                    fileBrowserSystem->getModel()->setExtensions(extensions);
                     fileBrowserSystem->open(
                         app->getMainWindow(),
                         [appWeak](const std::filesystem::path& value)

@@ -6,6 +6,8 @@ set(HEADERS
     DocumentTabs.h
     MainWindow.h
     MenuBar.h
+    ObjIO.h
+    ObjView.h
     SettingsModel.h
     SettingsWidget.h
     StatusBar.h
@@ -19,6 +21,8 @@ set(SOURCE
     DocumentTabs.cpp
     MainWindow.cpp
     MenuBar.cpp
+    ObjIO.cpp
+    ObjView.cpp
     SettingsModel.cpp
     SettingsWidget.cpp
     StatusBar.cpp

@@ -4,8 +4,6 @@
 
 #pragma once
 
-#include <ftk/UI/Label.h>
-#include <ftk/UI/RowLayout.h>
 #include <ftk/UI/TabWidget.h>
 
 namespace examples
@@ -14,6 +12,7 @@ namespace examples
     {
         class App;
         class Document;
+        class ImageView;
 
         //! Document tabs widget.
         class DocumentTabs : public ftk::IWidget

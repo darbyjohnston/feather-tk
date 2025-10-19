@@ -4,7 +4,7 @@
 
 #include "Document.h"
 
-#include <ftk/Core/FileIO.h>
+#include "ObjIO.h"
 
 using namespace ftk;
 
@@ -17,6 +17,8 @@ namespace examples
             const std::filesystem::path& path)
         {
             _path = path;
+
+            _mesh = read(path);
         }
 
         Document::~Document()
@@ -44,6 +46,11 @@ namespace examples
         std::string Document::getTooltip() const
         {
             return _path.u8string();
+        }
+
+        const std::shared_ptr<ftk::TriMesh3F>& Document::getMesh() const
+        {
+            return _mesh;
         }
     }
 }

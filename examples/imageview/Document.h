@@ -5,6 +5,7 @@
 #pragma once
 
 #include <ftk/Core/Context.h>
+#include <ftk/Core/Image.h>
 
 #include <filesystem>
 
@@ -39,8 +40,16 @@ namespace examples
 
             ///@}
 
+            //! \name Image
+            ///@{
+
+            const std::shared_ptr<ftk::Image>& getImage() const;
+
+            ///@}
+
         private:
             std::filesystem::path _path;
+            std::shared_ptr<ftk::Image> _image;
         };
     }
 }

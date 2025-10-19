@@ -35,12 +35,6 @@ namespace examples
                 app->getDocumentModel()->observeCurrent(),
                 [this, appWeak](const std::shared_ptr<Document>& doc)
                 {
-                    if (doc)
-                    {
-                    }
-                    else
-                    {
-                    }
                 });
         }
 

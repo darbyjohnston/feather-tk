@@ -11,21 +11,11 @@ namespace ftk
     namespace png
     {
         ImagePlugin::ImagePlugin() :
-            IImagePlugin("PNG")
+            IImagePlugin("PNG", { ".png" })
         {}
 
         ImagePlugin::~ImagePlugin()
         {}
-
-        bool ImagePlugin::canRead(
-            const std::filesystem::path& path,
-            const ImageIOOptions&)
-        {
-            return compare(
-                path.extension().u8string(),
-                ".png",
-                CaseCompare::Insensitive);
-        }
 
         std::shared_ptr<IImageReader> ImagePlugin::read(
             const std::filesystem::path& path,
@@ -47,12 +37,9 @@ namespace ftk
         bool ImagePlugin::canWrite(
             const std::filesystem::path& path,
             const ImageInfo& info,
-            const ImageIOOptions&)
+            const ImageIOOptions& options)
         {
-            return compare(
-                path.extension().u8string(),
-                ".png",
-                CaseCompare::Insensitive) &&
+            return IImagePlugin::canWrite(path, info, options) &&
                 (
                     info.type == ImageType::L_U8 ||
                     info.type == ImageType::L_U16 ||
@@ -62,7 +49,7 @@ namespace ftk
                     info.type == ImageType::RGB_U16 ||
                     info.type == ImageType::RGBA_U8 ||
                     info.type == ImageType::RGBA_U16
-                    );
+                );
         }
 
         std::shared_ptr<IImageWriter> ImagePlugin::write(
