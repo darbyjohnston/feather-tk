@@ -4,35 +4,15 @@
 
 #pragma once
 
-#include "Document.h"
+#include "Settings.h"
 
-#include <ftk/UI/App.h>
+#include <ftk/UI/FileBrowser.h>
 #include <ftk/UI/Settings.h>
 
 namespace examples
 {
     namespace imageview
     {
-        //! Window settings.
-        struct WindowSettings
-        {
-            bool  settings = false;
-            float split    = .7F;
-
-            bool operator == (const WindowSettings&) const;
-            bool operator != (const WindowSettings&) const;
-        };
-
-        //! Style settings.
-        struct StyleSettings
-        {
-            float displayScale = 2.F;
-            ftk::ColorStyle colorStyle = ftk::ColorStyle::Dark;
-
-            bool operator == (const StyleSettings&) const;
-            bool operator != (const StyleSettings&) const;
-        };
-
         //! Global settings that are save to file.
         class SettingsModel : public std::enable_shared_from_this<SettingsModel>
         {
@@ -80,14 +60,9 @@ namespace examples
         private:
             std::shared_ptr<ftk::Settings> _settings;
             std::vector<std::filesystem::path> _recentFiles;
+            std::shared_ptr<ftk::FileBrowserSystem> _fileBrowserSystem;
             std::shared_ptr<ftk::ObservableValue<WindowSettings> > _window;
             std::shared_ptr<ftk::ObservableValue<StyleSettings> > _style;
         };
-
-        void to_json(nlohmann::json&, const WindowSettings&);
-        void to_json(nlohmann::json&, const StyleSettings&);
-
-        void from_json(const nlohmann::json&, WindowSettings&);
-        void from_json(const nlohmann::json&, StyleSettings&);
     }
 }

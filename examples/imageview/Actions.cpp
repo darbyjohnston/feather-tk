@@ -7,10 +7,7 @@
 #include "App.h"
 #include "DocumentModel.h"
 #include "MainWindow.h"
-
-#include <ftk/UI/FileBrowser.h>
-
-#include <ftk/Core/ImageIO.h>
+#include "SettingsModel.h"
 
 using namespace ftk;
 
@@ -77,14 +74,6 @@ namespace examples
                 {
                     auto app = appWeak.lock();
                     auto fileBrowserSystem = app->getContext()->getSystem<FileBrowserSystem>();
-                    auto ioSystem = app->getContext()->getSystem<ImageIO>();
-                    std::vector<std::string> extensions;
-                    for (const auto& plugin : ioSystem->getPlugins())
-                    {
-                        const std::vector<std::string>& extensions2 = plugin->getExtensions();
-                        extensions.insert(extensions.end(), extensions2.begin(), extensions2.end());
-                    }
-                    fileBrowserSystem->getModel()->setExtensions(extensions);
                     fileBrowserSystem->open(
                         app->getMainWindow(),
                         [appWeak](const std::filesystem::path& value)

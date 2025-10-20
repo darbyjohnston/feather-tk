@@ -7,8 +7,7 @@
 #include "App.h"
 #include "DocumentModel.h"
 #include "MainWindow.h"
-
-#include <ftk/UI/FileBrowser.h>
+#include "SettingsModel.h"
 
 using namespace ftk;
 

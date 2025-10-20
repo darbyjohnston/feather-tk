@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include "SettingsModel.h"
+#include "Settings.h"
 
 #include <ftk/UI/Action.h>
 
@@ -13,6 +13,7 @@ namespace examples
     namespace imageview
     {
         class App;
+        class Document;
         class MainWindow;
 
         //! This class provides actions that are used to populate the menus

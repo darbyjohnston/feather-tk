@@ -6,7 +6,7 @@
 
 #include "Settings.h"
 
-#include <ftk/UI/App.h>
+#include <ftk/UI/FileBrowser.h>
 #include <ftk/UI/Settings.h>
 
 namespace examples
@@ -78,6 +78,7 @@ namespace examples
         private:
             std::shared_ptr<ftk::Settings> _settings;
             std::vector<std::filesystem::path> _recentFiles;
+            std::shared_ptr<ftk::FileBrowserSystem> _fileBrowserSystem;
             std::shared_ptr<ftk::ObservableValue<WindowSettings> > _window;
             std::shared_ptr<ftk::ObservableValue<RenderSettings> > _render;
             std::shared_ptr<ftk::ObservableValue<AnimSettings> > _anim;

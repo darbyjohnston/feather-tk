@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include "SettingsModel.h"
+#include "Settings.h"
 
 #include <ftk/UI/App.h>
 #include <ftk/UI/DialogSystem.h>
@@ -20,6 +20,7 @@ namespace examples
     {
         class DocumentModel;
         class MainWindow;
+        class SettingsModel;
 
         //! Application.
         class App : public ftk::App

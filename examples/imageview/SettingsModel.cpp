@@ -4,36 +4,14 @@
 
 #include "SettingsModel.h"
 
+#include <ftk/Core/ImageIO.h>
+
 using namespace ftk;
 
 namespace examples
 {
     namespace imageview
     {
-        bool WindowSettings::operator == (const WindowSettings& other) const
-        {
-            return
-                settings == other.settings &&
-                split == other.split;
-        }
-
-        bool WindowSettings::operator != (const WindowSettings& other) const
-        {
-            return !(*this == other);
-        }
-
-        bool StyleSettings::operator == (const StyleSettings& other) const
-        {
-            return
-                displayScale == other.displayScale &&
-                colorStyle == other.colorStyle;
-        }
-
-        bool StyleSettings::operator != (const StyleSettings& other) const
-        {
-            return !(*this == other);
-        }
-
         void SettingsModel::_init(
             const std::shared_ptr<Context>& context,
             float defaultDisplayScale)
@@ -53,6 +31,26 @@ namespace examples
                 }
             }
 
+            FileBrowserOptions fileBrowserOptions;
+            _settings->getT("/FileBrowser/Options", fileBrowserOptions);
+            _fileBrowserSystem = context->getSystem<FileBrowserSystem>();
+            _fileBrowserSystem->getModel()->setOptions(fileBrowserOptions);
+            auto ioSystem = context->getSystem<ImageIO>();
+            std::vector<std::string> extensions;
+            for (const auto& plugin : ioSystem->getPlugins())
+            {
+                const std::vector<std::string>& extensions2 = plugin->getExtensions();
+                extensions.insert(extensions.end(), extensions2.begin(), extensions2.end());
+            }
+            _fileBrowserSystem->getModel()->setExtensions(extensions);
+            std::string extension;
+            if (!extensions.empty())
+            {
+                extension = extensions.front();
+            }
+            _settings->get("/FileBrowser/Extension", extension);
+            _fileBrowserSystem->getModel()->setExtension(extension);
+
             WindowSettings window;
             _settings->getT("/Window", window);
             _window = ObservableValue<WindowSettings>::create(window);
@@ -71,6 +69,14 @@ namespace examples
                 recentFiles.push_back(i);
             }
             _settings->set("/RecentFiles", recentFiles);
+
+            _settings->setT(
+                "/FileBrowser/Options",
+                _fileBrowserSystem->getModel()->getOptions());
+            _settings->set(
+                "/FileBrowser/Extension",
+                _fileBrowserSystem->getModel()->getExtension());
+
             _settings->setT("/Window", _window->get());
             _settings->setT("/Style", _style->get());
         }
@@ -122,30 +128,6 @@ namespace examples
         void SettingsModel::setStyle(const StyleSettings& value)
         {
             _style->setIfChanged(value);
-        }
-
-        void to_json(nlohmann::json& json, const WindowSettings& value)
-        {
-            json["Settings"] = value.settings;
-            json["Split"] = value.split;
-        }
-
-        void to_json(nlohmann::json& json, const StyleSettings& value)
-        {
-            json["DisplayScale"] = value.displayScale;
-            json["ColorStyle"] = value.colorStyle;
-        }
-
-        void from_json(const nlohmann::json& json, WindowSettings& value)
-        {
-            json.at("Settings").get_to(value.settings);
-            json.at("Split").get_to(value.split);
-        }
-
-        void from_json(const nlohmann::json& json, StyleSettings& value)
-        {
-            json.at("DisplayScale").get_to(value.displayScale);
-            json.at("ColorStyle").get_to(value.colorStyle);
         }
     }
 }

@@ -10,30 +10,6 @@ namespace examples
 {
     namespace textedit
     {
-        bool WindowSettings::operator == (const WindowSettings& other) const
-        {
-            return
-                settings == other.settings &&
-                split == other.split;
-        }
-
-        bool WindowSettings::operator != (const WindowSettings& other) const
-        {
-            return !(*this == other);
-        }
-
-        bool StyleSettings::operator == (const StyleSettings& other) const
-        {
-            return
-                displayScale == other.displayScale &&
-                colorStyle == other.colorStyle;
-        }
-
-        bool StyleSettings::operator != (const StyleSettings& other) const
-        {
-            return !(*this == other);
-        }
-
         void SettingsModel::_init(
             const std::shared_ptr<Context>& context,
             float defaultDisplayScale)
@@ -52,6 +28,11 @@ namespace examples
                     }
                 }
             }
+
+            FileBrowserOptions fileBrowserOptions;
+            _settings->getT("/FileBrowser/Options", fileBrowserOptions);
+            _fileBrowserSystem = context->getSystem<FileBrowserSystem>();
+            _fileBrowserSystem->getModel()->setOptions(fileBrowserOptions);
 
             TextEditOptions textEditOptions;
             _settings->getT("/TextEdit", textEditOptions);
@@ -79,6 +60,14 @@ namespace examples
                 recentFiles.push_back(i);
             }
             _settings->set("/RecentFiles", recentFiles);
+
+            _settings->setT(
+                "/FileBrowser/Options",
+                _fileBrowserSystem->getModel()->getOptions());
+            _settings->set(
+                "/FileBrowser/Extension",
+                _fileBrowserSystem->getModel()->getExtension());
+
             _settings->setT("/TextEdit", _textEditOptions->get());
             _settings->setT("/TextEditModel", _textEditModelOptions->get());
             _settings->setT("/Window", _window->get());
@@ -162,30 +151,6 @@ namespace examples
         void SettingsModel::setStyle(const StyleSettings& value)
         {
             _style->setIfChanged(value);
-        }
-
-        void to_json(nlohmann::json& json, const WindowSettings& value)
-        {
-            json["Settings"] = value.settings;
-            json["Split"] = value.split;
-        }
-
-        void to_json(nlohmann::json& json, const StyleSettings& value)
-        {
-            json["DisplayScale"] = value.displayScale;
-            json["ColorStyle"] = value.colorStyle;
-        }
-
-        void from_json(const nlohmann::json& json, WindowSettings& value)
-        {
-            json.at("Settings").get_to(value.settings);
-            json.at("Split").get_to(value.split);
-        }
-
-        void from_json(const nlohmann::json& json, StyleSettings& value)
-        {
-            json.at("DisplayScale").get_to(value.displayScale);
-            json.at("ColorStyle").get_to(value.colorStyle);
         }
     }
 }

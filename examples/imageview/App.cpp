@@ -6,9 +6,9 @@
 
 #include "DocumentModel.h"
 #include "MainWindow.h"
+#include "SettingsModel.h"
 
 #include <ftk/UI/DialogSystem.h>
-#include <ftk/UI/FileBrowser.h>
 
 using namespace ftk;
 
@@ -34,14 +34,16 @@ namespace examples
                 "Image view example",
                 { _cmdLine.paths });
 
-            // Turn off the native file dialog.
-            context->getSystem<FileBrowserSystem>()->setNativeFileDialog(false);
-
             // Create models.
             _settingsModel = SettingsModel::create(context, getDefaultDisplayScale());
             _documentModel = DocumentModel::create(context);
             _recentFilesModel = RecentFilesModel::create(context);
             _recentFilesModel->setRecent(_settingsModel->getRecentFiles());
+
+            // Initialize the file browser.
+            auto fileBrowserSystem = context->getSystem<FileBrowserSystem>();
+            fileBrowserSystem->setNativeFileDialog(false);
+            fileBrowserSystem->setRecentFilesModel(_recentFilesModel);
 
             // Create the main window.
             _mainWindow = MainWindow::create(

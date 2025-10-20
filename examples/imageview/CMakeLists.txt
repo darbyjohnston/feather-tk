@@ -7,6 +7,7 @@ set(HEADERS
     ImageView.h
     MainWindow.h
     MenuBar.h
+    Settings.h
     SettingsModel.h
     SettingsWidget.h
     StatusBar.h
@@ -21,6 +22,7 @@ set(SOURCE
     ImageView.cpp
     MainWindow.cpp
     MenuBar.cpp
+    Settings.cpp
     SettingsModel.cpp
     SettingsWidget.cpp
     StatusBar.cpp

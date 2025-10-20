@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include "SettingsModel.h"
+#include "Settings.h"
 
 #include <ftk/UI/ComboBox.h>
 #include <ftk/UI/IntEdit.h>

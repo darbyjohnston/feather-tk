@@ -4,15 +4,17 @@
 
 #pragma once
 
-#include "SettingsModel.h"
+#include "Settings.h"
 
 #include <ftk/UI/Action.h>
+#include <ftk/UI/TextEditModel.h>
 
 namespace examples
 {
     namespace textedit
     {
         class App;
+        class Document;
         class MainWindow;
 
         //! This class provides actions that are used to populate the menus

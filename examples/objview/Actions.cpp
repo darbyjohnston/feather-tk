@@ -10,8 +10,6 @@
 #include "ObjView.h"
 #include "SettingsModel.h"
 
-#include <ftk/UI/FileBrowser.h>
-
 using namespace ftk;
 
 namespace examples

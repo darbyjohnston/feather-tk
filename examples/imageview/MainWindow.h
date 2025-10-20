@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include "SettingsModel.h"
+#include "Settings.h"
 
 #include <ftk/UI/MainWindow.h>
 #include <ftk/UI/RowLayout.h>
@@ -19,6 +19,7 @@ namespace examples
         class Document;
         class DocumentTabs;
         class MenuBar;
+        class SettingsModel;
         class SettingsWidget;
         class StatusBar;
         class ToolBar;

@@ -29,6 +29,15 @@ namespace examples
                 }
             }
 
+            FileBrowserOptions fileBrowserOptions;
+            _settings->getT("/FileBrowser/Options", fileBrowserOptions);
+            _fileBrowserSystem = context->getSystem<FileBrowserSystem>();
+            _fileBrowserSystem->getModel()->setOptions(fileBrowserOptions);
+            _fileBrowserSystem->getModel()->setExtensions({ ".obj" });
+            std::string extension = ".obj";
+            _settings->get("/FileBrowser/Extension", extension);
+            _fileBrowserSystem->getModel()->setExtension(extension);
+
             WindowSettings window;
             _settings->getT("/Window", window);
             _window = ObservableValue<WindowSettings>::create(window);
@@ -55,6 +64,14 @@ namespace examples
                 recentFiles.push_back(i);
             }
             _settings->set("/RecentFiles", recentFiles);
+
+            _settings->setT(
+                "/FileBrowser/Options",
+                _fileBrowserSystem->getModel()->getOptions());
+            _settings->set(
+                "/FileBrowser/Extension",
+                _fileBrowserSystem->getModel()->getExtension());
+
             _settings->setT("/Window", _window->get());
             _settings->setT("/Render", _render->get());
             _settings->setT("/Anim", _anim->get());

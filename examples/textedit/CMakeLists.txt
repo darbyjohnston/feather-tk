@@ -6,6 +6,7 @@ set(HEADERS
     DocumentTabs.h
     MainWindow.h
     MenuBar.h
+    Settings.h
     SettingsModel.h
     SettingsWidget.h
     StatusBar.h
@@ -19,6 +20,7 @@ set(SOURCE
     DocumentTabs.cpp
     MainWindow.cpp
     MenuBar.cpp
+    Settings.cpp
     SettingsModel.cpp
     SettingsWidget.cpp
     StatusBar.cpp
