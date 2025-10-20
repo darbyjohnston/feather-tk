@@ -164,6 +164,7 @@ namespace ftk
         p.pathWidget->setParent(hLayout);
         p.splitter = Splitter::create(context, Orientation::Horizontal, vLayout);
         p.splitter->setSplit(.2F);
+        p.splitter->setBorder(false);
         p.panelScrollWidget->setParent(p.splitter);
         p.viewScrollWidget->setParent(p.splitter);
         p.fileEdit->setParent(vLayout);

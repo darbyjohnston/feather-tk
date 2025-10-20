@@ -14,7 +14,7 @@ namespace ftk
     {
         Orientation orientation = Orientation::Horizontal;
         float split = .5F;
-        SizeRole spacingRole = SizeRole::SpacingSmall;
+        bool border = true;
 
         struct SizeData
         {
@@ -78,6 +78,20 @@ namespace ftk
             return;
         p.split = value;
         _setSizeUpdate();
+        _setDrawUpdate();
+    }
+
+    bool Splitter::hasBorder() const
+    {
+        return _p->border;
+    }
+
+    void Splitter::setBorder(bool value)
+    {
+        FTK_P();
+        if (value == p.border)
+            return;
+        p.border = value;
         _setDrawUpdate();
     }
 
@@ -239,12 +253,15 @@ namespace ftk
                     p.size.g,
                     event.style->getColorRole(ColorRole::Hover));
             }
-            event.render->drawRect(
-                p.size.g2,
-                event.style->getColorRole(ColorRole::Border));
-            event.render->drawRect(
-                p.size.g3,
-                event.style->getColorRole(ColorRole::Border));
+            if (p.border)
+            {
+                event.render->drawRect(
+                    p.size.g2,
+                    event.style->getColorRole(ColorRole::Border));
+                event.render->drawRect(
+                    p.size.g3,
+                    event.style->getColorRole(ColorRole::Border));
+            }
         }
     }
 

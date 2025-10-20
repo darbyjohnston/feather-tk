@@ -37,6 +37,12 @@ namespace ftk
         //! Set the split value.
         void setSplit(float);
 
+        //! Get whether the splitter has a border.
+        bool hasBorder() const;
+
+        //! Set whether the splitter has a border.
+        void setBorder(bool);
+
         void setGeometry(const Box2I&) override;
         void sizeHintEvent(const SizeHintEvent&) override;
         void drawEvent(const Box2I&, const DrawEvent&) override;
