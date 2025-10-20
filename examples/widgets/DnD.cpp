@@ -2,16 +2,16 @@
 // Copyright (c) 2024-2025 Darby Johnston
 // All rights reserved.
 
-#include "dnd.h"
+#include "DnD.h"
 
 #include <ftk/UI/DrawUtil.h>
-#include <ftk/UI/ScrollWidget.h>
+#include <ftk/UI/RowLayout.h>
 
 #include <ftk/Core/Format.h>
 
 using namespace ftk;
 
-namespace dnd
+namespace widgets
 {
     DragAndDropData::DragAndDropData(const std::shared_ptr<DragWidget>& widget) :
         _widget(widget)
@@ -265,79 +265,52 @@ namespace dnd
         return out;
     }
 
-    void MainWindow::_init(
-        const std::shared_ptr<Context>& context,
-        const std::shared_ptr<App>& app)
+    void DnD::_init(const std::shared_ptr<Context>& context)
     {
-        ftk::MainWindow::_init(context, app, "dnd", Size2I(1280, 960));
-    }
-
-    MainWindow::~MainWindow()
-    {}
-
-    std::shared_ptr<MainWindow> MainWindow::create(
-        const std::shared_ptr<Context>& context,
-        const std::shared_ptr<App>& app)
-    {
-        auto out = std::shared_ptr<MainWindow>(new MainWindow);
-        out->_init(context, app);
-        return out;
-    }
-
-    void MainWindow::_drop(const std::vector<std::string>& value)
-    {
-        for (size_t i = 0; i < value.size(); ++i)
-        {
-            std::cout << Format("Drop {0}: {1}").arg(i).arg(value[i]).str() << std::endl;
-        }
-    }
-}
-
-FTK_MAIN()
-{
-    try
-    {
-        // Create the context and application.
-        auto context = Context::create();
-        auto app = App::create(context, argc, argv, "dnd", "Drag and drop example");
-        if (app->getExit() != 0)
-            return app->getExit();
-
-        // Create a window.
-        auto window = dnd::MainWindow::create(context, app);
+        ftk::IWidget::_init(context, "DnD", nullptr);
 
         // Create a layout.
-        auto layout = HorizontalLayout::create(context);
-        layout->setSpacingRole(SizeRole::None);
-        layout->setStretch(Stretch::Expanding);
-        window->setWidget(layout);
-        auto scrollWidget0 = ScrollWidget::create(context, ScrollType::Vertical, layout);
+        _layout = HorizontalLayout::create(context, shared_from_this());
+        _layout->setSpacingRole(SizeRole::None);
+        _layout->setStretch(Stretch::Expanding);
+        auto scrollWidget0 = ScrollWidget::create(context, ScrollType::Vertical, _layout);
         scrollWidget0->setBorder(false);
         scrollWidget0->setStretch(Stretch::Expanding);
-        auto scrollWidget1 = ScrollWidget::create(context, ScrollType::Vertical, layout);
+        auto scrollWidget1 = ScrollWidget::create(context, ScrollType::Vertical, _layout);
         scrollWidget1->setBorder(false);
         scrollWidget1->setStretch(Stretch::Expanding);
 
         // Create the drag and drop widgets.
-        auto dndContainer0 = dnd::ContainerWidget::create(context);
+        auto dndContainer0 = ContainerWidget::create(context);
         scrollWidget0->setWidget(dndContainer0);
-        auto dndContainer1 = dnd::ContainerWidget::create(context);
+        auto dndContainer1 = ContainerWidget::create(context);
         scrollWidget1->setWidget(dndContainer1);
         for (int i = 0; i < 100; ++i)
         {
-            dndContainer0->addWidget(dnd::DragWidget::create(context, i));
-            dndContainer1->addWidget(dnd::DragWidget::create(context, i));
+            dndContainer0->addWidget(DragWidget::create(context, i));
+            dndContainer1->addWidget(DragWidget::create(context, i));
         }
-
-        // Show the window and run the application.
-        window->show();
-        app->run();
     }
-    catch (const std::exception& e)
+
+    DnD::~DnD()
+    {}
+
+    std::shared_ptr<DnD> DnD::create(const std::shared_ptr<Context>& context)
     {
-        std::cout << "ERROR: " << e.what() << std::endl;
-        return 1;
+        auto out = std::shared_ptr<DnD>(new DnD);
+        out->_init(context);
+        return out;
     }
-    return 0;
-}
 
+    void DnD::setGeometry(const Box2I& value)
+    {
+        IWidget::setGeometry(value);
+        _layout->setGeometry(value);
+    }
+
+    void DnD::sizeHintEvent(const SizeHintEvent& event)
+    {
+        IWidget::sizeHintEvent(event);
+        _setSizeHint(_layout->getSizeHint());
+    }
+}

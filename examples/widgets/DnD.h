@@ -4,12 +4,13 @@
 
 #pragma once
 
-#include <ftk/UI/App.h>
 #include <ftk/UI/Label.h>
-#include <ftk/UI/MainWindow.h>
 #include <ftk/UI/RowLayout.h>
+#include <ftk/UI/ScrollWidget.h>
 
-namespace dnd
+using namespace ftk;
+
+namespace widgets
 {
     class DragWidget;
 
@@ -92,22 +93,22 @@ namespace dnd
         int _dropTarget = -1;
     };
 
-    class MainWindow : public ftk::MainWindow
+    class DnD : public ftk::IWidget
     {
     protected:
-        void _init(
-            const std::shared_ptr<ftk::Context>&,
-            const std::shared_ptr<ftk::App>&);
+        void _init(const std::shared_ptr<Context>&);
 
-        MainWindow() = default;
+        DnD() = default;
 
     public:
-        virtual ~MainWindow();
+        virtual ~DnD();
 
-        static std::shared_ptr<MainWindow> create(
-            const std::shared_ptr<ftk::Context>&,
-            const std::shared_ptr<ftk::App>&);
+        static std::shared_ptr<DnD> create(const std::shared_ptr<Context>&);
 
-        void _drop(const std::vector<std::string>&) override;
+        void setGeometry(const Box2I&) override;
+        void sizeHintEvent(const SizeHintEvent&) override;
+
+    private:
+        std::shared_ptr<ftk::HorizontalLayout> _layout;
     };
 }
