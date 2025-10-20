@@ -8,15 +8,12 @@
 
 #include <filesystem>
 
-namespace examples
+namespace objview
 {
-    namespace objview
-    {
-        //! \todo This is a simplified .obj reader, it currently only handles:
-        //! * vertices
-        //! * texture vertices
-        //! * normals
-        //! * faces
-        std::shared_ptr<ftk::TriMesh3F> read(const std::filesystem::path&);
-    }
+    //! \todo This is a simplified .obj reader, it currently only handles:
+    //! * vertices
+    //! * texture vertices
+    //! * normals
+    //! * faces
+    std::shared_ptr<ftk::TriMesh3F> read(const std::filesystem::path&);
 }

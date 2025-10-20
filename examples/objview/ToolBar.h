@@ -8,63 +8,60 @@
 #include <ftk/UI/RowLayout.h>
 #include <ftk/UI/ToolButton.h>
 
-namespace examples
+namespace objview
 {
-    namespace objview
+    class Actions;
+    class App;
+
+    //! Tool bar widget.
+    class ToolBar : public ftk::IWidget
     {
-        class Actions;
-        class App;
+    protected:
+        void _init(
+            const std::shared_ptr<ftk::Context>&,
+            const std::shared_ptr<App>&,
+            const std::shared_ptr<Actions>&,
+            const std::shared_ptr<ftk::IWidget>& parent);
 
-        //! Tool bar widget.
-        class ToolBar : public ftk::IWidget
-        {
-        protected:
-            void _init(
-                const std::shared_ptr<ftk::Context>&,
-                const std::shared_ptr<App>&,
-                const std::shared_ptr<Actions>&,
-                const std::shared_ptr<ftk::IWidget>& parent);
+        ToolBar() = default;
 
-            ToolBar() = default;
+    public:
+        virtual ~ToolBar();
 
-        public:
-            virtual ~ToolBar();
+        //! Create a new tool bar.
+        static std::shared_ptr<ToolBar> create(
+            const std::shared_ptr<ftk::Context>&,
+            const std::shared_ptr<App>&,
+            const std::shared_ptr<Actions>&,
+            const std::shared_ptr<ftk::IWidget>& parent = nullptr);
 
-            //! Create a new tool bar.
-            static std::shared_ptr<ToolBar> create(
-                const std::shared_ptr<ftk::Context>&,
-                const std::shared_ptr<App>&,
-                const std::shared_ptr<Actions>&,
-                const std::shared_ptr<ftk::IWidget>& parent = nullptr);
+        void setGeometry(const ftk::Box2I&) override;
+        void sizeHintEvent(const ftk::SizeHintEvent&) override;
 
-            void setGeometry(const ftk::Box2I&) override;
-            void sizeHintEvent(const ftk::SizeHintEvent&) override;
+    private:
+        void _createFileToolBar(
+            const std::shared_ptr<ftk::Context>&,
+            const std::shared_ptr<Actions>&);
+        void _createWindowToolBar(
+            const std::shared_ptr<ftk::Context>&,
+            const std::shared_ptr<Actions>&);
+        void _createViewToolBar(
+            const std::shared_ptr<ftk::Context>&,
+            const std::shared_ptr<Actions>&);
+        void _createObjectToolBar(
+            const std::shared_ptr<ftk::Context>&,
+            const std::shared_ptr<App>&,
+            const std::shared_ptr<Actions>&);
 
-        private:
-            void _createFileToolBar(
-                const std::shared_ptr<ftk::Context>&,
-                const std::shared_ptr<Actions>&);
-            void _createWindowToolBar(
-                const std::shared_ptr<ftk::Context>&,
-                const std::shared_ptr<Actions>&);
-            void _createViewToolBar(
-                const std::shared_ptr<ftk::Context>&,
-                const std::shared_ptr<Actions>&);
-            void _createObjectToolBar(
-                const std::shared_ptr<ftk::Context>&,
-                const std::shared_ptr<App>&,
-                const std::shared_ptr<Actions>&);
+        void _rotationUpdate();
 
-            void _rotationUpdate();
+        std::weak_ptr<ftk::IDocument> _current;
+        ftk::V3F _rotation;
 
-            std::weak_ptr<ftk::IDocument> _current;
-            ftk::V3F _rotation;
+        std::map<std::string, std::shared_ptr<ftk::ToolButton> > _buttons;
+        std::shared_ptr<ftk::HorizontalLayout> _layout;
 
-            std::map<std::string, std::shared_ptr<ftk::ToolButton> > _buttons;
-            std::shared_ptr<ftk::HorizontalLayout> _layout;
-
-            std::shared_ptr<ftk::ValueObserver<std::shared_ptr<ftk::IDocument> > > _currentObserver;
-            std::shared_ptr<ftk::ValueObserver<ftk::V3F> > _rotationObserver;
-        };
-    }
+        std::shared_ptr<ftk::ValueObserver<std::shared_ptr<ftk::IDocument> > > _currentObserver;
+        std::shared_ptr<ftk::ValueObserver<ftk::V3F> > _rotationObserver;
+    };
 }

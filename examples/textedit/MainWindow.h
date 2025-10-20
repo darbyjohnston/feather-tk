@@ -10,62 +10,59 @@
 #include <ftk/UI/RowLayout.h>
 #include <ftk/UI/Splitter.h>
 
-namespace examples
+namespace textedit
 {
-    namespace textedit
+    class Actions;
+    class App;
+    class Document;
+    class DocumentTabs;
+    class MenuBar;
+    class SettingsModel;
+    class SettingsWidget;
+    class StatusBar;
+    class ToolBar;
+
+    //! Main window.
+    class MainWindow : public ftk::MainWindow
     {
-        class Actions;
-        class App;
-        class Document;
-        class DocumentTabs;
-        class MenuBar;
-        class SettingsModel;
-        class SettingsWidget;
-        class StatusBar;
-        class ToolBar;
+    protected:
+        void _init(
+            const std::shared_ptr<ftk::Context>&,
+            const std::shared_ptr<App>&,
+            const std::string& name,
+            const ftk::Size2I&);
 
-        //! Main window.
-        class MainWindow : public ftk::MainWindow
-        {
-        protected:
-            void _init(
-                const std::shared_ptr<ftk::Context>&,
-                const std::shared_ptr<App>&,
-                const std::string& name,
-                const ftk::Size2I&);
+        MainWindow() = default;
 
-            MainWindow() = default;
+    public:
+        virtual ~MainWindow();
 
-        public:
-            virtual ~MainWindow();
+        //! Create a new window.
+        static std::shared_ptr<MainWindow> create(
+            const std::shared_ptr<ftk::Context>&,
+            const std::shared_ptr<App>&,
+            const std::string& name,
+            const ftk::Size2I&);
 
-            //! Create a new window.
-            static std::shared_ptr<MainWindow> create(
-                const std::shared_ptr<ftk::Context>&,
-                const std::shared_ptr<App>&,
-                const std::string& name,
-                const ftk::Size2I&);
+        void close() override;
 
-            void close() override;
-
-        protected:
-            void _drop(const std::vector<std::string>&);
+    protected:
+        void _drop(const std::vector<std::string>&);
  
-        private:
+    private:
 
-            std::weak_ptr<App> _app;
-            std::shared_ptr<SettingsModel> _settingsModel;
+        std::weak_ptr<App> _app;
+        std::shared_ptr<SettingsModel> _settingsModel;
 
-            std::shared_ptr<Actions> _actions;
-            std::shared_ptr<MenuBar> _menuBar;
-            std::shared_ptr<ToolBar> _toolBar;
-            std::shared_ptr<DocumentTabs> _tabs;
-            std::shared_ptr<SettingsWidget> _settingsWidget;
-            std::shared_ptr<StatusBar> _statusBar;
-            std::shared_ptr<ftk::Splitter> _splitter;
-            std::shared_ptr<ftk::VerticalLayout> _layout;
+        std::shared_ptr<Actions> _actions;
+        std::shared_ptr<MenuBar> _menuBar;
+        std::shared_ptr<ToolBar> _toolBar;
+        std::shared_ptr<DocumentTabs> _tabs;
+        std::shared_ptr<SettingsWidget> _settingsWidget;
+        std::shared_ptr<StatusBar> _statusBar;
+        std::shared_ptr<ftk::Splitter> _splitter;
+        std::shared_ptr<ftk::VerticalLayout> _layout;
 
-            std::shared_ptr<ftk::ValueObserver<WindowSettings> > _windowSettingsObserver;
-        };
-    }
+        std::shared_ptr<ftk::ValueObserver<WindowSettings> > _windowSettingsObserver;
+    };
 }

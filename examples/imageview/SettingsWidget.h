@@ -12,43 +12,40 @@
 #include <ftk/UI/ScrollWidget.h>
 #include <ftk/UI/TextEdit.h>
 
-namespace examples
+namespace imageview
 {
-    namespace imageview
+    class App;
+
+    //! Settings widget.
+    class SettingsWidget : public ftk::IWidget
     {
-        class App;
+    protected:
+        void _init(
+            const std::shared_ptr<ftk::Context>&,
+            const std::shared_ptr<App>&,
+            const std::shared_ptr<ftk::IWidget>& parent);
 
-        //! Settings widget.
-        class SettingsWidget : public ftk::IWidget
-        {
-        protected:
-            void _init(
-                const std::shared_ptr<ftk::Context>&,
-                const std::shared_ptr<App>&,
-                const std::shared_ptr<ftk::IWidget>& parent);
+        SettingsWidget() = default;
 
-            SettingsWidget() = default;
+    public:
+        virtual ~SettingsWidget();
 
-        public:
-            virtual ~SettingsWidget();
+        //! Create a new settings widget.
+        static std::shared_ptr<SettingsWidget> create(
+            const std::shared_ptr<ftk::Context>&,
+            const std::shared_ptr<App>&,
+            const std::shared_ptr<ftk::IWidget>& parent = nullptr);
 
-            //! Create a new settings widget.
-            static std::shared_ptr<SettingsWidget> create(
-                const std::shared_ptr<ftk::Context>&,
-                const std::shared_ptr<App>&,
-                const std::shared_ptr<ftk::IWidget>& parent = nullptr);
+        void setGeometry(const ftk::Box2I&) override;
+        void sizeHintEvent(const ftk::SizeHintEvent&) override;
 
-            void setGeometry(const ftk::Box2I&) override;
-            void sizeHintEvent(const ftk::SizeHintEvent&) override;
+    private:
+        std::shared_ptr<ftk::ComboBox> _colorStyleComboBox;
+        std::vector<float> _displayScales;
+        std::shared_ptr<ftk::ComboBox> _displayScaleComboBox;
+        std::shared_ptr<ftk::ScrollWidget> _scrollWidget;
+        std::shared_ptr<ftk::VerticalLayout> _layout;
 
-        private:
-            std::shared_ptr<ftk::ComboBox> _colorStyleComboBox;
-            std::vector<float> _displayScales;
-            std::shared_ptr<ftk::ComboBox> _displayScaleComboBox;
-            std::shared_ptr<ftk::ScrollWidget> _scrollWidget;
-            std::shared_ptr<ftk::VerticalLayout> _layout;
-
-            std::shared_ptr<ftk::ValueObserver<StyleSettings> > _styleSettingsObserver;
-        };
-    }
+        std::shared_ptr<ftk::ValueObserver<StyleSettings> > _styleSettingsObserver;
+    };
 }

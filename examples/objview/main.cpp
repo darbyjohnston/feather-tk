@@ -9,7 +9,7 @@ FTK_MAIN()
     try
     {
         auto context = ftk::Context::create();
-        auto app = examples::objview::App::create(context, ftk::convert(argc, argv));
+        auto app = objview::App::create(context, ftk::convert(argc, argv));
         if (app->getExit() != 0)
             return app->getExit();
         app->run();

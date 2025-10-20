@@ -12,369 +12,366 @@
 
 using namespace ftk;
 
-namespace examples
+namespace objview
 {
-    namespace objview
+    void Actions::_init(
+        const std::shared_ptr<Context>& context,
+        const std::shared_ptr<App>& app,
+        const std::shared_ptr<MainWindow>& mainWindow)
     {
-        void Actions::_init(
-            const std::shared_ptr<Context>& context,
-            const std::shared_ptr<App>& app,
-            const std::shared_ptr<MainWindow>& mainWindow)
-        {
-            // Create the actions.
-            _createFileActions(context, app);
-            _createEditActions(context, app);
-            _createWindowActions(context, app, mainWindow);
-            _createViewActions(context, app, mainWindow);
-            _createRenderActions(context, app, mainWindow);
+        // Create the actions.
+        _createFileActions(context, app);
+        _createEditActions(context, app);
+        _createWindowActions(context, app, mainWindow);
+        _createViewActions(context, app, mainWindow);
+        _createRenderActions(context, app, mainWindow);
 
-            // Observe the current document to update the state of the actions.
-            _currentObserver = ValueObserver<std::shared_ptr<IDocument> >::create(
-                app->getDocumentModel()->observeCurrent(),
-                [this](const std::shared_ptr<IDocument>& doc)
-                {
-                    const bool current = doc.get();
-                    _actions["File/Close"]->setEnabled(current);
-                    _actions["File/CloseAll"]->setEnabled(current);
-                    _actions["View/Frame"]->setEnabled(current);
-                    _actions["View/ZoomIn"]->setEnabled(current);
-                    _actions["View/ZoomOut"]->setEnabled(current);
-                    _actions["View/OrbitLeft"]->setEnabled(current);
-                    _actions["View/OrbitRight"]->setEnabled(current);
-                    _actions["View/OrbitUp"]->setEnabled(current);
-                    _actions["View/OrbitDown"]->setEnabled(current);
-                    for (const auto label : getRenderModeLabels())
-                    {
-                        const std::string key = "Render/" + label;
-                        _actions[key]->setEnabled(current);
-                    }
-                });
-        }
-
-        Actions::~Actions()
-        {}
-
-        std::shared_ptr<Actions> Actions::create(
-            const std::shared_ptr<Context>& context,
-            const std::shared_ptr<App>& app,
-            const std::shared_ptr<MainWindow>& mainWindow)
-        {
-            auto out = std::shared_ptr<Actions>(new Actions);
-            out->_init(context, app, mainWindow);
-            return out;
-        }
-
-        const std::map<std::string, std::shared_ptr<Action> > Actions::getActions() const
-        {
-            return _actions;
-        }
-
-        std::shared_ptr<Action> Actions::getAction(const std::string& name) const
-        {
-            const auto i = _actions.find(name);
-            return i != _actions.end() ? i->second : nullptr;
-        }
-
-        void Actions::_createFileActions(
-            const std::shared_ptr<Context>& context,
-            const std::shared_ptr<App>& app)
-        {
-            auto appWeak = std::weak_ptr<App>(app);
-            _actions["File/Open"] = Action::create(
-                "Open",
-                "FileOpen",
-                Key::O,
-                static_cast<int>(KeyModifier::Control),
-                [this, appWeak]
-                {
-                    auto app = appWeak.lock();
-                    auto fileBrowserSystem = app->getContext()->getSystem<FileBrowserSystem>();
-                    fileBrowserSystem->getModel()->setExtensions({ ".obj" });
-                    fileBrowserSystem->open(
-                        app->getMainWindow(),
-                        [appWeak](const std::filesystem::path& value)
-                        {
-                            if (auto app = appWeak.lock())
-                            {
-                                app->open(value);
-                            }
-                        });
-                });
-            _actions["File/Open"]->setTooltip("Open a file");
-
-            _actions["File/Close"] = Action::create(
-                "Close",
-                "FileClose",
-                Key::E,
-                static_cast<int>(KeyModifier::Control),
-                [appWeak]
-                {
-                    auto app = appWeak.lock();
-                    app->close(app->getDocumentModel()->getCurrentIndex());
-                });
-            _actions["File/Close"]->setTooltip("Close the current file");
-
-            _actions["File/CloseAll"] = Action::create(
-                "Close All",
-                "FileCloseAll",
-                Key::E,
-                static_cast<int>(KeyModifier::Shift) |
-                static_cast<int>(KeyModifier::Control),
-                [appWeak]
-                {
-                    auto app = appWeak.lock();
-                    app->closeAll();
-                });
-            _actions["File/CloseAll"]->setTooltip("Close all files");
-
-            _actions["File/Exit"] = Action::create(
-                "Exit",
-                Key::Q,
-                static_cast<int>(KeyModifier::Control),
-                [appWeak]
-                {
-                    auto app = appWeak.lock();
-                    app->exit();
-                });
-        }
-
-        void Actions::_createEditActions(
-            const std::shared_ptr<Context>& context,
-            const std::shared_ptr<App>& app)
-        {
-            auto appWeak = std::weak_ptr<App>(app);
-            _actions["Edit/Settings"] = Action::create(
-                "Settings",
-                "Settings",
-                [appWeak](bool value)
-                {
-                    auto app = appWeak.lock();
-                    auto window = app->getSettingsModel()->getWindow();
-                    window.settings = value;
-                    app->getSettingsModel()->setWindow(window);
-                });
-            _actions["Edit/Settings"]->setTooltip("Toggle the settings");
-
-            _windowSettingsObserver = ValueObserver<WindowSettings>::create(
-                app->getSettingsModel()->observeWindow(),
-                [this](const WindowSettings& value)
-                {
-                    _actions["Edit/Settings"]->setChecked(value.settings);
-                });
-        }
-
-        void Actions::_createWindowActions(
-            const std::shared_ptr<Context>& context,
-            const std::shared_ptr<App>& app,
-            const std::shared_ptr<MainWindow>& mainWindow)
-        {
-            std::weak_ptr<MainWindow> mainWindowWeak(mainWindow);
-            _actions["Window/FullScreen"] = Action::create(
-                "Full Screen",
-                "WindowFullScreen",
-                Key::U,
-                static_cast<int>(KeyModifier::Control),
-                [mainWindowWeak](bool value)
-                {
-                    if (auto mainWindow = mainWindowWeak.lock())
-                    {
-                        mainWindow->setFullScreen(value);
-                    }
-                });
-            _actions["Window/FullScreen"]->setTooltip("Toggle full screen mode");
-
-            _fullScreenObserver = ValueObserver<bool>::create(
-                mainWindow->observeFullScreen(),
-                [this](bool value)
-                {
-                    _actions["Window/FullScreen"]->setChecked(value);
-                });
-        }
-
-        void Actions::_createViewActions(
-            const std::shared_ptr<Context>& context,
-            const std::shared_ptr<App>& app,
-            const std::shared_ptr<MainWindow>& mainWindow)
-        {
-            std::weak_ptr<MainWindow> mainWindowWeak(mainWindow);
-            _actions["View/Frame"] = Action::create(
-                "Frame",
-                "ViewFrame",
-                Key::Backspace,
-                0,
-                [mainWindowWeak]
-                {
-                    if (auto mainWindow = mainWindowWeak.lock())
-                    {
-                        if (auto view = mainWindow->getCurrentView())
-                        {
-                            view->frame();
-                        }
-                    }
-                });
-            _actions["View/Frame"]->setTooltip("Frame the view");
-
-            _actions["View/ZoomIn"] = Action::create(
-                "Zoom In",
-                "ViewZoomIn",
-                Key::Equals,
-                0,
-                [mainWindowWeak]
-                {
-                    if (auto mainWindow = mainWindowWeak.lock())
-                    {
-                        if (auto view = mainWindow->getCurrentView())
-                        {
-                            view->zoomIn();
-                        }
-                    }
-                });
-            _actions["View/ZoomIn"]->setTooltip("Zoom the view in");
-
-            _actions["View/ZoomOut"] = Action::create(
-                "Zoom Out",
-                "ViewZoomOut",
-                Key::Minus,
-                0,
-                [mainWindowWeak]
-                {
-                    if (auto mainWindow = mainWindowWeak.lock())
-                    {
-                        if (auto view = mainWindow->getCurrentView())
-                        {
-                            view->zoomOut();
-                        }
-                    }
-                });
-            _actions["View/ZoomOut"]->setTooltip("Zoom the view out");
-
-            _actions["View/OrbitLeft"] = Action::create(
-                "Orbit Left",
-                "ViewLeft",
-                Key::Left,
-                0,
-                [mainWindowWeak]
-                {
-                    if (auto mainWindow = mainWindowWeak.lock())
-                    {
-                        if (auto view = mainWindow->getCurrentView())
-                        {
-                            view->orbitLeft();
-                        }
-                    }
-                });
-            _actions["View/OrbitLeft"]->setTooltip("Orbit the view left");
-
-            _actions["View/OrbitRight"] = Action::create(
-                "Orbit Right",
-                "ViewRight",
-                Key::Right,
-                0,
-                [mainWindowWeak]
-                {
-                    if (auto mainWindow = mainWindowWeak.lock())
-                    {
-                        if (auto view = mainWindow->getCurrentView())
-                        {
-                            view->orbitRight();
-                        }
-                    }
-                });
-            _actions["View/OrbitRight"]->setTooltip("Orbit the view right");
-
-            _actions["View/OrbitUp"] = Action::create(
-                "Orbit Up",
-                "ViewUp",
-                Key::Up,
-                0,
-                [mainWindowWeak]
-                {
-                    if (auto mainWindow = mainWindowWeak.lock())
-                    {
-                        if (auto view = mainWindow->getCurrentView())
-                        {
-                            view->orbitUp();
-                        }
-                    }
-                });
-            _actions["View/OrbitUp"]->setTooltip("Orbit the view up");
-
-            _actions["View/OrbitDown"] = Action::create(
-                "Orbit Down",
-                "ViewDown",
-                Key::Down,
-                0,
-                [mainWindowWeak]
-                {
-                    if (auto mainWindow = mainWindowWeak.lock())
-                    {
-                        if (auto view = mainWindow->getCurrentView())
-                        {
-                            view->orbitDown();
-                        }
-                    }
-                });
-            _actions["View/OrbitDown"]->setTooltip("Orbit the view down");
-        }
-
-        void Actions::_createRenderActions(
-            const std::shared_ptr<Context>& context,
-            const std::shared_ptr<App>& app,
-            const std::shared_ptr<MainWindow>& mainWindow)
-        {
-            std::map<RenderMode, Key> shortcuts =
+        // Observe the current document to update the state of the actions.
+        _currentObserver = ValueObserver<std::shared_ptr<IDocument> >::create(
+            app->getDocumentModel()->observeCurrent(),
+            [this](const std::shared_ptr<IDocument>& doc)
             {
-                { RenderMode::Shaded, Key::_1 },
-                { RenderMode::Flat, Key::_2 },
-                { RenderMode::Texture, Key::_3 },
-                { RenderMode::Normals, Key::_4 }
-            };
-            std::weak_ptr<App> appWeak(app);
-            for (auto e : getRenderModeEnums())
+                const bool current = doc.get();
+                _actions["File/Close"]->setEnabled(current);
+                _actions["File/CloseAll"]->setEnabled(current);
+                _actions["View/Frame"]->setEnabled(current);
+                _actions["View/ZoomIn"]->setEnabled(current);
+                _actions["View/ZoomOut"]->setEnabled(current);
+                _actions["View/OrbitLeft"]->setEnabled(current);
+                _actions["View/OrbitRight"]->setEnabled(current);
+                _actions["View/OrbitUp"]->setEnabled(current);
+                _actions["View/OrbitDown"]->setEnabled(current);
+                for (const auto label : getRenderModeLabels())
+                {
+                    const std::string key = "Render/" + label;
+                    _actions[key]->setEnabled(current);
+                }
+            });
+    }
+
+    Actions::~Actions()
+    {}
+
+    std::shared_ptr<Actions> Actions::create(
+        const std::shared_ptr<Context>& context,
+        const std::shared_ptr<App>& app,
+        const std::shared_ptr<MainWindow>& mainWindow)
+    {
+        auto out = std::shared_ptr<Actions>(new Actions);
+        out->_init(context, app, mainWindow);
+        return out;
+    }
+
+    const std::map<std::string, std::shared_ptr<Action> > Actions::getActions() const
+    {
+        return _actions;
+    }
+
+    std::shared_ptr<Action> Actions::getAction(const std::string& name) const
+    {
+        const auto i = _actions.find(name);
+        return i != _actions.end() ? i->second : nullptr;
+    }
+
+    void Actions::_createFileActions(
+        const std::shared_ptr<Context>& context,
+        const std::shared_ptr<App>& app)
+    {
+        auto appWeak = std::weak_ptr<App>(app);
+        _actions["File/Open"] = Action::create(
+            "Open",
+            "FileOpen",
+            Key::O,
+            static_cast<int>(KeyModifier::Control),
+            [this, appWeak]
             {
-                const std::string label = getLabel(e);
-                const std::string key = "Render/" + label;
-                _actions[key] = Action::create(
-                    label,
-                    shortcuts[e],
-                    0,
-                    [appWeak, e](bool value)
+                auto app = appWeak.lock();
+                auto fileBrowserSystem = app->getContext()->getSystem<FileBrowserSystem>();
+                fileBrowserSystem->getModel()->setExtensions({ ".obj" });
+                fileBrowserSystem->open(
+                    app->getMainWindow(),
+                    [appWeak](const std::filesystem::path& value)
                     {
                         if (auto app = appWeak.lock())
                         {
-                            auto render = app->getSettingsModel()->getRender();
-                            render.mode = e;
-                            app->getSettingsModel()->setRender(render);
+                            app->open(value);
                         }
                     });
-                _actions[key]->setTooltip(label);
-                _renderModeActions[e] = _actions[key];
-            }
+            });
+        _actions["File/Open"]->setTooltip("Open a file");
 
-            _actions["Render/Cull"] = Action::create(
-                "Cull",
-                [appWeak](bool value)
+        _actions["File/Close"] = Action::create(
+            "Close",
+            "FileClose",
+            Key::E,
+            static_cast<int>(KeyModifier::Control),
+            [appWeak]
+            {
+                auto app = appWeak.lock();
+                app->close(app->getDocumentModel()->getCurrentIndex());
+            });
+        _actions["File/Close"]->setTooltip("Close the current file");
+
+        _actions["File/CloseAll"] = Action::create(
+            "Close All",
+            "FileCloseAll",
+            Key::E,
+            static_cast<int>(KeyModifier::Shift) |
+            static_cast<int>(KeyModifier::Control),
+            [appWeak]
+            {
+                auto app = appWeak.lock();
+                app->closeAll();
+            });
+        _actions["File/CloseAll"]->setTooltip("Close all files");
+
+        _actions["File/Exit"] = Action::create(
+            "Exit",
+            Key::Q,
+            static_cast<int>(KeyModifier::Control),
+            [appWeak]
+            {
+                auto app = appWeak.lock();
+                app->exit();
+            });
+    }
+
+    void Actions::_createEditActions(
+        const std::shared_ptr<Context>& context,
+        const std::shared_ptr<App>& app)
+    {
+        auto appWeak = std::weak_ptr<App>(app);
+        _actions["Edit/Settings"] = Action::create(
+            "Settings",
+            "Settings",
+            [appWeak](bool value)
+            {
+                auto app = appWeak.lock();
+                auto window = app->getSettingsModel()->getWindow();
+                window.settings = value;
+                app->getSettingsModel()->setWindow(window);
+            });
+        _actions["Edit/Settings"]->setTooltip("Toggle the settings");
+
+        _windowSettingsObserver = ValueObserver<WindowSettings>::create(
+            app->getSettingsModel()->observeWindow(),
+            [this](const WindowSettings& value)
+            {
+                _actions["Edit/Settings"]->setChecked(value.settings);
+            });
+    }
+
+    void Actions::_createWindowActions(
+        const std::shared_ptr<Context>& context,
+        const std::shared_ptr<App>& app,
+        const std::shared_ptr<MainWindow>& mainWindow)
+    {
+        std::weak_ptr<MainWindow> mainWindowWeak(mainWindow);
+        _actions["Window/FullScreen"] = Action::create(
+            "Full Screen",
+            "WindowFullScreen",
+            Key::U,
+            static_cast<int>(KeyModifier::Control),
+            [mainWindowWeak](bool value)
+            {
+                if (auto mainWindow = mainWindowWeak.lock())
+                {
+                    mainWindow->setFullScreen(value);
+                }
+            });
+        _actions["Window/FullScreen"]->setTooltip("Toggle full screen mode");
+
+        _fullScreenObserver = ValueObserver<bool>::create(
+            mainWindow->observeFullScreen(),
+            [this](bool value)
+            {
+                _actions["Window/FullScreen"]->setChecked(value);
+            });
+    }
+
+    void Actions::_createViewActions(
+        const std::shared_ptr<Context>& context,
+        const std::shared_ptr<App>& app,
+        const std::shared_ptr<MainWindow>& mainWindow)
+    {
+        std::weak_ptr<MainWindow> mainWindowWeak(mainWindow);
+        _actions["View/Frame"] = Action::create(
+            "Frame",
+            "ViewFrame",
+            Key::Backspace,
+            0,
+            [mainWindowWeak]
+            {
+                if (auto mainWindow = mainWindowWeak.lock())
+                {
+                    if (auto view = mainWindow->getCurrentView())
+                    {
+                        view->frame();
+                    }
+                }
+            });
+        _actions["View/Frame"]->setTooltip("Frame the view");
+
+        _actions["View/ZoomIn"] = Action::create(
+            "Zoom In",
+            "ViewZoomIn",
+            Key::Equals,
+            0,
+            [mainWindowWeak]
+            {
+                if (auto mainWindow = mainWindowWeak.lock())
+                {
+                    if (auto view = mainWindow->getCurrentView())
+                    {
+                        view->zoomIn();
+                    }
+                }
+            });
+        _actions["View/ZoomIn"]->setTooltip("Zoom the view in");
+
+        _actions["View/ZoomOut"] = Action::create(
+            "Zoom Out",
+            "ViewZoomOut",
+            Key::Minus,
+            0,
+            [mainWindowWeak]
+            {
+                if (auto mainWindow = mainWindowWeak.lock())
+                {
+                    if (auto view = mainWindow->getCurrentView())
+                    {
+                        view->zoomOut();
+                    }
+                }
+            });
+        _actions["View/ZoomOut"]->setTooltip("Zoom the view out");
+
+        _actions["View/OrbitLeft"] = Action::create(
+            "Orbit Left",
+            "ViewLeft",
+            Key::Left,
+            0,
+            [mainWindowWeak]
+            {
+                if (auto mainWindow = mainWindowWeak.lock())
+                {
+                    if (auto view = mainWindow->getCurrentView())
+                    {
+                        view->orbitLeft();
+                    }
+                }
+            });
+        _actions["View/OrbitLeft"]->setTooltip("Orbit the view left");
+
+        _actions["View/OrbitRight"] = Action::create(
+            "Orbit Right",
+            "ViewRight",
+            Key::Right,
+            0,
+            [mainWindowWeak]
+            {
+                if (auto mainWindow = mainWindowWeak.lock())
+                {
+                    if (auto view = mainWindow->getCurrentView())
+                    {
+                        view->orbitRight();
+                    }
+                }
+            });
+        _actions["View/OrbitRight"]->setTooltip("Orbit the view right");
+
+        _actions["View/OrbitUp"] = Action::create(
+            "Orbit Up",
+            "ViewUp",
+            Key::Up,
+            0,
+            [mainWindowWeak]
+            {
+                if (auto mainWindow = mainWindowWeak.lock())
+                {
+                    if (auto view = mainWindow->getCurrentView())
+                    {
+                        view->orbitUp();
+                    }
+                }
+            });
+        _actions["View/OrbitUp"]->setTooltip("Orbit the view up");
+
+        _actions["View/OrbitDown"] = Action::create(
+            "Orbit Down",
+            "ViewDown",
+            Key::Down,
+            0,
+            [mainWindowWeak]
+            {
+                if (auto mainWindow = mainWindowWeak.lock())
+                {
+                    if (auto view = mainWindow->getCurrentView())
+                    {
+                        view->orbitDown();
+                    }
+                }
+            });
+        _actions["View/OrbitDown"]->setTooltip("Orbit the view down");
+    }
+
+    void Actions::_createRenderActions(
+        const std::shared_ptr<Context>& context,
+        const std::shared_ptr<App>& app,
+        const std::shared_ptr<MainWindow>& mainWindow)
+    {
+        std::map<RenderMode, Key> shortcuts =
+        {
+            { RenderMode::Shaded, Key::_1 },
+            { RenderMode::Flat, Key::_2 },
+            { RenderMode::Texture, Key::_3 },
+            { RenderMode::Normals, Key::_4 }
+        };
+        std::weak_ptr<App> appWeak(app);
+        for (auto e : getRenderModeEnums())
+        {
+            const std::string label = getLabel(e);
+            const std::string key = "Render/" + label;
+            _actions[key] = Action::create(
+                label,
+                shortcuts[e],
+                0,
+                [appWeak, e](bool value)
                 {
                     if (auto app = appWeak.lock())
                     {
                         auto render = app->getSettingsModel()->getRender();
-                        render.cull = value;
+                        render.mode = e;
                         app->getSettingsModel()->setRender(render);
                     }
                 });
-            _actions["Render/Cull"]->setTooltip("Cull back-facing triangles");
-
-            _renderSettingsObserver = ValueObserver<RenderSettings>::create(
-                app->getSettingsModel()->observeRender(),
-                [this](const RenderSettings& value)
-                {
-                    for (const auto e : getRenderModeEnums())
-                    {
-                        const std::string key = "Render/" + getLabel(e);
-                        _actions[key]->setChecked(e == value.mode);
-                    }
-                    _actions["Render/Cull"]->setChecked(value.cull);
-                });
+            _actions[key]->setTooltip(label);
+            _renderModeActions[e] = _actions[key];
         }
+
+        _actions["Render/Cull"] = Action::create(
+            "Cull",
+            [appWeak](bool value)
+            {
+                if (auto app = appWeak.lock())
+                {
+                    auto render = app->getSettingsModel()->getRender();
+                    render.cull = value;
+                    app->getSettingsModel()->setRender(render);
+                }
+            });
+        _actions["Render/Cull"]->setTooltip("Cull back-facing triangles");
+
+        _renderSettingsObserver = ValueObserver<RenderSettings>::create(
+            app->getSettingsModel()->observeRender(),
+            [this](const RenderSettings& value)
+            {
+                for (const auto e : getRenderModeEnums())
+                {
+                    const std::string key = "Render/" + getLabel(e);
+                    _actions[key]->setChecked(e == value.mode);
+                }
+                _actions["Render/Cull"]->setChecked(value.cull);
+            });
     }
 }

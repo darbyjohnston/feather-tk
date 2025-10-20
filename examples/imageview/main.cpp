@@ -9,7 +9,7 @@ FTK_MAIN()
     try
     {
         auto context = ftk::Context::create();
-        auto app = examples::imageview::App::create(context, ftk::convert(argc, argv));
+        auto app = imageview::App::create(context, ftk::convert(argc, argv));
         if (app->getExit() != 0)
             return app->getExit();
         app->run();

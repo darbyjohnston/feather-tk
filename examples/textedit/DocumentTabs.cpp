@@ -10,166 +10,163 @@
 
 using namespace ftk;
 
-namespace examples
+namespace textedit
 {
-    namespace textedit
+    void DocumentTabs::_init(
+        const std::shared_ptr<Context>& context,
+        const std::shared_ptr<App>& app,
+        const std::shared_ptr<IWidget>& parent)
     {
-        void DocumentTabs::_init(
-            const std::shared_ptr<Context>& context,
-            const std::shared_ptr<App>& app,
-            const std::shared_ptr<IWidget>& parent)
-        {
-            IWidget::_init(context, "examples::textedit::DocumentTabs", parent);
+        IWidget::_init(context, "examples::textedit::DocumentTabs", parent);
 
-            setStretch(Stretch::Expanding);
+        setStretch(Stretch::Expanding);
 
-            _tabWidget = TabWidget::create(context, shared_from_this());
-            _tabWidget->setTabsClosable(true);
+        _tabWidget = TabWidget::create(context, shared_from_this());
+        _tabWidget->setTabsClosable(true);
 
-            // Set tab callbacks.
-            auto appWeak = std::weak_ptr<App>(app);
-            _tabWidget->setCurrentTabCallback(
-                [appWeak](int index)
+        // Set tab callbacks.
+        auto appWeak = std::weak_ptr<App>(app);
+        _tabWidget->setCurrentTabCallback(
+            [appWeak](int index)
+            {
+                auto app = appWeak.lock();
+                app->getDocumentModel()->setCurrentIndex(index);
+            });
+        _tabWidget->setTabCloseCallback(
+            [appWeak](int index)
+            {
+                auto app = appWeak.lock();
+                app->close(index);
+            });
+
+        // Observe when documents are added.
+        _addObserver = ftk::ValueObserver<std::weak_ptr<IDocument> >::create(
+            app->getDocumentModel()->observeAdd(),
+            [this, appWeak](const std::weak_ptr<IDocument>& idoc)
+            {
+                if (auto doc = std::dynamic_pointer_cast<Document>(idoc.lock()))
                 {
+                    // Create a new text editor.
+                    auto context = getContext();
                     auto app = appWeak.lock();
-                    app->getDocumentModel()->setCurrentIndex(index);
-                });
-            _tabWidget->setTabCloseCallback(
-                [appWeak](int index)
-                {
-                    auto app = appWeak.lock();
-                    app->close(index);
-                });
+                    auto textEdit = TextEdit::create(context, doc->getModel());
+                    textEdit->setOptions(app->getSettingsModel()->getTextEditOptions());
+                    textEdit->getModel()->setOptions(app->getSettingsModel()->getTextEditModelOptions());
+                    textEdit->setMarginRole(SizeRole::MarginSmall);
+                    _textEdits[doc] = textEdit;
+                    _tabWidget->addTab(std::string(), textEdit);
+                    textEdit->takeKeyFocus();
 
-            // Observe when documents are added.
-            _addObserver = ftk::ValueObserver<std::weak_ptr<IDocument> >::create(
-                app->getDocumentModel()->observeAdd(),
-                [this, appWeak](const std::weak_ptr<IDocument>& idoc)
-                {
-                    if (auto doc = std::dynamic_pointer_cast<Document>(idoc.lock()))
-                    {
-                        // Create a new text editor.
-                        auto context = getContext();
-                        auto app = appWeak.lock();
-                        auto textEdit = TextEdit::create(context, doc->getModel());
-                        textEdit->setOptions(app->getSettingsModel()->getTextEditOptions());
-                        textEdit->getModel()->setOptions(app->getSettingsModel()->getTextEditModelOptions());
-                        textEdit->setMarginRole(SizeRole::MarginSmall);
-                        _textEdits[doc] = textEdit;
-                        _tabWidget->addTab(std::string(), textEdit);
-                        textEdit->takeKeyFocus();
-
-                        // Observe the document to update the tab text and tooltip.
-                        _nameObservers[doc] = ValueObserver<std::string>::create(
-                            doc->observeName(),
-                            [this, textEdit](const std::string& value)
-                            {
-                                _tabWidget->setTabText(textEdit, value);
-                            });
-                        _tooltipObservers[doc] = ValueObserver<std::string>::create(
-                            doc->observeTooltip(),
-                            [this, textEdit](const std::string& value)
-                            {
-                                _tabWidget->setTabTooltip(textEdit, value);
-                            });
-                    }
-                });
-
-            // Observe when documents are closed.
-            _closeObserver = ftk::ValueObserver<std::weak_ptr<IDocument> >::create(
-                app->getDocumentModel()->observeClose(),
-                [this](const std::weak_ptr<IDocument>& idoc)
-                {
-                    if (auto doc = std::dynamic_pointer_cast<Document>(idoc.lock()))
-                    {
-                        // Remove the text editor.
-                        auto i = _textEdits.find(doc);
-                        if (i != _textEdits.end())
+                    // Observe the document to update the tab text and tooltip.
+                    _nameObservers[doc] = ValueObserver<std::string>::create(
+                        doc->observeName(),
+                        [this, textEdit](const std::string& value)
                         {
-                            _tabWidget->removeTab(i->second);
-                            _textEdits.erase(i);
-                        }
-
-                        // Remove the observers.
-                        auto j = _nameObservers.find(doc);
-                        if (j != _nameObservers.end())
+                            _tabWidget->setTabText(textEdit, value);
+                        });
+                    _tooltipObservers[doc] = ValueObserver<std::string>::create(
+                        doc->observeTooltip(),
+                        [this, textEdit](const std::string& value)
                         {
-                            _nameObservers.erase(j);
-                        }
-                        auto k = _tooltipObservers.find(doc);
-                        if (k != _tooltipObservers.end())
-                        {
-                            _tooltipObservers.erase(k);
-                        }
-                    }
-                });
+                            _tabWidget->setTabTooltip(textEdit, value);
+                        });
+                }
+            });
 
-            // Observe when all the documents are closed.
-            _clearObserver = ftk::ValueObserver<bool>::create(
-                app->getDocumentModel()->observeCloseAll(),
-                [this](bool value)
+        // Observe when documents are closed.
+        _closeObserver = ftk::ValueObserver<std::weak_ptr<IDocument> >::create(
+            app->getDocumentModel()->observeClose(),
+            [this](const std::weak_ptr<IDocument>& idoc)
+            {
+                if (auto doc = std::dynamic_pointer_cast<Document>(idoc.lock()))
                 {
-                    if (value)
+                    // Remove the text editor.
+                    auto i = _textEdits.find(doc);
+                    if (i != _textEdits.end())
                     {
-                        _textEdits.clear();
-                        _tabWidget->clearTabs();
-                        _nameObservers.clear();
-                        _tooltipObservers.clear();
+                        _tabWidget->removeTab(i->second);
+                        _textEdits.erase(i);
                     }
-                });
 
-            // Observe the current document and update the current tab.
-            _currentObserver = ftk::ValueObserver<int>::create(
-                app->getDocumentModel()->observeCurrentIndex(),
-                [this, appWeak](int index)
-                {
-                    _tabWidget->setCurrentTab(index);
-                });
-
-            // Observe text editor options.
-            _textEditOptionsObserver = ValueObserver<TextEditOptions>::create(
-                app->getSettingsModel()->observeTextEditOptions(),
-                [this](const TextEditOptions& value)
-                {
-                    for (auto i : _textEdits)
+                    // Remove the observers.
+                    auto j = _nameObservers.find(doc);
+                    if (j != _nameObservers.end())
                     {
-                        i.second->setOptions(value);
+                        _nameObservers.erase(j);
                     }
-                });
-            _textEditModelOptionsObserver = ValueObserver<TextEditModelOptions>::create(
-                app->getSettingsModel()->observeTextEditModelOptions(),
-                [this](const TextEditModelOptions& value)
-                {
-                    for (auto i : _textEdits)
+                    auto k = _tooltipObservers.find(doc);
+                    if (k != _tooltipObservers.end())
                     {
-                        i.second->getModel()->setOptions(value);
+                        _tooltipObservers.erase(k);
                     }
-                });
-        }
+                }
+            });
 
-        DocumentTabs::~DocumentTabs()
-        {}
+        // Observe when all the documents are closed.
+        _clearObserver = ftk::ValueObserver<bool>::create(
+            app->getDocumentModel()->observeCloseAll(),
+            [this](bool value)
+            {
+                if (value)
+                {
+                    _textEdits.clear();
+                    _tabWidget->clearTabs();
+                    _nameObservers.clear();
+                    _tooltipObservers.clear();
+                }
+            });
 
-        std::shared_ptr<DocumentTabs> DocumentTabs::create(
-            const std::shared_ptr<Context>& context,
-            const std::shared_ptr<App>& app,
-            const std::shared_ptr<IWidget>& parent)
-        {
-            auto out = std::shared_ptr<DocumentTabs>(new DocumentTabs);
-            out->_init(context, app, parent);
-            return out;
-        }
+        // Observe the current document and update the current tab.
+        _currentObserver = ftk::ValueObserver<int>::create(
+            app->getDocumentModel()->observeCurrentIndex(),
+            [this, appWeak](int index)
+            {
+                _tabWidget->setCurrentTab(index);
+            });
 
-        void DocumentTabs::setGeometry(const Box2I& value)
-        {
-            IWidget::setGeometry(value);
-            _tabWidget->setGeometry(value);
-        }
+        // Observe text editor options.
+        _textEditOptionsObserver = ValueObserver<TextEditOptions>::create(
+            app->getSettingsModel()->observeTextEditOptions(),
+            [this](const TextEditOptions& value)
+            {
+                for (auto i : _textEdits)
+                {
+                    i.second->setOptions(value);
+                }
+            });
+        _textEditModelOptionsObserver = ValueObserver<TextEditModelOptions>::create(
+            app->getSettingsModel()->observeTextEditModelOptions(),
+            [this](const TextEditModelOptions& value)
+            {
+                for (auto i : _textEdits)
+                {
+                    i.second->getModel()->setOptions(value);
+                }
+            });
+    }
 
-        void DocumentTabs::sizeHintEvent(const SizeHintEvent& event)
-        {
-            IWidget::sizeHintEvent(event);
-            _setSizeHint(_tabWidget->getSizeHint());
-        }
+    DocumentTabs::~DocumentTabs()
+    {}
+
+    std::shared_ptr<DocumentTabs> DocumentTabs::create(
+        const std::shared_ptr<Context>& context,
+        const std::shared_ptr<App>& app,
+        const std::shared_ptr<IWidget>& parent)
+    {
+        auto out = std::shared_ptr<DocumentTabs>(new DocumentTabs);
+        out->_init(context, app, parent);
+        return out;
+    }
+
+    void DocumentTabs::setGeometry(const Box2I& value)
+    {
+        IWidget::setGeometry(value);
+        _tabWidget->setGeometry(value);
+    }
+
+    void DocumentTabs::sizeHintEvent(const SizeHintEvent& event)
+    {
+        IWidget::sizeHintEvent(event);
+        _setSizeHint(_tabWidget->getSizeHint());
     }
 }

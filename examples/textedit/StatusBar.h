@@ -9,42 +9,39 @@
 #include <ftk/UI/RowLayout.h>
 #include <ftk/UI/TextEditModel.h>
 
-namespace examples
+namespace textedit
 {
-    namespace textedit
+    class App;
+
+    //! Status bar widget.
+    class StatusBar : public ftk::IWidget
     {
-        class App;
+    protected:
+        void _init(
+            const std::shared_ptr<ftk::Context>&,
+            const std::shared_ptr<App>&,
+            const std::shared_ptr<ftk::IWidget>& parent);
 
-        //! Status bar widget.
-        class StatusBar : public ftk::IWidget
-        {
-        protected:
-            void _init(
-                const std::shared_ptr<ftk::Context>&,
-                const std::shared_ptr<App>&,
-                const std::shared_ptr<ftk::IWidget>& parent);
+        StatusBar() = default;
 
-            StatusBar() = default;
+    public:
+        virtual ~StatusBar();
 
-        public:
-            virtual ~StatusBar();
+        //! Create a new widget.
+        static std::shared_ptr<StatusBar> create(
+            const std::shared_ptr<ftk::Context>&,
+            const std::shared_ptr<App>&,
+            const std::shared_ptr<ftk::IWidget>& parent = nullptr);
 
-            //! Create a new widget.
-            static std::shared_ptr<StatusBar> create(
-                const std::shared_ptr<ftk::Context>&,
-                const std::shared_ptr<App>&,
-                const std::shared_ptr<ftk::IWidget>& parent = nullptr);
+        void setGeometry(const ftk::Box2I&) override;
+        void sizeHintEvent(const ftk::SizeHintEvent&) override;
 
-            void setGeometry(const ftk::Box2I&) override;
-            void sizeHintEvent(const ftk::SizeHintEvent&) override;
+    private:
+        std::map<std::string, std::shared_ptr<ftk::Label> > _labels;
+        std::shared_ptr<ftk::HorizontalLayout> _layout;
 
-        private:
-            std::map<std::string, std::shared_ptr<ftk::Label> > _labels;
-            std::shared_ptr<ftk::HorizontalLayout> _layout;
-
-            std::shared_ptr<ftk::ValueObserver<std::shared_ptr<ftk::IDocument> > > _currentObserver;
-            std::shared_ptr<ftk::ListObserver<std::string> > _textObserver;
-            std::shared_ptr<ftk::ValueObserver<ftk::TextEditPos> > _cursorObserver;
-        };
-    }
+        std::shared_ptr<ftk::ValueObserver<std::shared_ptr<ftk::IDocument> > > _currentObserver;
+        std::shared_ptr<ftk::ListObserver<std::string> > _textObserver;
+        std::shared_ptr<ftk::ValueObserver<ftk::TextEditPos> > _cursorObserver;
+    };
 }

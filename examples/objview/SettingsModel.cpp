@@ -6,155 +6,152 @@
 
 using namespace ftk;
 
-namespace examples
+namespace objview
 {
-    namespace objview
+    void SettingsModel::_init(
+        const std::shared_ptr<Context>& context,
+        float defaultDisplayScale)
     {
-        void SettingsModel::_init(
-            const std::shared_ptr<Context>& context,
-            float defaultDisplayScale)
-        {
-            _settings = Settings::create(context, getSettingsPath("feather-tk", "objview.json"));
+        _settings = Settings::create(context, getSettingsPath("feather-tk", "objview.json"));
 
-            nlohmann::json recentFiles;
-            _settings->get("/RecentFiles", recentFiles);
-            if (recentFiles.is_array())
+        nlohmann::json recentFiles;
+        _settings->get("/RecentFiles", recentFiles);
+        if (recentFiles.is_array())
+        {
+            for (const auto& i : recentFiles)
             {
-                for (const auto& i : recentFiles)
+                if (i.is_string())
                 {
-                    if (i.is_string())
-                    {
-                        _recentFiles.push_back(i.get<std::string>());
-                    }
+                    _recentFiles.push_back(i.get<std::string>());
                 }
             }
-
-            FileBrowserOptions fileBrowserOptions;
-            _settings->getT("/FileBrowser/Options", fileBrowserOptions);
-            _fileBrowserSystem = context->getSystem<FileBrowserSystem>();
-            _fileBrowserSystem->getModel()->setOptions(fileBrowserOptions);
-            _fileBrowserSystem->getModel()->setExtensions({ ".obj" });
-            std::string extension = ".obj";
-            _settings->get("/FileBrowser/Extension", extension);
-            _fileBrowserSystem->getModel()->setExtension(extension);
-
-            WindowSettings window;
-            _settings->getT("/Window", window);
-            _window = ObservableValue<WindowSettings>::create(window);
-
-            RenderSettings render;
-            _settings->getT("/Render", render);
-            _render = ObservableValue<RenderSettings>::create(render);
-
-            AnimSettings anim;
-            _settings->getT("/Anim", anim);
-            _anim = ObservableValue<AnimSettings>::create(anim);
-
-            StyleSettings style;
-            style.displayScale = defaultDisplayScale;
-            _settings->getT("/Style", style);
-            _style = ObservableValue<StyleSettings>::create(style);
         }
 
-        SettingsModel::~SettingsModel()
+        FileBrowserOptions fileBrowserOptions;
+        _settings->getT("/FileBrowser/Options", fileBrowserOptions);
+        _fileBrowserSystem = context->getSystem<FileBrowserSystem>();
+        _fileBrowserSystem->getModel()->setOptions(fileBrowserOptions);
+        _fileBrowserSystem->getModel()->setExtensions({ ".obj" });
+        std::string extension = ".obj";
+        _settings->get("/FileBrowser/Extension", extension);
+        _fileBrowserSystem->getModel()->setExtension(extension);
+
+        WindowSettings window;
+        _settings->getT("/Window", window);
+        _window = ObservableValue<WindowSettings>::create(window);
+
+        RenderSettings render;
+        _settings->getT("/Render", render);
+        _render = ObservableValue<RenderSettings>::create(render);
+
+        AnimSettings anim;
+        _settings->getT("/Anim", anim);
+        _anim = ObservableValue<AnimSettings>::create(anim);
+
+        StyleSettings style;
+        style.displayScale = defaultDisplayScale;
+        _settings->getT("/Style", style);
+        _style = ObservableValue<StyleSettings>::create(style);
+    }
+
+    SettingsModel::~SettingsModel()
+    {
+        nlohmann::json recentFiles;
+        for (const auto& i : _recentFiles)
         {
-            nlohmann::json recentFiles;
-            for (const auto& i : _recentFiles)
-            {
-                recentFiles.push_back(i);
-            }
-            _settings->set("/RecentFiles", recentFiles);
-
-            _settings->setT(
-                "/FileBrowser/Options",
-                _fileBrowserSystem->getModel()->getOptions());
-            _settings->set(
-                "/FileBrowser/Extension",
-                _fileBrowserSystem->getModel()->getExtension());
-
-            _settings->setT("/Window", _window->get());
-            _settings->setT("/Render", _render->get());
-            _settings->setT("/Anim", _anim->get());
-            _settings->setT("/Style", _style->get());
+            recentFiles.push_back(i);
         }
+        _settings->set("/RecentFiles", recentFiles);
 
-        std::shared_ptr<SettingsModel> SettingsModel::create(
-            const std::shared_ptr<Context>& context,
-            float defaultDisplayScale)
-        {
-            auto out = std::shared_ptr<SettingsModel>(new SettingsModel);
-            out->_init(context, defaultDisplayScale);
-            return out;
-        }
+        _settings->setT(
+            "/FileBrowser/Options",
+            _fileBrowserSystem->getModel()->getOptions());
+        _settings->set(
+            "/FileBrowser/Extension",
+            _fileBrowserSystem->getModel()->getExtension());
 
-        const std::vector<std::filesystem::path>& SettingsModel::getRecentFiles() const
-        {
-            return _recentFiles;
-        }
+        _settings->setT("/Window", _window->get());
+        _settings->setT("/Render", _render->get());
+        _settings->setT("/Anim", _anim->get());
+        _settings->setT("/Style", _style->get());
+    }
 
-        void SettingsModel::setRecentFiles(const std::vector<std::filesystem::path>& value)
-        {
-            _recentFiles = value;
-        }
+    std::shared_ptr<SettingsModel> SettingsModel::create(
+        const std::shared_ptr<Context>& context,
+        float defaultDisplayScale)
+    {
+        auto out = std::shared_ptr<SettingsModel>(new SettingsModel);
+        out->_init(context, defaultDisplayScale);
+        return out;
+    }
 
-        const WindowSettings& SettingsModel::getWindow() const
-        {
-            return _window->get();
-        }
+    const std::vector<std::filesystem::path>& SettingsModel::getRecentFiles() const
+    {
+        return _recentFiles;
+    }
 
-        std::shared_ptr<IObservableValue<WindowSettings> > SettingsModel::observeWindow() const
-        {
-            return _window;
-        }
+    void SettingsModel::setRecentFiles(const std::vector<std::filesystem::path>& value)
+    {
+        _recentFiles = value;
+    }
 
-        void SettingsModel::setWindow(const WindowSettings& value)
-        {
-            _window->setIfChanged(value);
-        }
+    const WindowSettings& SettingsModel::getWindow() const
+    {
+        return _window->get();
+    }
 
-        const RenderSettings& SettingsModel::getRender() const
-        {
-            return _render->get();
-        }
+    std::shared_ptr<IObservableValue<WindowSettings> > SettingsModel::observeWindow() const
+    {
+        return _window;
+    }
 
-        std::shared_ptr<IObservableValue<RenderSettings> > SettingsModel::observeRender() const
-        {
-            return _render;
-        }
+    void SettingsModel::setWindow(const WindowSettings& value)
+    {
+        _window->setIfChanged(value);
+    }
 
-        void SettingsModel::setRender(const RenderSettings& value)
-        {
-            _render->setIfChanged(value);
-        }
+    const RenderSettings& SettingsModel::getRender() const
+    {
+        return _render->get();
+    }
 
-        const AnimSettings& SettingsModel::getAnim() const
-        {
-            return _anim->get();
-        }
+    std::shared_ptr<IObservableValue<RenderSettings> > SettingsModel::observeRender() const
+    {
+        return _render;
+    }
 
-        std::shared_ptr<IObservableValue<AnimSettings> > SettingsModel::observeAnim() const
-        {
-            return _anim;
-        }
+    void SettingsModel::setRender(const RenderSettings& value)
+    {
+        _render->setIfChanged(value);
+    }
 
-        void SettingsModel::setAnim(const AnimSettings& value)
-        {
-            _anim->setIfChanged(value);
-        }
+    const AnimSettings& SettingsModel::getAnim() const
+    {
+        return _anim->get();
+    }
 
-        const StyleSettings& SettingsModel::getStyle() const
-        {
-            return _style->get();
-        }
+    std::shared_ptr<IObservableValue<AnimSettings> > SettingsModel::observeAnim() const
+    {
+        return _anim;
+    }
 
-        std::shared_ptr<IObservableValue<StyleSettings> > SettingsModel::observeStyle() const
-        {
-            return _style;
-        }
+    void SettingsModel::setAnim(const AnimSettings& value)
+    {
+        _anim->setIfChanged(value);
+    }
 
-        void SettingsModel::setStyle(const StyleSettings& value)
-        {
-            _style->setIfChanged(value);
-        }
+    const StyleSettings& SettingsModel::getStyle() const
+    {
+        return _style->get();
+    }
+
+    std::shared_ptr<IObservableValue<StyleSettings> > SettingsModel::observeStyle() const
+    {
+        return _style;
+    }
+
+    void SettingsModel::setStyle(const StyleSettings& value)
+    {
+        _style->setIfChanged(value);
     }
 }

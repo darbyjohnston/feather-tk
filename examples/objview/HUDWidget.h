@@ -8,36 +8,33 @@
 #include <ftk/UI/GridLayout.h>
 #include <ftk/UI/Label.h>
 
-namespace examples
+namespace objview
 {
-    namespace objview
+    //! Heads up display (HUD) widget.
+    class HUDWidget : public ftk::IWidget
     {
-        //! Heads up display (HUD) widget.
-        class HUDWidget : public ftk::IWidget
-        {
-        protected:
-            void _init(
-                const std::shared_ptr<ftk::Context>&,
-                const std::shared_ptr<ftk::IDocument>&,
-                const std::shared_ptr<ftk::IWidget>& parent);
+    protected:
+        void _init(
+            const std::shared_ptr<ftk::Context>&,
+            const std::shared_ptr<ftk::IDocument>&,
+            const std::shared_ptr<ftk::IWidget>& parent);
 
-            HUDWidget() = default;
+        HUDWidget() = default;
 
-        public:
-            virtual ~HUDWidget();
+    public:
+        virtual ~HUDWidget();
 
-            //! Create a new widget.
-            static std::shared_ptr<HUDWidget> create(
-                const std::shared_ptr<ftk::Context>&,
-                const std::shared_ptr<ftk::IDocument>&,
-                const std::shared_ptr<ftk::IWidget>& parent = nullptr);
+        //! Create a new widget.
+        static std::shared_ptr<HUDWidget> create(
+            const std::shared_ptr<ftk::Context>&,
+            const std::shared_ptr<ftk::IDocument>&,
+            const std::shared_ptr<ftk::IWidget>& parent = nullptr);
 
-            void setGeometry(const ftk::Box2I&) override;
-            void sizeHintEvent(const ftk::SizeHintEvent&) override;
+        void setGeometry(const ftk::Box2I&) override;
+        void sizeHintEvent(const ftk::SizeHintEvent&) override;
 
-        private:
-            std::map<std::string, std::shared_ptr<ftk::Label> > _labels;
-            std::shared_ptr<ftk::GridLayout> _layout;
-        };
-    }
+    private:
+        std::map<std::string, std::shared_ptr<ftk::Label> > _labels;
+        std::shared_ptr<ftk::GridLayout> _layout;
+    };
 }

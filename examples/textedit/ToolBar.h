@@ -7,38 +7,35 @@
 #include <ftk/UI/RowLayout.h>
 #include <ftk/UI/ToolButton.h>
 
-namespace examples
+namespace textedit
 {
-    namespace textedit
+    class Actions;
+
+    //! Tool bar widget.
+    class ToolBar : public ftk::IWidget
     {
-        class Actions;
+    protected:
+        void _init(
+            const std::shared_ptr<ftk::Context>&,
+            const std::shared_ptr<Actions>&,
+            const std::shared_ptr<ftk::IWidget>& parent);
 
-        //! Tool bar widget.
-        class ToolBar : public ftk::IWidget
-        {
-        protected:
-            void _init(
-                const std::shared_ptr<ftk::Context>&,
-                const std::shared_ptr<Actions>&,
-                const std::shared_ptr<ftk::IWidget>& parent);
+        ToolBar() = default;
 
-            ToolBar() = default;
+    public:
+        virtual ~ToolBar();
 
-        public:
-            virtual ~ToolBar();
+        //! Create a new tool bar.
+        static std::shared_ptr<ToolBar> create(
+            const std::shared_ptr<ftk::Context>&,
+            const std::shared_ptr<Actions>&,
+            const std::shared_ptr<ftk::IWidget>& parent = nullptr);
 
-            //! Create a new tool bar.
-            static std::shared_ptr<ToolBar> create(
-                const std::shared_ptr<ftk::Context>&,
-                const std::shared_ptr<Actions>&,
-                const std::shared_ptr<ftk::IWidget>& parent = nullptr);
+        void setGeometry(const ftk::Box2I&) override;
+        void sizeHintEvent(const ftk::SizeHintEvent&) override;
 
-            void setGeometry(const ftk::Box2I&) override;
-            void sizeHintEvent(const ftk::SizeHintEvent&) override;
-
-        private:
-            std::map<std::string, std::shared_ptr<ftk::ToolButton> > _buttons;
-            std::shared_ptr<ftk::HorizontalLayout> _layout;
-        };
-    }
+    private:
+        std::map<std::string, std::shared_ptr<ftk::ToolButton> > _buttons;
+        std::shared_ptr<ftk::HorizontalLayout> _layout;
+    };
 }

@@ -10,47 +10,44 @@
 
 #include <filesystem>
 
-namespace examples
+namespace imageview
 {
-    namespace imageview
+    //! Document.
+    class Document : public ftk::IDocument
     {
-        //! Document.
-        class Document : public ftk::IDocument
-        {
-        protected:
-            void _init(
-                const std::shared_ptr<ftk::Context>&,
-                const std::filesystem::path& = std::filesystem::path());
+    protected:
+        void _init(
+            const std::shared_ptr<ftk::Context>&,
+            const std::filesystem::path& = std::filesystem::path());
 
-            Document() = default;
+        Document() = default;
 
-        public:
-            virtual ~Document();
+    public:
+        virtual ~Document();
 
-            //! Create a new document.
-            static std::shared_ptr<Document> create(
-                const std::shared_ptr<ftk::Context>&,
-                const std::filesystem::path& = std::filesystem::path());
+        //! Create a new document.
+        static std::shared_ptr<Document> create(
+            const std::shared_ptr<ftk::Context>&,
+            const std::filesystem::path& = std::filesystem::path());
 
-            //! \name Information
-            ///@{
+        //! \name Information
+        ///@{
 
-            const std::filesystem::path& getPath() const;
-            std::string getName() const;
-            std::string getTooltip() const;
+        const std::filesystem::path& getPath() const;
+        std::string getName() const;
+        std::string getTooltip() const;
 
-            ///@}
+        ///@}
 
-            //! \name Image
-            ///@{
+        //! \name Image
+        ///@{
 
-            const std::shared_ptr<ftk::Image>& getImage() const;
+        const std::shared_ptr<ftk::Image>& getImage() const;
 
-            ///@}
+        ///@}
 
-        private:
-            std::filesystem::path _path;
-            std::shared_ptr<ftk::Image> _image;
-        };
-    }
+    private:
+        std::filesystem::path _path;
+        std::shared_ptr<ftk::Image> _image;
+    };
 }

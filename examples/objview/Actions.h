@@ -9,67 +9,64 @@
 #include <ftk/UI/Action.h>
 #include <ftk/UI/DocumentModel.h>
 
-namespace examples
+namespace objview
 {
-    namespace objview
+    class App;
+    class MainWindow;
+
+    //! This class provides actions that are used to populate the menus
+    //! and tool bars.
+    class Actions : public std::enable_shared_from_this<Actions>
     {
-        class App;
-        class MainWindow;
+    protected:
+        void _init(
+            const std::shared_ptr<ftk::Context>&,
+            const std::shared_ptr<App>&,
+            const std::shared_ptr<MainWindow>&);
 
-        //! This class provides actions that are used to populate the menus
-        //! and tool bars.
-        class Actions : public std::enable_shared_from_this<Actions>
-        {
-        protected:
-            void _init(
-                const std::shared_ptr<ftk::Context>&,
-                const std::shared_ptr<App>&,
-                const std::shared_ptr<MainWindow>&);
+        Actions() = default;
 
-            Actions() = default;
+    public:
+        virtual ~Actions();
 
-        public:
-            virtual ~Actions();
+        //! Create new actions.
+        static std::shared_ptr<Actions> create(
+            const std::shared_ptr<ftk::Context>&,
+            const std::shared_ptr<App>&,
+            const std::shared_ptr<MainWindow>&);
 
-            //! Create new actions.
-            static std::shared_ptr<Actions> create(
-                const std::shared_ptr<ftk::Context>&,
-                const std::shared_ptr<App>&,
-                const std::shared_ptr<MainWindow>&);
+        //! Get the actions.
+        const std::map<std::string, std::shared_ptr<ftk::Action> > getActions() const;
 
-            //! Get the actions.
-            const std::map<std::string, std::shared_ptr<ftk::Action> > getActions() const;
+        //! Get an action by name.
+        std::shared_ptr<ftk::Action> getAction(const std::string&) const;
 
-            //! Get an action by name.
-            std::shared_ptr<ftk::Action> getAction(const std::string&) const;
+    private:
+        void _createFileActions(
+            const std::shared_ptr<ftk::Context>&,
+            const std::shared_ptr<App>&);
+        void _createEditActions(
+            const std::shared_ptr<ftk::Context>&,
+            const std::shared_ptr<App>&);
+        void _createWindowActions(
+            const std::shared_ptr<ftk::Context>&,
+            const std::shared_ptr<App>&,
+            const std::shared_ptr<MainWindow>&);
+        void _createViewActions(
+            const std::shared_ptr<ftk::Context>&,
+            const std::shared_ptr<App>&,
+            const std::shared_ptr<MainWindow>&);
+        void _createRenderActions(
+            const std::shared_ptr<ftk::Context>&,
+            const std::shared_ptr<App>&,
+            const std::shared_ptr<MainWindow>&);
 
-        private:
-            void _createFileActions(
-                const std::shared_ptr<ftk::Context>&,
-                const std::shared_ptr<App>&);
-            void _createEditActions(
-                const std::shared_ptr<ftk::Context>&,
-                const std::shared_ptr<App>&);
-            void _createWindowActions(
-                const std::shared_ptr<ftk::Context>&,
-                const std::shared_ptr<App>&,
-                const std::shared_ptr<MainWindow>&);
-            void _createViewActions(
-                const std::shared_ptr<ftk::Context>&,
-                const std::shared_ptr<App>&,
-                const std::shared_ptr<MainWindow>&);
-            void _createRenderActions(
-                const std::shared_ptr<ftk::Context>&,
-                const std::shared_ptr<App>&,
-                const std::shared_ptr<MainWindow>&);
+        std::map<std::string, std::shared_ptr<ftk::Action> > _actions;
+        std::map<RenderMode, std::shared_ptr<ftk::Action> > _renderModeActions;
 
-            std::map<std::string, std::shared_ptr<ftk::Action> > _actions;
-            std::map<RenderMode, std::shared_ptr<ftk::Action> > _renderModeActions;
-
-            std::shared_ptr<ftk::ValueObserver<std::shared_ptr<ftk::IDocument> > > _currentObserver;
-            std::shared_ptr<ftk::ValueObserver<WindowSettings> > _windowSettingsObserver;
-            std::shared_ptr<ftk::ValueObserver<bool> > _fullScreenObserver;
-            std::shared_ptr<ftk::ValueObserver<RenderSettings> > _renderSettingsObserver;
-        };
-    }
+        std::shared_ptr<ftk::ValueObserver<std::shared_ptr<ftk::IDocument> > > _currentObserver;
+        std::shared_ptr<ftk::ValueObserver<WindowSettings> > _windowSettingsObserver;
+        std::shared_ptr<ftk::ValueObserver<bool> > _fullScreenObserver;
+        std::shared_ptr<ftk::ValueObserver<RenderSettings> > _renderSettingsObserver;
+    };
 }

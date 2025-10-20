@@ -11,71 +11,68 @@
 
 using namespace ftk;
 
-namespace examples
+namespace textedit
 {
-    namespace textedit
+    void ToolBar::_init(
+        const std::shared_ptr<Context>& context,
+        const std::shared_ptr<Actions>& actions,
+        const std::shared_ptr<IWidget>& parent)
     {
-        void ToolBar::_init(
-            const std::shared_ptr<Context>& context,
-            const std::shared_ptr<Actions>& actions,
-            const std::shared_ptr<IWidget>& parent)
+        IWidget::_init(context, "examples::textedit::ToolBar", parent);
+
+        // Create the layout.
+        _layout = HorizontalLayout::create(context, shared_from_this());
+        _layout->setSpacingRole(SizeRole::SpacingSmall);
+
+        // Create the file tool bar.
+        auto fileToolBar = ftk::ToolBar::create(context, Orientation::Horizontal, _layout);
+        for (const auto& key :
+            { "File/New", "File/Open", "File/Close", "File/CloseAll", "File/Save" })
         {
-            IWidget::_init(context, "examples::textedit::ToolBar", parent);
-
-            // Create the layout.
-            _layout = HorizontalLayout::create(context, shared_from_this());
-            _layout->setSpacingRole(SizeRole::SpacingSmall);
-
-            // Create the file tool bar.
-            auto fileToolBar = ftk::ToolBar::create(context, Orientation::Horizontal, _layout);
-            for (const auto& key :
-                { "File/New", "File/Open", "File/Close", "File/CloseAll", "File/Save" })
-            {
-                fileToolBar->addAction(actions->getAction(key));
-            }
-            Divider::create(context, Orientation::Horizontal, _layout);
-
-            // Create the edit tool bar.
-            auto editToolBar = ftk::ToolBar::create(context, Orientation::Horizontal, _layout);
-            for (const auto& key :
-                { "Edit/Undo", "Edit/Redo", "Edit/Cut", "Edit/Copy", "Edit/Paste" })
-            {
-                editToolBar->addAction(actions->getAction(key));
-            }
-            Divider::create(context, Orientation::Horizontal, _layout);
-
-            // Create the window tool bar.
-            auto windowToolBar = ftk::ToolBar::create(context, Orientation::Horizontal, _layout);
-            for (const auto& key :
-                { "Window/FullScreen" })
-            {
-                windowToolBar->addAction(actions->getAction(key));
-            }
+            fileToolBar->addAction(actions->getAction(key));
         }
+        Divider::create(context, Orientation::Horizontal, _layout);
 
-        ToolBar::~ToolBar()
-        {}
-
-        std::shared_ptr<ToolBar> ToolBar::create(
-            const std::shared_ptr<Context>& context,
-            const std::shared_ptr<Actions>& actions,
-            const std::shared_ptr<IWidget>& parent)
+        // Create the edit tool bar.
+        auto editToolBar = ftk::ToolBar::create(context, Orientation::Horizontal, _layout);
+        for (const auto& key :
+            { "Edit/Undo", "Edit/Redo", "Edit/Cut", "Edit/Copy", "Edit/Paste" })
         {
-            auto out = std::shared_ptr<ToolBar>(new ToolBar);
-            out->_init(context, actions, parent);
-            return out;
+            editToolBar->addAction(actions->getAction(key));
         }
+        Divider::create(context, Orientation::Horizontal, _layout);
 
-        void ToolBar::setGeometry(const Box2I& value)
+        // Create the window tool bar.
+        auto windowToolBar = ftk::ToolBar::create(context, Orientation::Horizontal, _layout);
+        for (const auto& key :
+            { "Window/FullScreen" })
         {
-            IWidget::setGeometry(value);
-            _layout->setGeometry(value);
+            windowToolBar->addAction(actions->getAction(key));
         }
+    }
 
-        void ToolBar::sizeHintEvent(const SizeHintEvent& event)
-        {
-            IWidget::sizeHintEvent(event);
-            _setSizeHint(_layout->getSizeHint());
-        }
+    ToolBar::~ToolBar()
+    {}
+
+    std::shared_ptr<ToolBar> ToolBar::create(
+        const std::shared_ptr<Context>& context,
+        const std::shared_ptr<Actions>& actions,
+        const std::shared_ptr<IWidget>& parent)
+    {
+        auto out = std::shared_ptr<ToolBar>(new ToolBar);
+        out->_init(context, actions, parent);
+        return out;
+    }
+
+    void ToolBar::setGeometry(const Box2I& value)
+    {
+        IWidget::setGeometry(value);
+        _layout->setGeometry(value);
+    }
+
+    void ToolBar::sizeHintEvent(const SizeHintEvent& event)
+    {
+        IWidget::sizeHintEvent(event);
+        _setSizeHint(_layout->getSizeHint());
     }
 }

@@ -7,44 +7,41 @@
 #include <ftk/UI/DocumentModel.h>
 #include <ftk/UI/TabWidget.h>
 
-namespace examples
+namespace imageview
 {
-    namespace imageview
+    class App;
+    class ImageView;
+
+    //! Document tabs widget.
+    class DocumentTabs : public ftk::IWidget
     {
-        class App;
-        class ImageView;
+    protected:
+        void _init(
+            const std::shared_ptr<ftk::Context>&,
+            const std::shared_ptr<App>&,
+            const std::shared_ptr<ftk::IWidget>& parent);
 
-        //! Document tabs widget.
-        class DocumentTabs : public ftk::IWidget
-        {
-        protected:
-            void _init(
-                const std::shared_ptr<ftk::Context>&,
-                const std::shared_ptr<App>&,
-                const std::shared_ptr<ftk::IWidget>& parent);
+        DocumentTabs() = default;
 
-            DocumentTabs() = default;
+    public:
+        virtual ~DocumentTabs();
 
-        public:
-            virtual ~DocumentTabs();
+        //! Create a new widget.
+        static std::shared_ptr<DocumentTabs> create(
+            const std::shared_ptr<ftk::Context>&,
+            const std::shared_ptr<App>&,
+            const std::shared_ptr<ftk::IWidget>& parent = nullptr);
 
-            //! Create a new widget.
-            static std::shared_ptr<DocumentTabs> create(
-                const std::shared_ptr<ftk::Context>&,
-                const std::shared_ptr<App>&,
-                const std::shared_ptr<ftk::IWidget>& parent = nullptr);
+        void setGeometry(const ftk::Box2I&) override;
+        void sizeHintEvent(const ftk::SizeHintEvent&) override;
 
-            void setGeometry(const ftk::Box2I&) override;
-            void sizeHintEvent(const ftk::SizeHintEvent&) override;
+    private:
+        std::shared_ptr<ftk::TabWidget> _tabWidget;
+        std::map<std::shared_ptr<ftk::IDocument>, std::shared_ptr<ftk::IWidget> > _views;
 
-        private:
-            std::shared_ptr<ftk::TabWidget> _tabWidget;
-            std::map<std::shared_ptr<ftk::IDocument>, std::shared_ptr<ftk::IWidget> > _views;
-
-            std::shared_ptr<ftk::ValueObserver<std::weak_ptr<ftk::IDocument> > > _addObserver;
-            std::shared_ptr<ftk::ValueObserver<std::weak_ptr<ftk::IDocument> > > _closeObserver;
-            std::shared_ptr<ftk::ValueObserver<bool> > _clearObserver;
-            std::shared_ptr<ftk::ValueObserver<int> > _currentObserver;
-        };
-    }
+        std::shared_ptr<ftk::ValueObserver<std::weak_ptr<ftk::IDocument> > > _addObserver;
+        std::shared_ptr<ftk::ValueObserver<std::weak_ptr<ftk::IDocument> > > _closeObserver;
+        std::shared_ptr<ftk::ValueObserver<bool> > _clearObserver;
+        std::shared_ptr<ftk::ValueObserver<int> > _currentObserver;
+    };
 }
