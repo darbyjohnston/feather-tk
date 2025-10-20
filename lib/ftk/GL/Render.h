@@ -89,6 +89,7 @@ namespace ftk
             void drawTexture(
                 unsigned int,
                 const Box2I&,
+                bool flipV = false,
                 const Color4F& = Color4F(1.F, 1.F, 1.F),
                 AlphaBlend = AlphaBlend::Straight) override;
             void drawText(

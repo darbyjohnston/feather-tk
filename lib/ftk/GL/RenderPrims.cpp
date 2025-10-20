@@ -208,6 +208,7 @@ namespace ftk
         void Render::drawTexture(
             unsigned int id,
             const Box2I& rect,
+            bool flipV,
             const Color4F& color,
             AlphaBlend alphaBlend)
         {
@@ -223,7 +224,7 @@ namespace ftk
 
             if (p.vbos["texture"])
             {
-                p.vbos["texture"]->copy(convert(mesh(rect), p.vbos["texture"]->getType()));
+                p.vbos["texture"]->copy(convert(mesh(rect, flipV), p.vbos["texture"]->getType()));
             }
             if (p.vaos["texture"])
             {

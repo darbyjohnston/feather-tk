@@ -150,12 +150,12 @@ namespace examples
 
         void ObjView::orbitUp()
         {
-            setOrbit(_orbit + V2F(0.F, -10.F));
+            setOrbit(_orbit + V2F(0.F, 10.F));
         }
 
         void ObjView::orbitDown()
         {
-            setOrbit(_orbit + V2F(0.F, 10.F));
+            setOrbit(_orbit + V2F(0.F, -10.F));
         }
 
         RenderMode ObjView::getRenderMode() const
@@ -207,6 +207,7 @@ namespace examples
                 "\n"
                 "struct Transform\n"
                 "{\n"
+                "    mat4 m;\n"
                 "    mat4 mvp;\n"
                 "};\n"
                 "\n"
@@ -217,6 +218,7 @@ namespace examples
                 "    gl_Position = vec4(vPos, 1.0) * transform.mvp;\n"
                 "    fTex = vTex;\n"
                 "    fNorm = vNorm;\n"
+                //"    fNorm = mat3(transpose(inverse(transform.m))) * vNorm;\n"
                 "    fColor = vColor;\n"
                 "}\n";
         }
@@ -248,7 +250,13 @@ namespace examples
                 "    outColor.a = 0;\n"
                 "    if (RenderMode_Shaded == renderMode)\n"
                 "    {\n"
-                "        outColor = fColor * color;\n"
+                "        vec3 l = normalize(vec3(1, 1, 0));\n"
+                "        vec3 n = normalize(fNorm);\n"
+                "        float d = max(dot(n, l), 0.0);\n"
+                "        outColor.r = d * fColor.r * color.r + .2;\n"
+                "        outColor.g = d * fColor.g * color.g + .2;\n"
+                "        outColor.b = d * fColor.b * color.b + .2;\n"
+                "        outColor.a = fColor.a * color.a;\n"
                 "    }\n"
                 "    else if (RenderMode_Flat == renderMode)\n"
                 "    {\n"
@@ -338,6 +346,7 @@ namespace examples
                     vm = vm * translate(_position);
 
                     _shader->bind();
+                    _shader->setUniform("transform.m", vm);
                     _shader->setUniform("transform.mvp", pm * vm);
                     _shader->setUniform("renderMode", static_cast<int>(_renderMode->get()));
                     _shader->setUniform("color", Color4F(1.F, 1.F, 1.F));
@@ -361,7 +370,7 @@ namespace examples
             if (_buffer)
             {
                 const unsigned int id = _buffer->getColorID();
-                event.render->drawTexture(id, g);
+                event.render->drawTexture(id, g, true);
             }
         }
 
@@ -371,7 +380,7 @@ namespace examples
             if (_isMousePressed())
             {
                 const V2I d = event.pos - event.prev;
-                const V2F v(d.x * mouseMult, -d.y * mouseMult);
+                const V2F v(d.x * mouseMult, d.y * mouseMult);
                 setOrbit(_orbit + v);
                 _animVel = v.x;
             }
