@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include "Document.h"
+#include "Settings.h"
 
 #include <ftk/UI/App.h>
 #include <ftk/UI/Settings.h>
@@ -13,35 +13,6 @@ namespace examples
 {
     namespace objview
     {
-        //! Window settings.
-        struct WindowSettings
-        {
-            bool  settings = false;
-            float split    = .7F;
-
-            bool operator == (const WindowSettings&) const;
-            bool operator != (const WindowSettings&) const;
-        };
-
-        //! Animation settings.
-        struct AnimSettings
-        {
-            bool enabled = true;
-
-            bool operator == (const AnimSettings&) const;
-            bool operator != (const AnimSettings&) const;
-        };
-
-        //! Style settings.
-        struct StyleSettings
-        {
-            float displayScale = 2.F;
-            ftk::ColorStyle colorStyle = ftk::ColorStyle::Dark;
-
-            bool operator == (const StyleSettings&) const;
-            bool operator != (const StyleSettings&) const;
-        };
-
         //! Global settings that are save to file.
         class SettingsModel : public std::enable_shared_from_this<SettingsModel>
         {
@@ -77,6 +48,15 @@ namespace examples
 
             ///@}
 
+            //! \name Rendering
+            ///@{
+
+            const RenderSettings& getRender() const;
+            std::shared_ptr<ftk::IObservableValue<RenderSettings> > observeRender() const;
+            void setRender(const RenderSettings&);
+
+            ///@}
+
             //! \name Animation
             ///@{
 
@@ -99,16 +79,9 @@ namespace examples
             std::shared_ptr<ftk::Settings> _settings;
             std::vector<std::filesystem::path> _recentFiles;
             std::shared_ptr<ftk::ObservableValue<WindowSettings> > _window;
+            std::shared_ptr<ftk::ObservableValue<RenderSettings> > _render;
             std::shared_ptr<ftk::ObservableValue<AnimSettings> > _anim;
             std::shared_ptr<ftk::ObservableValue<StyleSettings> > _style;
         };
-
-        void to_json(nlohmann::json&, const WindowSettings&);
-        void to_json(nlohmann::json&, const AnimSettings&);
-        void to_json(nlohmann::json&, const StyleSettings&);
-
-        void from_json(const nlohmann::json&, WindowSettings&);
-        void from_json(const nlohmann::json&, AnimSettings&);
-        void from_json(const nlohmann::json&, StyleSettings&);
     }
 }

@@ -26,13 +26,6 @@ namespace examples
             const float mouseMult = .25F;
         }
 
-        FTK_ENUM_IMPL(
-            RenderMode,
-            "Shaded",
-            "Flat",
-            "Texture",
-            "Normals");
-
         void ObjView::_init(
             const std::shared_ptr<Context>& context,
             const std::shared_ptr<App>& app,
@@ -50,8 +43,6 @@ namespace examples
                 _bbox = bbox(*_mesh);
             }
 
-            _renderMode = ObservableValue<RenderMode>::create(RenderMode::Shaded);
-
             _hudWidget = HUDWidget::create(context, doc, shared_from_this());
 
             _animTimer = Timer::create(context);
@@ -64,6 +55,15 @@ namespace examples
                 [this](const V3F& value)
                 {
                     _rotation = value;
+                    _doRender = true;
+                    _setDrawUpdate();
+                });
+
+            _renderSettingsObserver = ValueObserver<RenderSettings>::create(
+                app->getSettingsModel()->observeRender(),
+                [this](const RenderSettings& value)
+                {
+                    _settings = value;
                     _doRender = true;
                     _setDrawUpdate();
                 });
@@ -126,14 +126,14 @@ namespace examples
 
         void ObjView::zoomIn()
         {
-            _distance *= .5F;
+            _distance *= .9F;
             _doRender = true;
             _setDrawUpdate();
         }
 
         void ObjView::zoomOut()
         {
-            _distance *= 1.5F;
+            _distance *= 1.1F;
             _doRender = true;
             _setDrawUpdate();
         }
@@ -156,25 +156,6 @@ namespace examples
         void ObjView::orbitDown()
         {
             setOrbit(_orbit + V2F(0.F, -10.F));
-        }
-
-        RenderMode ObjView::getRenderMode() const
-        {
-            return _renderMode->get();
-        }
-
-        std::shared_ptr<ftk::IObservableValue<RenderMode> > ObjView::observeRenderMode() const
-        {
-            return _renderMode;
-        }
-
-        void ObjView::setRenderMode(RenderMode value)
-        {
-            if (_renderMode->setIfChanged(value))
-            {
-                _doRender = true;
-                _setDrawUpdate();
-            }
         }
 
         void ObjView::setGeometry(const ftk::Box2I& value)
@@ -217,8 +198,9 @@ namespace examples
                 "{\n"
                 "    gl_Position = vec4(vPos, 1.0) * transform.mvp;\n"
                 "    fTex = vTex;\n"
-                "    fNorm = vNorm;\n"
-                //"    fNorm = mat3(transpose(inverse(transform.m))) * vNorm;\n"
+                //"    fNorm = vNorm;\n"
+                //! \todo Replace this with a pre-computed uniform variable.
+                "    fNorm = vNorm * mat3(transpose(inverse(transform.m)));\n"
                 "    fColor = vColor;\n"
                 "}\n";
         }
@@ -241,6 +223,8 @@ namespace examples
                 "\n"
                 "uniform int renderMode;\n"
                 "uniform vec4 color;\n"
+                "uniform vec3 lightDir;\n"
+                "uniform vec3 ambientLight;\n"
                 "\n"
                 "void main()\n"
                 "{\n"
@@ -250,12 +234,12 @@ namespace examples
                 "    outColor.a = 0;\n"
                 "    if (RenderMode_Shaded == renderMode)\n"
                 "    {\n"
-                "        vec3 l = normalize(vec3(1, 1, 0));\n"
+                "        vec3 l = normalize(lightDir);\n"
                 "        vec3 n = normalize(fNorm);\n"
                 "        float d = max(dot(n, l), 0.0);\n"
-                "        outColor.r = d * fColor.r * color.r + .2;\n"
-                "        outColor.g = d * fColor.g * color.g + .2;\n"
-                "        outColor.b = d * fColor.b * color.b + .2;\n"
+                "        outColor.r = d * fColor.r * color.r + ambientLight.r;\n"
+                "        outColor.g = d * fColor.g * color.g + ambientLight.g;\n"
+                "        outColor.b = d * fColor.b * color.b + ambientLight.b;\n"
                 "        outColor.a = fColor.a * color.a;\n"
                 "    }\n"
                 "    else if (RenderMode_Flat == renderMode)\n"
@@ -335,27 +319,37 @@ namespace examples
                     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
                     const float aspect = aspectRatio(size);
-                    const auto pm = perspective(_fov, aspect, .1F, 10000.F);
-                    M44F vm;
-                    vm = vm * translate(V3F(0.F, 0.F, -_distance));
-                    vm = vm * rotateX(_orbit.y);
-                    vm = vm * rotateY(_orbit.x);
-                    vm = vm * rotateX(_rotation.x);
-                    vm = vm * rotateY(_rotation.y);
-                    vm = vm * rotateZ(_rotation.z);
-                    vm = vm * translate(_position);
-
+                    const M44F pm = perspective(_fov, aspect, .1F, 10000.F);
+                    const M44F vm =
+                        translate(V3F(0.F, 0.F, -_distance)) *
+                        rotateX(_orbit.y) *
+                        rotateY(_orbit.x) *
+                        translate(_position);
+                    const M44F mm =
+                        translate(-_position) *
+                        rotateX(_rotation.x) *
+                        rotateY(_rotation.y) *
+                        rotateZ(_rotation.z) *
+                        translate(_position);
                     _shader->bind();
-                    _shader->setUniform("transform.m", vm);
-                    _shader->setUniform("transform.mvp", pm * vm);
-                    _shader->setUniform("renderMode", static_cast<int>(_renderMode->get()));
+                    _shader->setUniform("transform.m", mm);
+                    _shader->setUniform("transform.mvp", pm * vm * mm);
+                    _shader->setUniform("renderMode", static_cast<int>(_settings.mode));
                     _shader->setUniform("color", Color4F(1.F, 1.F, 1.F));
+                    _shader->setUniform("lightDir", V3F(1.F, 1.F, 0.F));
+                    _shader->setUniform("ambientLight", V3F(.2F, .2F, .2F));
 
                     if (_vao && _vbo)
                     {
                         glEnable(GL_DEPTH_TEST);
+                        if (_settings.cull)
+                        {
+                            glEnable(GL_CULL_FACE);
+                        }
                         _vao->bind();
                         _vao->draw(GL_TRIANGLES, 0, _vbo->getSize());
+                        glDisable(GL_CULL_FACE);
+                        glDisable(GL_CULL_FACE);
                     }
                 }
             }

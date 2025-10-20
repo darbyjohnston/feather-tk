@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include "SettingsModel.h"
+#include "Settings.h"
 
 #include <ftk/UI/IWidget.h>
 
@@ -21,19 +21,6 @@ namespace examples
         class App;
         class Document;
         class HUDWidget;
-
-        //! Render modes.
-        enum class RenderMode
-        {
-            Shaded,
-            Flat,
-            Texture,
-            Normals,
-
-            Count,
-            First = Shaded
-        };
-        FTK_ENUM(RenderMode);
 
         //! Object view widget.
         class ObjView : public ftk::IWidget
@@ -72,15 +59,6 @@ namespace examples
 
             ///@}
 
-            //! \name Rendering
-            ///@{
-
-            RenderMode getRenderMode() const;
-            std::shared_ptr<ftk::IObservableValue<RenderMode> > observeRenderMode() const;
-            void setRenderMode(RenderMode);
-
-            ///@}
-
             void setGeometry(const ftk::Box2I&) override;
             void sizeHintEvent(const ftk::SizeHintEvent&) override;
             void drawEvent(const ftk::Box2I&, const ftk::DrawEvent&) override;
@@ -96,7 +74,7 @@ namespace examples
             ftk::V3F _position;
             ftk::V2F _orbit;
             float _distance = 10.F;
-            std::shared_ptr<ftk::ObservableValue<RenderMode> > _renderMode;
+            RenderSettings _settings;
 
             bool _doRender = true;
             std::shared_ptr<ftk::gl::VBO> _vbo;
@@ -112,6 +90,7 @@ namespace examples
             std::shared_ptr<ftk::Timer> _animTimer;
 
             std::shared_ptr<ftk::ValueObserver<ftk::V3F> > _rotationObserver;
+            std::shared_ptr<ftk::ValueObserver<RenderSettings> > _renderSettingsObserver;
             std::shared_ptr<ftk::ValueObserver<AnimSettings> > _animSettingsObserver;
         };
     }

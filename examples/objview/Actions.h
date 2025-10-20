@@ -4,8 +4,7 @@
 
 #pragma once
 
-#include "ObjView.h"
-#include "SettingsModel.h"
+#include "Settings.h"
 
 #include <ftk/UI/Action.h>
 
@@ -14,6 +13,7 @@ namespace examples
     namespace objview
     {
         class App;
+        class Document;
         class MainWindow;
 
         //! This class provides actions that are used to populate the menus
@@ -69,8 +69,7 @@ namespace examples
             std::shared_ptr<ftk::ValueObserver<std::shared_ptr<Document> > > _currentObserver;
             std::shared_ptr<ftk::ValueObserver<WindowSettings> > _windowSettingsObserver;
             std::shared_ptr<ftk::ValueObserver<bool> > _fullScreenObserver;
-            std::shared_ptr<ftk::ValueObserver<std::shared_ptr<ObjView> > > _currentViewObserver;
-            std::shared_ptr<ftk::ValueObserver<RenderMode> > _renderModeObserver;
+            std::shared_ptr<ftk::ValueObserver<RenderSettings> > _renderSettingsObserver;
         };
     }
 }

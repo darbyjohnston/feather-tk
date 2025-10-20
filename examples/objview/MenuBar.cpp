@@ -125,6 +125,8 @@ namespace examples
                 const std::string key = "Render/" + label;
                 _menus["Render"]->addAction(actions->getAction(key));
             }
+            _menus["Render"]->addDivider();
+            _menus["Render"]->addAction(actions->getAction("Render/Cull"));
             addMenu("Render", _menus["Render"]);
         }
     }

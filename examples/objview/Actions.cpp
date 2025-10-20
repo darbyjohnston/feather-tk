@@ -323,8 +323,6 @@ namespace examples
             const std::shared_ptr<App>& app,
             const std::shared_ptr<MainWindow>& mainWindow)
         {
-            std::weak_ptr<MainWindow> mainWindowWeak(mainWindow);
-
             std::map<RenderMode, Key> shortcuts =
             {
                 { RenderMode::Shaded, Key::_1 },
@@ -332,6 +330,7 @@ namespace examples
                 { RenderMode::Texture, Key::_3 },
                 { RenderMode::Normals, Key::_4 }
             };
+            std::weak_ptr<App> appWeak(app);
             for (auto e : getRenderModeEnums())
             {
                 const std::string label = getLabel(e);
@@ -340,46 +339,42 @@ namespace examples
                     label,
                     shortcuts[e],
                     0,
-                    [mainWindowWeak, e](bool value)
+                    [appWeak, e](bool value)
                     {
-                        if (auto mainWindow = mainWindowWeak.lock())
+                        if (auto app = appWeak.lock())
                         {
-                            if (auto view = mainWindow->getCurrentView())
-                            {
-                                view->setRenderMode(e);
-                            }
+                            auto render = app->getSettingsModel()->getRender();
+                            render.mode = e;
+                            app->getSettingsModel()->setRender(render);
                         }
                     });
                 _actions[key]->setTooltip(label);
                 _renderModeActions[e] = _actions[key];
             }
 
-            _currentViewObserver = ValueObserver<std::shared_ptr<ObjView> >::create(
-                mainWindow->observeCurrentView(),
-                [this](const std::shared_ptr<ObjView>& view)
+            _actions["Render/Cull"] = Action::create(
+                "Cull",
+                [appWeak](bool value)
                 {
-                    if (view)
+                    if (auto app = appWeak.lock())
                     {
-                        _renderModeObserver = ValueObserver<RenderMode>::create(
-                            view->observeRenderMode(),
-                            [this](RenderMode value)
-                            {
-                                for (const auto e : getRenderModeEnums())
-                                {
-                                    const std::string key = "Render/" + getLabel(e);
-                                    _actions[key]->setChecked(e == value);
-                                }
-                            });
+                        auto render = app->getSettingsModel()->getRender();
+                        render.cull = value;
+                        app->getSettingsModel()->setRender(render);
                     }
-                    else
+                });
+            _actions["Render/Cull"]->setTooltip("Cull back-facing triangles");
+
+            _renderSettingsObserver = ValueObserver<RenderSettings>::create(
+                app->getSettingsModel()->observeRender(),
+                [this](const RenderSettings& value)
+                {
+                    for (const auto e : getRenderModeEnums())
                     {
-                        _renderModeObserver.reset();
-                        for (const auto label : getRenderModeLabels())
-                        {
-                            const std::string key = "Render/" + label;
-                            _actions[key]->setChecked(false);
-                        }
+                        const std::string key = "Render/" + getLabel(e);
+                        _actions[key]->setChecked(e == value.mode);
                     }
+                    _actions["Render/Cull"]->setChecked(value.cull);
                 });
         }
     }

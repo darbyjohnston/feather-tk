@@ -9,6 +9,7 @@ set(HEADERS
     MenuBar.h
     ObjIO.h
     ObjView.h
+    Settings.h
     SettingsModel.h
     SettingsWidget.h
     ToolBar.h)
@@ -24,6 +25,7 @@ set(SOURCE
     MenuBar.cpp
     ObjIO.cpp
     ObjView.cpp
+    Settings.cpp
     SettingsModel.cpp
     SettingsWidget.cpp
     ToolBar.cpp
