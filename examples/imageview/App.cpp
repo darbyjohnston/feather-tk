@@ -4,7 +4,7 @@
 
 #include "App.h"
 
-#include "DocumentModel.h"
+#include "Document.h"
 #include "MainWindow.h"
 #include "SettingsModel.h"
 

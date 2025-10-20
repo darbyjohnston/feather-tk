@@ -4,6 +4,7 @@
 
 #pragma once
 
+#include <ftk/UI/DocumentModel.h>
 #include <ftk/UI/Label.h>
 #include <ftk/UI/RowLayout.h>
 #include <ftk/UI/TabWidget.h>
@@ -14,7 +15,6 @@ namespace examples
     namespace textedit
     {
         class App;
-        class Document;
 
         //! Document tabs widget.
         class DocumentTabs : public ftk::IWidget
@@ -41,14 +41,14 @@ namespace examples
 
         private:
             std::shared_ptr<ftk::TabWidget> _tabWidget;
-            std::map<std::shared_ptr<Document>, std::shared_ptr<ftk::TextEdit> > _textEdits;
+            std::map<std::shared_ptr<ftk::IDocument>, std::shared_ptr<ftk::TextEdit> > _textEdits;
 
-            std::shared_ptr<ftk::ValueObserver<std::weak_ptr<Document> > > _addObserver;
-            std::shared_ptr<ftk::ValueObserver<std::weak_ptr<Document> > > _closeObserver;
+            std::shared_ptr<ftk::ValueObserver<std::weak_ptr<ftk::IDocument> > > _addObserver;
+            std::shared_ptr<ftk::ValueObserver<std::weak_ptr<ftk::IDocument> > > _closeObserver;
             std::shared_ptr<ftk::ValueObserver<bool> > _clearObserver;
             std::shared_ptr<ftk::ValueObserver<int> > _currentObserver;
-            std::map<std::shared_ptr<Document>, std::shared_ptr<ftk::ValueObserver<std::string> > > _nameObservers;
-            std::map<std::shared_ptr<Document>, std::shared_ptr<ftk::ValueObserver<std::string> > > _tooltipObservers;
+            std::map<std::shared_ptr<ftk::IDocument>, std::shared_ptr<ftk::ValueObserver<std::string> > > _nameObservers;
+            std::map<std::shared_ptr<ftk::IDocument>, std::shared_ptr<ftk::ValueObserver<std::string> > > _tooltipObservers;
             std::shared_ptr<ftk::ValueObserver<ftk::TextEditOptions> > _textEditOptionsObserver;
             std::shared_ptr<ftk::ValueObserver<ftk::TextEditModelOptions> > _textEditModelOptionsObserver;
         };

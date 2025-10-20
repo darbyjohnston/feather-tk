@@ -6,7 +6,7 @@
 
 #include "Actions.h"
 #include "App.h"
-#include "DocumentModel.h"
+#include "Document.h"
 #include "DocumentTabs.h"
 #include "MenuBar.h"
 #include "SettingsModel.h"

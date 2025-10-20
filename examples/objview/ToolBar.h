@@ -4,6 +4,7 @@
 
 #pragma once
 
+#include <ftk/UI/DocumentModel.h>
 #include <ftk/UI/RowLayout.h>
 #include <ftk/UI/ToolButton.h>
 
@@ -13,7 +14,6 @@ namespace examples
     {
         class Actions;
         class App;
-        class Document;
 
         //! Tool bar widget.
         class ToolBar : public ftk::IWidget
@@ -57,13 +57,13 @@ namespace examples
 
             void _rotationUpdate();
 
-            std::weak_ptr<Document> _current;
+            std::weak_ptr<ftk::IDocument> _current;
             ftk::V3F _rotation;
 
             std::map<std::string, std::shared_ptr<ftk::ToolButton> > _buttons;
             std::shared_ptr<ftk::HorizontalLayout> _layout;
 
-            std::shared_ptr<ftk::ValueObserver<std::shared_ptr<Document> > > _currentObserver;
+            std::shared_ptr<ftk::ValueObserver<std::shared_ptr<ftk::IDocument> > > _currentObserver;
             std::shared_ptr<ftk::ValueObserver<ftk::V3F> > _rotationObserver;
         };
     }

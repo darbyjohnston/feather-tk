@@ -2,7 +2,6 @@ set(HEADERS
     Actions.h
     App.h
     Document.h
-    DocumentModel.h
     DocumentTabs.h
     ImageView.h
     MainWindow.h
@@ -17,7 +16,6 @@ set(SOURCE
     Actions.cpp
     App.cpp
     Document.cpp
-    DocumentModel.cpp
     DocumentTabs.cpp
     ImageView.cpp
     MainWindow.cpp

@@ -4,6 +4,7 @@
 
 #pragma once
 
+#include <ftk/UI/DocumentModel.h>
 #include <ftk/UI/TextEditModel.h>
 
 #include <filesystem>
@@ -13,7 +14,7 @@ namespace examples
     namespace textedit
     {
         //! Document.
-        class Document : public std::enable_shared_from_this<Document>
+        class Document : public ftk::IDocument
         {
         protected:
             void _init(

@@ -7,7 +7,6 @@
 #include "Actions.h"
 #include "App.h"
 #include "Document.h"
-#include "DocumentModel.h"
 
 #include <ftk/UI/Divider.h>
 #include <ftk/UI/ToolBar.h>
@@ -127,7 +126,7 @@ namespace examples
             _buttons["Object/RotateX"]->setClickedCallback(
                 [this]
                 {
-                    if (auto doc = _current.lock())
+                    if (auto doc = std::dynamic_pointer_cast<Document>(_current.lock()))
                     {
                         V3F r = doc->getRotation();
                         r.x += 90.F;
@@ -141,7 +140,7 @@ namespace examples
             _buttons["Object/RotateY"]->setClickedCallback(
                 [this]
                 {
-                    if (auto doc = _current.lock())
+                    if (auto doc = std::dynamic_pointer_cast<Document>(_current.lock()))
                     {
                         V3F r = doc->getRotation();
                         r.y += 90.F;
@@ -155,7 +154,7 @@ namespace examples
             _buttons["Object/RotateZ"]->setClickedCallback(
                 [this]
                 {
-                    if (auto doc = _current.lock())
+                    if (auto doc = std::dynamic_pointer_cast<Document>(_current.lock()))
                     {
                         V3F r = doc->getRotation();
                         r.z += 90.F;
@@ -168,13 +167,13 @@ namespace examples
                 });
 
             // Observe the current document to update the toolbars.
-            _currentObserver = ValueObserver<std::shared_ptr<Document> >::create(
+            _currentObserver = ValueObserver<std::shared_ptr<IDocument> >::create(
                 app->getDocumentModel()->observeCurrent(),
-                [this](const std::shared_ptr<Document>& doc)
+                [this](const std::shared_ptr<IDocument>& idoc)
                 {
-                    _current = doc;
+                    _current = idoc;
 
-                    if (doc)
+                    if (auto doc = std::dynamic_pointer_cast<Document>(idoc))
                     {
                         _rotationObserver = ValueObserver<V3F>::create(
                             doc->observeRotation(),
@@ -191,7 +190,7 @@ namespace examples
                         _rotationUpdate();
                     }
 
-                    const bool current = doc.get();
+                    const bool current = idoc.get();
                     _buttons["Object/RotateX"]->setEnabled(current);
                     _buttons["Object/RotateY"]->setEnabled(current);
                     _buttons["Object/RotateZ"]->setEnabled(current);

@@ -12,7 +12,7 @@ set(HEADERS
     ConfirmDialog.h
     DialogSystem.h
     Divider.h
-    DockLayout.h
+    DocumentModel.h
     DoubleEdit.h
     DoubleEditSlider.h
     DoubleModel.h
@@ -110,7 +110,7 @@ set(SOURCE
     ConfirmDialog.cpp
     DialogSystem.cpp
     Divider.cpp
-    DockLayout.cpp
+    DocumentModel.cpp
     DoubleEdit.cpp
     DoubleEditSlider.cpp
     DoubleModel.cpp

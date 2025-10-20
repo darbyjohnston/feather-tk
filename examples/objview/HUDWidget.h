@@ -4,6 +4,7 @@
 
 #pragma once
 
+#include <ftk/UI/DocumentModel.h>
 #include <ftk/UI/GridLayout.h>
 #include <ftk/UI/Label.h>
 
@@ -11,15 +12,13 @@ namespace examples
 {
     namespace objview
     {
-        class Document;
-
         //! Heads up display (HUD) widget.
         class HUDWidget : public ftk::IWidget
         {
         protected:
             void _init(
                 const std::shared_ptr<ftk::Context>&,
-                const std::shared_ptr<Document>&,
+                const std::shared_ptr<ftk::IDocument>&,
                 const std::shared_ptr<ftk::IWidget>& parent);
 
             HUDWidget() = default;
@@ -30,7 +29,7 @@ namespace examples
             //! Create a new widget.
             static std::shared_ptr<HUDWidget> create(
                 const std::shared_ptr<ftk::Context>&,
-                const std::shared_ptr<Document>&,
+                const std::shared_ptr<ftk::IDocument>&,
                 const std::shared_ptr<ftk::IWidget>& parent = nullptr);
 
             void setGeometry(const ftk::Box2I&) override;

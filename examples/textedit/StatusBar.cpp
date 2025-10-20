@@ -5,7 +5,7 @@
 #include "StatusBar.h"
 
 #include "App.h"
-#include "DocumentModel.h"
+#include "Document.h"
 
 #include <ftk/Core/Format.h>
 #include <ftk/Core/String.h>
@@ -45,11 +45,11 @@ namespace examples
 
             // Observe the current document and update the widgets.
             std::weak_ptr<App> appWeak(app);
-            _currentObserver = ftk::ValueObserver<std::shared_ptr<Document> >::create(
+            _currentObserver = ftk::ValueObserver<std::shared_ptr<IDocument> >::create(
                 app->getDocumentModel()->observeCurrent(),
-                [this, appWeak](const std::shared_ptr<Document>& doc)
+                [this, appWeak](const std::shared_ptr<IDocument>& idoc)
                 {
-                    if (doc)
+                    if (auto doc = std::dynamic_pointer_cast<Document>(idoc))
                     {
                         _textObserver = ListObserver<std::string>::create(
                             doc->getModel()->observeText(),

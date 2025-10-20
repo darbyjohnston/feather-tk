@@ -4,7 +4,7 @@
 
 #include "App.h"
 
-#include "DocumentModel.h"
+#include "Document.h"
 #include "MainWindow.h"
 #include "SettingsModel.h"
 
@@ -155,8 +155,8 @@ namespace examples
             auto& docs = _documentModel->getList();
             if (index >= 0 && index < docs.size())
             {
-                auto doc = docs[index];
-                if (doc->isChanged())
+                auto doc = std::dynamic_pointer_cast<Document>(docs[index]);
+                if (doc && doc->isChanged())
                 {
                     _context->getSystem<DialogSystem>()->confirm(
                         "Unsaved Changes",
@@ -182,9 +182,12 @@ namespace examples
         void App::closeAll()
         {
             bool changed = false;
-            for (const auto& doc : _documentModel->getList())
+            for (const auto& idoc : _documentModel->getList())
             {
-                changed |= doc->isChanged();
+                if (auto doc = std::dynamic_pointer_cast<Document>(idoc))
+                {
+                    changed |= doc->isChanged();
+                }
             }
             if (changed)
             {
@@ -210,7 +213,7 @@ namespace examples
 
         void App::save()
         {
-            if (auto doc = _documentModel->getCurrent())
+            if (auto doc = std::dynamic_pointer_cast<Document>(_documentModel->getCurrent()))
             {
                 if (doc->getPath().empty())
                 {
@@ -252,7 +255,7 @@ namespace examples
 
         void App::saveAs()
         {
-            if (auto doc = _documentModel->getCurrent())
+            if (auto doc = std::dynamic_pointer_cast<Document>(_documentModel->getCurrent()))
             {
                 auto fileBrowserSystem = _context->getSystem<FileBrowserSystem>();
                 fileBrowserSystem->open(
@@ -278,9 +281,12 @@ namespace examples
         void App::exit()
         {
             bool changed = false;
-            for (const auto& doc : _documentModel->getList())
+            for (const auto& idoc : _documentModel->getList())
             {
-                changed |= doc->isChanged();
+                if (auto doc = std::dynamic_pointer_cast<Document>(idoc))
+                {
+                    changed |= doc->isChanged();
+                }
             }
             if (changed)
             {

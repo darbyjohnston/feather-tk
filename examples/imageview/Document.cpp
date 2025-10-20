@@ -4,6 +4,7 @@
 
 #include "Document.h"
 
+#include <ftk/Core/Context.h>
 #include <ftk/Core/ImageIO.h>
 
 using namespace ftk;

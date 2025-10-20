@@ -4,6 +4,7 @@
 
 #pragma once
 
+#include <ftk/UI/DocumentModel.h>
 #include <ftk/UI/Label.h>
 #include <ftk/UI/RowLayout.h>
 
@@ -12,7 +13,6 @@ namespace examples
     namespace imageview
     {
         class App;
-        class Document;
 
         //! Status bar widget.
         class StatusBar : public ftk::IWidget
@@ -41,7 +41,7 @@ namespace examples
             std::map<std::string, std::shared_ptr<ftk::Label> > _labels;
             std::shared_ptr<ftk::HorizontalLayout> _layout;
 
-            std::shared_ptr<ftk::ValueObserver<std::shared_ptr<Document> > > _currentObserver;
+            std::shared_ptr<ftk::ValueObserver<std::shared_ptr<ftk::IDocument> > > _currentObserver;
         };
     }
 }

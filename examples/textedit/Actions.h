@@ -7,6 +7,7 @@
 #include "Settings.h"
 
 #include <ftk/UI/Action.h>
+#include <ftk/UI/DocumentModel.h>
 #include <ftk/UI/TextEditModel.h>
 
 namespace examples
@@ -14,7 +15,6 @@ namespace examples
     namespace textedit
     {
         class App;
-        class Document;
         class MainWindow;
 
         //! This class provides actions that are used to populate the menus
@@ -60,8 +60,8 @@ namespace examples
 
             std::map<std::string, std::shared_ptr<ftk::Action> > _actions;
 
-            std::weak_ptr<Document> _current;
-            std::shared_ptr<ftk::ValueObserver<std::shared_ptr<Document> > > _currentObserver;
+            std::weak_ptr<ftk::IDocument> _current;
+            std::shared_ptr<ftk::ValueObserver<std::shared_ptr<ftk::IDocument> > > _currentObserver;
             std::shared_ptr<ftk::ValueObserver<bool> > _changedObserver;
             std::shared_ptr<ftk::ValueObserver<ftk::TextEditSelection> > _selectionObserver;
             std::shared_ptr<ftk::ValueObserver<WindowSettings> > _windowSettingsObserver;

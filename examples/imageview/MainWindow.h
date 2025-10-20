@@ -16,7 +16,6 @@ namespace examples
     {
         class Actions;
         class App;
-        class Document;
         class DocumentTabs;
         class MenuBar;
         class SettingsModel;

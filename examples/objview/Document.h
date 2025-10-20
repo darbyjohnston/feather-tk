@@ -4,9 +4,9 @@
 
 #pragma once
 
-#include <ftk/Core/Context.h>
+#include <ftk/UI/DocumentModel.h>
+
 #include <ftk/Core/Mesh.h>
-#include <ftk/Core/ObservableValue.h>
 
 #include <filesystem>
 
@@ -15,7 +15,7 @@ namespace examples
     namespace objview
     {
         //! Document.
-        class Document : public std::enable_shared_from_this<Document>
+        class Document : public ftk::IDocument
         {
         protected:
             void _init(

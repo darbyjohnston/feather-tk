@@ -5,7 +5,7 @@
 #include "DocumentTabs.h"
 
 #include "App.h"
-#include "DocumentModel.h"
+#include "Document.h"
 #include "ObjView.h"
 #include "SettingsModel.h"
 
@@ -45,11 +45,11 @@ namespace examples
                 });
 
             // Observe when documents are added.
-            _addObserver = ftk::ValueObserver<std::weak_ptr<Document> >::create(
+            _addObserver = ftk::ValueObserver<std::weak_ptr<IDocument> >::create(
                 app->getDocumentModel()->observeAdd(),
-                [this, appWeak](const std::weak_ptr<Document>& docWeak)
+                [this, appWeak](const std::weak_ptr<IDocument>& idoc)
                 {
-                    if (auto doc = docWeak.lock())
+                    if (auto doc = std::dynamic_pointer_cast<Document>(idoc.lock()))
                     {
                         // Create a new view.
                         auto context = getContext();
@@ -62,11 +62,11 @@ namespace examples
                 });
 
             // Observe when documents are closed.
-            _closeObserver = ftk::ValueObserver<std::weak_ptr<Document> >::create(
+            _closeObserver = ftk::ValueObserver<std::weak_ptr<IDocument> >::create(
                 app->getDocumentModel()->observeClose(),
-                [this](const std::weak_ptr<Document>& docWeak)
+                [this](const std::weak_ptr<IDocument>& idoc)
                 {
-                    if (auto doc = docWeak.lock())
+                    if (auto doc = std::dynamic_pointer_cast<Document>(idoc.lock()))
                     {
                         // Remove the view.
                         auto i = _views.find(doc);
@@ -91,9 +91,9 @@ namespace examples
                 });
 
             // Observe the current document and update the current view.
-            _currentObserver = ftk::ValueObserver<std::shared_ptr<Document> >::create(
+            _currentObserver = ftk::ValueObserver<std::shared_ptr<IDocument> >::create(
                 app->getDocumentModel()->observeCurrent(),
-                [this](const std::shared_ptr<Document>& doc)
+                [this](const std::shared_ptr<IDocument>& doc)
                 {
                     auto i = _views.find(doc);
                     _currentView->setIfChanged(i != _views.end() ? i->second : nullptr);

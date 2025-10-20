@@ -5,7 +5,7 @@
 #include "Actions.h"
 
 #include "App.h"
-#include "DocumentModel.h"
+#include "Document.h"
 #include "MainWindow.h"
 #include "SettingsModel.h"
 
@@ -27,12 +27,12 @@ namespace examples
             _actionsUpdate();
 
             // Observe the current document to update the state of the actions.
-            _currentObserver = ValueObserver<std::shared_ptr<Document> >::create(
+            _currentObserver = ValueObserver<std::shared_ptr<IDocument> >::create(
                 app->getDocumentModel()->observeCurrent(),
-                [this](const std::shared_ptr<Document>& doc)
+                [this](const std::shared_ptr<IDocument>& idoc)
                 {
-                    _current = doc;
-                    if (doc)
+                    _current = idoc;
+                    if (auto doc = std::dynamic_pointer_cast<Document>(idoc))
                     {
                         _changedObserver = ValueObserver<bool>::create(
                             doc->observeChanged(),
@@ -192,7 +192,7 @@ namespace examples
                 [appWeak]
                 {
                     auto app = appWeak.lock();
-                    if (auto doc = app->getDocumentModel()->getCurrent())
+                    if (auto doc = std::dynamic_pointer_cast<Document>(app->getDocumentModel()->getCurrent()))
                     {
                         doc->getModel()->undo();
                     }
@@ -207,7 +207,7 @@ namespace examples
                 [appWeak]
                 {
                     auto app = appWeak.lock();
-                    if (auto doc = app->getDocumentModel()->getCurrent())
+                    if (auto doc = std::dynamic_pointer_cast<Document>(app->getDocumentModel()->getCurrent()))
                     {
                         doc->getModel()->redo();
                     }
@@ -222,7 +222,7 @@ namespace examples
                 [appWeak]
                 {
                     auto app = appWeak.lock();
-                    if (auto doc = app->getDocumentModel()->getCurrent())
+                    if (auto doc = std::dynamic_pointer_cast<Document>(app->getDocumentModel()->getCurrent()))
                     {
                         doc->getModel()->cut();
                     }
@@ -237,7 +237,7 @@ namespace examples
                 [appWeak]
                 {
                     auto app = appWeak.lock();
-                    if (auto doc = app->getDocumentModel()->getCurrent())
+                    if (auto doc = std::dynamic_pointer_cast<Document>(app->getDocumentModel()->getCurrent()))
                     {
                         doc->getModel()->copy();
                     }
@@ -252,7 +252,7 @@ namespace examples
                 [appWeak]
                 {
                     auto app = appWeak.lock();
-                    if (auto doc = app->getDocumentModel()->getCurrent())
+                    if (auto doc = std::dynamic_pointer_cast<Document>(app->getDocumentModel()->getCurrent()))
                     {
                         doc->getModel()->paste();
                     }
@@ -266,7 +266,7 @@ namespace examples
                 [appWeak]
                 {
                     auto app = appWeak.lock();
-                    if (auto doc = app->getDocumentModel()->getCurrent())
+                    if (auto doc = std::dynamic_pointer_cast<Document>(app->getDocumentModel()->getCurrent()))
                     {
                         doc->getModel()->selectAll();
                     }
@@ -281,7 +281,7 @@ namespace examples
                 [appWeak]
                 {
                     auto app = appWeak.lock();
-                    if (auto doc = app->getDocumentModel()->getCurrent())
+                    if (auto doc = std::dynamic_pointer_cast<Document>(app->getDocumentModel()->getCurrent()))
                     {
                         doc->getModel()->clearSelection();
                     }
@@ -338,7 +338,7 @@ namespace examples
 
         void Actions::_actionsUpdate()
         {
-            const auto doc = _current.lock();
+            const auto doc = std::dynamic_pointer_cast<Document>(_current.lock());
             const bool current = doc.get();
             TextEditSelection selection;
             if (doc)

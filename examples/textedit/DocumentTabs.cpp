@@ -5,7 +5,7 @@
 #include "DocumentTabs.h"
 
 #include "App.h"
-#include "DocumentModel.h"
+#include "Document.h"
 #include "SettingsModel.h"
 
 using namespace ftk;
@@ -42,11 +42,11 @@ namespace examples
                 });
 
             // Observe when documents are added.
-            _addObserver = ftk::ValueObserver<std::weak_ptr<Document> >::create(
+            _addObserver = ftk::ValueObserver<std::weak_ptr<IDocument> >::create(
                 app->getDocumentModel()->observeAdd(),
-                [this, appWeak](const std::weak_ptr<Document>& docWeak)
+                [this, appWeak](const std::weak_ptr<IDocument>& idoc)
                 {
-                    if (auto doc = docWeak.lock())
+                    if (auto doc = std::dynamic_pointer_cast<Document>(idoc.lock()))
                     {
                         // Create a new text editor.
                         auto context = getContext();
@@ -76,11 +76,11 @@ namespace examples
                 });
 
             // Observe when documents are closed.
-            _closeObserver = ftk::ValueObserver<std::weak_ptr<Document> >::create(
+            _closeObserver = ftk::ValueObserver<std::weak_ptr<IDocument> >::create(
                 app->getDocumentModel()->observeClose(),
-                [this](const std::weak_ptr<Document>& docWeak)
+                [this](const std::weak_ptr<IDocument>& idoc)
                 {
-                    if (auto doc = docWeak.lock())
+                    if (auto doc = std::dynamic_pointer_cast<Document>(idoc.lock()))
                     {
                         // Remove the text editor.
                         auto i = _textEdits.find(doc);

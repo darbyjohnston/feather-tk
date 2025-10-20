@@ -4,6 +4,7 @@
 
 #pragma once
 
+#include <ftk/UI/DocumentModel.h>
 #include <ftk/UI/TabWidget.h>
 
 namespace examples
@@ -11,7 +12,6 @@ namespace examples
     namespace objview
     {
         class App;
-        class Document;
         class ObjView;
 
         //! Document tabs widget.
@@ -47,13 +47,13 @@ namespace examples
 
         private:
             std::shared_ptr<ftk::TabWidget> _tabWidget;
-            std::map<std::shared_ptr<Document>, std::shared_ptr<ObjView> > _views;
+            std::map<std::shared_ptr<ftk::IDocument>, std::shared_ptr<ObjView> > _views;
             std::shared_ptr<ftk::ObservableValue<std::shared_ptr<ObjView> > > _currentView;
 
-            std::shared_ptr<ftk::ValueObserver<std::weak_ptr<Document> > > _addObserver;
-            std::shared_ptr<ftk::ValueObserver<std::weak_ptr<Document> > > _closeObserver;
+            std::shared_ptr<ftk::ValueObserver<std::weak_ptr<ftk::IDocument> > > _addObserver;
+            std::shared_ptr<ftk::ValueObserver<std::weak_ptr<ftk::IDocument> > > _closeObserver;
             std::shared_ptr<ftk::ValueObserver<bool> > _clearObserver;
-            std::shared_ptr<ftk::ValueObserver<std::shared_ptr<Document> > > _currentObserver;
+            std::shared_ptr<ftk::ValueObserver<std::shared_ptr<ftk::IDocument> > > _currentObserver;
             std::shared_ptr<ftk::ValueObserver<int> > _currentIndexObserver;
         };
     }

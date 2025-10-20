@@ -5,7 +5,7 @@
 #include "Actions.h"
 
 #include "App.h"
-#include "DocumentModel.h"
+#include "Document.h"
 #include "MainWindow.h"
 #include "SettingsModel.h"
 
@@ -27,9 +27,9 @@ namespace examples
             _actionsUpdate();
 
             // Observe the current document to update the state of the actions.
-            _currentObserver = ValueObserver<std::shared_ptr<Document> >::create(
+            _currentObserver = ValueObserver<std::shared_ptr<IDocument> >::create(
                 app->getDocumentModel()->observeCurrent(),
-                [this](const std::shared_ptr<Document>& doc)
+                [this](const std::shared_ptr<IDocument>& doc)
                 {
                     _current = doc;
                     _actionsUpdate();

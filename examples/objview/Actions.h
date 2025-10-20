@@ -7,13 +7,13 @@
 #include "Settings.h"
 
 #include <ftk/UI/Action.h>
+#include <ftk/UI/DocumentModel.h>
 
 namespace examples
 {
     namespace objview
     {
         class App;
-        class Document;
         class MainWindow;
 
         //! This class provides actions that are used to populate the menus
@@ -66,7 +66,7 @@ namespace examples
             std::map<std::string, std::shared_ptr<ftk::Action> > _actions;
             std::map<RenderMode, std::shared_ptr<ftk::Action> > _renderModeActions;
 
-            std::shared_ptr<ftk::ValueObserver<std::shared_ptr<Document> > > _currentObserver;
+            std::shared_ptr<ftk::ValueObserver<std::shared_ptr<ftk::IDocument> > > _currentObserver;
             std::shared_ptr<ftk::ValueObserver<WindowSettings> > _windowSettingsObserver;
             std::shared_ptr<ftk::ValueObserver<bool> > _fullScreenObserver;
             std::shared_ptr<ftk::ValueObserver<RenderSettings> > _renderSettingsObserver;

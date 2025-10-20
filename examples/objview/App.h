@@ -8,6 +8,7 @@
 
 #include <ftk/UI/App.h>
 #include <ftk/UI/DialogSystem.h>
+#include <ftk/UI/DocumentModel.h>
 #include <ftk/UI/RecentFilesModel.h>
 
 #include <ftk/Core/CmdLine.h>
@@ -18,7 +19,6 @@ namespace examples
 {
     namespace objview
     {
-        class DocumentModel;
         class MainWindow;
         class SettingsModel;
 
@@ -44,7 +44,7 @@ namespace examples
             ///@{
 
             const std::shared_ptr<SettingsModel>& getSettingsModel() const;
-            const std::shared_ptr<DocumentModel>& getDocumentModel() const;
+            const std::shared_ptr<ftk::DocumentModel>& getDocumentModel() const;
             const std::shared_ptr<ftk::RecentFilesModel>& getRecentFilesModel() const;
 
             ///@}
@@ -54,8 +54,7 @@ namespace examples
 
             //! \name File I/O
             //! 
-            //! These are wrappers around the methods on DocumentModel
-            //! that also do error handling.
+            //! These are wrappers methods that do error handling.
             //! 
             ///@{
 
@@ -76,7 +75,7 @@ namespace examples
             CmdLine _cmdLine;
 
             std::shared_ptr<SettingsModel> _settingsModel;
-            std::shared_ptr<DocumentModel> _documentModel;
+            std::shared_ptr<ftk::DocumentModel> _documentModel;
             std::shared_ptr<ftk::RecentFilesModel> _recentFilesModel;
 
             std::shared_ptr<MainWindow> _mainWindow;
