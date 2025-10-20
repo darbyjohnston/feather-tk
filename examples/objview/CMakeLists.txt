@@ -4,13 +4,13 @@ set(HEADERS
     Document.h
     DocumentModel.h
     DocumentTabs.h
+    HUDWidget.h
     MainWindow.h
     MenuBar.h
     ObjIO.h
     ObjView.h
     SettingsModel.h
     SettingsWidget.h
-    StatusBar.h
     ToolBar.h)
 
 set(SOURCE
@@ -19,13 +19,13 @@ set(SOURCE
     Document.cpp
     DocumentModel.cpp
     DocumentTabs.cpp
+    HUDWidget.cpp
     MainWindow.cpp
     MenuBar.cpp
     ObjIO.cpp
     ObjView.cpp
     SettingsModel.cpp
     SettingsWidget.cpp
-    StatusBar.cpp
     ToolBar.cpp
     main.cpp)
 

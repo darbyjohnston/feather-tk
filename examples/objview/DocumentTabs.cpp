@@ -9,8 +9,6 @@
 #include "ObjView.h"
 #include "SettingsModel.h"
 
-#include <ftk/UI/ScrollWidget.h>
-
 using namespace ftk;
 
 namespace examples
@@ -28,6 +26,8 @@ namespace examples
 
             _tabWidget = TabWidget::create(context, shared_from_this());
             _tabWidget->setTabsClosable(true);
+
+            _currentView = ObservableValue<std::shared_ptr<ObjView> >::create();
 
             // Set tab callbacks.
             auto appWeak = std::weak_ptr<App>(app);
@@ -54,13 +54,10 @@ namespace examples
                         // Create a new view.
                         auto context = getContext();
                         auto app = appWeak.lock();
-                        auto view = ObjView::create(context, doc);
-                        auto scrollWidget = ScrollWidget::create(context);
-                        scrollWidget->setBorder(false);
-                        scrollWidget->setWidget(view);
-                        _tabWidget->addTab(doc->getName(), scrollWidget, doc->getTooltip());
+                        auto view = ObjView::create(context, app, doc);
+                        _tabWidget->addTab(doc->getName(), view, doc->getTooltip());
                         view->takeKeyFocus();
-                        _views[doc] = scrollWidget;
+                        _views[doc] = view;
                     }
                 });
 
@@ -93,10 +90,19 @@ namespace examples
                     }
                 });
 
+            // Observe the current document and update the current view.
+            _currentObserver = ftk::ValueObserver<std::shared_ptr<Document> >::create(
+                app->getDocumentModel()->observeCurrent(),
+                [this](const std::shared_ptr<Document>& doc)
+                {
+                    auto i = _views.find(doc);
+                    _currentView->setIfChanged(i != _views.end() ? i->second : nullptr);
+                });
+
             // Observe the current document and update the current tab.
-            _currentObserver = ftk::ValueObserver<int>::create(
+            _currentIndexObserver = ftk::ValueObserver<int>::create(
                 app->getDocumentModel()->observeCurrentIndex(),
-                [this, appWeak](int index)
+                [this](int index)
                 {
                     _tabWidget->setCurrentTab(index);
                 });
@@ -113,6 +119,16 @@ namespace examples
             auto out = std::shared_ptr<DocumentTabs>(new DocumentTabs);
             out->_init(context, app, parent);
             return out;
+        }
+
+        const std::shared_ptr<ObjView>& DocumentTabs::getCurrentView() const
+        {
+            return _currentView->get();
+        }
+
+        std::shared_ptr<ftk::IObservableValue<std::shared_ptr<ObjView> > > DocumentTabs::observeCurrentView() const
+        {
+            return _currentView;
         }
 
         void DocumentTabs::setGeometry(const Box2I& value)

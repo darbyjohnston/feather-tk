@@ -19,8 +19,8 @@ namespace examples
         class Document;
         class DocumentTabs;
         class MenuBar;
+        class ObjView;
         class SettingsWidget;
-        class StatusBar;
         class ToolBar;
 
         //! Main window.
@@ -45,6 +45,14 @@ namespace examples
                 const std::string& name,
                 const ftk::Size2I&);
 
+            //! \name Current View
+            ///@{
+
+            const std::shared_ptr<ObjView>& getCurrentView() const;
+            std::shared_ptr<ftk::IObservableValue<std::shared_ptr<ObjView> > > observeCurrentView() const;
+
+            ///@}
+
         protected:
             void _drop(const std::vector<std::string>&);
  
@@ -52,17 +60,18 @@ namespace examples
 
             std::weak_ptr<App> _app;
             std::shared_ptr<SettingsModel> _settingsModel;
+            std::shared_ptr<ftk::ObservableValue<std::shared_ptr<ObjView> > > _currentView;
 
             std::shared_ptr<Actions> _actions;
             std::shared_ptr<MenuBar> _menuBar;
             std::shared_ptr<ToolBar> _toolBar;
             std::shared_ptr<DocumentTabs> _tabs;
             std::shared_ptr<SettingsWidget> _settingsWidget;
-            std::shared_ptr<StatusBar> _statusBar;
             std::shared_ptr<ftk::Splitter> _splitter;
             std::shared_ptr<ftk::VerticalLayout> _layout;
 
             std::shared_ptr<ftk::ValueObserver<WindowSettings> > _windowSettingsObserver;
+            std::shared_ptr<ftk::ValueObserver<std::shared_ptr<ObjView> > > _currentViewObserver;
         };
     }
 }

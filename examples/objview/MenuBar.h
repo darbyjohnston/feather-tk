@@ -47,6 +47,12 @@ namespace examples
             void _createWindowMenu(
                 const std::shared_ptr<ftk::Context>&,
                 const std::shared_ptr<Actions>&);
+            void _createViewMenu(
+                const std::shared_ptr<ftk::Context>&,
+                const std::shared_ptr<Actions>&);
+            void _createRenderMenu(
+                const std::shared_ptr<ftk::Context>&,
+                const std::shared_ptr<Actions>&);
 
             std::map<std::string, std::shared_ptr<ftk::Menu> > _menus;
 

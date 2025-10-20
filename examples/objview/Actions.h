@@ -4,6 +4,7 @@
 
 #pragma once
 
+#include "ObjView.h"
 #include "SettingsModel.h"
 
 #include <ftk/UI/Action.h>
@@ -53,15 +54,23 @@ namespace examples
                 const std::shared_ptr<ftk::Context>&,
                 const std::shared_ptr<App>&,
                 const std::shared_ptr<MainWindow>&);
-
-            void _actionsUpdate();
+            void _createViewActions(
+                const std::shared_ptr<ftk::Context>&,
+                const std::shared_ptr<App>&,
+                const std::shared_ptr<MainWindow>&);
+            void _createRenderActions(
+                const std::shared_ptr<ftk::Context>&,
+                const std::shared_ptr<App>&,
+                const std::shared_ptr<MainWindow>&);
 
             std::map<std::string, std::shared_ptr<ftk::Action> > _actions;
+            std::map<RenderMode, std::shared_ptr<ftk::Action> > _renderModeActions;
 
-            std::weak_ptr<Document> _current;
             std::shared_ptr<ftk::ValueObserver<std::shared_ptr<Document> > > _currentObserver;
             std::shared_ptr<ftk::ValueObserver<WindowSettings> > _windowSettingsObserver;
             std::shared_ptr<ftk::ValueObserver<bool> > _fullScreenObserver;
+            std::shared_ptr<ftk::ValueObserver<std::shared_ptr<ObjView> > > _currentViewObserver;
+            std::shared_ptr<ftk::ValueObserver<RenderMode> > _renderModeObserver;
         };
     }
 }

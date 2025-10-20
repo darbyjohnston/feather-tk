@@ -12,6 +12,8 @@ namespace examples
     namespace objview
     {
         class Actions;
+        class App;
+        class Document;
 
         //! Tool bar widget.
         class ToolBar : public ftk::IWidget
@@ -19,6 +21,7 @@ namespace examples
         protected:
             void _init(
                 const std::shared_ptr<ftk::Context>&,
+                const std::shared_ptr<App>&,
                 const std::shared_ptr<Actions>&,
                 const std::shared_ptr<ftk::IWidget>& parent);
 
@@ -30,6 +33,7 @@ namespace examples
             //! Create a new tool bar.
             static std::shared_ptr<ToolBar> create(
                 const std::shared_ptr<ftk::Context>&,
+                const std::shared_ptr<App>&,
                 const std::shared_ptr<Actions>&,
                 const std::shared_ptr<ftk::IWidget>& parent = nullptr);
 
@@ -37,8 +41,30 @@ namespace examples
             void sizeHintEvent(const ftk::SizeHintEvent&) override;
 
         private:
+            void _createFileToolBar(
+                const std::shared_ptr<ftk::Context>&,
+                const std::shared_ptr<Actions>&);
+            void _createWindowToolBar(
+                const std::shared_ptr<ftk::Context>&,
+                const std::shared_ptr<Actions>&);
+            void _createViewToolBar(
+                const std::shared_ptr<ftk::Context>&,
+                const std::shared_ptr<Actions>&);
+            void _createObjectToolBar(
+                const std::shared_ptr<ftk::Context>&,
+                const std::shared_ptr<App>&,
+                const std::shared_ptr<Actions>&);
+
+            void _rotationUpdate();
+
+            std::weak_ptr<Document> _current;
+            ftk::V3F _rotation;
+
             std::map<std::string, std::shared_ptr<ftk::ToolButton> > _buttons;
             std::shared_ptr<ftk::HorizontalLayout> _layout;
+
+            std::shared_ptr<ftk::ValueObserver<std::shared_ptr<Document> > > _currentObserver;
+            std::shared_ptr<ftk::ValueObserver<ftk::V3F> > _rotationObserver;
         };
     }
 }

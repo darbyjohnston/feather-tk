@@ -23,6 +23,15 @@ namespace examples
             bool operator != (const WindowSettings&) const;
         };
 
+        //! Animation settings.
+        struct AnimSettings
+        {
+            bool enabled = true;
+
+            bool operator == (const AnimSettings&) const;
+            bool operator != (const AnimSettings&) const;
+        };
+
         //! Style settings.
         struct StyleSettings
         {
@@ -68,6 +77,15 @@ namespace examples
 
             ///@}
 
+            //! \name Animation
+            ///@{
+
+            const AnimSettings& getAnim() const;
+            std::shared_ptr<ftk::IObservableValue<AnimSettings> > observeAnim() const;
+            void setAnim(const AnimSettings&);
+
+            ///@}
+
             //! \name Style
             ///@{
 
@@ -81,13 +99,16 @@ namespace examples
             std::shared_ptr<ftk::Settings> _settings;
             std::vector<std::filesystem::path> _recentFiles;
             std::shared_ptr<ftk::ObservableValue<WindowSettings> > _window;
+            std::shared_ptr<ftk::ObservableValue<AnimSettings> > _anim;
             std::shared_ptr<ftk::ObservableValue<StyleSettings> > _style;
         };
 
         void to_json(nlohmann::json&, const WindowSettings&);
+        void to_json(nlohmann::json&, const AnimSettings&);
         void to_json(nlohmann::json&, const StyleSettings&);
 
         void from_json(const nlohmann::json&, WindowSettings&);
+        void from_json(const nlohmann::json&, AnimSettings&);
         void from_json(const nlohmann::json&, StyleSettings&);
     }
 }

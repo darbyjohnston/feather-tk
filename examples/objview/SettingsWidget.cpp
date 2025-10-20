@@ -33,6 +33,10 @@ namespace examples
             auto closeButton = ToolButton::create(context);
             closeButton->setIcon("Close");
 
+            // Create the animation widgets.
+            _animCheckBox = CheckBox::create(context);
+            _animCheckBox->setHStretch(Stretch::Expanding);
+
             // Create the style widgets.
             _colorStyleComboBox = ComboBox::create(context);
             _colorStyleComboBox->setItems(getColorStyleLabels());
@@ -57,6 +61,7 @@ namespace examples
             closeButton->setParent(hLayout);
             auto formLayout = FormLayout::create(context, _layout);
             formLayout->setMarginRole(SizeRole::Margin);
+            formLayout->addRow("Animation:", _animCheckBox);
             formLayout->addRow("Color style:", _colorStyleComboBox);
             formLayout->addRow("Display scale:", _displayScaleComboBox);
             _scrollWidget = ScrollWidget::create(context, ScrollType::Both, _layout);
@@ -74,6 +79,18 @@ namespace examples
                         auto window = app->getSettingsModel()->getWindow();
                         window.settings = false;
                         app->getSettingsModel()->setWindow(window);
+                    }
+                });
+
+            // Set the animation callbacks.
+            _animCheckBox->setCheckedCallback(
+                [appWeak](bool value)
+                {
+                    if (auto app = appWeak.lock())
+                    {
+                        auto anim = app->getSettingsModel()->getAnim();
+                        anim.enabled = value;
+                        app->getSettingsModel()->setAnim(anim);
                     }
                 });
 
@@ -97,6 +114,14 @@ namespace examples
                         style.displayScale = _displayScales[index];
                         app->getSettingsModel()->setStyle(style);
                     }
+                });
+
+            // Observe animation settings and update the widgets.
+            _animSettingsObserver = ValueObserver<AnimSettings>::create(
+                app->getSettingsModel()->observeAnim(),
+                [this](const AnimSettings& value)
+                {
+                    _animCheckBox->setChecked(value.enabled);
                 });
 
             // Observe style settings and update the widgets.

@@ -547,8 +547,6 @@ namespace ftk
         const auto& text = p.text->get();
         TextEditPos cursor = p.cursor->get();
         TextEditSelection selection = p.selection->get();
-
-        // Start selection.
         if (static_cast<int>(KeyModifier::Shift) == modifiers)
         {
             if (!selection.isValid())
@@ -561,32 +559,25 @@ namespace ftk
             selection = TextEditSelection();
         }
 
-        // Handle keys.
         switch (key)
         {
         case Key::Left:
-            // Move the cursor left.
             cursor = _getPrev(cursor);
             break;
-
         case Key::Right:
-            // Move the cursor right.
             cursor = _getNext(cursor);
             break;
 
         case Key::Up:
             if (cursor.line > 0)
             {
-                // Move the cursor up a line.
                 --cursor.line;
                 cursor.chr = std::min(cursor.chr, static_cast<int>(text[cursor.line].size()));
             }
             break;
-
         case Key::Down:
             if (cursor.line < static_cast<int>(text.size() - 1))
             {
-                // Move the cursor down a line.
                 ++cursor.line;
                 cursor.chr = cursor.line < static_cast<int>(text.size()) ?
                     std::min(cursor.chr, static_cast<int>(text[cursor.line].size())) :
@@ -597,16 +588,13 @@ namespace ftk
         case Key::Home:
             if (cursor.chr > 0)
             {
-                // Move the cursor to the beginning of the line.
                 cursor.chr = 0;
             }
             break;
-
         case Key::End:
             if (cursor.line < static_cast<int>(text.size()) &&
                 cursor.chr < static_cast<int>(text[cursor.line].size()))
             {
-                // Move the cursor to the end of the line.
                 cursor.chr = static_cast<int>(text[cursor.line].size());
             }
             break;
@@ -614,16 +602,13 @@ namespace ftk
         case Key::PageUp:
             if (cursor.line > 0)
             {
-                // Move the cursor up a page.
                 cursor.line = std::max(0, cursor.line - p.pageRows);
                 cursor.chr = std::min(cursor.chr, static_cast<int>(text[cursor.line].size()));
             }
             break;
-
         case Key::PageDown:
             if (cursor.line < static_cast<int>(text.size()))
             {
-                // Move the cursor down a page.
                 cursor.line = std::min(cursor.line + p.pageRows, static_cast<int>(text.size()) - 1);
                 cursor.chr = std::min(cursor.chr, static_cast<int>(text[cursor.line].size()));
             }
@@ -632,12 +617,10 @@ namespace ftk
         default: break;
         }
 
-        // End selection.
         if (static_cast<int>(KeyModifier::Shift) == modifiers)
         {
             selection.second = cursor;
         }
-
         p.cursor->setIfChanged(cursor);
         p.selection->setIfChanged(selection);
     }

@@ -22,6 +22,17 @@ namespace examples
             return !(*this == other);
         }
 
+        bool AnimSettings::operator == (const AnimSettings& other) const
+        {
+            return
+                enabled == other.enabled;
+        }
+
+        bool AnimSettings::operator != (const AnimSettings& other) const
+        {
+            return !(*this == other);
+        }
+
         bool StyleSettings::operator == (const StyleSettings& other) const
         {
             return
@@ -57,6 +68,10 @@ namespace examples
             _settings->getT("/Window", window);
             _window = ObservableValue<WindowSettings>::create(window);
 
+            AnimSettings anim;
+            _settings->getT("/Anim", anim);
+            _anim = ObservableValue<AnimSettings>::create(anim);
+
             StyleSettings style;
             style.displayScale = defaultDisplayScale;
             _settings->getT("/Style", style);
@@ -72,6 +87,7 @@ namespace examples
             }
             _settings->set("/RecentFiles", recentFiles);
             _settings->setT("/Window", _window->get());
+            _settings->setT("/Anim", _anim->get());
             _settings->setT("/Style", _style->get());
         }
 
@@ -109,6 +125,21 @@ namespace examples
             _window->setIfChanged(value);
         }
 
+        const AnimSettings& SettingsModel::getAnim() const
+        {
+            return _anim->get();
+        }
+
+        std::shared_ptr<IObservableValue<AnimSettings> > SettingsModel::observeAnim() const
+        {
+            return _anim;
+        }
+
+        void SettingsModel::setAnim(const AnimSettings& value)
+        {
+            _anim->setIfChanged(value);
+        }
+
         const StyleSettings& SettingsModel::getStyle() const
         {
             return _style->get();
@@ -130,6 +161,11 @@ namespace examples
             json["Split"] = value.split;
         }
 
+        void to_json(nlohmann::json& json, const AnimSettings& value)
+        {
+            json["Enabled"] = value.enabled;
+        }
+
         void to_json(nlohmann::json& json, const StyleSettings& value)
         {
             json["DisplayScale"] = value.displayScale;
@@ -140,6 +176,11 @@ namespace examples
         {
             json.at("Settings").get_to(value.settings);
             json.at("Split").get_to(value.split);
+        }
+
+        void from_json(const nlohmann::json& json, AnimSettings& value)
+        {
+            json.at("Enabled").get_to(value.enabled);
         }
 
         void from_json(const nlohmann::json& json, StyleSettings& value)

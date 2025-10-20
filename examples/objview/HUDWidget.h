@@ -4,34 +4,33 @@
 
 #pragma once
 
+#include <ftk/UI/GridLayout.h>
 #include <ftk/UI/Label.h>
-#include <ftk/UI/RowLayout.h>
 
 namespace examples
 {
     namespace objview
     {
-        class App;
         class Document;
 
-        //! Status bar widget.
-        class StatusBar : public ftk::IWidget
+        //! Heads up display (HUD) widget.
+        class HUDWidget : public ftk::IWidget
         {
         protected:
             void _init(
                 const std::shared_ptr<ftk::Context>&,
-                const std::shared_ptr<App>&,
+                const std::shared_ptr<Document>&,
                 const std::shared_ptr<ftk::IWidget>& parent);
 
-            StatusBar() = default;
+            HUDWidget() = default;
 
         public:
-            virtual ~StatusBar();
+            virtual ~HUDWidget();
 
             //! Create a new widget.
-            static std::shared_ptr<StatusBar> create(
+            static std::shared_ptr<HUDWidget> create(
                 const std::shared_ptr<ftk::Context>&,
-                const std::shared_ptr<App>&,
+                const std::shared_ptr<Document>&,
                 const std::shared_ptr<ftk::IWidget>& parent = nullptr);
 
             void setGeometry(const ftk::Box2I&) override;
@@ -39,9 +38,7 @@ namespace examples
 
         private:
             std::map<std::string, std::shared_ptr<ftk::Label> > _labels;
-            std::shared_ptr<ftk::HorizontalLayout> _layout;
-
-            std::shared_ptr<ftk::ValueObserver<std::shared_ptr<Document> > > _currentObserver;
+            std::shared_ptr<ftk::GridLayout> _layout;
         };
     }
 }

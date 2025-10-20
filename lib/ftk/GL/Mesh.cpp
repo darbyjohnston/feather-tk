@@ -82,80 +82,113 @@ namespace ftk
         {
             const size_t vertexByteCount = getByteCount(type);
             std::vector<uint8_t> out((range.max() - range.min() + 1) * 3 * vertexByteCount);
+            const size_t vSize = mesh.v.size();
+            const size_t tSize = mesh.t.size();
+            const size_t cSize = mesh.c.size();
             uint8_t* p = out.data();
             switch (type)
             {
             case VBOType::Pos2_F32:
+            {
+                float* pf = reinterpret_cast<float*>(p);
                 for (size_t i = range.min(); i <= range.max(); ++i)
                 {
-                    const Vertex2* vertices[] =
-                    {
-                        &mesh.triangles[i].v[0],
-                        &mesh.triangles[i].v[1],
-                        &mesh.triangles[i].v[2]
-                    };
+                    const Triangle2* tri = &mesh.triangles[i];
                     for (size_t k = 0; k < 3; ++k)
                     {
-                        const size_t v = vertices[k]->v;
-                        float* pf = reinterpret_cast<float*>(p);
-                        pf[0] = v ? mesh.v[v - 1].x : 0.F;
-                        pf[1] = v ? mesh.v[v - 1].y : 0.F;
-                        p += 2 * sizeof(float);
+                        const size_t v = tri->v[k].v;
+                        if (v && v <= vSize)
+                        {
+                            pf[0] = mesh.v[v - 1].x;
+                            pf[1] = mesh.v[v - 1].y;
+                        }
+                        else
+                        {
+                            pf[0] = 0.F;
+                            pf[1] = 0.F;
+                        }
+                        pf += 2;
                     }
                 }
                 break;
+            }
             case VBOType::Pos2_F32_UV_U16:
                 for (size_t i = range.min(); i <= range.max(); ++i)
                 {
-                    const Vertex2* vertices[] =
-                    {
-                        &mesh.triangles[i].v[0],
-                        &mesh.triangles[i].v[1],
-                        &mesh.triangles[i].v[2]
-                    };
+                    const Triangle2* tri = &mesh.triangles[i];
                     for (size_t k = 0; k < 3; ++k)
                     {
-                        const size_t v = vertices[k]->v;
+                        const size_t v = tri->v[k].v;
                         float* pf = reinterpret_cast<float*>(p);
-                        pf[0] = v ? mesh.v[v - 1].x : 0.F;
-                        pf[1] = v ? mesh.v[v - 1].y : 0.F;
+                        if (v && v <= vSize)
+                        {
+                            pf[0] = mesh.v[v - 1].x;
+                            pf[1] = mesh.v[v - 1].y;
+                        }
+                        else
+                        {
+                            pf[0] = 0.F;
+                            pf[1] = 0.F;
+                        }
                         p += 2 * sizeof(float);
 
-                        const size_t t = vertices[k]->t;
+                        const size_t t = tri->v[k].t;
                         uint16_t* pu16 = reinterpret_cast<uint16_t*>(p);
-                        pu16[0] = t ? clamp(static_cast<int>(mesh.t[t - 1].x * 65535.F), 0, 65535) : 0;
-                        pu16[1] = t ? clamp(static_cast<int>(mesh.t[t - 1].y * 65535.F), 0, 65535) : 0;
+                        if (t && t <= tSize)
+                        {
+                            pu16[0] = clamp(static_cast<int>(mesh.t[t - 1].x * 65535.F), 0, 65535);
+                            pu16[1] = clamp(static_cast<int>(mesh.t[t - 1].y * 65535.F), 0, 65535);
+                        }
+                        else
+                        {
+                            pu16[0] = 0;
+                            pu16[1] = 0;
+                        }
                         p += 2 * sizeof(uint16_t);
                     }
                 }
                 break;
             case VBOType::Pos2_F32_Color_F32:
+            {
+                float* pf = reinterpret_cast<float*>(p);
                 for (size_t i = range.min(); i <= range.max(); ++i)
                 {
-                    const Vertex2* vertices[] =
-                    {
-                        &mesh.triangles[i].v[0],
-                        &mesh.triangles[i].v[1],
-                        &mesh.triangles[i].v[2]
-                    };
+                    const Triangle2* tri = &mesh.triangles[i];
                     for (size_t k = 0; k < 3; ++k)
                     {
-                        const size_t v = vertices[k]->v;
-                        float* pf = reinterpret_cast<float*>(p);
-                        pf[0] = v ? mesh.v[v - 1].x : 0.F;
-                        pf[1] = v ? mesh.v[v - 1].y : 0.F;
-                        p += 2 * sizeof(float);
+                        const size_t v = tri->v[k].v;
+                        if (v && v <= vSize)
+                        {
+                            pf[0] = mesh.v[v - 1].x;
+                            pf[1] = mesh.v[v - 1].y;
+                        }
+                        else
+                        {
+                            pf[0] = 0.F;
+                            pf[1] = 0.F;
+                        }
+                        pf += 2;
 
-                        const size_t c = vertices[k]->c;
-                        pf = reinterpret_cast<float*>(p);
-                        pf[0] = c ? mesh.c[c - 1].x : 1.F;
-                        pf[1] = c ? mesh.c[c - 1].y : 1.F;
-                        pf[2] = c ? mesh.c[c - 1].z : 1.F;
-                        pf[3] = c ? mesh.c[c - 1].w : 1.F;
-                        p += 4 * sizeof(float);
+                        const size_t c = tri->v[k].c;
+                        if (c && c <= cSize)
+                        {
+                            pf[0] = mesh.c[c - 1].x;
+                            pf[1] = mesh.c[c - 1].y;
+                            pf[2] = mesh.c[c - 1].z;
+                            pf[3] = mesh.c[c - 1].w;
+                        }
+                        else
+                        {
+                            pf[0] = 1.F;
+                            pf[1] = 1.F;
+                            pf[2] = 1.F;
+                            pf[3] = 1.F;
+                        }
+                        pf += 4;
                     }
                 }
                 break;
+            }
             default: break;
             }
             return out;
@@ -176,51 +209,73 @@ namespace ftk
         {
             const size_t vertexByteCount = getByteCount(type);
             std::vector<uint8_t> out((range.max() - range.min() + 1) * 3 * vertexByteCount);
+            const size_t vSize = mesh.v.size();
+            const size_t tSize = mesh.t.size();
+            const size_t nSize = mesh.n.size();
+            const size_t cSize = mesh.c.size();
             uint8_t* p = out.data();
             switch (type)
             {
             case VBOType::Pos3_F32:
+            {
+                float* pf = reinterpret_cast<float*>(p);
                 for (size_t i = range.min(); i <= range.max(); ++i)
                 {
-                    const Vertex3* vertices[] =
-                    {
-                        &mesh.triangles[i].v[0],
-                        &mesh.triangles[i].v[1],
-                        &mesh.triangles[i].v[2]
-                    };
+                    const Triangle3* tri = &mesh.triangles[i];
                     for (size_t k = 0; k < 3; ++k)
                     {
-                        const size_t v = vertices[k]->v;
-                        float* pf = reinterpret_cast<float*>(p);
-                        pf[0] = v ? mesh.v[v - 1].x : 0.F;
-                        pf[1] = v ? mesh.v[v - 1].y : 0.F;
-                        pf[2] = v ? mesh.v[v - 1].z : 0.F;
-                        p += 3 * sizeof(float);
+                        const size_t v = tri->v[k].v;
+                        if (v && v <= vSize)
+                        {
+                            pf[0] = mesh.v[v - 1].x;
+                            pf[1] = mesh.v[v - 1].y;
+                            pf[2] = mesh.v[v - 1].z;
+                        }
+                        else
+                        {
+                            pf[0] = 0.F;
+                            pf[1] = 0.F;
+                            pf[2] = 0.F;
+                        }
+                        pf += 3;
                     }
                 }
                 break;
+            }
             case VBOType::Pos3_F32_UV_U16:
                 for (size_t i = range.min(); i <= range.max(); ++i)
                 {
-                    const Vertex3* vertices[] =
-                    {
-                        &mesh.triangles[i].v[0],
-                        &mesh.triangles[i].v[1],
-                        &mesh.triangles[i].v[2]
-                    };
+                    const Triangle3* tri = &mesh.triangles[i];
                     for (size_t k = 0; k < 3; ++k)
                     {
-                        const size_t v = vertices[k]->v;
+                        const size_t v = tri->v[k].v;
                         float* pf = reinterpret_cast<float*>(p);
-                        pf[0] = v ? mesh.v[v - 1].x : 0.F;
-                        pf[1] = v ? mesh.v[v - 1].y : 0.F;
-                        pf[2] = v ? mesh.v[v - 1].z : 0.F;
+                        if (v && v <= vSize)
+                        {
+                            pf[0] = mesh.v[v - 1].x;
+                            pf[1] = mesh.v[v - 1].y;
+                            pf[2] = mesh.v[v - 1].z;
+                        }
+                        else
+                        {
+                            pf[0] = 0.F;
+                            pf[1] = 0.F;
+                            pf[2] = 0.F;
+                        }
                         p += 3 * sizeof(float);
 
-                        const size_t t = vertices[k]->t;
+                        const size_t t = tri->v[k].t;
                         uint16_t* pu16 = reinterpret_cast<uint16_t*>(p);
-                        pu16[0] = t ? clamp(static_cast<int>(mesh.t[t - 1].x * 65535.F), 0, 65535) : 0;
-                        pu16[1] = t ? clamp(static_cast<int>(mesh.t[t - 1].y * 65535.F), 0, 65535) : 0;
+                        if (t && t <= tSize)
+                        {
+                            pu16[0] = clamp(static_cast<int>(mesh.t[t - 1].x * 65535.F), 0, 65535);
+                            pu16[1] = clamp(static_cast<int>(mesh.t[t - 1].y * 65535.F), 0, 65535);
+                        }
+                        else
+                        {
+                            pu16[0] = 0;
+                            pu16[0] = 0;
+                        }
                         p += 2 * sizeof(uint16_t);
                     }
                 }
@@ -228,32 +283,53 @@ namespace ftk
             case VBOType::Pos3_F32_UV_U16_Normal_U10:
                 for (size_t i = range.min(); i <= range.max(); ++i)
                 {
-                    const Vertex3* vertices[] =
-                    {
-                        &mesh.triangles[i].v[0],
-                        &mesh.triangles[i].v[1],
-                        &mesh.triangles[i].v[2]
-                    };
+                    const Triangle3* tri = &mesh.triangles[i];
                     for (size_t k = 0; k < 3; ++k)
                     {
-                        const size_t v = vertices[k]->v;
+                        const size_t v = tri->v[k].v;
                         float* pf = reinterpret_cast<float*>(p);
-                        pf[0] = v ? mesh.v[v - 1].x : 0.F;
-                        pf[1] = v ? mesh.v[v - 1].y : 0.F;
-                        pf[2] = v ? mesh.v[v - 1].z : 0.F;
+                        if (v && v <= vSize)
+                        {
+                            pf[0] = mesh.v[v - 1].x;
+                            pf[1] = mesh.v[v - 1].y;
+                            pf[2] = mesh.v[v - 1].z;
+                        }
+                        else
+                        {
+                            pf[0] = 0.F;
+                            pf[1] = 0.F;
+                            pf[2] = 0.F;
+                        }
                         p += 3 * sizeof(float);
 
-                        const size_t t = vertices[k]->t;
+                        const size_t t = tri->v[k].t;
                         uint16_t* pu16 = reinterpret_cast<uint16_t*>(p);
-                        pu16[0] = t ? clamp(static_cast<int>(mesh.t[t - 1].x * 65535.F), 0, 65535) : 0;
-                        pu16[1] = t ? clamp(static_cast<int>(mesh.t[t - 1].y * 65535.F), 0, 65535) : 0;
+                        if (t && t <= tSize)
+                        {
+                            pu16[0] = clamp(static_cast<int>(mesh.t[t - 1].x * 65535.F), 0, 65535);
+                            pu16[1] = clamp(static_cast<int>(mesh.t[t - 1].y * 65535.F), 0, 65535);
+                        }
+                        else
+                        {
+                            pu16[0] = 0;
+                            pu16[1] = 0;
+                        }
                         p += 2 * sizeof(uint16_t);
 
-                        const size_t n = vertices[k]->n;
+                        const size_t n = tri->v[k].n;
                         auto packedNormal = reinterpret_cast<PackedNormal*>(p);
-                        packedNormal->x = n ? clamp(static_cast<int>(mesh.n[n - 1].x * 511.F), -512, 511) : 0;
-                        packedNormal->y = n ? clamp(static_cast<int>(mesh.n[n - 1].y * 511.F), -512, 511) : 0;
-                        packedNormal->z = n ? clamp(static_cast<int>(mesh.n[n - 1].z * 511.F), -512, 511) : 0;
+                        if (n && n <= nSize)
+                        {
+                            packedNormal->x = clamp(static_cast<int>(mesh.n[n - 1].x * 511.F), -512, 511);
+                            packedNormal->y = clamp(static_cast<int>(mesh.n[n - 1].y * 511.F), -512, 511);
+                            packedNormal->z = clamp(static_cast<int>(mesh.n[n - 1].z * 511.F), -512, 511);
+                        }
+                        else
+                        {
+                            packedNormal->x = 0;
+                            packedNormal->y = 0;
+                            packedNormal->z = 0;
+                        }
                         p += sizeof(PackedNormal);
                     }
                 }
@@ -261,142 +337,219 @@ namespace ftk
             case VBOType::Pos3_F32_UV_U16_Normal_U10_Color_U8:
                 for (size_t i = range.min(); i <= range.max(); ++i)
                 {
-                    const Vertex3* vertices[] =
-                    {
-                        &mesh.triangles[i].v[0],
-                        &mesh.triangles[i].v[1],
-                        &mesh.triangles[i].v[2]
-                    };
+                    const Triangle3* tri = &mesh.triangles[i];
                     for (size_t k = 0; k < 3; ++k)
                     {
-                        const size_t v = vertices[k]->v;
+                        const size_t v = tri->v[k].v;
                         float* pf = reinterpret_cast<float*>(p);
-                        pf[0] = v ? mesh.v[v - 1].x : 0.F;
-                        pf[1] = v ? mesh.v[v - 1].y : 0.F;
-                        pf[2] = v ? mesh.v[v - 1].z : 0.F;
+                        if (v && v <= vSize)
+                        {
+                            pf[0] = mesh.v[v - 1].x;
+                            pf[1] = mesh.v[v - 1].y;
+                            pf[2] = mesh.v[v - 1].z;
+                        }
+                        else
+                        {
+                            pf[0] = 0.F;
+                            pf[1] = 0.F;
+                            pf[2] = 0.F;
+                        }
                         p += 3 * sizeof(float);
 
-                        const size_t t = vertices[k]->t;
+                        const size_t t = tri->v[k].t;
                         uint16_t* pu16 = reinterpret_cast<uint16_t*>(p);
-                        pu16[0] = t ? clamp(static_cast<int>(mesh.t[t - 1].x * 65535.F), 0, 65535) : 0;
-                        pu16[1] = t ? clamp(static_cast<int>(mesh.t[t - 1].y * 65535.F), 0, 65535) : 0;
+                        if (t && t <= tSize)
+                        {
+                            pu16[0] = clamp(static_cast<int>(mesh.t[t - 1].x * 65535.F), 0, 65535);
+                            pu16[1] = clamp(static_cast<int>(mesh.t[t - 1].y * 65535.F), 0, 65535);
+                        }
+                        else
+                        {
+                            pu16[0] = 0;
+                            pu16[1] = 0;
+                        }
                         p += 2 * sizeof(uint16_t);
 
-                        const size_t n = vertices[k]->n;
+                        const size_t n = tri->v[k].n;
                         auto packedNormal = reinterpret_cast<PackedNormal*>(p);
-                        packedNormal->x = n ? clamp(static_cast<int>(mesh.n[n - 1].x * 511.F), -512, 511) : 0;
-                        packedNormal->y = n ? clamp(static_cast<int>(mesh.n[n - 1].y * 511.F), -512, 511) : 0;
-                        packedNormal->z = n ? clamp(static_cast<int>(mesh.n[n - 1].z * 511.F), -512, 511) : 0;
+                        if (n && n <= nSize)
+                        {
+                            packedNormal->x = clamp(static_cast<int>(mesh.n[n - 1].x * 511.F), -512, 511);
+                            packedNormal->y = clamp(static_cast<int>(mesh.n[n - 1].y * 511.F), -512, 511);
+                            packedNormal->z = clamp(static_cast<int>(mesh.n[n - 1].z * 511.F), -512, 511);
+                        }
+                        else
+                        {
+                            packedNormal->x = 0;
+                            packedNormal->y = 0;
+                            packedNormal->z = 0;
+                        }
                         p += sizeof(PackedNormal);
 
-                        const size_t c = vertices[k]->c;
+                        const size_t c = tri->v[k].c;
                         auto packedColor = reinterpret_cast<PackedColor*>(p);
-                        packedColor->r = c ? clamp(static_cast<int>(mesh.c[c - 1].x * 255.F), 0, 255) : 255;
-                        packedColor->g = c ? clamp(static_cast<int>(mesh.c[c - 1].y * 255.F), 0, 255) : 255;
-                        packedColor->b = c ? clamp(static_cast<int>(mesh.c[c - 1].z * 255.F), 0, 255) : 255;
-                        packedColor->a = c ? clamp(static_cast<int>(mesh.c[c - 1].w * 255.F), 0, 255) : 255;
+                        if (c && c <= cSize)
+                        {
+                            packedColor->r = clamp(static_cast<int>(mesh.c[c - 1].x * 255.F), 0, 255);
+                            packedColor->g = clamp(static_cast<int>(mesh.c[c - 1].y * 255.F), 0, 255);
+                            packedColor->b = clamp(static_cast<int>(mesh.c[c - 1].z * 255.F), 0, 255);
+                            packedColor->a = clamp(static_cast<int>(mesh.c[c - 1].w * 255.F), 0, 255);
+                        }
+                        else
+                        {
+                            packedColor->r = 255;
+                            packedColor->g = 255;
+                            packedColor->b = 255;
+                            packedColor->a = 255;
+                        }
                         p += sizeof(PackedColor);
                     }
                 }
                 break;
             case VBOType::Pos3_F32_UV_F32_Normal_F32:
+            {
+                float* pf = reinterpret_cast<float*>(p);
                 for (size_t i = range.min(); i <= range.max(); ++i)
                 {
-                    const Vertex3* vertices[] =
-                    {
-                        &mesh.triangles[i].v[0],
-                        &mesh.triangles[i].v[1],
-                        &mesh.triangles[i].v[2]
-                    };
+                    const Triangle3* tri = &mesh.triangles[i];
                     for (size_t k = 0; k < 3; ++k)
                     {
-                        const size_t v = vertices[k]->v;
-                        float* pf = reinterpret_cast<float*>(p);
-                        pf[0] = v ? mesh.v[v - 1].x : 0.F;
-                        pf[1] = v ? mesh.v[v - 1].y : 0.F;
-                        pf[2] = v ? mesh.v[v - 1].z : 0.F;
-                        p += 3 * sizeof(float);
+                        const size_t v = tri->v[k].v;
+                        if (v && v <= vSize)
+                        {
+                            pf[0] = mesh.v[v - 1].x;
+                            pf[1] = mesh.v[v - 1].y;
+                            pf[2] = mesh.v[v - 1].z;
+                        }
+                        else
+                        {
+                            pf[0] = 0.F;
+                            pf[1] = 0.F;
+                            pf[2] = 0.F;
+                        }
+                        pf += 3;
 
-                        const size_t t = vertices[k]->t;
-                        pf = reinterpret_cast<float*>(p);
-                        pf[0] = t ? mesh.t[t - 1].x : 0.F;
-                        pf[1] = t ? mesh.t[t - 1].y : 0.F;
-                        p += 2 * sizeof(float);
+                        const size_t t = tri->v[k].t;
+                        if (t && t <= tSize)
+                        {
+                            pf[0] = mesh.t[t - 1].x;
+                            pf[1] = mesh.t[t - 1].y;
+                        }
+                        else
+                        {
+                            pf[0] = 0.F;
+                            pf[1] = 0.F;
+                        }
+                        pf += 2;
 
-                        const size_t n = vertices[k]->n;
-                        pf = reinterpret_cast<float*>(p);
-                        pf[0] = n ? mesh.n[n - 1].x : 0.F;
-                        pf[1] = n ? mesh.n[n - 1].y : 0.F;
-                        pf[2] = n ? mesh.n[n - 1].z : 0.F;
-                        p += 3 * sizeof(float);
+                        const size_t n = tri->v[k].n;
+                        if (n && n <= nSize)
+                        {
+                            pf[0] = mesh.n[n - 1].x;
+                            pf[1] = mesh.n[n - 1].y;
+                            pf[2] = mesh.n[n - 1].z;
+                        }
+                        else
+                        {
+                            pf[0] = 0.F;
+                            pf[1] = 0.F;
+                            pf[2] = 0.F;
+                        }
+                        pf += 3;
                     }
                 }
                 break;
+            }
             case VBOType::Pos3_F32_UV_F32_Normal_F32_Color_F32:
+            {
+                float* pf = reinterpret_cast<float*>(p);
                 for (size_t i = range.min(); i <= range.max(); ++i)
                 {
-                    const Vertex3* vertices[] =
-                    {
-                        &mesh.triangles[i].v[0],
-                        &mesh.triangles[i].v[1],
-                        &mesh.triangles[i].v[2]
-                    };
+                    const Triangle3* tri = &mesh.triangles[i];
                     for (size_t k = 0; k < 3; ++k)
                     {
-                        const size_t v = vertices[k]->v;
-                        float* pf = reinterpret_cast<float*>(p);
-                        pf[0] = v ? mesh.v[v - 1].x : 0.F;
-                        pf[1] = v ? mesh.v[v - 1].y : 0.F;
-                        pf[2] = v ? mesh.v[v - 1].z : 0.F;
-                        p += 3 * sizeof(float);
+                        const size_t v = tri->v[k].v;
+                        if (v && v <= vSize)
+                        {
+                            pf[0] = mesh.v[v - 1].x;
+                            pf[1] = mesh.v[v - 1].y;
+                            pf[2] = mesh.v[v - 1].z;
+                        }
+                        else
+                        {
+                            pf[0] = 0.F;
+                            pf[1] = 0.F;
+                            pf[2] = 0.F;
+                        }
+                        pf += 3;
 
-                        const size_t t = vertices[k]->t;
-                        pf = reinterpret_cast<float*>(p);
-                        pf[0] = t ? mesh.t[t - 1].x : 0.F;
-                        pf[1] = t ? mesh.t[t - 1].y : 0.F;
-                        p += 2 * sizeof(float);
+                        const size_t t = tri->v[k].t;
+                        if (t && t <= tSize)
+                        {
+                            pf[0] = mesh.t[t - 1].x;
+                            pf[1] = mesh.t[t - 1].y;
+                        }
+                        else
+                        {
+                            pf[0] = 0.F;
+                            pf[1] = 0.F;
+                        }
+                        pf += 2;
 
-                        const size_t n = vertices[k]->n;
-                        pf = reinterpret_cast<float*>(p);
-                        pf[0] = n ? mesh.n[n - 1].x : 0.F;
-                        pf[1] = n ? mesh.n[n - 1].y : 0.F;
-                        pf[2] = n ? mesh.n[n - 1].z : 0.F;
-                        p += 3 * sizeof(float);
+                        const size_t n = tri->v[k].n;
+                        if (n && n <= nSize)
+                        {
+                            pf[0] = mesh.n[n - 1].x;
+                            pf[1] = mesh.n[n - 1].y;
+                            pf[2] = mesh.n[n - 1].z;
+                        }
+                        else
+                        {
+                            pf[0] = 0.F;
+                            pf[1] = 0.F;
+                            pf[2] = 0.F;
+                        }
+                        pf += 3;
 
-                        const size_t c = vertices[k]->c;
-                        pf = reinterpret_cast<float*>(p);
-                        pf[0] = c ? mesh.c[c - 1].x : 1.F;
-                        pf[1] = c ? mesh.c[c - 1].y : 1.F;
-                        pf[2] = c ? mesh.c[c - 1].z : 1.F;
-                        pf[3] = c ? mesh.c[c - 1].w : 1.F;
-                        p += 4 * sizeof(float);
+                        const size_t c = tri->v[k].c;
+                        if (c && c <= cSize)
+                        {
+                            pf[0] = mesh.c[c - 1].x;
+                            pf[1] = mesh.c[c - 1].y;
+                            pf[2] = mesh.c[c - 1].z;
+                            pf[3] = mesh.c[c - 1].w;
+                        }
+                        else
+                        {
+                            pf[0] = 1.F;
+                            pf[1] = 1.F;
+                            pf[2] = 1.F;
+                            pf[3] = 1.F;
+                        }
+                        pf += 4;
                     }
                 }
                 break;
+            }
             case VBOType::Pos3_F32_Color_U8:
                 for (size_t i = range.min(); i <= range.max(); ++i)
                 {
-                    const Vertex3* vertices[] =
-                    {
-                        &mesh.triangles[i].v[0],
-                        &mesh.triangles[i].v[1],
-                        &mesh.triangles[i].v[2]
-                    };
+                    const Triangle3* tri = &mesh.triangles[i];
                     for (size_t k = 0; k < 3; ++k)
                     {
-                        const size_t v = vertices[k]->v;
+                        const size_t v = tri->v[k].v;
                         float* pf = reinterpret_cast<float*>(p);
-                        pf[0] = v ? mesh.v[v - 1].x : 0.F;
-                        pf[1] = v ? mesh.v[v - 1].y : 0.F;
-                        pf[2] = v ? mesh.v[v - 1].z : 0.F;
+                        pf[0] = (v && v <= vSize) ? mesh.v[v - 1].x : 0.F;
+                        pf[1] = (v && v <= vSize) ? mesh.v[v - 1].y : 0.F;
+                        pf[2] = (v && v <= vSize) ? mesh.v[v - 1].z : 0.F;
                         p += 3 * sizeof(float);
 
-                        const size_t c = vertices[k]->c;
+                        const size_t c = tri->v[k].c;
                         auto packedColor = reinterpret_cast<PackedColor*>(p);
-                        packedColor->r = c ? clamp(static_cast<int>(mesh.c[c - 1].x * 255.F), 0, 255) : 255;
-                        packedColor->g = c ? clamp(static_cast<int>(mesh.c[c - 1].y * 255.F), 0, 255) : 255;
-                        packedColor->b = c ? clamp(static_cast<int>(mesh.c[c - 1].z * 255.F), 0, 255) : 255;
-                        packedColor->a = c ? clamp(static_cast<int>(mesh.c[c - 1].w * 255.F), 0, 255) : 255;
+                        packedColor->r = (c && c <= cSize) ? clamp(static_cast<int>(mesh.c[c - 1].x * 255.F), 0, 255) : 255;
+                        packedColor->g = (c && c <= cSize) ? clamp(static_cast<int>(mesh.c[c - 1].y * 255.F), 0, 255) : 255;
+                        packedColor->b = (c && c <= cSize) ? clamp(static_cast<int>(mesh.c[c - 1].z * 255.F), 0, 255) : 255;
+                        packedColor->a = (c && c <= cSize) ? clamp(static_cast<int>(mesh.c[c - 1].w * 255.F), 0, 255) : 255;
                         p += sizeof(PackedColor);
                     }
                 }

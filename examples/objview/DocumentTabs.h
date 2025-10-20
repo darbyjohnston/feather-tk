@@ -12,6 +12,7 @@ namespace examples
     {
         class App;
         class Document;
+        class ObjView;
 
         //! Document tabs widget.
         class DocumentTabs : public ftk::IWidget
@@ -33,17 +34,27 @@ namespace examples
                 const std::shared_ptr<App>&,
                 const std::shared_ptr<ftk::IWidget>& parent = nullptr);
 
+            //! \name Current View
+            ///@{
+
+            const std::shared_ptr<ObjView>& getCurrentView() const;
+            std::shared_ptr<ftk::IObservableValue<std::shared_ptr<ObjView> > > observeCurrentView() const;
+
+            ///@}
+
             void setGeometry(const ftk::Box2I&) override;
             void sizeHintEvent(const ftk::SizeHintEvent&) override;
 
         private:
             std::shared_ptr<ftk::TabWidget> _tabWidget;
-            std::map<std::shared_ptr<Document>, std::shared_ptr<IWidget> > _views;
+            std::map<std::shared_ptr<Document>, std::shared_ptr<ObjView> > _views;
+            std::shared_ptr<ftk::ObservableValue<std::shared_ptr<ObjView> > > _currentView;
 
             std::shared_ptr<ftk::ValueObserver<std::weak_ptr<Document> > > _addObserver;
             std::shared_ptr<ftk::ValueObserver<std::weak_ptr<Document> > > _closeObserver;
             std::shared_ptr<ftk::ValueObserver<bool> > _clearObserver;
-            std::shared_ptr<ftk::ValueObserver<int> > _currentObserver;
+            std::shared_ptr<ftk::ValueObserver<std::shared_ptr<Document> > > _currentObserver;
+            std::shared_ptr<ftk::ValueObserver<int> > _currentIndexObserver;
         };
     }
 }

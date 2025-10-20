@@ -7,6 +7,7 @@
 #include "App.h"
 #include "DocumentModel.h"
 #include "MainWindow.h"
+#include "ObjView.h"
 
 #include <ftk/UI/FileBrowser.h>
 
@@ -25,15 +26,29 @@ namespace examples
             _createFileActions(context, app);
             _createEditActions(context, app);
             _createWindowActions(context, app, mainWindow);
-            _actionsUpdate();
+            _createViewActions(context, app, mainWindow);
+            _createRenderActions(context, app, mainWindow);
 
             // Observe the current document to update the state of the actions.
             _currentObserver = ValueObserver<std::shared_ptr<Document> >::create(
                 app->getDocumentModel()->observeCurrent(),
                 [this](const std::shared_ptr<Document>& doc)
                 {
-                    _current = doc;
-                    _actionsUpdate();
+                    const bool current = doc.get();
+                    _actions["File/Close"]->setEnabled(current);
+                    _actions["File/CloseAll"]->setEnabled(current);
+                    _actions["View/Frame"]->setEnabled(current);
+                    _actions["View/ZoomIn"]->setEnabled(current);
+                    _actions["View/ZoomOut"]->setEnabled(current);
+                    _actions["View/OrbitLeft"]->setEnabled(current);
+                    _actions["View/OrbitRight"]->setEnabled(current);
+                    _actions["View/OrbitUp"]->setEnabled(current);
+                    _actions["View/OrbitDown"]->setEnabled(current);
+                    for (const auto label : getRenderModeLabels())
+                    {
+                        const std::string key = "Render/" + label;
+                        _actions[key]->setEnabled(current);
+                    }
                 });
         }
 
@@ -177,13 +192,195 @@ namespace examples
                 });
         }
 
-        void Actions::_actionsUpdate()
+        void Actions::_createViewActions(
+            const std::shared_ptr<Context>& context,
+            const std::shared_ptr<App>& app,
+            const std::shared_ptr<MainWindow>& mainWindow)
         {
-            const auto doc = _current.lock();
-            const bool current = doc.get();
+            std::weak_ptr<MainWindow> mainWindowWeak(mainWindow);
+            _actions["View/Frame"] = Action::create(
+                "Frame",
+                "ViewFrame",
+                Key::Backspace,
+                0,
+                [mainWindowWeak]
+                {
+                    if (auto mainWindow = mainWindowWeak.lock())
+                    {
+                        if (auto view = mainWindow->getCurrentView())
+                        {
+                            view->frame();
+                        }
+                    }
+                });
+            _actions["View/Frame"]->setTooltip("Frame the view");
 
-            _actions["File/Close"]->setEnabled(current);
-            _actions["File/CloseAll"]->setEnabled(current);
+            _actions["View/ZoomIn"] = Action::create(
+                "Zoom In",
+                "ViewZoomIn",
+                Key::Equals,
+                0,
+                [mainWindowWeak]
+                {
+                    if (auto mainWindow = mainWindowWeak.lock())
+                    {
+                        if (auto view = mainWindow->getCurrentView())
+                        {
+                            view->zoomIn();
+                        }
+                    }
+                });
+            _actions["View/ZoomIn"]->setTooltip("Zoom the view in");
+
+            _actions["View/ZoomOut"] = Action::create(
+                "Zoom Out",
+                "ViewZoomOut",
+                Key::Minus,
+                0,
+                [mainWindowWeak]
+                {
+                    if (auto mainWindow = mainWindowWeak.lock())
+                    {
+                        if (auto view = mainWindow->getCurrentView())
+                        {
+                            view->zoomOut();
+                        }
+                    }
+                });
+            _actions["View/ZoomOut"]->setTooltip("Zoom the view out");
+
+            _actions["View/OrbitLeft"] = Action::create(
+                "Orbit Left",
+                "ViewLeft",
+                Key::Left,
+                0,
+                [mainWindowWeak]
+                {
+                    if (auto mainWindow = mainWindowWeak.lock())
+                    {
+                        if (auto view = mainWindow->getCurrentView())
+                        {
+                            view->orbitLeft();
+                        }
+                    }
+                });
+            _actions["View/OrbitLeft"]->setTooltip("Orbit the view left");
+
+            _actions["View/OrbitRight"] = Action::create(
+                "Orbit Right",
+                "ViewRight",
+                Key::Right,
+                0,
+                [mainWindowWeak]
+                {
+                    if (auto mainWindow = mainWindowWeak.lock())
+                    {
+                        if (auto view = mainWindow->getCurrentView())
+                        {
+                            view->orbitRight();
+                        }
+                    }
+                });
+            _actions["View/OrbitRight"]->setTooltip("Orbit the view right");
+
+            _actions["View/OrbitUp"] = Action::create(
+                "Orbit Up",
+                "ViewUp",
+                Key::Up,
+                0,
+                [mainWindowWeak]
+                {
+                    if (auto mainWindow = mainWindowWeak.lock())
+                    {
+                        if (auto view = mainWindow->getCurrentView())
+                        {
+                            view->orbitUp();
+                        }
+                    }
+                });
+            _actions["View/OrbitUp"]->setTooltip("Orbit the view up");
+
+            _actions["View/OrbitDown"] = Action::create(
+                "Orbit Down",
+                "ViewDown",
+                Key::Down,
+                0,
+                [mainWindowWeak]
+                {
+                    if (auto mainWindow = mainWindowWeak.lock())
+                    {
+                        if (auto view = mainWindow->getCurrentView())
+                        {
+                            view->orbitDown();
+                        }
+                    }
+                });
+            _actions["View/OrbitDown"]->setTooltip("Orbit the view down");
+        }
+
+        void Actions::_createRenderActions(
+            const std::shared_ptr<Context>& context,
+            const std::shared_ptr<App>& app,
+            const std::shared_ptr<MainWindow>& mainWindow)
+        {
+            std::weak_ptr<MainWindow> mainWindowWeak(mainWindow);
+
+            std::map<RenderMode, Key> shortcuts =
+            {
+                { RenderMode::Shaded, Key::_1 },
+                { RenderMode::Flat, Key::_2 },
+                { RenderMode::Texture, Key::_3 },
+                { RenderMode::Normals, Key::_4 }
+            };
+            for (auto e : getRenderModeEnums())
+            {
+                const std::string label = getLabel(e);
+                const std::string key = "Render/" + label;
+                _actions[key] = Action::create(
+                    label,
+                    shortcuts[e],
+                    0,
+                    [mainWindowWeak, e](bool value)
+                    {
+                        if (auto mainWindow = mainWindowWeak.lock())
+                        {
+                            if (auto view = mainWindow->getCurrentView())
+                            {
+                                view->setRenderMode(e);
+                            }
+                        }
+                    });
+                _actions[key]->setTooltip(label);
+                _renderModeActions[e] = _actions[key];
+            }
+
+            _currentViewObserver = ValueObserver<std::shared_ptr<ObjView> >::create(
+                mainWindow->observeCurrentView(),
+                [this](const std::shared_ptr<ObjView>& view)
+                {
+                    if (view)
+                    {
+                        _renderModeObserver = ValueObserver<RenderMode>::create(
+                            view->observeRenderMode(),
+                            [this](RenderMode value)
+                            {
+                                for (const auto e : getRenderModeEnums())
+                                {
+                                    const std::string key = "Render/" + getLabel(e);
+                                    _actions[key]->setChecked(e == value);
+                                }
+                            });
+                    }
+                    else
+                    {
+                        _renderModeObserver.reset();
+                        for (const auto label : getRenderModeLabels())
+                        {
+                            const std::string key = "Render/" + label;
+                            _actions[key]->setChecked(false);
+                        }
+                    }
+                });
         }
     }
 }

@@ -10,7 +10,6 @@
 #include "DocumentTabs.h"
 #include "MenuBar.h"
 #include "SettingsWidget.h"
-#include "StatusBar.h"
 #include "ToolBar.h"
 
 #include <ftk/UI/Divider.h>
@@ -34,6 +33,9 @@ namespace examples
             _app = app;
             _settingsModel = app->getSettingsModel();
 
+            // Create observables.
+            _currentView = ObservableValue<std::shared_ptr<ObjView> >::create();
+
             // Create the actions.
             _actions = Actions::create(
                 context,
@@ -45,8 +47,7 @@ namespace examples
             setMenuBar(_menuBar);
             _tabs = DocumentTabs::create(context, app);
             _settingsWidget = SettingsWidget::create(context, app);
-            _toolBar = ToolBar::create(context, _actions);
-            _statusBar = StatusBar::create(context, app);
+            _toolBar = ToolBar::create(context, app, _actions);
 
             // Layout the widgets.
             _layout = VerticalLayout::create(context, shared_from_this());
@@ -58,8 +59,6 @@ namespace examples
             _splitter->setSplit(.7F);
             _tabs->setParent(_splitter);
             _settingsWidget->setParent(_splitter);
-            Divider::create(context, Orientation::Vertical, _layout);
-            _statusBar->setParent(_layout);
             setWidget(_layout);
 
             // Observe window settings.
@@ -69,6 +68,14 @@ namespace examples
                 {
                     _splitter->setSplit(value.split);
                     _settingsWidget->setVisible(value.settings);
+                });
+
+            // Observe the current view.
+            _currentViewObserver = ValueObserver<std::shared_ptr<ObjView>>::create(
+                _tabs->observeCurrentView(),
+                [this](const std::shared_ptr<ObjView>& value)
+                {
+                    _currentView->setIfChanged(value);
                 });
         }
 
@@ -88,6 +95,16 @@ namespace examples
             auto out = std::shared_ptr<MainWindow>(new MainWindow);
             out->_init(context, app, name, size);
             return out;
+        }
+        
+        const std::shared_ptr<ObjView>& MainWindow::getCurrentView() const
+        {
+            return _currentView->get();
+        }
+
+        std::shared_ptr<ftk::IObservableValue<std::shared_ptr<ObjView> > > MainWindow::observeCurrentView() const
+        {
+            return _currentView;
         }
 
         void MainWindow::_drop(const std::vector<std::string>& drops)

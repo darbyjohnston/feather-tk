@@ -8,6 +8,27 @@
 
 namespace ftk
 {
+    Box3F bbox(const TriMesh3F& mesh)
+    {
+        Box3F out;
+        const size_t size = mesh.v.size();
+        if (size > 0)
+        {
+            out.min = out.max = mesh.v.front();
+            for (size_t i = 1; i < size; ++i)
+            {
+                const V3F& v = mesh.v[i];
+                out.min.x = std::min(out.min.x, v.x);
+                out.min.y = std::min(out.min.y, v.y);
+                out.min.z = std::min(out.min.z, v.z);
+                out.max.x = std::max(out.max.x, v.x);
+                out.max.y = std::max(out.max.y, v.y);
+                out.max.z = std::max(out.max.z, v.z);
+            }
+        }
+        return out;
+    }
+
     TriMesh2F mesh(const Box2I& box, bool flipV)
     {
         TriMesh2F out;

@@ -77,6 +77,9 @@ namespace ftk
 
     //! Edge function.
     float edge(const V2F& p, const V2F& v0, const V2F& v1);
+
+    //! Compute the bounding box of a mesh.
+    Box3F bbox(const TriMesh3F&);
         
     //! Create a mesh from a box.
     TriMesh2F mesh(const Box2I&, bool flipV = false);

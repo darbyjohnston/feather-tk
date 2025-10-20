@@ -28,25 +28,38 @@ namespace examples
                         std::atof(split[2].c_str()),
                         std::atof(split[3].c_str())));
                 }
+                else if (size >= 3 && "vt" == split[0])
+                {
+                    out->t.push_back(V2F(
+                        std::atof(split[1].c_str()),
+                        std::atof(split[2].c_str())));
+                }
+                else if (size >= 4 && "vn" == split[0])
+                {
+                    out->n.push_back(V3F(
+                        std::atof(split[1].c_str()),
+                        std::atof(split[2].c_str()),
+                        std::atof(split[3].c_str())));
+                }
                 else if (size >= 4 && "f" == split[0])
                 {
                     std::vector<Vertex3> vs;
                     for (size_t i = 1; i < size; ++i)
                     {
-                        const auto split2 = ftk::split(split[i], '/');
+                        const auto split2 = ftk::split(split[i], '/', SplitOptions::KeepEmpty);
                         Vertex3 v;
                         v.v = std::atoi(split2[0].c_str());
-                        if (split2.size() > 1)
+                        if (split2.size() > 1 && !split2[1].empty())
                         {
                             v.t = std::atoi(split2[1].c_str());
                         }
-                        if (split2.size() > 2)
+                        if (split2.size() > 2 && !split2[2].empty())
                         {
                             v.n = std::atoi(split2[2].c_str());
                         }
                         vs.push_back(v);
                     }
-                    for (size_t i = 0; i < vs.size() - 1; ++i)
+                    for (size_t i = 1; i < vs.size() - 1; ++i)
                     {
                         Triangle3 t;
                         t.v[0] = vs[0];

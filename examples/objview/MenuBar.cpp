@@ -27,6 +27,8 @@ namespace examples
             _createFileMenu(context, actions);
             _createEditMenu(context, actions);
             _createWindowMenu(context, actions);
+            _createViewMenu(context, actions);
+            _createRenderMenu(context, actions);
 
             // Observe the recent files and update the menu.
             std::weak_ptr<App> appWeak(app);
@@ -95,6 +97,35 @@ namespace examples
             _menus["Window"] = Menu::create(context);
             _menus["Window"]->addAction(actions->getAction("Window/FullScreen"));
             addMenu("Window", _menus["Window"]);
+        }
+
+        void MenuBar::_createViewMenu(
+            const std::shared_ptr<ftk::Context>& context,
+            const std::shared_ptr<Actions>& actions)
+        {
+            _menus["View"] = Menu::create(context);
+            _menus["View"]->addAction(actions->getAction("View/Frame"));
+            _menus["View"]->addAction(actions->getAction("View/ZoomIn"));
+            _menus["View"]->addAction(actions->getAction("View/ZoomOut"));
+            _menus["View"]->addDivider();
+            _menus["View"]->addAction(actions->getAction("View/OrbitLeft"));
+            _menus["View"]->addAction(actions->getAction("View/OrbitRight"));
+            _menus["View"]->addAction(actions->getAction("View/OrbitUp"));
+            _menus["View"]->addAction(actions->getAction("View/OrbitDown"));
+            addMenu("View", _menus["View"]);
+        }
+
+        void MenuBar::_createRenderMenu(
+            const std::shared_ptr<ftk::Context>& context,
+            const std::shared_ptr<Actions>& actions)
+        {
+            _menus["Render"] = Menu::create(context);
+            for (const auto label : getRenderModeLabels())
+            {
+                const std::string key = "Render/" + label;
+                _menus["Render"]->addAction(actions->getAction(key));
+            }
+            addMenu("Render", _menus["Render"]);
         }
     }
 }

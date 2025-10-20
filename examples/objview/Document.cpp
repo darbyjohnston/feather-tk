@@ -17,8 +17,8 @@ namespace examples
             const std::filesystem::path& path)
         {
             _path = path;
-
             _mesh = read(path);
+            _rotation = ObservableValue<ftk::V3F>::create();
         }
 
         Document::~Document()
@@ -51,6 +51,21 @@ namespace examples
         const std::shared_ptr<ftk::TriMesh3F>& Document::getMesh() const
         {
             return _mesh;
+        }
+
+        const ftk::V3F& Document::getRotation() const
+        {
+            return _rotation->get();
+        }
+
+        std::shared_ptr<ftk::IObservableValue<V3F> > Document::observeRotation() const
+        {
+            return _rotation;
+        }
+
+        void Document::setRotation(const V3F& value)
+        {
+            _rotation->setIfChanged(value);
         }
     }
 }
