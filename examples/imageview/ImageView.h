@@ -32,10 +32,20 @@ namespace imageview
             const std::shared_ptr<Document>&,
             const std::shared_ptr<ftk::IWidget>& parent = nullptr);
 
+        //! \name View
+        ///@{
+
+        void zoomReset();
+        void zoomIn();
+        void zoomOut();
+
+        ///@}
+
         void sizeHintEvent(const ftk::SizeHintEvent&) override;
         void drawEvent(const ftk::Box2I&, const ftk::DrawEvent&) override;
 
     private:
         std::shared_ptr<ftk::Image> _image;
+        float _zoom = 1.F;
     };
 }

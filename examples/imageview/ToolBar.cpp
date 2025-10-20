@@ -40,6 +40,15 @@ namespace imageview
         {
             windowToolBar->addAction(actions->getAction(key));
         }
+        Divider::create(context, Orientation::Horizontal, _layout);
+
+        // Create the view tool bar.
+        auto viewToolBar = ftk::ToolBar::create(context, Orientation::Horizontal, _layout);
+        for (const auto& key :
+            { "View/ZoomReset", "View/ZoomIn", "View/ZoomOut" })
+        {
+            viewToolBar->addAction(actions->getAction(key));
+        }
     }
 
     ToolBar::~ToolBar()

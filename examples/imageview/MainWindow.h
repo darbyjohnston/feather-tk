@@ -16,6 +16,7 @@ namespace imageview
     class App;
     class DocumentTabs;
     class MenuBar;
+    class ImageView;
     class SettingsModel;
     class SettingsWidget;
     class StatusBar;
@@ -43,6 +44,14 @@ namespace imageview
             const std::string& name,
             const ftk::Size2I&);
 
+        //! \name Current View
+        ///@{
+
+        const std::shared_ptr<ImageView>& getCurrentView() const;
+        std::shared_ptr<ftk::IObservableValue<std::shared_ptr<ImageView> > > observeCurrentView() const;
+
+        ///@}
+
     protected:
         void _drop(const std::vector<std::string>&);
  
@@ -50,6 +59,7 @@ namespace imageview
 
         std::weak_ptr<App> _app;
         std::shared_ptr<SettingsModel> _settingsModel;
+        std::shared_ptr<ftk::ObservableValue<std::shared_ptr<ImageView> > > _currentView;
 
         std::shared_ptr<Actions> _actions;
         std::shared_ptr<MenuBar> _menuBar;
@@ -60,6 +70,7 @@ namespace imageview
         std::shared_ptr<ftk::Splitter> _splitter;
         std::shared_ptr<ftk::VerticalLayout> _layout;
 
+        std::shared_ptr<ftk::ValueObserver<std::shared_ptr<ImageView> > > _currentViewObserver;
         std::shared_ptr<ftk::ValueObserver<WindowSettings> > _windowSettingsObserver;
     };
 }

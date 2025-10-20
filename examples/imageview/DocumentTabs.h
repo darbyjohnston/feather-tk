@@ -5,6 +5,7 @@
 #pragma once
 
 #include <ftk/UI/DocumentModel.h>
+#include <ftk/UI/ScrollWidget.h>
 #include <ftk/UI/TabWidget.h>
 
 namespace imageview
@@ -32,16 +33,26 @@ namespace imageview
             const std::shared_ptr<App>&,
             const std::shared_ptr<ftk::IWidget>& parent = nullptr);
 
+        //! \name Current View
+        ///@{
+
+        const std::shared_ptr<ImageView>& getCurrentView() const;
+        std::shared_ptr<ftk::IObservableValue<std::shared_ptr<ImageView> > > observeCurrentView() const;
+
+        ///@}
+
         void setGeometry(const ftk::Box2I&) override;
         void sizeHintEvent(const ftk::SizeHintEvent&) override;
 
     private:
         std::shared_ptr<ftk::TabWidget> _tabWidget;
-        std::map<std::shared_ptr<ftk::IDocument>, std::shared_ptr<ftk::IWidget> > _views;
+        std::map<std::shared_ptr<ftk::IDocument>, std::shared_ptr<ftk::ScrollWidget> > _views;
+        std::shared_ptr<ftk::ObservableValue<std::shared_ptr<ImageView> > > _currentView;
 
         std::shared_ptr<ftk::ValueObserver<std::weak_ptr<ftk::IDocument> > > _addObserver;
         std::shared_ptr<ftk::ValueObserver<std::weak_ptr<ftk::IDocument> > > _closeObserver;
         std::shared_ptr<ftk::ValueObserver<bool> > _clearObserver;
-        std::shared_ptr<ftk::ValueObserver<int> > _currentObserver;
+        std::shared_ptr<ftk::ValueObserver<std::shared_ptr<ftk::IDocument> > > _currentObserver;
+        std::shared_ptr<ftk::ValueObserver<int> > _currentIndexObserver;
     };
 }

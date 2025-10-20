@@ -33,13 +33,34 @@ namespace imageview
         return out;
     }
 
+    void ImageView::zoomReset()
+    {
+        _zoom = 1.F;
+        _setSizeUpdate();
+        _setDrawUpdate();
+    }
+
+    void ImageView::zoomIn()
+    {
+        _zoom *= 2.F;
+        _setSizeUpdate();
+        _setDrawUpdate();
+    }
+
+    void ImageView::zoomOut()
+    {
+        _zoom *= .5F;
+        _setSizeUpdate();
+        _setDrawUpdate();
+    }
+
     void ImageView::sizeHintEvent(const SizeHintEvent& event)
     {
         IWidget::sizeHintEvent(event);
         Size2I sizeHint;
         if (_image)
         {
-            sizeHint = _image->getSize();
+            sizeHint = _image->getSize() * _zoom;
         }
         _setSizeHint(sizeHint);
     }
@@ -53,7 +74,7 @@ namespace imageview
 
         if (_image)
         {
-            const Size2I& size = _image->getSize();
+            const Size2I& size = _image->getSize() * _zoom;
             event.render->drawImage(
                 _image,
                 Box2I(

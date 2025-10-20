@@ -60,6 +60,14 @@ namespace objview
         _settingsWidget->setParent(_splitter);
         setWidget(_layout);
 
+        // Observe the current view.
+        _currentViewObserver = ValueObserver<std::shared_ptr<ObjView>>::create(
+            _tabs->observeCurrentView(),
+            [this](const std::shared_ptr<ObjView>& value)
+            {
+                _currentView->setIfChanged(value);
+            });
+
         // Observe window settings.
         _windowSettingsObserver = ValueObserver<WindowSettings>::create(
             _settingsModel->observeWindow(),
@@ -67,14 +75,6 @@ namespace objview
             {
                 _splitter->setSplit(value.split);
                 _settingsWidget->setVisible(value.settings);
-            });
-
-        // Observe the current view.
-        _currentViewObserver = ValueObserver<std::shared_ptr<ObjView>>::create(
-            _tabs->observeCurrentView(),
-            [this](const std::shared_ptr<ObjView>& value)
-            {
-                _currentView->setIfChanged(value);
             });
     }
 

@@ -25,6 +25,7 @@ namespace imageview
         _createFileMenu(context, actions);
         _createEditMenu(context, actions);
         _createWindowMenu(context, actions);
+        _createViewMenu(context, actions);
 
         // Observe the recent files and update the menu.
         std::weak_ptr<App> appWeak(app);
@@ -93,5 +94,16 @@ namespace imageview
         _menus["Window"] = Menu::create(context);
         _menus["Window"]->addAction(actions->getAction("Window/FullScreen"));
         addMenu("Window", _menus["Window"]);
+    }
+
+    void MenuBar::_createViewMenu(
+        const std::shared_ptr<ftk::Context>& context,
+        const std::shared_ptr<Actions>& actions)
+    {
+        _menus["View"] = Menu::create(context);
+        _menus["View"]->addAction(actions->getAction("View/ZoomReset"));
+        _menus["View"]->addAction(actions->getAction("View/ZoomIn"));
+        _menus["View"]->addAction(actions->getAction("View/ZoomOut"));
+        addMenu("View", _menus["View"]);
     }
 }

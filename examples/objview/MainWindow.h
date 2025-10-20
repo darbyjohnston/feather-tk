@@ -69,7 +69,7 @@ namespace objview
         std::shared_ptr<ftk::Splitter> _splitter;
         std::shared_ptr<ftk::VerticalLayout> _layout;
 
-        std::shared_ptr<ftk::ValueObserver<WindowSettings> > _windowSettingsObserver;
         std::shared_ptr<ftk::ValueObserver<std::shared_ptr<ObjView> > > _currentViewObserver;
+        std::shared_ptr<ftk::ValueObserver<WindowSettings> > _windowSettingsObserver;
     };
 }

@@ -6,6 +6,7 @@
 
 #include "App.h"
 #include "Document.h"
+#include "ImageView.h"
 #include "MainWindow.h"
 #include "SettingsModel.h"
 
@@ -22,6 +23,7 @@ namespace imageview
         _createFileActions(context, app);
         _createEditActions(context, app);
         _createWindowActions(context, app, mainWindow);
+        _createViewActions(context, app, mainWindow);
         _actionsUpdate();
 
         // Observe the current document to update the state of the actions.
@@ -173,6 +175,61 @@ namespace imageview
             });
     }
 
+    void Actions::_createViewActions(
+        const std::shared_ptr<Context>& context,
+        const std::shared_ptr<App>& app,
+        const std::shared_ptr<MainWindow>& mainWindow)
+    {
+        std::weak_ptr<MainWindow> mainWindowWeak(mainWindow);
+        _actions["View/ZoomReset"] = Action::create(
+            "Zoom Reset",
+            "ViewZoomReset",
+            Key::Backspace,
+            0,
+            [mainWindowWeak](bool value)
+            {
+                if (auto mainWindow = mainWindowWeak.lock())
+                {
+                    mainWindow->getCurrentView()->zoomReset();
+                }
+            });
+        _actions["View/ZoomReset"]->setTooltip("Reset the view zoom");
+
+        _actions["View/ZoomIn"] = Action::create(
+            "Zoom In",
+            "ViewZoomIn",
+            Key::Equals,
+            0,
+            [mainWindowWeak]
+            {
+                if (auto mainWindow = mainWindowWeak.lock())
+                {
+                    if (auto view = mainWindow->getCurrentView())
+                    {
+                        view->zoomIn();
+                    }
+                }
+            });
+        _actions["View/ZoomIn"]->setTooltip("Zoom the view in");
+
+        _actions["View/ZoomOut"] = Action::create(
+            "Zoom Out",
+            "ViewZoomOut",
+            Key::Minus,
+            0,
+            [mainWindowWeak]
+            {
+                if (auto mainWindow = mainWindowWeak.lock())
+                {
+                    if (auto view = mainWindow->getCurrentView())
+                    {
+                        view->zoomOut();
+                    }
+                }
+            });
+        _actions["View/ZoomOut"]->setTooltip("Zoom the view out");
+    }
+
     void Actions::_actionsUpdate()
     {
         const auto doc = _current.lock();
@@ -180,5 +237,9 @@ namespace imageview
 
         _actions["File/Close"]->setEnabled(current);
         _actions["File/CloseAll"]->setEnabled(current);
+
+        _actions["View/ZoomReset"]->setEnabled(current);
+        _actions["View/ZoomIn"]->setEnabled(current);
+        _actions["View/ZoomOut"]->setEnabled(current);
     }
 }

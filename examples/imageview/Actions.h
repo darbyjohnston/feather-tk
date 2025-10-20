@@ -52,6 +52,10 @@ namespace imageview
             const std::shared_ptr<ftk::Context>&,
             const std::shared_ptr<App>&,
             const std::shared_ptr<MainWindow>&);
+        void _createViewActions(
+            const std::shared_ptr<ftk::Context>&,
+            const std::shared_ptr<App>&,
+            const std::shared_ptr<MainWindow>&);
 
         void _actionsUpdate();
 
