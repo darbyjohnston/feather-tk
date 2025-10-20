@@ -5,6 +5,7 @@
 #include "SettingsWidget.h"
 
 #include "App.h"
+#include "SettingsModel.h"
 
 #include <ftk/UI/Divider.h>
 #include <ftk/UI/FormLayout.h>

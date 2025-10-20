@@ -8,6 +8,7 @@
 #include "DocumentModel.h"
 #include "MainWindow.h"
 #include "ObjView.h"
+#include "SettingsModel.h"
 
 #include <ftk/UI/FileBrowser.h>
 

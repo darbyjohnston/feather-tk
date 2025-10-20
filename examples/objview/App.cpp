@@ -6,6 +6,7 @@
 
 #include "DocumentModel.h"
 #include "MainWindow.h"
+#include "SettingsModel.h"
 
 #include <ftk/UI/DialogSystem.h>
 #include <ftk/UI/FileBrowser.h>

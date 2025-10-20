@@ -7,6 +7,7 @@
 #include "App.h"
 #include "Document.h"
 #include "HUDWidget.h"
+#include "SettingsModel.h"
 
 #include <ftk/GL/GL.h>
 

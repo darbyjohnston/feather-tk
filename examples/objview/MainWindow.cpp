@@ -9,6 +9,7 @@
 #include "DocumentModel.h"
 #include "DocumentTabs.h"
 #include "MenuBar.h"
+#include "SettingsModel.h"
 #include "SettingsWidget.h"
 #include "ToolBar.h"
 
