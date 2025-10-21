@@ -4,6 +4,7 @@
 
 #pragma once
 
+#include <ftk/UI/IMouseWidget.h>
 #include <ftk/UI/Label.h>
 #include <ftk/UI/RowLayout.h>
 #include <ftk/UI/ScrollWidget.h>
@@ -27,7 +28,7 @@ namespace widgets
         std::shared_ptr<DragWidget> _widget;
     };
 
-    class DragWidget : public ftk::IWidget
+    class DragWidget : public ftk::IMouseWidget
     {
     protected:
         void _init(

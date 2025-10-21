@@ -52,9 +52,6 @@ namespace ftk
         void mousePressEvent(MouseClickEvent&) override;
         void mouseReleaseEvent(MouseClickEvent&) override;
 
-    protected:
-        void _releaseMouse() override;
-
     private:
         FTK_PRIVATE();
     };

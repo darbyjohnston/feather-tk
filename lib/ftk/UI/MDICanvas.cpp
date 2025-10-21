@@ -33,7 +33,7 @@ namespace ftk
         const std::shared_ptr<Context>& context,
         const std::shared_ptr<IWidget>& parent)
     {
-        IWidget::_init(context, "ftk::MDICanvas", parent);
+        IMouseWidget::_init(context, "ftk::MDICanvas", parent);
         _setMouseHoverEnabled(true);
         _setMousePressEnabled(true);
     }
@@ -224,7 +224,7 @@ namespace ftk
     void MDICanvas::setGeometry(const Box2I& value)
     {
         V2I offset = value.min - getGeometry().min;
-        IWidget::setGeometry(value);
+        IMouseWidget::setGeometry(value);
         FTK_P();
 
         // Place new child widgets on the canvas.
@@ -302,7 +302,7 @@ namespace ftk
 
     void MDICanvas::childRemoveEvent(const ChildRemoveEvent& event)
     {
-        IWidget::childRemoveEvent(event);
+        IMouseWidget::childRemoveEvent(event);
         FTK_P();
         const auto i = p.sizeHints.find(event.child);
         if (i != p.sizeHints.end())
@@ -313,7 +313,7 @@ namespace ftk
 
     void MDICanvas::sizeHintEvent(const SizeHintEvent& event)
     {
-        IWidget::sizeHintEvent(event);
+        IMouseWidget::sizeHintEvent(event);
         FTK_P();
         p.size.gridSize = p.gridSize * static_cast<int>(event.displayScale);
         _setSizeHint(p.canvasSize * static_cast<int>(event.displayScale));
@@ -321,7 +321,7 @@ namespace ftk
 
     void MDICanvas::drawEvent(const Box2I& drawRect, const DrawEvent& event)
     {
-        IWidget::drawEvent(drawRect, event);
+        IMouseWidget::drawEvent(drawRect, event);
         FTK_P();
         const Box2I& g = getGeometry();
 
@@ -354,17 +354,17 @@ namespace ftk
 
     void MDICanvas::mouseMoveEvent(MouseMoveEvent& event)
     {
-        IWidget::mouseMoveEvent(event);
+        IMouseWidget::mouseMoveEvent(event);
     }
 
     void MDICanvas::mousePressEvent(MouseClickEvent& event)
     {
-        IWidget::mousePressEvent(event);
+        IMouseWidget::mousePressEvent(event);
     }
 
     void MDICanvas::mouseReleaseEvent(MouseClickEvent& event)
     {
-        IWidget::mouseReleaseEvent(event);
+        IMouseWidget::mouseReleaseEvent(event);
     }
 
     int MDICanvas::_snapToGridX(int value) const

@@ -54,7 +54,7 @@ namespace ftk
         const std::shared_ptr<TextEditModel>& model,
         const std::shared_ptr<IWidget>& parent)
     {
-        IWidget::_init(context, "ftk::TextEditWidget", parent);
+        IMouseWidget::_init(context, "ftk::TextEditWidget", parent);
         FTK_P();
 
         setAcceptsKeyFocus(true);
@@ -182,7 +182,7 @@ namespace ftk
 
     void TextEditWidget::setGeometry(const Box2I& value)
     {
-        IWidget::setGeometry(value);
+        IMouseWidget::setGeometry(value);
         FTK_P();
         if (auto parent = getParentT<ScrollArea>())
         {
@@ -195,7 +195,7 @@ namespace ftk
     {
         FTK_P();
         const bool changed = value != isVisible(false);
-        IWidget::setVisible(value);
+        IMouseWidget::setVisible(value);
         if (changed && !isVisible(false))
         {
             if (p.cursorVisible)
@@ -210,7 +210,7 @@ namespace ftk
     {
         FTK_P();
         const bool changed = value != isEnabled(false);
-        IWidget::setEnabled(value);
+        IMouseWidget::setEnabled(value);
         if (changed && !isEnabled(false))
         {
             if (p.cursorVisible)
@@ -226,7 +226,7 @@ namespace ftk
         bool parentsEnabled,
         const TickEvent& event)
     {
-        IWidget::tickEvent(parentsVisible, parentsEnabled, event);
+        IMouseWidget::tickEvent(parentsVisible, parentsEnabled, event);
         FTK_P();
 
         if (hasKeyFocus())
@@ -264,7 +264,7 @@ namespace ftk
 
     void TextEditWidget::sizeHintEvent(const SizeHintEvent& event)
     {
-        IWidget::sizeHintEvent(event);
+        IMouseWidget::sizeHintEvent(event);
         FTK_P();
 
         if (!p.size.displayScale.has_value() ||
@@ -299,7 +299,7 @@ namespace ftk
         const Box2I& drawRect,
         const DrawEvent& event)
     {
-        IWidget::drawEvent(drawRect, event);
+        IMouseWidget::drawEvent(drawRect, event);
         FTK_P();
 
         const Box2I& g = getGeometry();
@@ -401,7 +401,7 @@ namespace ftk
 
     void TextEditWidget::mouseMoveEvent(MouseMoveEvent& event)
     {
-        IWidget::mouseMoveEvent(event);
+        IMouseWidget::mouseMoveEvent(event);
         FTK_P();
         if (1 == p.mousePress)
         {
@@ -444,7 +444,7 @@ namespace ftk
 
     void TextEditWidget::mousePressEvent(MouseClickEvent& event)
     {
-        IWidget::mousePressEvent(event);
+        IMouseWidget::mousePressEvent(event);
         FTK_P();
         if (1 == event.button)
         {
@@ -458,7 +458,7 @@ namespace ftk
 
     void TextEditWidget::mouseReleaseEvent(MouseClickEvent& event)
     {
-        IWidget::mouseReleaseEvent(event);
+        IMouseWidget::mouseReleaseEvent(event);
         FTK_P();
         event.accept = true;
         p.autoScroll = V2I();
@@ -467,7 +467,7 @@ namespace ftk
 
     void TextEditWidget::keyFocusEvent(bool value)
     {
-        IWidget::keyFocusEvent(value);
+        IMouseWidget::keyFocusEvent(value);
         FTK_P();
         if (p.focusCallback)
         {
@@ -496,19 +496,19 @@ namespace ftk
         }
         if (!event.accept)
         {
-            IWidget::keyPressEvent(event);
+            IMouseWidget::keyPressEvent(event);
         }
     }
 
     void TextEditWidget::keyReleaseEvent(KeyEvent& event)
     {
-        IWidget::keyReleaseEvent(event);
+        IMouseWidget::keyReleaseEvent(event);
         event.accept = true;
     }
 
     void TextEditWidget::textEvent(TextEvent& event)
     {
-        IWidget::textEvent(event);
+        IMouseWidget::textEvent(event);
         event.accept = true;
         _p->model->input(event.text);
     }

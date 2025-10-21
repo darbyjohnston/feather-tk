@@ -30,7 +30,7 @@ namespace widgets
         int number,
         const std::shared_ptr<IWidget>& parent)
     {
-        IWidget::_init(context, "ftk::examples::dnd::DragWidget", parent);
+        IMouseWidget::_init(context, "ftk::examples::dnd::DragWidget", parent);
 
         _setMouseHoverEnabled(true);
         _setMousePressEnabled(true);
@@ -57,13 +57,13 @@ namespace widgets
 
     void DragWidget::setGeometry(const Box2I& value)
     {
-        IWidget::setGeometry(value);
+        IMouseWidget::setGeometry(value);
         _label->setGeometry(getGeometry());
     }
 
     void DragWidget::sizeHintEvent(const SizeHintEvent& event)
     {
-        IWidget::sizeHintEvent(event);
+        IMouseWidget::sizeHintEvent(event);
         _dragLength = event.style->getSizeRole(SizeRole::DragLength, event.displayScale);
         _setSizeHint(_label->getSizeHint());
     }
@@ -72,7 +72,7 @@ namespace widgets
         const Box2I& drawRect,
         const DrawEvent& event)
     {
-        IWidget::drawEvent(drawRect, event);
+        IMouseWidget::drawEvent(drawRect, event);
         if (_isMouseInside())
         {
             const Box2I& g = getGeometry();
@@ -84,19 +84,19 @@ namespace widgets
 
     void DragWidget::mouseEnterEvent(MouseEnterEvent& event)
     {
-        IWidget::mouseEnterEvent(event);
+        IMouseWidget::mouseEnterEvent(event);
         _setDrawUpdate();
     }
 
     void DragWidget::mouseLeaveEvent()
     {
-        IWidget::mouseLeaveEvent();
+        IMouseWidget::mouseLeaveEvent();
         _setDrawUpdate();
     }
 
     void DragWidget::mouseMoveEvent(MouseMoveEvent& event)
     {
-        IWidget::mouseMoveEvent(event);
+        IMouseWidget::mouseMoveEvent(event);
         if (_isMousePressed())
         {
             const float length = ftk::length(event.pos - _getMousePressPos());

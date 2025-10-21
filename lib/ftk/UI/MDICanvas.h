@@ -14,7 +14,7 @@ namespace ftk
     //! MDI canvas.
     //!
     //! \todo Add support for maximizing MDI widgets.
-    class MDICanvas : public IWidget
+    class MDICanvas : public IMouseWidget
     {
     protected:
         void _init(

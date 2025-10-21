@@ -55,15 +55,6 @@ namespace objview
 
         ///@}
 
-        //! \name Animation
-        ///@{
-
-        const AnimSettings& getAnim() const;
-        std::shared_ptr<ftk::IObservableValue<AnimSettings> > observeAnim() const;
-        void setAnim(const AnimSettings&);
-
-        ///@}
-
         //! \name Style
         ///@{
 
@@ -79,7 +70,6 @@ namespace objview
         std::shared_ptr<ftk::FileBrowserSystem> _fileBrowserSystem;
         std::shared_ptr<ftk::ObservableValue<WindowSettings> > _window;
         std::shared_ptr<ftk::ObservableValue<RenderSettings> > _render;
-        std::shared_ptr<ftk::ObservableValue<AnimSettings> > _anim;
         std::shared_ptr<ftk::ObservableValue<StyleSettings> > _style;
     };
 }

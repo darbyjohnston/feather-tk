@@ -74,7 +74,7 @@ namespace ftk
         const std::shared_ptr<FileBrowserModel>& model,
         const std::shared_ptr<IWidget>& parent)
     {
-        IWidget::_init(context, "ftk::FileBrowserView", parent);
+        IMouseWidget::_init(context, "ftk::FileBrowserView", parent);
         FTK_P();
 
         setAcceptsKeyFocus(true);
@@ -175,7 +175,7 @@ namespace ftk
 
     void FileBrowserView::sizeHintEvent(const SizeHintEvent& event)
     {
-        IWidget::sizeHintEvent(event);
+        IMouseWidget::sizeHintEvent(event);
         FTK_P();
 
         if (event.displayScale != p.iconScale)
@@ -236,7 +236,7 @@ namespace ftk
         const Box2I& drawRect,
         const DrawEvent& event)
     {
-        IWidget::drawEvent(drawRect, event);
+        IMouseWidget::drawEvent(drawRect, event);
         FTK_P();
         const Box2I& g = getGeometry();
 
@@ -310,7 +310,7 @@ namespace ftk
 
     void FileBrowserView::mouseEnterEvent(MouseEnterEvent& event)
     {
-        IWidget::mouseEnterEvent(event);
+        IMouseWidget::mouseEnterEvent(event);
         FTK_P();
         const int hover = _getItem(event.pos);
         if (hover != p.mouse.hover)
@@ -322,7 +322,7 @@ namespace ftk
 
     void FileBrowserView::mouseLeaveEvent()
     {
-        IWidget::mouseLeaveEvent();
+        IMouseWidget::mouseLeaveEvent();
         FTK_P();
         int hover = -1;
         if (hover != p.mouse.hover)
@@ -334,7 +334,7 @@ namespace ftk
 
     void FileBrowserView::mouseMoveEvent(MouseMoveEvent& event)
     {
-        IWidget::mouseMoveEvent(event);
+        IMouseWidget::mouseMoveEvent(event);
         FTK_P();
         const int hover = _getItem(event.pos);
         if (hover != p.mouse.hover)
@@ -346,7 +346,7 @@ namespace ftk
 
     void FileBrowserView::mousePressEvent(MouseClickEvent& event)
     {
-        IWidget::mousePressEvent(event);
+        IMouseWidget::mousePressEvent(event);
         FTK_P();
         takeKeyFocus();
         const int hover = _getItem(event.pos);
@@ -365,7 +365,7 @@ namespace ftk
 
     void FileBrowserView::mouseReleaseEvent(MouseClickEvent& event)
     {
-        IWidget::mouseReleaseEvent(event);
+        IMouseWidget::mouseReleaseEvent(event);
         FTK_P();
         const Box2I& g = getGeometry();
         if (p.mouse.pressed != -1)
@@ -388,7 +388,7 @@ namespace ftk
 
     void FileBrowserView::keyFocusEvent(bool value)
     {
-        IWidget::keyFocusEvent(value);
+        IMouseWidget::keyFocusEvent(value);
         _setDrawUpdate();
     }
 
@@ -450,13 +450,13 @@ namespace ftk
         }
         if (!event.accept)
         {
-            IWidget::keyPressEvent(event);
+            IMouseWidget::keyPressEvent(event);
         }
     }
 
     void FileBrowserView::keyReleaseEvent(KeyEvent& event)
     {
-        IWidget::keyReleaseEvent(event);
+        IMouseWidget::keyReleaseEvent(event);
         event.accept = true;
     }
 

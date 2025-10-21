@@ -12,7 +12,7 @@
 
 namespace ftk
 {
-    class MessageDialogWidget : public IWidget
+    class MessageDialogWidget : public IMouseWidget
     {
     protected:
         void _init(
@@ -52,7 +52,7 @@ namespace ftk
         const std::string& text,
         const std::shared_ptr<IWidget>& parent)
     {
-        IWidget::_init(context, "ftk::MessageDialogWidget", parent);
+        IMouseWidget::_init(context, "ftk::MessageDialogWidget", parent);
 
         _setMouseHoverEnabled(true);
         _setMousePressEnabled(true);
@@ -118,13 +118,13 @@ namespace ftk
 
     void MessageDialogWidget::setGeometry(const Box2I& value)
     {
-        IWidget::setGeometry(value);
+        IMouseWidget::setGeometry(value);
         _layout->setGeometry(value);
     }
 
     void MessageDialogWidget::sizeHintEvent(const SizeHintEvent& event)
     {
-        IWidget::sizeHintEvent(event);
+        IMouseWidget::sizeHintEvent(event);
         const int sa = event.style->getSizeRole(SizeRole::ScrollArea, event.displayScale);
         Size2I sizeHint = _layout->getSizeHint();
         sizeHint.w = std::max(sizeHint.w, sa * 2);

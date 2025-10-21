@@ -44,10 +44,6 @@ namespace objview
         _settings->getT("/Render", render);
         _render = ObservableValue<RenderSettings>::create(render);
 
-        AnimSettings anim;
-        _settings->getT("/Anim", anim);
-        _anim = ObservableValue<AnimSettings>::create(anim);
-
         StyleSettings style;
         style.displayScale = defaultDisplayScale;
         _settings->getT("/Style", style);
@@ -72,7 +68,6 @@ namespace objview
 
         _settings->setT("/Window", _window->get());
         _settings->setT("/Render", _render->get());
-        _settings->setT("/Anim", _anim->get());
         _settings->setT("/Style", _style->get());
     }
 
@@ -123,21 +118,6 @@ namespace objview
     void SettingsModel::setRender(const RenderSettings& value)
     {
         _render->setIfChanged(value);
-    }
-
-    const AnimSettings& SettingsModel::getAnim() const
-    {
-        return _anim->get();
-    }
-
-    std::shared_ptr<IObservableValue<AnimSettings> > SettingsModel::observeAnim() const
-    {
-        return _anim;
-    }
-
-    void SettingsModel::setAnim(const AnimSettings& value)
-    {
-        _anim->setIfChanged(value);
     }
 
     const StyleSettings& SettingsModel::getStyle() const

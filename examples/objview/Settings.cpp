@@ -39,16 +39,6 @@ namespace objview
         return !(*this == other);
     }
 
-    bool AnimSettings::operator == (const AnimSettings& other) const
-    {
-        return enabled == other.enabled;
-    }
-
-    bool AnimSettings::operator != (const AnimSettings& other) const
-    {
-        return !(*this == other);
-    }
-
     bool StyleSettings::operator == (const StyleSettings& other) const
     {
         return
@@ -73,11 +63,6 @@ namespace objview
         json["Cull"] = value.cull;
     }
 
-    void to_json(nlohmann::json& json, const AnimSettings& value)
-    {
-        json["Enabled"] = value.enabled;
-    }
-
     void to_json(nlohmann::json& json, const StyleSettings& value)
     {
         json["DisplayScale"] = value.displayScale;
@@ -94,11 +79,6 @@ namespace objview
     {
         from_string(json.at("Mode").get<std::string>(), value.mode);
         json.at("Cull").get_to(value.cull);
-    }
-
-    void from_json(const nlohmann::json& json, AnimSettings& value)
-    {
-        json.at("Enabled").get_to(value.enabled);
     }
 
     void from_json(const nlohmann::json& json, StyleSettings& value)

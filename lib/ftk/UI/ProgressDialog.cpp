@@ -147,7 +147,7 @@ namespace ftk
             event.style->getColorRole(ColorRole::Checked));
     }
 
-    class ProgressDialogWidget : public IWidget
+    class ProgressDialogWidget : public IMouseWidget
     {
     protected:
         void _init(
@@ -200,7 +200,7 @@ namespace ftk
         const std::string& text,
         const std::shared_ptr<IWidget>& parent)
     {
-        IWidget::_init(context, "ftk::ProgressDialogWidget", parent);
+        IMouseWidget::_init(context, "ftk::ProgressDialogWidget", parent);
 
         _setMouseHoverEnabled(true);
         _setMousePressEnabled(true);
@@ -316,13 +316,13 @@ namespace ftk
 
     void ProgressDialogWidget::setGeometry(const Box2I& value)
     {
-        IWidget::setGeometry(value);
+        IMouseWidget::setGeometry(value);
         _layout->setGeometry(value);
     }
 
     void ProgressDialogWidget::sizeHintEvent(const SizeHintEvent& event)
     {
-        IWidget::sizeHintEvent(event);
+        IMouseWidget::sizeHintEvent(event);
         _setSizeHint(_layout->getSizeHint());
     }
 

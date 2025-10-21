@@ -59,12 +59,4 @@ namespace ftk
         First = Top
     };
     FTK_ENUM(VAlign);
-
-    //! Updates.
-    enum class Update
-    {
-        None = 0,
-        Size = 1,
-        Draw = 2
-    };
 }

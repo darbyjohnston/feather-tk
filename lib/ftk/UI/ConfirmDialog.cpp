@@ -12,7 +12,7 @@
 
 namespace ftk
 {
-    class ConfirmDialogWidget : public IWidget
+    class ConfirmDialogWidget : public IMouseWidget
     {
     protected:
         void _init(
@@ -59,7 +59,7 @@ namespace ftk
         const std::string& cancel,
         const std::shared_ptr<IWidget>& parent)
     {
-        IWidget::_init(context, "ftk::ConfirmDialogWidget", parent);
+        IMouseWidget::_init(context, "ftk::ConfirmDialogWidget", parent);
 
         _setMouseHoverEnabled(true);
         _setMousePressEnabled(true);
@@ -138,13 +138,13 @@ namespace ftk
 
     void ConfirmDialogWidget::setGeometry(const Box2I& value)
     {
-        IWidget::setGeometry(value);
+        IMouseWidget::setGeometry(value);
         _layout->setGeometry(value);
     }
 
     void ConfirmDialogWidget::sizeHintEvent(const SizeHintEvent& event)
     {
-        IWidget::sizeHintEvent(event);
+        IMouseWidget::sizeHintEvent(event);
         const int sa = event.style->getSizeRole(SizeRole::ScrollArea, event.displayScale);
         Size2I sizeHint = _layout->getSizeHint();
         sizeHint.w = std::max(sizeHint.w, sa * 2);

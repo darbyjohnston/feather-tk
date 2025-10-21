@@ -28,9 +28,6 @@ namespace ftk
         }
     }
 
-    IWidget::IWidget()
-    {}
-
     IWidget::~IWidget()
     {}
 
@@ -64,7 +61,6 @@ namespace ftk
     {
         if (!value)
         {
-            _releaseMouse();
             releaseKeyFocus();
         }
         auto widget = shared_from_this();
@@ -264,7 +260,6 @@ namespace ftk
         _visible = value;
         if (!_visible)
         {
-            _releaseMouse();
             releaseKeyFocus();
         }
         _setSizeUpdate();
@@ -298,7 +293,6 @@ namespace ftk
         _enabled = value;
         if (!_enabled)
         {
-            _releaseMouse();
             releaseKeyFocus();
         }
         _setSizeUpdate();
@@ -359,14 +353,13 @@ namespace ftk
 
     void IWidget::sizeHintEvent(const SizeHintEvent& event)
     {
-        _updates &= ~static_cast<int>(Update::Size);
+        _sizeUpdate = false;
     }
 
     void IWidget::clipEvent(const Box2I&, bool clipped)
     {
         if (clipped && clipped != _clipped)
         {
-            _releaseMouse();
             releaseKeyFocus();
         }
         _clipped = clipped;
@@ -376,7 +369,8 @@ namespace ftk
         const Box2I&,
         const DrawEvent& event)
     {
-        _updates &= ~static_cast<int>(Update::Draw);
+        _drawUpdate = false;
+
         if (_backgroundRole != ColorRole::None)
         {
             event.render->drawRect(
@@ -388,61 +382,22 @@ namespace ftk
     void IWidget::drawOverlayEvent(
         const Box2I&,
         const DrawEvent&)
-    {
-        _updates &= ~static_cast<int>(Update::Draw);
-    }
+    {}
 
     void IWidget::mouseEnterEvent(MouseEnterEvent& event)
-    {
-        if (_mouseHoverEnabled)
-        {
-            event.accept = true;
-        }
-        _mouseInside = true;
-        _mousePos = event.pos;
-    }
+    {}
 
     void IWidget::mouseLeaveEvent()
-    {
-        _mouseInside = false;
-    }
+    {}
 
     void IWidget::mouseMoveEvent(MouseMoveEvent& event)
-    {
-        if (_mouseHoverEnabled)
-        {
-            event.accept = true;
-        }
-        _mousePos = event.pos;
-    }
+    {}
 
     void IWidget::mousePressEvent(MouseClickEvent& event)
-    {
-        const bool button =
-            _mousePressButton != 0 ?
-            event.button == _mousePressButton :
-            true;
-        const bool modifiers =
-            _mousePressModifiers != -1 ?
-            event.modifiers == _mousePressModifiers :
-            true;
-        if (_mousePressEnabled && button && modifiers)
-        {
-            event.accept = true;
-            _mousePos = event.pos;
-            _mousePress = true;
-            _mousePressPos = event.pos;
-        }
-    }
+    {}
 
     void IWidget::mouseReleaseEvent(MouseClickEvent& event)
-    {
-        if (_mousePress)
-        {
-            event.accept = true;
-            _mousePress = false;
-        }
-    }
+    {}
 
     void IWidget::scrollEvent(ScrollEvent&)
     {}
@@ -472,31 +427,4 @@ namespace ftk
 
     void IWidget::dropEvent(DragAndDropEvent&)
     {}
-
-    void IWidget::_setMouseHoverEnabled(bool value)
-    {
-        _mouseHoverEnabled = value;
-    }
-
-    void IWidget::_setMousePressEnabled(bool value, int button, int modifiers)
-    {
-        _mousePressEnabled = value;
-        _mousePressButton = button;
-        _mousePressModifiers = modifiers;
-    }
-
-    void IWidget::_releaseMouse()
-    {
-        if (_mouseInside || _mousePress)
-        {
-            _mouseInside = false;
-            _mousePress = false;
-            _setDrawUpdate();
-        }
-        auto children = _children;
-        for (const auto& child : children)
-        {
-            child->_releaseMouse();
-        }
-    }
 }

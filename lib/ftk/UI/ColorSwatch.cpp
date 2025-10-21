@@ -40,7 +40,7 @@ namespace ftk
         const std::shared_ptr<Context>& context,
         const std::shared_ptr<IWidget>& parent)
     {
-        IWidget::_init(context, "ftk::ColorSwatch", parent);
+        IMouseWidget::_init(context, "ftk::ColorSwatch", parent);
     }
 
     ColorSwatch::ColorSwatch() :
@@ -117,7 +117,7 @@ namespace ftk
     void ColorSwatch::setGeometry(const Box2I& value)
     {
         const bool changed = value != getGeometry();
-        IWidget::setGeometry(value);
+        IMouseWidget::setGeometry(value);
         FTK_P();
         if (changed)
         {
@@ -127,7 +127,7 @@ namespace ftk
 
     void ColorSwatch::sizeHintEvent(const SizeHintEvent& event)
     {
-        IWidget::sizeHintEvent(event);
+        IMouseWidget::sizeHintEvent(event);
         FTK_P();
 
         if (!p.size.displayScale.has_value() ||
@@ -144,7 +144,7 @@ namespace ftk
 
     void ColorSwatch::clipEvent(const Box2I& clipRect, bool clipped)
     {
-        IWidget::clipEvent(clipRect, clipped);
+        IMouseWidget::clipEvent(clipRect, clipped);
         FTK_P();
         if (clipped)
         {
@@ -156,7 +156,7 @@ namespace ftk
         const Box2I& drawRect,
         const DrawEvent& event)
     {
-        IWidget::drawEvent(drawRect, event);
+        IMouseWidget::drawEvent(drawRect, event);
         FTK_P();
 
         if (!p.draw.has_value())
@@ -176,7 +176,7 @@ namespace ftk
 
     void ColorSwatch::mousePressEvent(MouseClickEvent& event)
     {
-        IWidget::mousePressEvent(event);
+        IMouseWidget::mousePressEvent(event);
         FTK_P();
         if (p.editable)
         {

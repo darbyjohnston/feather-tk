@@ -41,14 +41,12 @@ namespace objview
         void sizeHintEvent(const ftk::SizeHintEvent&) override;
 
     private:
-        std::shared_ptr<ftk::CheckBox> _animCheckBox;
         std::shared_ptr<ftk::ComboBox> _colorStyleComboBox;
         std::vector<float> _displayScales;
         std::shared_ptr<ftk::ComboBox> _displayScaleComboBox;
         std::shared_ptr<ftk::ScrollWidget> _scrollWidget;
         std::shared_ptr<ftk::VerticalLayout> _layout;
 
-        std::shared_ptr<ftk::ValueObserver<AnimSettings> > _animSettingsObserver;
         std::shared_ptr<ftk::ValueObserver<StyleSettings> > _styleSettingsObserver;
     };
 }

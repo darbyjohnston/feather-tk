@@ -37,7 +37,7 @@ namespace ftk
         Orientation orientation,
         const std::shared_ptr<IWidget>& parent)
     {
-        IWidget::_init(context, "ftk::ScrollBar", parent);
+        IMouseWidget::_init(context, "ftk::ScrollBar", parent);
         FTK_P();
         setBackgroundRole(ColorRole::Base);
         _setMouseHoverEnabled(true);
@@ -99,7 +99,7 @@ namespace ftk
 
     void ScrollBar::sizeHintEvent(const SizeHintEvent& event)
     {
-        IWidget::sizeHintEvent(event);
+        IMouseWidget::sizeHintEvent(event);
         FTK_P();
 
         if (!p.size.displayScale.has_value() ||
@@ -128,7 +128,7 @@ namespace ftk
         const Box2I& drawRect,
         const DrawEvent& event)
     {
-        IWidget::drawEvent(drawRect, event);
+        IMouseWidget::drawEvent(drawRect, event);
         FTK_P();
 
         const int scrollPosMax = _getScrollPosMax();
@@ -156,19 +156,19 @@ namespace ftk
 
     void ScrollBar::mouseEnterEvent(MouseEnterEvent& event)
     {
-        IWidget::mouseEnterEvent(event);
+        IMouseWidget::mouseEnterEvent(event);
         _setDrawUpdate();
     }
 
     void ScrollBar::mouseLeaveEvent()
     {
-        IWidget::mouseLeaveEvent();
+        IMouseWidget::mouseLeaveEvent();
         _setDrawUpdate();
     }
 
     void ScrollBar::mouseMoveEvent(MouseMoveEvent& event)
     {
-        IWidget::mouseMoveEvent(event);
+        IMouseWidget::mouseMoveEvent(event);
         FTK_P();
         if (_isMousePressed())
         {
@@ -203,7 +203,7 @@ namespace ftk
 
     void ScrollBar::mousePressEvent(MouseClickEvent& event)
     {
-        IWidget::mousePressEvent(event);
+        IMouseWidget::mousePressEvent(event);
         FTK_P();
         const Box2I& g = getGeometry();
         const Box2I hg = _getHandleGeometry();
@@ -240,7 +240,7 @@ namespace ftk
 
     void ScrollBar::mouseReleaseEvent(MouseClickEvent& event)
     {
-        IWidget::mouseReleaseEvent(event);
+        IMouseWidget::mouseReleaseEvent(event);
         _setDrawUpdate();
     }
 

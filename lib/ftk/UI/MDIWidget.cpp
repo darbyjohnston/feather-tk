@@ -70,7 +70,7 @@ namespace ftk
         const std::string& title,
         const std::shared_ptr<IWidget>& parent)
     {
-        IWidget::_init(context, "ftk::MDIWidget", parent);
+        IMouseWidget::_init(context, "ftk::MDIWidget", parent);
         FTK_P();
 
         _setMouseHoverEnabled(true);
@@ -170,7 +170,7 @@ namespace ftk
     void MDIWidget::setGeometry(const Box2I& value)
     {
         const bool changed = value != getGeometry();
-        IWidget::setGeometry(value);
+        IMouseWidget::setGeometry(value);
         FTK_P();
         if (changed)
         {
@@ -231,7 +231,7 @@ namespace ftk
 
     void MDIWidget::sizeHintEvent(const SizeHintEvent& event)
     {
-        IWidget::sizeHintEvent(event);
+        IMouseWidget::sizeHintEvent(event);
         FTK_P();
 
         if (!p.size.displayScale.has_value() ||
@@ -253,7 +253,7 @@ namespace ftk
 
     void MDIWidget::clipEvent(const Box2I& clipRect, bool clipped)
     {
-        IWidget::clipEvent(clipRect, clipped);
+        IMouseWidget::clipEvent(clipRect, clipped);
         FTK_P();
         if (clipped)
         {
@@ -265,7 +265,7 @@ namespace ftk
         const Box2I& drawRect,
         const DrawEvent& event)
     {
-        IWidget::drawEvent(drawRect, event);
+        IMouseWidget::drawEvent(drawRect, event);
         FTK_P();
 
         if (!p.draw.has_value())
@@ -300,7 +300,7 @@ namespace ftk
 
     void MDIWidget::mouseLeaveEvent()
     {
-        IWidget::mouseLeaveEvent();
+        IMouseWidget::mouseLeaveEvent();
         FTK_P();
         if (p.mouse.resize != MDIResize::None)
         {
@@ -311,7 +311,7 @@ namespace ftk
 
     void MDIWidget::mouseMoveEvent(MouseMoveEvent& event)
     {
-        IWidget::mouseMoveEvent(event);
+        IMouseWidget::mouseMoveEvent(event);
         FTK_P();
         if (!_isMousePressed())
         {
@@ -349,7 +349,7 @@ namespace ftk
 
     void MDIWidget::mousePressEvent(MouseClickEvent& event)
     {
-        IWidget::mousePressEvent(event);
+        IMouseWidget::mousePressEvent(event);
         FTK_P();
         if (p.pressCallback)
         {
@@ -359,7 +359,7 @@ namespace ftk
 
     void MDIWidget::mouseReleaseEvent(MouseClickEvent& event)
     {
-        IWidget::mouseReleaseEvent(event);
+        IMouseWidget::mouseReleaseEvent(event);
         FTK_P();
         if (p.pressCallback)
         {

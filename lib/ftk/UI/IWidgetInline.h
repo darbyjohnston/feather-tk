@@ -19,11 +19,6 @@ namespace ftk
         return _backgroundRole;
     }
 
-    inline int IWidget::getUpdates() const
-    {
-        return _updates;
-    }
-
     inline const std::weak_ptr<IWidget>& IWidget::getParent() const
     {
         return _parent;
@@ -49,6 +44,11 @@ namespace ftk
             parent = parent->_parent.lock();
         }
         return out;
+    }
+
+    inline bool IWidget::hasSizeUpdate() const
+    {
+        return _sizeUpdate;
     }
 
     inline const Size2I& IWidget::getSizeHint() const
@@ -79,6 +79,11 @@ namespace ftk
     inline const Box2I& IWidget::getGeometry() const
     {
         return _geometry;
+    }
+
+    inline bool IWidget::hasDrawUpdate() const
+    {
+        return _drawUpdate;
     }
 
     inline bool IWidget::isVisible(bool andParentsVisible) const
@@ -123,12 +128,7 @@ namespace ftk
 
     inline void IWidget::_setDrawUpdate()
     {
-        _updates |= static_cast<int>(Update::Draw);
-    }
-
-    inline void IWidget::_setSizeUpdate()
-    {
-        _updates |= static_cast<int>(Update::Size);
+        _sizeUpdate = true;
     }
 
     inline void IWidget::_setSizeHint(const Size2I& value)
@@ -136,23 +136,8 @@ namespace ftk
         _sizeHint = value;
     }
 
-    inline bool IWidget::_isMouseInside() const
+    inline void IWidget::_setSizeUpdate()
     {
-        return _mouseInside;
-    }
-
-    inline const V2I& IWidget::_getMousePos() const
-    {
-        return _mousePos;
-    }
-
-    inline bool IWidget::_isMousePressed() const
-    {
-        return _mousePress;
-    }
-
-    inline const V2I& IWidget::_getMousePressPos() const
-    {
-        return _mousePressPos;
+        _drawUpdate = true;
     }
 }

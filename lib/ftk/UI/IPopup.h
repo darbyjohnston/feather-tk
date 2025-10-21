@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include <ftk/UI/IWidget.h>
+#include <ftk/UI/IMouseWidget.h>
 
 namespace ftk
 {
@@ -12,7 +12,7 @@ namespace ftk
     ///@{
         
     //! Base class for popups.
-    class IPopup : public IWidget
+    class IPopup : public IMouseWidget
     {
     protected:
         void _init(

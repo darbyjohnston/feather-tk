@@ -29,6 +29,7 @@
 #include <UIPy/IButton.h>
 #include <UIPy/IDialog.h>
 #include <UIPy/IMenuPopup.h>
+#include <UIPy/IMouseWidget.h>
 #include <UIPy/IPopup.h>
 #include <UIPy/IWidget.h>
 #include <UIPy/IWidgetPopup.h>
@@ -85,6 +86,7 @@ namespace ftk
         widgetOptions(m);
         iWidget(m);
         iWindow(m);
+        iMouseWidget(m);
         iPopup(m);
         iDialog(m);
         iMenuPopup(m);

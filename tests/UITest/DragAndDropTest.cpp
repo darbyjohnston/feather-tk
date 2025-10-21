@@ -5,6 +5,7 @@
 #include <UITest/DragAndDropTest.h>
 
 #include <ftk/UI/App.h>
+#include <ftk/UI/IMouseWidget.h>
 #include <ftk/UI/RowLayout.h>
 #include <ftk/UI/Spacer.h>
 #include <ftk/UI/Window.h>
@@ -18,7 +19,7 @@ namespace ftk
     {
         namespace
         {
-            class DragAndDropWidget : public IWidget
+            class DragAndDropWidget : public IMouseWidget
             {
             protected:
                 void _init(
@@ -55,7 +56,7 @@ namespace ftk
                 const std::string& text,
                 const std::shared_ptr<IWidget>& parent)
             {
-                IWidget::_init(context, "ftk::examples::dnd::DragAndDropWidget", parent);
+                IMouseWidget::_init(context, "ftk::examples::dnd::DragAndDropWidget", parent);
                 setStretch(Stretch::Expanding);
                 _setMouseHoverEnabled(true);
                 _setMousePressEnabled(true);
@@ -82,14 +83,14 @@ namespace ftk
 
             void DragAndDropWidget::sizeHintEvent(const SizeHintEvent& event)
             {
-                IWidget::sizeHintEvent(event);
+                IMouseWidget::sizeHintEvent(event);
                 _dragLength = event.style->getSizeRole(SizeRole::DragLength, event.displayScale);
                 _setSizeHint(Size2I(100, 100));
             }
 
             void DragAndDropWidget::mouseMoveEvent(MouseMoveEvent& event)
             {
-                IWidget::mouseMoveEvent(event);
+                IMouseWidget::mouseMoveEvent(event);
                 if (_isMousePressed())
                 {
                     const float length = ftk::length(event.pos - _getMousePressPos());

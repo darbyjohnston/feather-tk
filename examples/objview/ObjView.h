@@ -6,13 +6,11 @@
 
 #include "Settings.h"
 
-#include <ftk/UI/IWidget.h>
+#include <ftk/UI/IMouseWidget.h>
 
 #include <ftk/GL/Mesh.h>
 #include <ftk/GL/OffscreenBuffer.h>
 #include <ftk/GL/Shader.h>
-
-#include <ftk/Core/Timer.h>
 
 namespace objview
 {
@@ -21,7 +19,7 @@ namespace objview
     class HUDWidget;
 
     //! Object view widget.
-    class ObjView : public ftk::IWidget
+    class ObjView : public ftk::IMouseWidget
     {
     protected:
         void _init(
@@ -61,8 +59,6 @@ namespace objview
         void sizeHintEvent(const ftk::SizeHintEvent&) override;
         void drawEvent(const ftk::Box2I&, const ftk::DrawEvent&) override;
         void mouseMoveEvent(ftk::MouseMoveEvent&) override;
-        void mousePressEvent(ftk::MouseClickEvent&) override;
-        void mouseReleaseEvent(ftk::MouseClickEvent&) override;
 
     private:
         std::shared_ptr<ftk::TriMesh3F> _mesh;
@@ -82,13 +78,7 @@ namespace objview
 
         std::shared_ptr<HUDWidget> _hudWidget;
 
-        AnimSettings _anim;
-        float _animVel = 0.F;
-        int _dragLength = 0;
-        std::shared_ptr<ftk::Timer> _animTimer;
-
         std::shared_ptr<ftk::ValueObserver<ftk::V3F> > _rotationObserver;
         std::shared_ptr<ftk::ValueObserver<RenderSettings> > _renderSettingsObserver;
-        std::shared_ptr<ftk::ValueObserver<AnimSettings> > _animSettingsObserver;
     };
 }

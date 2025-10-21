@@ -127,7 +127,7 @@ namespace ftk
     };
 
     //! File browser widget.
-    class FileBrowserWidget : public IWidget
+    class FileBrowserWidget : public IMouseWidget
     {
     protected:
         void _init(

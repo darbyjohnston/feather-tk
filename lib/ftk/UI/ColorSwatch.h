@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include <ftk/UI/IWidget.h>
+#include <ftk/UI/IMouseWidget.h>
 
 namespace ftk
 {
@@ -12,7 +12,7 @@ namespace ftk
     ///@{
 
     //! Color swatch widget.
-    class ColorSwatch : public IWidget
+    class ColorSwatch : public IMouseWidget
     {
     protected:
         void _init(

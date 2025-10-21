@@ -24,7 +24,7 @@ namespace ftk
             const std::string& objectName,
             const std::shared_ptr<IWidget>& parent);
 
-        IWidget();
+        IWidget() = default;
 
     public:
         virtual ~IWidget() = 0;
@@ -46,9 +46,6 @@ namespace ftk
 
         //! Set the background role.
         void setBackgroundRole(ColorRole);
-
-        //! Get whether updates are needed.
-        int getUpdates() const;
 
         //! Hierarchy
         ///@{
@@ -85,6 +82,9 @@ namespace ftk
 
         //! Geometry
         ///@{
+
+        //! Get whether a size update is needed.
+        bool hasSizeUpdate() const;
 
         //! Get the size hint.
         const Size2I& getSizeHint() const;
@@ -138,6 +138,9 @@ namespace ftk
 
         //! Visibility
         ///@{
+
+        //! Get whether a draw update is needed.
+        bool hasDrawUpdate() const;
 
         //! Is the widget visible?
         bool isVisible(bool andParentsVisible = true) const;
@@ -274,47 +277,39 @@ namespace ftk
         ///@}
 
     protected:
-        void _setDrawUpdate();
         void _setSizeUpdate();
-
         void _setSizeHint(const Size2I&);
 
-        void _setMouseHoverEnabled(bool);
-        void _setMousePressEnabled(bool, int button = 0, int modifiers = -1);
-        virtual void _releaseMouse();
-        bool _isMouseInside() const;
-        const V2I& _getMousePos() const;
-        bool _isMousePressed() const;
-        const V2I& _getMousePressPos() const;
+        void _setDrawUpdate();
 
     private:
         std::weak_ptr<Context> _context;
+
         std::string _objectName;
         ColorRole _backgroundRole = ColorRole::None;
-        int _updates = 0;
+
         std::weak_ptr<IWidget> _parent;
         std::list<std::shared_ptr<IWidget> > _children;
+
+        bool _sizeUpdate = false;
         Size2I _sizeHint;
         Stretch _hStretch = Stretch::Fixed;
         Stretch _vStretch = Stretch::Fixed;
         HAlign _hAlign = HAlign::Fill;
         VAlign _vAlign = VAlign::Fill;
         Box2I _geometry;
+
+        bool _drawUpdate = false;
         bool _visible = true;
         bool _parentsVisible = true;
         bool _clipped = false;
         bool _enabled = true;
+
         bool _parentsEnabled = true;
-        bool _mouseHoverEnabled = false;
-        bool _mousePressEnabled = false;
-        int _mousePressButton = 0;
-        int _mousePressModifiers = -1;
-        bool _mouseInside = false;
-        V2I _mousePos;
-        bool _mousePress = false;
-        V2I _mousePressPos;
+
         bool _acceptsKeyFocus = false;
         bool _keyFocus = false;
+
         std::string _tooltip;
     };
 }

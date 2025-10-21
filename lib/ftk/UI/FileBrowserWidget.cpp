@@ -69,7 +69,7 @@ namespace ftk
         const std::shared_ptr<FileBrowserModel>& model,
         const std::shared_ptr<IWidget>& parent)
     {
-        IWidget::_init(context, "ftk::FileBrowserWidget", parent);
+        IMouseWidget::_init(context, "ftk::FileBrowserWidget", parent);
         FTK_P();
 
         setHStretch(Stretch::Expanding);
@@ -420,13 +420,13 @@ namespace ftk
 
     void FileBrowserWidget::setGeometry(const Box2I& value)
     {
-        IWidget::setGeometry(value);
+        IMouseWidget::setGeometry(value);
         _p->layout->setGeometry(value);
     }
 
     void FileBrowserWidget::sizeHintEvent(const SizeHintEvent& value)
     {
-        IWidget::sizeHintEvent(value);
+        IMouseWidget::sizeHintEvent(value);
         _setSizeHint(_p->layout->getSizeHint());
     }
 

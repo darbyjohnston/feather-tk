@@ -138,7 +138,7 @@ namespace ftk
         const std::shared_ptr<Context>& context,
         const std::shared_ptr<IWidget>& parent)
     {
-        IWidget::_init(context, "ftk::LineEdit", parent);
+        IMouseWidget::_init(context, "ftk::LineEdit", parent);
         FTK_P();
         setHAlign(HAlign::Fill);
         setAcceptsKeyFocus(true);
@@ -267,7 +267,7 @@ namespace ftk
     void LineEdit::setGeometry(const Box2I& value)
     {
         const bool changed = value != getGeometry();
-        IWidget::setGeometry(value);
+        IMouseWidget::setGeometry(value);
         FTK_P();
         if (changed)
         {
@@ -279,7 +279,7 @@ namespace ftk
     {
         FTK_P();
         const bool changed = value != isVisible(false);
-        IWidget::setVisible(value);
+        IMouseWidget::setVisible(value);
         if (changed && !isVisible(false))
         {
             if (p.cursorVisible)
@@ -294,7 +294,7 @@ namespace ftk
     {
         FTK_P();
         const bool changed = value != isEnabled(false);
-        IWidget::setEnabled(value);
+        IMouseWidget::setEnabled(value);
         if (changed && !isEnabled(false))
         {
             if (p.cursorVisible)
@@ -310,7 +310,7 @@ namespace ftk
         bool parentsEnabled,
         const TickEvent& event)
     {
-        IWidget::tickEvent(parentsVisible, parentsEnabled, event);
+        IMouseWidget::tickEvent(parentsVisible, parentsEnabled, event);
         FTK_P();
         if (hasKeyFocus())
         {
@@ -332,7 +332,7 @@ namespace ftk
 
     void LineEdit::sizeHintEvent(const SizeHintEvent& event)
     {
-        IWidget::sizeHintEvent(event);
+        IMouseWidget::sizeHintEvent(event);
         FTK_P();
 
         if (!p.size.displayScale.has_value() ||
@@ -358,7 +358,7 @@ namespace ftk
 
     void LineEdit::clipEvent(const Box2I& clipRect, bool clipped)
     {
-        IWidget::clipEvent(clipRect, clipped);
+        IMouseWidget::clipEvent(clipRect, clipped);
         FTK_P();
         if (clipped)
         {
@@ -370,7 +370,7 @@ namespace ftk
         const Box2I& drawRect,
         const DrawEvent& event)
     {
-        IWidget::drawEvent(drawRect, event);
+        IMouseWidget::drawEvent(drawRect, event);
         FTK_P();
 
         if (!p.draw.has_value())
@@ -451,7 +451,7 @@ namespace ftk
 
     void LineEdit::mouseMoveEvent(MouseMoveEvent& event)
     {
-        IWidget::mouseMoveEvent(event);
+        IMouseWidget::mouseMoveEvent(event);
         FTK_P();
         if (_isMousePressed())
         {
@@ -473,7 +473,7 @@ namespace ftk
 
     void LineEdit::mousePressEvent(MouseClickEvent& event)
     {
-        IWidget::mousePressEvent(event);
+        IMouseWidget::mousePressEvent(event);
         FTK_P();
         const int cursorPos = _getCursorPos(event.pos);
         if (cursorPos != p.cursorPos)
@@ -494,7 +494,7 @@ namespace ftk
 
     void LineEdit::keyFocusEvent(bool value)
     {
-        IWidget::keyFocusEvent(value);
+        IMouseWidget::keyFocusEvent(value);
         FTK_P();
         if (!value)
         {
@@ -765,13 +765,13 @@ namespace ftk
         }
         if (!event.accept)
         {
-            IWidget::keyPressEvent(event);
+            IMouseWidget::keyPressEvent(event);
         }
     }
 
     void LineEdit::keyReleaseEvent(KeyEvent& event)
     {
-        IWidget::keyReleaseEvent(event);
+        IMouseWidget::keyReleaseEvent(event);
         event.accept = true;
     }
 

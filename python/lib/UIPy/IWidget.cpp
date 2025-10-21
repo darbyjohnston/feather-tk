@@ -34,7 +34,6 @@ namespace ftk
             .def_property("objectName", &IWidget::getObjectName, &IWidget::setObjectName)
             .def_property_readonly("objectPath", &IWidget::getObjectPath)
             .def_property("backgroundColor", &IWidget::getBackgroundRole, &IWidget::setBackgroundRole)
-            .def("getUpdates", &IWidget::getUpdates)
 
             .def_property("parent", &IWidget::getParent, &IWidget::setParent)
             .def("getChildren", &IWidget::getChildren)
@@ -42,6 +41,7 @@ namespace ftk
             .def("moveToBack", &IWidget::moveToBack)
             .def_property_readonly("window", &IWidget::getWindow)
 
+            .def("hasSizeUpdate", &IWidget::hasSizeUpdate)
             .def_property_readonly("sizeHint", &IWidget::getSizeHint)
             .def_property("hStretch", &IWidget::getHStretch, &IWidget::setHStretch)
             .def_property("vStretch", &IWidget::getVStretch, &IWidget::setVStretch)
@@ -63,6 +63,8 @@ namespace ftk
             .def_property("geometry", &IWidget::getGeometry, &IWidget::setGeometry)
             .def("setPos", &IWidget::setPos)
             .def("setSize", &IWidget::setSize)
+
+            .def("hasDrawUpdate", &IWidget::hasDrawUpdate)
             .def(
                 "isVisible",
                 &IWidget::isVisible,

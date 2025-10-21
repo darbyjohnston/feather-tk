@@ -42,7 +42,7 @@ namespace ftk
         const std::shared_ptr<IntModel>& model,
         const std::shared_ptr<IWidget>& parent)
     {
-        IWidget::_init(context, "ftk::IntSlider", parent);
+        IMouseWidget::_init(context, "ftk::IntSlider", parent);
         FTK_P();
 
         setAcceptsKeyFocus(true);
@@ -167,7 +167,7 @@ namespace ftk
     void IntSlider::setGeometry(const Box2I& value)
     {
         const bool changed = value != getGeometry();
-        IWidget::setGeometry(value);
+        IMouseWidget::setGeometry(value);
         FTK_P();
         if (changed)
         {
@@ -177,7 +177,7 @@ namespace ftk
 
     void IntSlider::sizeHintEvent(const SizeHintEvent& event)
     {
-        IWidget::sizeHintEvent(event);
+        IMouseWidget::sizeHintEvent(event);
         FTK_P();
 
         if (!p.size.displayScale.has_value() ||
@@ -200,7 +200,7 @@ namespace ftk
 
     void IntSlider::clipEvent(const Box2I& clipRect, bool clipped)
     {
-        IWidget::clipEvent(clipRect, clipped);
+        IMouseWidget::clipEvent(clipRect, clipped);
         FTK_P();
         if (clipped)
         {
@@ -212,7 +212,7 @@ namespace ftk
         const Box2I& drawRect,
         const DrawEvent& event)
     {
-        IWidget::drawEvent(drawRect, event);
+        IMouseWidget::drawEvent(drawRect, event);
         FTK_P();
 
         if (!p.draw.has_value())
@@ -267,19 +267,19 @@ namespace ftk
 
     void IntSlider::mouseEnterEvent(MouseEnterEvent& event)
     {
-        IWidget::mouseEnterEvent(event);
+        IMouseWidget::mouseEnterEvent(event);
         _setDrawUpdate();
     }
 
     void IntSlider::mouseLeaveEvent()
     {
-        IWidget::mouseLeaveEvent();
+        IMouseWidget::mouseLeaveEvent();
         _setDrawUpdate();
     }
 
     void IntSlider::mouseMoveEvent(MouseMoveEvent& event)
     {
-        IWidget::mouseMoveEvent(event);
+        IMouseWidget::mouseMoveEvent(event);
         FTK_P();
         if (_isMousePressed() && p.model)
         {
@@ -289,7 +289,7 @@ namespace ftk
 
     void IntSlider::mousePressEvent(MouseClickEvent& event)
     {
-        IWidget::mousePressEvent(event);
+        IMouseWidget::mousePressEvent(event);
         FTK_P();
         if (p.model)
         {
@@ -301,7 +301,7 @@ namespace ftk
 
     void IntSlider::mouseReleaseEvent(MouseClickEvent& event)
     {
-        IWidget::mouseReleaseEvent(event);
+        IMouseWidget::mouseReleaseEvent(event);
         _setDrawUpdate();
     }
 
@@ -360,13 +360,13 @@ namespace ftk
         }
         if (!event.accept)
         {
-            IWidget::keyPressEvent(event);
+            IMouseWidget::keyPressEvent(event);
         }
     }
 
     void IntSlider::keyReleaseEvent(KeyEvent& event)
     {
-        IWidget::keyReleaseEvent(event);
+        IMouseWidget::keyReleaseEvent(event);
         event.accept = true;
     }
 

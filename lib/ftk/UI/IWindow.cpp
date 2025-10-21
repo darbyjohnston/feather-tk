@@ -305,7 +305,7 @@ namespace ftk
 
     bool IWindow::_hasSizeUpdate(const std::shared_ptr<IWidget>& widget) const
     {
-        bool out = widget->getUpdates() & static_cast<int>(Update::Size);
+        bool out = widget->hasSizeUpdate();
         if (out)
         {
             //std::cout << "Size update: " << widget->getObjectName() << std::endl;
@@ -336,7 +336,7 @@ namespace ftk
         bool out = false;
         if (!widget->isClipped())
         {
-            out = widget->getUpdates() & static_cast<int>(Update::Draw);
+            out = widget->hasDrawUpdate();
             if (out)
             {
                 //std::cout << "Draw update: " << widget->getObjectName() << std::endl;

@@ -44,8 +44,6 @@ namespace ftk
         IWidget::_init(context, "ftk::Splitter", parent);
         FTK_P();
         setStretch(Stretch::Expanding);
-        _setMouseHoverEnabled(true);
-        _setMousePressEnabled(true);
         p.orientation = orientation;
     }
 
@@ -268,12 +266,19 @@ namespace ftk
     void Splitter::mouseEnterEvent(MouseEnterEvent& event)
     {
         IWidget::mouseEnterEvent(event);
+        FTK_P();
+        if (contains(p.size.g, event.pos) && !p.mouse.hoverHandle)
+        {
+            event.accept = true;
+            p.mouse.hoverHandle = true;
+            _setDrawUpdate();
+        }
     }
 
     void Splitter::mouseLeaveEvent()
     {
         FTK_P();
-        if (p.mouse.hoverHandle != false)
+        if (p.mouse.hoverHandle)
         {
             p.mouse.hoverHandle = false;
             _setDrawUpdate();
@@ -331,17 +336,5 @@ namespace ftk
         event.accept = true;
         p.mouse.pressedHandle = false;
         _setDrawUpdate();
-    }
-
-    void Splitter::_releaseMouse()
-    {
-        IWidget::_releaseMouse();
-        FTK_P();
-        if (p.mouse.hoverHandle || p.mouse.pressedHandle)
-        {
-            p.mouse.hoverHandle = false;
-            p.mouse.pressedHandle = false;
-            _setDrawUpdate();
-        }
     }
 }

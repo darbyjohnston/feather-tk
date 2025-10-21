@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include <ftk/UI/IWidget.h>
+#include <ftk/UI/IMouseWidget.h>
 
 namespace ftk
 {
@@ -12,7 +12,7 @@ namespace ftk
     ///@{
 
     //! Base class for buttons.
-    class IButton : public IWidget
+    class IButton : public IMouseWidget
     {
     protected:
         void _init(
@@ -105,17 +105,18 @@ namespace ftk
         void mouseReleaseEvent(MouseClickEvent&) override;
 
     protected:
-        void _releaseMouse() override;
-
         std::string _text;
         FontRole _fontRole = FontRole::Label;
+
         std::string _icon;
         std::shared_ptr<Image> _iconImage;
         std::string _checkedIcon;
         std::shared_ptr<Image> _checkedIconImage;
+
         ColorRole _buttonRole = ColorRole::Button;
         ColorRole _checkedRole = ColorRole::Checked;
         bool _checked = false;
+
         std::function<void(bool)> _hoveredCallback;
         std::function<void(void)> _pressedCallback;
         std::function<void(void)> _clickedCallback;

@@ -5,7 +5,7 @@
 #pragma once
 
 #include <ftk/UI/DoubleModel.h>
-#include <ftk/UI/IWidget.h>
+#include <ftk/UI/IMouseWidget.h>
 
 namespace ftk
 {
@@ -13,7 +13,7 @@ namespace ftk
     ///@{
         
     //! Double precision floating point value slider.
-    class DoubleSlider : public IWidget
+    class DoubleSlider : public IMouseWidget
     {
     protected:
         void _init(

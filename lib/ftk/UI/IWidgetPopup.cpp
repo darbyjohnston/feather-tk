@@ -5,6 +5,7 @@
 #include <ftk/UI/IWidgetPopup.h>
 
 #include <ftk/UI/DrawUtil.h>
+#include <ftk/UI/IMouseWidget.h>
 #include <ftk/UI/IWindow.h>
 
 #include <optional>
@@ -13,7 +14,7 @@ namespace ftk
 {
     namespace
     {
-        class ContainerWidget : public IWidget
+        class ContainerWidget : public IMouseWidget
         {
         protected:
             void _init(
@@ -37,7 +38,7 @@ namespace ftk
             const std::shared_ptr<Context>& context,
             const std::shared_ptr<IWidget>& parent)
         {
-            IWidget::_init(context, "ftk::ContainerWidget", parent);
+            IMouseWidget::_init(context, "ftk::ContainerWidget", parent);
             _setMouseHoverEnabled(true);
             _setMousePressEnabled(true);
         }
@@ -59,7 +60,7 @@ namespace ftk
 
         void ContainerWidget::setGeometry(const Box2I& value)
         {
-            IWidget::setGeometry(value);
+            IMouseWidget::setGeometry(value);
             const auto& children = getChildren();
             if (!children.empty())
             {
@@ -69,7 +70,7 @@ namespace ftk
 
         void ContainerWidget::sizeHintEvent(const SizeHintEvent& event)
         {
-            IWidget::sizeHintEvent(event);
+            IMouseWidget::sizeHintEvent(event);
             const auto& children = getChildren();
             if (!children.empty())
             {

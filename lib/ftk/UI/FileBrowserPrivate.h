@@ -188,7 +188,7 @@ namespace ftk
         std::filesystem::file_time_type time;
     };
 
-    class FileBrowserView : public IWidget
+    class FileBrowserView : public IMouseWidget
     {
     protected:
         void _init(

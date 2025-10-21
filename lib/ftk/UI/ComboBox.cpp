@@ -68,7 +68,7 @@ namespace ftk
         const std::shared_ptr<Context>& context,
         const std::shared_ptr<IWidget>& parent)
     {
-        IWidget::_init(context, "ftk::ComboBox", parent);
+        IMouseWidget::_init(context, "ftk::ComboBox", parent);
         setAcceptsKeyFocus(true);
         _setMouseHoverEnabled(true);
         _setMousePressEnabled(true);
@@ -196,7 +196,7 @@ namespace ftk
     void ComboBox::setGeometry(const Box2I& value)
     {
         const bool changed = value != getGeometry();
-        IWidget::setGeometry(value);
+        IMouseWidget::setGeometry(value);
         FTK_P();
         if (changed)
         {
@@ -206,7 +206,7 @@ namespace ftk
 
     void ComboBox::sizeHintEvent(const SizeHintEvent& event)
     {
-        IWidget::sizeHintEvent(event);
+        IMouseWidget::sizeHintEvent(event);
         FTK_P();
 
         if (!p.size.displayScale.has_value() ||
@@ -265,7 +265,7 @@ namespace ftk
 
     void ComboBox::clipEvent(const Box2I& clipRect, bool clipped)
     {
-        IWidget::clipEvent(clipRect, clipped);
+        IMouseWidget::clipEvent(clipRect, clipped);
         FTK_P();
         if (clipped)
         {
@@ -277,7 +277,7 @@ namespace ftk
         const Box2I& drawRect,
         const DrawEvent& event)
     {
-        IWidget::drawEvent(drawRect, event);
+        IMouseWidget::drawEvent(drawRect, event);
         FTK_P();
 
         if (!p.draw.has_value())
@@ -367,20 +367,20 @@ namespace ftk
 
     void ComboBox::mouseEnterEvent(MouseEnterEvent& event)
     {
-        IWidget::mouseEnterEvent(event);
+        IMouseWidget::mouseEnterEvent(event);
         event.accept = true;
         _setDrawUpdate();
     }
 
     void ComboBox::mouseLeaveEvent()
     {
-        IWidget::mouseLeaveEvent();
+        IMouseWidget::mouseLeaveEvent();
         _setDrawUpdate();
     }
 
     void ComboBox::mousePressEvent(MouseClickEvent& event)
     {
-        IWidget::mousePressEvent(event);
+        IMouseWidget::mousePressEvent(event);
         FTK_P();
         _click();
         _setDrawUpdate();
@@ -388,7 +388,7 @@ namespace ftk
 
     void ComboBox::mouseReleaseEvent(MouseClickEvent& event)
     {
-        IWidget::mouseReleaseEvent(event);
+        IMouseWidget::mouseReleaseEvent(event);
         _setDrawUpdate();
     }
 
@@ -431,13 +431,13 @@ namespace ftk
         }
         if (!event.accept)
         {
-            IWidget::keyPressEvent(event);
+            IMouseWidget::keyPressEvent(event);
         }
     }
 
     void ComboBox::keyReleaseEvent(KeyEvent& event)
     {
-        IWidget::keyReleaseEvent(event);
+        IMouseWidget::keyReleaseEvent(event);
         event.accept = true;
     }
 

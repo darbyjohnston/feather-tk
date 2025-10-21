@@ -11,7 +11,7 @@ namespace ftk
         const std::string& objectName,
         const std::shared_ptr<IWidget>& parent)
     {
-        IWidget::_init(context, objectName, parent);
+        IMouseWidget::_init(context, objectName, parent);
     }
 
     IPopup::IPopup()

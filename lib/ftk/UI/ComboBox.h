@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include <ftk/UI/IWidget.h>
+#include <ftk/UI/IMouseWidget.h>
 
 namespace ftk
 {
@@ -27,7 +27,7 @@ namespace ftk
     };
 
     //! Combo box.
-    class ComboBox : public IWidget
+    class ComboBox : public IMouseWidget
     {
     protected:
         void _init(

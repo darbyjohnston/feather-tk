@@ -5,7 +5,7 @@
 #pragma once
 
 #include <ftk/UI/FloatModel.h>
-#include <ftk/UI/IWidget.h>
+#include <ftk/UI/IMouseWidget.h>
 
 namespace ftk
 {
@@ -13,7 +13,7 @@ namespace ftk
     ///@{
 
     //! Floating point value slider.
-    class FloatSlider : public IWidget
+    class FloatSlider : public IMouseWidget
     {
     protected:
         void _init(

@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include <ftk/UI/IWidget.h>
+#include <ftk/UI/IMouseWidget.h>
 
 namespace ftk
 {
@@ -15,7 +15,7 @@ namespace ftk
     //! 
     //! \todo Scroll the view with the cursor.
     //! \todo Double click to select text.
-    class LineEdit : public IWidget
+    class LineEdit : public IMouseWidget
     {
     protected:
         void _init(

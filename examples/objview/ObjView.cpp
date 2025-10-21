@@ -31,7 +31,7 @@ namespace objview
         const std::shared_ptr<Document>& doc,
         const std::shared_ptr<IWidget>& parent)
     {
-        IWidget::_init(context, "examples::objview::ObjView", parent);
+        IMouseWidget::_init(context, "examples::objview::ObjView", parent);
 
         _setMouseHoverEnabled(true);
         _setMousePressEnabled(true);
@@ -43,9 +43,6 @@ namespace objview
         }
 
         _hudWidget = HUDWidget::create(context, doc, shared_from_this());
-
-        _animTimer = Timer::create(context);
-        _animTimer->setRepeating(true);
 
         frame();
 
@@ -65,17 +62,6 @@ namespace objview
                 _settings = value;
                 _doRender = true;
                 _setDrawUpdate();
-            });
-
-        _animSettingsObserver = ValueObserver<AnimSettings>::create(
-            app->getSettingsModel()->observeAnim(),
-            [this](const AnimSettings& value)
-            {
-                _anim = value;
-                if (!_anim.enabled)
-                {
-                    _animTimer->stop();
-                }
             });
     }
 
@@ -160,15 +146,14 @@ namespace objview
     void ObjView::setGeometry(const ftk::Box2I& value)
     {
         const bool changed = value != getGeometry();
-        IWidget::setGeometry(value);
+        IMouseWidget::setGeometry(value);
         _doRender |= changed;
         _hudWidget->setGeometry(value);
     }
 
     void ObjView::sizeHintEvent(const SizeHintEvent& event)
     {
-        IWidget::sizeHintEvent(event);
-        _dragLength = event.style->getSizeRole(SizeRole::DragLength, event.displayScale);
+        IMouseWidget::sizeHintEvent(event);
         _setSizeHint(Size2I());
     }
 
@@ -263,7 +248,7 @@ namespace objview
 
     void ObjView::drawEvent(const Box2I& drawRect, const DrawEvent& event)
     {
-        IWidget::drawEvent(drawRect, event);
+        IMouseWidget::drawEvent(drawRect, event);
 
         const Box2I& g = getGeometry();
         event.render->drawRect(g, Color4F(0.F, 0.F, 0.F));
@@ -369,40 +354,12 @@ namespace objview
 
     void ObjView::mouseMoveEvent(MouseMoveEvent& event)
     {
-        IWidget::mouseMoveEvent(event);
+        IMouseWidget::mouseMoveEvent(event);
         if (_isMousePressed())
         {
             const V2I d = event.pos - event.prev;
             const V2F v(d.x * mouseMult, d.y * mouseMult);
             setOrbit(_orbit + v);
-            _animVel = v.x;
-        }
-    }
-
-    void ObjView::mousePressEvent(MouseClickEvent& event)
-    {
-        IWidget::mousePressEvent(event);
-        _animVel = 0.F;
-        _animTimer->stop();
-    }
-
-    void ObjView::mouseReleaseEvent(MouseClickEvent& event)
-    {
-        IWidget::mouseReleaseEvent(event);
-        const int drag = length(event.pos - _getMousePressPos());
-        if (_anim.enabled && drag > _dragLength)
-        {
-            _animTimer->start(
-                std::chrono::milliseconds(1000 / 60),
-                [this]
-                {
-                    setOrbit(_orbit + V2F(_animVel, 0.F));
-                    _animVel *= .99F;
-                    if (std::fabs(_animVel) <= .001F)
-                    {
-                        _animTimer->stop();
-                    }
-                });
         }
     }
 }

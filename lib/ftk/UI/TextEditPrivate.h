@@ -4,11 +4,12 @@
 
 #pragma once
 
+#include <ftk/UI/IMouseWidget.h>
 #include <ftk/UI/TextEdit.h>
 
 namespace ftk
 {
-    class TextEditWidget : public IWidget
+    class TextEditWidget : public IMouseWidget
     {
     protected:
         void _init(

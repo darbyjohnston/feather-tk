@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include <ftk/UI/IWidget.h>
+#include <ftk/UI/IMouseWidget.h>
 
 namespace ftk
 {
@@ -32,7 +32,7 @@ namespace ftk
     FTK_ENUM(MDIResize);
 
     //! MDI widget.
-    class MDIWidget : public IWidget
+    class MDIWidget : public IMouseWidget
     {
     protected:
         void _init(

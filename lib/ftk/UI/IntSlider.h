@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include <ftk/UI/IWidget.h>
+#include <ftk/UI/IMouseWidget.h>
 #include <ftk/UI/IntModel.h>
 
 namespace ftk
@@ -13,7 +13,7 @@ namespace ftk
     ///@{
         
     //! Integer value slider.
-    class IntSlider : public IWidget
+    class IntSlider : public IMouseWidget
     {
     protected:
         void _init(

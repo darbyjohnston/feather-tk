@@ -22,7 +22,7 @@ namespace ftk
         const std::string& objectName,
         const std::shared_ptr<IWidget>& parent)
     {
-        IWidget::_init(context, objectName, parent);
+        IMouseWidget::_init(context, objectName, parent);
         _setMouseHoverEnabled(true);
         _setMousePressEnabled(true);
     }
@@ -205,7 +205,7 @@ namespace ftk
         bool parentsEnabled,
         const TickEvent& event)
     {
-        IWidget::tickEvent(parentsVisible, parentsEnabled, event);
+        IMouseWidget::tickEvent(parentsVisible, parentsEnabled, event);
         FTK_P();
         if (_isMousePressed() && p.repeatClick)
         {
@@ -223,7 +223,7 @@ namespace ftk
 
     void IButton::sizeHintEvent(const SizeHintEvent& event)
     {
-        IWidget::sizeHintEvent(event);
+        IMouseWidget::sizeHintEvent(event);
         FTK_P();
         if (event.displayScale != p.iconScale)
         {
@@ -243,7 +243,7 @@ namespace ftk
 
     void IButton::mouseEnterEvent(MouseEnterEvent& event)
     {
-        IWidget::mouseEnterEvent(event);
+        IMouseWidget::mouseEnterEvent(event);
         event.accept = true;
         _setDrawUpdate();
         if (_hoveredCallback)
@@ -254,7 +254,7 @@ namespace ftk
 
     void IButton::mouseLeaveEvent()
     {
-        IWidget::mouseLeaveEvent();
+        IMouseWidget::mouseLeaveEvent();
         _setDrawUpdate();
         if (_hoveredCallback)
         {
@@ -264,7 +264,7 @@ namespace ftk
 
     void IButton::mousePressEvent(MouseClickEvent& event)
     {
-        IWidget::mousePressEvent(event);
+        IMouseWidget::mousePressEvent(event);
         FTK_P();
         if (acceptsKeyFocus())
         {
@@ -284,24 +284,11 @@ namespace ftk
 
     void IButton::mouseReleaseEvent(MouseClickEvent& event)
     {
-        IWidget::mouseReleaseEvent(event);
+        IMouseWidget::mouseReleaseEvent(event);
         _setDrawUpdate();
         if (contains(getGeometry(), _getMousePos()))
         {
             click();
-        }
-    }
-
-    void IButton::_releaseMouse()
-    {
-        const bool inside = _isMouseInside();
-        IWidget::_releaseMouse();
-        if (inside)
-        {
-            if (_hoveredCallback)
-            {
-                _hoveredCallback(false);
-            }
         }
     }
 }

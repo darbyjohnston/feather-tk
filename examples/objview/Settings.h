@@ -41,15 +41,6 @@ namespace objview
         bool operator != (const RenderSettings&) const;
     };
 
-    //! Animation settings.
-    struct AnimSettings
-    {
-        bool enabled = true;
-
-        bool operator == (const AnimSettings&) const;
-        bool operator != (const AnimSettings&) const;
-    };
-
     //! Style settings.
     struct StyleSettings
     {
@@ -62,11 +53,9 @@ namespace objview
 
     void to_json(nlohmann::json&, const WindowSettings&);
     void to_json(nlohmann::json&, const RenderSettings&);
-    void to_json(nlohmann::json&, const AnimSettings&);
     void to_json(nlohmann::json&, const StyleSettings&);
 
     void from_json(const nlohmann::json&, WindowSettings&);
     void from_json(const nlohmann::json&, RenderSettings&);
-    void from_json(const nlohmann::json&, AnimSettings&);
     void from_json(const nlohmann::json&, StyleSettings&);
 }
