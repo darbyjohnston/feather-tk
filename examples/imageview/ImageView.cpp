@@ -42,14 +42,14 @@ namespace imageview
 
     void ImageView::zoomIn()
     {
-        _zoom *= 2.F;
+        _zoom *= 1.1F;
         _setSizeUpdate();
         _setDrawUpdate();
     }
 
     void ImageView::zoomOut()
     {
-        _zoom *= .5F;
+        _zoom *= .9F;
         _setSizeUpdate();
         _setDrawUpdate();
     }

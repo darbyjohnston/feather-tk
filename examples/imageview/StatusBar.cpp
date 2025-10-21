@@ -46,7 +46,7 @@ namespace imageview
                         text = Format("Size: {0}x{1}:{2}").
                             arg(size.w).
                             arg(size.h).
-                            arg(image->getAspect());
+                            arg(image->getAspect(), 2);
                     }
                 }
                 _labels["Size"]->setText(text);

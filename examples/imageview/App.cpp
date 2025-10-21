@@ -48,7 +48,7 @@ namespace imageview
             context,
             std::dynamic_pointer_cast<App>(shared_from_this()),
             "imageview",
-            Size2I(1280, 960));
+            Size2I(1920, 1080));
         _mainWindow->show();
 
         // Observe style settings.

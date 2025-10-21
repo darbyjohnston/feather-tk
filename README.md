@@ -26,13 +26,17 @@ Projects using feather-tk:
 * https://github.com/darbyjohnston/tlRender
 * https://github.com/OpenTimelineIO/toucan
 
-Demo example with dark color style:
+Example image viewer showing menus, toolbars, and persistent settings:
 
-![DemoDarkStyle](etc/Images/DemoDarkStyle.png)
+![DemoDarkStyle](etc/Images/imageview.png)
 
-Demo example with light color style:
+Example object viewer showing offscreen rendering and a heads up display:
 
-![DemoLightStyle](etc/Images/DemoLightStyle.png)
+![DemoDarkStyle](etc/Images/objview.png)
+
+Example text editor showing multiple documents with loading and saving:
+
+![DemoDarkStyle](etc/Images/textedit.png)
 
 Simple C++ example that shows a window with a text label:
 ```

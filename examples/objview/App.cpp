@@ -48,7 +48,7 @@ namespace objview
             context,
             std::dynamic_pointer_cast<App>(shared_from_this()),
             "objview",
-            Size2I(1280, 960));
+            Size2I(1920, 1080));
         _mainWindow->show();
 
         // Observe style settings.
