@@ -40,11 +40,11 @@ Example text editor showing multiple documents with loading and saving:
 
 Simple C++ example that shows a window with a text label:
 ```
-#include <feather-tk/ui/App.h>
-#include <feather-tk/ui/Label.h>
-#include <feather-tk/ui/MainWindow.h>
+#include <ftk/UI/App.h>
+#include <ftk/UI/Label.h>
+#include <ftk/UI/MainWindow.h>
 
-using namespace feather-tk;
+using namespace ftk;
 
 int main(int argc, char** argv)
 {
@@ -73,7 +73,7 @@ int main(int argc, char** argv)
 
 Simple Python exmple that shows a window with a text label:
 ```
-import feather-tk as ftk
+import ftkPy as ftk
 import sys
 
 # Create the context and application.
