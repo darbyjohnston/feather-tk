@@ -281,14 +281,12 @@ namespace ftk
 
     void IWindow::sizeHintEvent(const SizeHintEvent& event)
     {
-        IWidget::sizeHintEvent(event);
         FTK_P();
         p.size.dl = event.style->getSizeRole(SizeRole::DragLength, event.displayScale);
     }
 
     void IWindow::drawOverlayEvent(const Box2I& clipRect, const DrawEvent& event)
     {
-        IWidget::drawOverlayEvent(clipRect, event);
         FTK_P();
         if (p.dndCursor)
         {
@@ -305,7 +303,7 @@ namespace ftk
 
     bool IWindow::_hasSizeUpdate(const std::shared_ptr<IWidget>& widget) const
     {
-        bool out = widget->hasSizeUpdate();
+        bool out = widget->_sizeUpdate;
         if (out)
         {
             //std::cout << "Size update: " << widget->getObjectName() << std::endl;
@@ -329,6 +327,7 @@ namespace ftk
             _sizeHintEventRecursive(child, event);
         }
         widget->sizeHintEvent(event);
+        widget->_sizeUpdate = false;
     }
 
     bool IWindow::_hasDrawUpdate(const std::shared_ptr<IWidget>& widget) const
@@ -336,7 +335,7 @@ namespace ftk
         bool out = false;
         if (!widget->isClipped())
         {
-            out = widget->hasDrawUpdate();
+            out = widget->_drawUpdate;
             if (out)
             {
                 //std::cout << "Draw update: " << widget->getObjectName() << std::endl;
@@ -362,6 +361,7 @@ namespace ftk
         {
             event.render->setClipRect(drawRect);
             widget->drawEvent(drawRect, event);
+            widget->_drawUpdate = false;
             const Box2I childrenClipRect = intersect(
                 widget->getChildrenClipRect(),
                 drawRect);

@@ -160,7 +160,6 @@ namespace widgets
 
     void ContainerWidget::sizeHintEvent(const SizeHintEvent& event)
     {
-        IWidget::sizeHintEvent(event);
         _handle = event.style->getSizeRole(SizeRole::Handle, event.displayScale);
         _setSizeHint(_layout->getSizeHint());
     }
@@ -310,7 +309,6 @@ namespace widgets
 
     void DnD::sizeHintEvent(const SizeHintEvent& event)
     {
-        IWidget::sizeHintEvent(event);
         _setSizeHint(_layout->getSizeHint());
     }
 }

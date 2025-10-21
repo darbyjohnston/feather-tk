@@ -61,7 +61,6 @@ namespace objview
 
     void ToolBar::sizeHintEvent(const SizeHintEvent& event)
     {
-        IWidget::sizeHintEvent(event);
         _setSizeHint(_layout->getSizeHint());
     }
 

@@ -203,7 +203,6 @@ namespace ftk
 
     void IntEdit::sizeHintEvent(const SizeHintEvent& event)
     {
-        IWidget::sizeHintEvent(event);
         _setSizeHint(_p->layout->getSizeHint());
     }
 
@@ -246,15 +245,10 @@ namespace ftk
             default: break;
             }
         }
-        if (!event.accept)
-        {
-            IWidget::keyPressEvent(event);
-        }
     }
 
     void IntEdit::keyReleaseEvent(KeyEvent& event)
     {
-        IWidget::keyReleaseEvent(event);
         event.accept = true;
     }
 
@@ -356,7 +350,6 @@ namespace ftk
 
     void IntResetButton::sizeHintEvent(const SizeHintEvent& event)
     {
-        IWidget::sizeHintEvent(event);
         _setSizeHint(_p->resetButton->getSizeHint());
     }
 

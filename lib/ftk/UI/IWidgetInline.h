@@ -46,11 +46,6 @@ namespace ftk
         return out;
     }
 
-    inline bool IWidget::hasSizeUpdate() const
-    {
-        return _sizeUpdate;
-    }
-
     inline const Size2I& IWidget::getSizeHint() const
     {
         return _sizeHint;
@@ -79,11 +74,6 @@ namespace ftk
     inline const Box2I& IWidget::getGeometry() const
     {
         return _geometry;
-    }
-
-    inline bool IWidget::hasDrawUpdate() const
-    {
-        return _drawUpdate;
     }
 
     inline bool IWidget::isVisible(bool andParentsVisible) const

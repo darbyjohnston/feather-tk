@@ -56,7 +56,6 @@ namespace imageview
 
     void ImageView::sizeHintEvent(const SizeHintEvent& event)
     {
-        IWidget::sizeHintEvent(event);
         Size2I sizeHint;
         if (_image)
         {

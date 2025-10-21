@@ -164,7 +164,6 @@ namespace ftk
 
     void TextEdit::sizeHintEvent(const SizeHintEvent& event)
     {
-        IWidget::sizeHintEvent(event);
         _setSizeHint(_p->scrollWidget->getSizeHint());
     }
 

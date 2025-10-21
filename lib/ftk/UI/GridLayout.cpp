@@ -264,7 +264,6 @@ namespace ftk
 
     void GridLayout::sizeHintEvent(const SizeHintEvent& event)
     {
-        IWidget::sizeHintEvent(event);
         FTK_P();
         
         if (!p.size.displayScale.has_value() ||
@@ -339,7 +338,6 @@ namespace ftk
 
     void GridLayout::childRemoveEvent(const ChildRemoveEvent& event)
     {
-        IWidget::childRemoveEvent(event);
         FTK_P();
         const auto i = p.gridPos.find(event.child);
         if (i != p.gridPos.end())

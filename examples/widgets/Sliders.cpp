@@ -133,7 +133,6 @@ namespace widgets
 
     void Sliders::sizeHintEvent(const SizeHintEvent& event)
     {
-        IWidget::sizeHintEvent(event);
         _setSizeHint(_scrollWidget->getSizeHint());
     }
 }

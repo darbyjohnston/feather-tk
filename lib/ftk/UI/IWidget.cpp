@@ -352,9 +352,7 @@ namespace ftk
     }
 
     void IWidget::sizeHintEvent(const SizeHintEvent& event)
-    {
-        _sizeUpdate = false;
-    }
+    {}
 
     void IWidget::clipEvent(const Box2I&, bool clipped)
     {
@@ -369,8 +367,6 @@ namespace ftk
         const Box2I&,
         const DrawEvent& event)
     {
-        _drawUpdate = false;
-
         if (_backgroundRole != ColorRole::None)
         {
             event.render->drawRect(

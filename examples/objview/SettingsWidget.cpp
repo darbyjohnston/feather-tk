@@ -138,7 +138,6 @@ namespace objview
 
     void SettingsWidget::sizeHintEvent(const SizeHintEvent& event)
     {
-        IWidget::sizeHintEvent(event);
         _setSizeHint(_layout->getSizeHint());
     }
 }

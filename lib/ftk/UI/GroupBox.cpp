@@ -132,7 +132,6 @@ namespace ftk
 
     void GroupBox::sizeHintEvent(const SizeHintEvent& event)
     {
-        IWidget::sizeHintEvent(event);
         FTK_P();
 
         if (!p.size.displayScale.has_value() ||

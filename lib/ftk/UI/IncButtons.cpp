@@ -152,7 +152,6 @@ namespace ftk
 
     void IncButtons::sizeHintEvent(const SizeHintEvent& event)
     {
-        IWidget::sizeHintEvent(event);
         const Size2I incSizeHint = _incButton->getSizeHint();
         const Size2I decSizeHint = _decButton->getSizeHint();
         _setSizeHint(Size2I(

@@ -41,7 +41,6 @@ namespace ftk
             .def("moveToBack", &IWidget::moveToBack)
             .def_property_readonly("window", &IWidget::getWindow)
 
-            .def("hasSizeUpdate", &IWidget::hasSizeUpdate)
             .def_property_readonly("sizeHint", &IWidget::getSizeHint)
             .def_property("hStretch", &IWidget::getHStretch, &IWidget::setHStretch)
             .def_property("vStretch", &IWidget::getVStretch, &IWidget::setVStretch)
@@ -64,7 +63,6 @@ namespace ftk
             .def("setPos", &IWidget::setPos)
             .def("setSize", &IWidget::setSize)
 
-            .def("hasDrawUpdate", &IWidget::hasDrawUpdate)
             .def(
                 "isVisible",
                 &IWidget::isVisible,

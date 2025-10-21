@@ -57,7 +57,6 @@ namespace widgets
 
     void Icons::sizeHintEvent(const SizeHintEvent& event)
     {
-        IWidget::sizeHintEvent(event);
         _setSizeHint(_scrollWidget->getSizeHint());
     }
 }

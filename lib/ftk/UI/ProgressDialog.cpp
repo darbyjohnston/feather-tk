@@ -102,14 +102,11 @@ namespace ftk
 
     void ProgressWidget::sizeHintEvent(const SizeHintEvent& event)
     {
-        IWidget::sizeHintEvent(event);
-
         _size.border = event.style->getSizeRole(SizeRole::Border, event.displayScale);
         _size.width = event.style->getSizeRole(SizeRole::ScrollArea, event.displayScale);
         const FontInfo fontInfo = event.style->getFontRole(FontRole::Label, event.displayScale);
         const FontMetrics fontMetrics = event.fontSystem->getMetrics(fontInfo);
         _size.height = fontMetrics.lineHeight * .75F;
-
         _setSizeHint(Size2I(
             _size.width + _size.border * 2,
             _size.height + _size.border * 2));

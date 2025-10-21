@@ -230,7 +230,6 @@ namespace ftk
 
     void DoubleEdit::sizeHintEvent(const SizeHintEvent& event)
     {
-        IWidget::sizeHintEvent(event);
         _setSizeHint(_p->layout->getSizeHint());
     }
 
@@ -273,15 +272,10 @@ namespace ftk
             default: break;
             }
         }
-        if (!event.accept)
-        {
-            IWidget::keyPressEvent(event);
-        }
     }
 
     void DoubleEdit::keyReleaseEvent(KeyEvent& event)
     {
-        IWidget::keyReleaseEvent(event);
         event.accept = true;
     }
 
@@ -383,7 +377,6 @@ namespace ftk
 
     void DoubleResetButton::sizeHintEvent(const SizeHintEvent& event)
     {
-        IWidget::sizeHintEvent(event);
         _setSizeHint(_p->resetButton->getSizeHint());
     }
 

@@ -218,7 +218,6 @@ namespace ftk
 
     void FloatEdit::sizeHintEvent(const SizeHintEvent& event)
     {
-        IWidget::sizeHintEvent(event);
         _setSizeHint(_p->layout->getSizeHint());
     }
 
@@ -261,15 +260,10 @@ namespace ftk
             default: break;
             }
         }
-        if (!event.accept)
-        {
-            IWidget::keyPressEvent(event);
-        }
     }
 
     void FloatEdit::keyReleaseEvent(KeyEvent& event)
     {
-        IWidget::keyReleaseEvent(event);
         event.accept = true;
     }
 
@@ -371,7 +365,6 @@ namespace ftk
 
     void FloatResetButton::sizeHintEvent(const SizeHintEvent& event)
     {
-        IWidget::sizeHintEvent(event);
         _setSizeHint(_p->resetButton->getSizeHint());
     }
 

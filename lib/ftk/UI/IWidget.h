@@ -83,9 +83,6 @@ namespace ftk
         //! Geometry
         ///@{
 
-        //! Get whether a size update is needed.
-        bool hasSizeUpdate() const;
-
         //! Get the size hint.
         const Size2I& getSizeHint() const;
 
@@ -125,7 +122,8 @@ namespace ftk
         //! Get the geometry.
         const Box2I& getGeometry() const;
 
-        //! Set the geometry.
+        //! Set the geometry. If this method is overridden the base method
+        //! should be called.
         virtual void setGeometry(const Box2I&);
             
         //! Set the position.
@@ -139,13 +137,11 @@ namespace ftk
         //! Visibility
         ///@{
 
-        //! Get whether a draw update is needed.
-        bool hasDrawUpdate() const;
-
         //! Is the widget visible?
         bool isVisible(bool andParentsVisible = true) const;
 
-        //! Set whether the widget is visible.
+        //! Set whether the widget is visible. If this method is overridden
+        //! the base method should be called.
         virtual void setVisible(bool);
 
         //! Show the widget.
@@ -169,7 +165,8 @@ namespace ftk
         //! Is the widget enabled?
         bool isEnabled(bool andParentsEnabled = true) const;
 
-        //! Set whether the widget is enabled.
+        //! Set whether the widget is enabled. If this method is overridden
+        //! the base method should be called.
         virtual void setEnabled(bool);
 
         ///@}
@@ -180,13 +177,15 @@ namespace ftk
         //! Does this widget accept key focus?
         bool acceptsKeyFocus() const;
 
-        //! Set whether the widget accepts key focus.
+        //! Set whether the widget accepts key focus. If this method is
+        //! overridden the base method should be called.
         virtual void setAcceptsKeyFocus(bool);
 
         //! Does this widget have key focus?
         bool hasKeyFocus() const;
 
-        //! Take the key focus.
+        //! Take the key focus. If this method is overridden the base method
+        //! should be called.
         virtual void takeKeyFocus();
 
         //! Release the key focus.
@@ -214,7 +213,8 @@ namespace ftk
         //! Child remove event.
         virtual void childRemoveEvent(const ChildRemoveEvent&);
 
-        //! Tick event.
+        //! Tick event. If this method is overridden the base method
+        //! should be called.
         virtual void tickEvent(
             bool parentsVisible,
             bool parentsEnabled,
@@ -223,7 +223,8 @@ namespace ftk
         //! Size hint event.
         virtual void sizeHintEvent(const SizeHintEvent&);
 
-        //! Clip event.
+        //! Clip event. If this method is overridden the base method
+        //! should be called.
         virtual void clipEvent(const Box2I&, bool clipped);
 
         //! Draw event.
@@ -250,7 +251,8 @@ namespace ftk
         //! Scroll event.
         virtual void scrollEvent(ScrollEvent&);
 
-        //! Key focus event.
+        //! Key focus event. If this method is overridden the base method
+        //! should be called.
         virtual void keyFocusEvent(bool);
 
         //! Key press event.
@@ -277,9 +279,14 @@ namespace ftk
         ///@}
 
     protected:
+        //! Set a size update. The sizeHintEvent() and setGeometry() methods
+        //! will be called the next tick of the event loop.
         void _setSizeUpdate();
+
         void _setSizeHint(const Size2I&);
 
+        //! Set a draw update. The drawEvent() method will be called the next
+        //! tick of the event loop.
         void _setDrawUpdate();
 
     private:
@@ -311,6 +318,8 @@ namespace ftk
         bool _keyFocus = false;
 
         std::string _tooltip;
+
+        friend class IWindow;
     };
 }
 

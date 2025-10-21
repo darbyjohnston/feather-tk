@@ -56,16 +56,13 @@ namespace ftk
 
     void Divider::sizeHintEvent(const SizeHintEvent& event)
     {
-        IWidget::sizeHintEvent(event);
         FTK_P();
-
         if (!p.size.displayScale.has_value() ||
             (p.size.displayScale.has_value() && p.size.displayScale.value() != event.displayScale))
         {
             p.size.displayScale = event.displayScale;
             p.size.size = event.style->getSizeRole(SizeRole::Border, event.displayScale);
         }
-
         _setSizeHint(Size2I(p.size.size, p.size.size));
     }
 }

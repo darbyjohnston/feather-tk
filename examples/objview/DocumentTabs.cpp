@@ -137,7 +137,6 @@ namespace objview
 
     void DocumentTabs::sizeHintEvent(const SizeHintEvent& event)
     {
-        IWidget::sizeHintEvent(event);
         _setSizeHint(_tabWidget->getSizeHint());
     }
 }

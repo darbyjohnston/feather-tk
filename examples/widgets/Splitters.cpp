@@ -45,7 +45,6 @@ namespace widgets
 
     void Splitters::sizeHintEvent(const SizeHintEvent& event)
     {
-        IWidget::sizeHintEvent(event);
         _setSizeHint(_splitter->getSizeHint());
     }
 }

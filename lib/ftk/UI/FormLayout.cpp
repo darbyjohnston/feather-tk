@@ -166,7 +166,6 @@ namespace ftk
 
     void FormLayout::sizeHintEvent(const SizeHintEvent& event)
     {
-        IWidget::sizeHintEvent(event);
         _setSizeHint(_p->layout->getSizeHint());
     }
 }

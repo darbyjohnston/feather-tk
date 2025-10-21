@@ -179,7 +179,6 @@ namespace ftk
 
     void DoubleEditSlider::sizeHintEvent(const SizeHintEvent& event)
     {
-        IWidget::sizeHintEvent(event);
         _setSizeHint(_p->layout->getSizeHint());
     }
 }

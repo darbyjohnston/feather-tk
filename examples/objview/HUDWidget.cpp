@@ -74,7 +74,6 @@ namespace objview
 
     void HUDWidget::sizeHintEvent(const SizeHintEvent& event)
     {
-        IWidget::sizeHintEvent(event);
         _setSizeHint(_layout->getSizeHint());
     }
 }
