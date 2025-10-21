@@ -18,7 +18,6 @@ Features:
 * BSD open source license
 
 Work in progress:
-* Multiple line text editor widget
 * Python bindings
 
 Projects using feather-tk:
