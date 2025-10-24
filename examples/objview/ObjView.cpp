@@ -20,41 +20,40 @@ using namespace ftk;
 
 namespace objview
 {
-    namespace
-    {
-        const float mouseMult = .25F;
-    }
-
     void ObjView::_init(
         const std::shared_ptr<Context>& context,
         const std::shared_ptr<App>& app,
         const std::shared_ptr<Document>& doc,
         const std::shared_ptr<IWidget>& parent)
     {
-        IMouseWidget::_init(context, "examples::objview::ObjView", parent);
+        IWidget::_init(context, "examples::objview::ObjView", parent);
 
-        _setMouseHoverEnabled(true);
-        _setMousePressEnabled(true);
-
+        // Initialize the mesh.
         _mesh = doc->getMesh();
         if (_mesh)
         {
-            _bbox = bbox(*_mesh);
+            _objectBBox = bbox(*_mesh);
+            _objectSize = std::max(std::max(_objectBBox.w(), _objectBBox.h()), _objectBBox.d());
         }
 
+        // Create the HUD widget.
         _hudWidget = HUDWidget::create(context, doc, shared_from_this());
+        _hudWidget->setOrbit(_orbit);
+        _hudWidget->setDistance(_distance);
 
-        frame();
-
+        // Observe the object rotation and update the render.
         _rotationObserver = ValueObserver<V3F>::create(
             doc->observeRotation(),
             [this](const V3F& value)
             {
                 _rotation = value;
                 _doRender = true;
+                _gridVbo.reset();
+                _gridVao.reset();
                 _setDrawUpdate();
             });
 
+        // Observe the render settings and update the render.
         _renderSettingsObserver = ValueObserver<RenderSettings>::create(
             app->getSettingsModel()->observeRender(),
             [this](const RenderSettings& value)
@@ -95,32 +94,37 @@ namespace objview
         if (tmp == _orbit)
             return;
         _orbit = tmp;
+        _hudWidget->setOrbit(_orbit);
+        _doRender = true;
+        _setDrawUpdate();
+    }
+
+    void ObjView::setDistance(float value)
+    {
+        const float tmp = std::max(_objectSize * .1F, value);
+        if (tmp == _distance)
+            return;
+        _distance = tmp;
+        _hudWidget->setDistance(_distance);
         _doRender = true;
         _setDrawUpdate();
     }
 
     void ObjView::frame()
     {
-        _position = -center(_bbox);
-        const float l = std::max(std::max(_bbox.w(), _bbox.h()), _bbox.d()) * 1.5F;
-        const float t = tan(deg2rad(_fov / 2.F));
-        _distance = t > 0.F ? (l / 2.F) / t : 0.F;
-        _doRender = true;
-        _setDrawUpdate();
+        const Box3F bbox = _getObjectBBoxTransformed();
+        _position = -center(bbox);
+        setDistance(_objectSize * 1.25F);
     }
 
     void ObjView::zoomIn()
     {
-        _distance *= .9F;
-        _doRender = true;
-        _setDrawUpdate();
+        setDistance(_distance * .9F);
     }
 
     void ObjView::zoomOut()
     {
-        _distance *= 1.1F;
-        _doRender = true;
-        _setDrawUpdate();
+        setDistance(_distance * 1.1F);
     }
 
     void ObjView::orbitLeft()
@@ -146,18 +150,57 @@ namespace objview
     void ObjView::setGeometry(const ftk::Box2I& value)
     {
         const bool changed = value != getGeometry();
-        IMouseWidget::setGeometry(value);
+        IWidget::setGeometry(value);
         _doRender |= changed;
+        if (_frameInit)
+        {
+            _frameInit = false;
+            frame();
+        }
         _hudWidget->setGeometry(value);
     }
 
-    void ObjView::sizeHintEvent(const SizeHintEvent& event)
+    std::string gridVertexSource()
     {
-        IMouseWidget::sizeHintEvent(event);
-        _setSizeHint(Size2I());
+        return
+            "#version 410\n"
+            "\n"
+            "layout(location = 0) in vec3 vPos;\n"
+            "layout(location = 1) in vec2 vTex;\n"
+            "out vec2 fTex;\n"
+            "\n"
+            "struct Transform\n"
+            "{\n"
+            "    mat4 mvp;\n"
+            "};\n"
+            "\n"
+            "uniform Transform transform;\n"
+            "\n"
+            "void main()\n"
+            "{\n"
+            "    gl_Position = vec4(vPos, 1.0) * transform.mvp;\n"
+            "    fTex = vTex;\n"
+            "}\n";
     }
 
-    std::string vertexSource()
+    std::string gridFragmentSource()
+    {
+        return
+            "#version 410\n"
+            "\n"
+            "in vec2 fTex;\n"
+            "out vec4 outColor;\n"
+            "\n"
+            "uniform vec4 color;\n"
+            "uniform sampler2D textureSampler;\n"
+            "\n"
+            "void main()\n"
+            "{\n"
+            "    outColor = texture(textureSampler, fTex) * color;\n"
+            "}\n";
+    };
+
+    std::string meshVertexSource()
     {
         return
             "#version 410\n"
@@ -248,14 +291,114 @@ namespace objview
 
     void ObjView::drawEvent(const Box2I& drawRect, const DrawEvent& event)
     {
-        IMouseWidget::drawEvent(drawRect, event);
-
         const Box2I& g = getGeometry();
-        event.render->drawRect(g, Color4F(0.F, 0.F, 0.F));
+
+        // Get transforms.
+        const M44F model = _getModelTransform();
+        const M44F view = _getViewTransform(_distance);
+        const M44F projection = _getProjectionTransform();
+        const Box3F bbox = _getObjectBBoxTransformed();
 
         try
         {
-            if (_mesh && !_mesh->triangles.empty()  && !_vbo && !_vao)
+            // Create the grid texture.
+            if (!_gridBuffer)
+            {
+                const int gridCells = 10;
+                const int gridCell = 100;
+                const int gridLine = 4;
+                const int axisLine = 10;
+
+                // Create the grid offscreen buffer.
+                const Size2I gridSize(
+                    gridCell * gridCells + gridLine,
+                    gridCell * gridCells + gridLine);
+                gl::OffscreenBufferOptions offscreenBufferOptions;
+                offscreenBufferOptions.color = ImageType::RGBA_F32;
+                _gridBuffer = gl::OffscreenBuffer::create(gridSize, offscreenBufferOptions);
+                gl::OffscreenBufferBinding binding(_gridBuffer);
+
+                // Save render state.
+                const ViewportState viewportState(event.render);
+                const ClipRectEnabledState clipRectEnabledState(event.render);
+                const ClipRectState clipRectState(event.render);
+                const TransformState transformState(event.render);
+                const RenderSizeState renderSizeState(event.render);
+
+                // Setup the camera.
+                event.render->setRenderSize(gridSize);
+                event.render->setViewport(Box2I(0, 0, gridSize.w, gridSize.h));
+                event.render->setClipRectEnabled(false);
+                event.render->clearViewport(Color4F(0.F, 0.F, 0.F, 0.F));
+                event.render->setTransform(ortho(
+                    0.F,
+                    static_cast<float>(gridSize.w),
+                    static_cast<float>(gridSize.h),
+                    0.F,
+                    -1.F,
+                    1.F));
+
+                // Draw the grid lines.
+                std::vector<Box2I> rects;
+                for (int x = 0; x < gridSize.w; x += gridCell)
+                {
+                    rects.push_back(Box2I(x, 0, gridLine, gridSize.h));
+                }
+                for (int y = 0; y < gridSize.h; y += gridCell)
+                {
+                    rects.push_back(Box2I(0, y, gridSize.w, gridLine));
+                }
+                event.render->drawRects(rects, Color4F(.5F, .5F, .5F));
+
+                // Draw the grid axis.
+                event.render->drawRect(
+                    Box2I(
+                        gridCell * gridCells / 2,
+                        gridCell * gridCells / 2,
+                        gridCell * gridCells / 2,
+                        axisLine),
+                    Color4F(1.F, 0.F, 0.F));
+                event.render->drawRect(
+                    Box2I(
+                        gridCell * gridCells / 2,
+                        gridCell * gridCells / 2,
+                        axisLine,
+                        gridCell * gridCells / 2),
+                    Color4F(0.F, 0.F, 1.F));
+            }
+
+            // Crate the grid vertex buffer.
+            if (_gridBuffer && !_gridVbo)
+            {
+                TriMesh3F mesh;
+                const float w = _objectSize;
+                const float y = -bbox.h() / 2.F;
+                mesh.v.push_back(V3F(-w / 2.F, y, -w / 2.F) - _position);
+                mesh.v.push_back(V3F( w / 2.F, y, -w / 2.F) - _position);
+                mesh.v.push_back(V3F( w / 2.F, y,  w / 2.F) - _position);
+                mesh.v.push_back(V3F(-w / 2.F, y,  w / 2.F) - _position);
+                mesh.t.push_back(V2F(0.F, 0.F));
+                mesh.t.push_back(V2F(1.F, 0.F));
+                mesh.t.push_back(V2F(1.F, 1.F));
+                mesh.t.push_back(V2F(0.F, 1.F));
+                mesh.triangles.push_back({
+                    Vertex3(1, 1),
+                    Vertex3(2, 2),
+                    Vertex3(3, 3) });
+                mesh.triangles.push_back({
+                    Vertex3(3, 3),
+                    Vertex3(4, 4),
+                    Vertex3(1, 1) });
+
+                _gridVbo = gl::VBO::create(
+                    mesh.triangles.size() * 3,
+                    gl::VBOType::Pos3_F32_UV_F32_Normal_F32);
+                _gridVbo->copy(gl::convert(mesh, _gridVbo->getType()));
+                _gridVao = gl::VAO::create(_gridVbo->getType(), _gridVbo->getID());
+            }
+
+            // Create the mesh vertex buffer.
+            if (_mesh && !_mesh->triangles.empty() && !_vbo)
             {
                 _vbo = gl::VBO::create(
                     _mesh->triangles.size() * 3,
@@ -264,13 +407,21 @@ namespace objview
                 _vao = gl::VAO::create(_vbo->getType(), _vbo->getID());
             }
 
+            // Create the shaders.
+            if (!_gridShader)
+            {
+                _gridShader = gl::Shader::create(
+                    gridVertexSource(),
+                    gridFragmentSource());
+            }
             if (!_shader)
             {
                 _shader = gl::Shader::create(
-                    vertexSource(),
+                    meshVertexSource(),
                     meshFragmentSource());
             }
 
+            // Create the offscreen buffer.
             const Size2I size = g.size();
             gl::OffscreenBufferOptions offscreenBufferOptions;
             offscreenBufferOptions.color = ImageType::RGBA_F32;
@@ -285,46 +436,36 @@ namespace objview
                 _buffer = gl::OffscreenBuffer::create(size, offscreenBufferOptions);
             }
 
+            // Render the scene.
             if (_doRender && _buffer)
             {
                 _doRender = false;
+                gl::OffscreenBufferBinding binding(_buffer);
 
+                // Save render state.
                 const ViewportState viewportState(event.render);
                 const ClipRectEnabledState clipRectEnabledState(event.render);
                 const ClipRectState clipRectState(event.render);
                 const TransformState transformState(event.render);
                 const RenderSizeState renderSizeState(event.render);
 
-                gl::OffscreenBufferBinding binding(_buffer);
+                // Setup the camrea.
                 event.render->setRenderSize(size);
                 event.render->setViewport(Box2I(0, 0, g.w(), g.h()));
                 event.render->setClipRectEnabled(false);
                 glClearColor(.1F, .1F, .1F, 1.F);
                 glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-                const float aspect = aspectRatio(size);
-                const M44F pm = perspective(_fov, aspect, .1F, 10000.F);
-                const M44F vm =
-                    translate(V3F(0.F, 0.F, -_distance)) *
-                    rotateX(_orbit.y) *
-                    rotateY(_orbit.x) *
-                    translate(_position);
-                const M44F mm =
-                    translate(-_position) *
-                    rotateX(_rotation.x) *
-                    rotateY(_rotation.y) *
-                    rotateZ(_rotation.z) *
-                    translate(_position);
-                _shader->bind();
-                _shader->setUniform("transform.m", mm);
-                _shader->setUniform("transform.mvp", pm * vm * mm);
-                _shader->setUniform("renderMode", static_cast<int>(_settings.mode));
-                _shader->setUniform("color", Color4F(1.F, 1.F, 1.F));
-                _shader->setUniform("lightDir", V3F(1.F, 1.F, 0.F));
-                _shader->setUniform("ambientLight", V3F(.2F, .2F, .2F));
-
-                if (_vao && _vbo)
+                // Draw the mesh.
+                if (_vbo && _vao)
                 {
+                    _shader->bind();
+                    _shader->setUniform("transform.m", model);
+                    _shader->setUniform("transform.mvp", projection * view * model);
+                    _shader->setUniform("renderMode", static_cast<int>(_settings.mode));
+                    _shader->setUniform("color", Color4F(1.F, 1.F, 1.F));
+                    _shader->setUniform("lightDir", V3F(1.F, 1.F, 0.F));
+                    _shader->setUniform("ambientLight", V3F(.2F, .2F, .2F));
                     glEnable(GL_DEPTH_TEST);
                     if (_settings.cull)
                     {
@@ -333,7 +474,22 @@ namespace objview
                     _vao->bind();
                     _vao->draw(GL_TRIANGLES, 0, _vbo->getSize());
                     glDisable(GL_CULL_FACE);
-                    glDisable(GL_CULL_FACE);
+                    glDisable(GL_DEPTH_TEST);
+                }
+
+                // Draw the grid.
+                if (_settings.grid && _gridVbo && _gridVao)
+                {
+                    _gridShader->bind();
+                    _gridShader->setUniform("transform.mvp", projection * view);
+                    _gridShader->setUniform("color", Color4F(1.F, 1.F, 1.F));
+                    _gridShader->setUniform("textureSampler", 0);
+                    glBindTexture(GL_TEXTURE_2D, _gridBuffer->getColorID());
+                    glActiveTexture(static_cast<GLenum>(GL_TEXTURE0));
+                    glEnable(GL_DEPTH_TEST);
+                    _gridVao->bind();
+                    _gridVao->draw(GL_TRIANGLES, 0, _gridVbo->getSize());
+                    glDisable(GL_DEPTH_TEST);
                 }
             }
         }
@@ -345,21 +501,123 @@ namespace objview
             }
         }
 
+        // Draw the offscreen buffer.
         if (_buffer)
         {
             const unsigned int id = _buffer->getColorID();
             event.render->drawTexture(id, g, true);
         }
+
+        //const Box2I sb = _getScreenBBox(mvp);
+        //event.render->drawRect(
+        //    Box2I(g.min.x + sb.min.x, g.min.y + sb.min.y, sb.w(), sb.h()),
+        //    Color4F(1.F, 0.F, 0.F, .1F));
+    }
+
+    void ObjView::mouseEnterEvent(ftk::MouseEnterEvent& event)
+    {
+        event.accept = true;
+        _mouseInside = true;
+    }
+
+    void ObjView::mouseLeaveEvent()
+    {
+        _mouseInside = false;
     }
 
     void ObjView::mouseMoveEvent(MouseMoveEvent& event)
     {
-        IMouseWidget::mouseMoveEvent(event);
-        if (_isMousePressed())
+        event.accept = true;
+        switch (_mouseButton)
+        {
+        case 1:
         {
             const V2I d = event.pos - event.prev;
-            const V2F v(d.x * mouseMult, d.y * mouseMult);
+            const V2F v(d.x * .25F, d.y * .25F);
             setOrbit(_orbit + v);
+            break;
         }
+        default: break;
+        }
+    }
+
+    void ObjView::scrollEvent(ftk::ScrollEvent& event)
+    {
+        event.accept = true;
+        setDistance(_distance + event.value.y * _objectSize * -.1F);
+    }
+
+    void ObjView::mousePressEvent(ftk::MouseClickEvent& event)
+    {
+        event.accept = true;
+        takeKeyFocus();
+        _mouseButton = event.button;
+    }
+
+    void ObjView::mouseReleaseEvent(ftk::MouseClickEvent& event)
+    {
+        event.accept = true;
+        _mouseButton = 0;
+    }
+
+    ftk::M44F ObjView::_getModelTransform() const
+    {
+        return
+            translate(-_position) *
+            rotateX(_rotation.x) *
+            rotateY(_rotation.y) *
+            rotateZ(_rotation.z) *
+            translate(_position);
+    }
+
+    ftk::M44F ObjView::_getViewTransform(float distance) const
+    {
+        return
+            translate(V3F(0.F, 0.F, -distance)) *
+            rotateX(_orbit.y) *
+            rotateY(_orbit.x) *
+            translate(_position);
+    }
+
+    ftk::M44F ObjView::_getProjectionTransform() const
+    {
+        const Size2I size = getGeometry().size();
+        const float aspect = aspectRatio(size);
+        return perspective(_fov, aspect, .1F, 10000.F);
+    }
+
+    ftk::M44F ObjView::_getMVPTransform(float distance) const
+    {
+        return
+            _getProjectionTransform() * 
+            _getViewTransform(_distance) *
+            _getModelTransform();
+    }
+
+    ftk::Box3F ObjView::_getObjectBBoxTransformed() const
+    {
+        auto v = points(_objectBBox);
+        const M44F m = _getModelTransform();
+        for (size_t i = 0; i < v.size(); ++i)
+        {
+            v[i] = v[i] * m;
+        }
+        return bbox(v);
+    }
+
+    ftk::Box2I ObjView::_getScreenBBox(const ftk::M44F& mvp) const
+    {
+        auto v = points(_objectBBox);
+        std::vector<V2I> v2;
+        const Size2I size = getGeometry().size();
+        for (size_t i = 0; i < v.size(); ++i)
+        {
+            const V3F vt = v[i] * mvp;
+            v2.push_back(V2I(
+                (vt.x + 1.F) / 2.F * size.w,
+                (vt.y + 1.F) / 2.F * size.h));
+        }
+        const Box2I b = ftk::bbox(v2);
+        return Box2I(b.min.x, size.h - b.min.y - b.h(), b.w(), b.h());
     }
 }

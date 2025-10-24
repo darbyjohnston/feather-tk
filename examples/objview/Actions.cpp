@@ -349,6 +349,19 @@ namespace objview
             _renderModeActions[e] = _actions[key];
         }
 
+        _actions["Render/Grid"] = Action::create(
+            "Grid",
+            [appWeak](bool value)
+            {
+                if (auto app = appWeak.lock())
+                {
+                    auto render = app->getSettingsModel()->getRender();
+                    render.grid = value;
+                    app->getSettingsModel()->setRender(render);
+                }
+            });
+        _actions["Render/Grid"]->setTooltip("Toggle the grid");
+
         _actions["Render/Cull"] = Action::create(
             "Cull",
             [appWeak](bool value)
@@ -371,6 +384,7 @@ namespace objview
                     const std::string key = "Render/" + getLabel(e);
                     _actions[key]->setChecked(e == value.mode);
                 }
+                _actions["Render/Grid"]->setChecked(value.grid);
                 _actions["Render/Cull"]->setChecked(value.cull);
             });
     }

@@ -116,6 +116,10 @@ namespace ftk
     template<int C, typename T>
     constexpr T dot(const Vector<C, T>&, const Vector<C, T>&);
         
+    //! Get the vector cross product.
+    template<typename T>
+    constexpr Vector<3, T> cross(const Vector<3, T>&, const Vector<3, T>&);
+
     //! Get a vector perpindicular to the given vector in the clockwise
     //! direction.
     template<typename T>

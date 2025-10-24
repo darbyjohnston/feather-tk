@@ -327,6 +327,60 @@ namespace ftk
             Vector<2, T>(a.max.x + x1, a.max.y + y1));
     }
 
+    template<typename T>
+    constexpr Box<2, T> bbox(const std::vector<Vector<2, T> >& v)
+    {
+        Box<2, T> out;
+        if (!v.empty())
+        {
+            out.min = out.max = v[0];
+            for (size_t i = 1; i < v.size(); ++i)
+            {
+                out.min.x = std::min(out.min.x, v[i].x);
+                out.min.y = std::min(out.min.y, v[i].y);
+                out.max.x = std::max(out.max.x, v[i].x);
+                out.max.y = std::max(out.max.y, v[i].y);
+            }
+        }
+        return out;
+    }
+
+    template<typename T>
+    constexpr Box<3, T> bbox(const std::vector<Vector<3, T> >& v)
+    {
+        Box<3, T> out;
+        if (!v.empty())
+        {
+            out.min = out.max = v[0];
+            for (size_t i = 1; i < v.size(); ++i)
+            {
+                out.min.x = std::min(out.min.x, v[i].x);
+                out.min.y = std::min(out.min.y, v[i].y);
+                out.min.z = std::min(out.min.z, v[i].z);
+                out.max.x = std::max(out.max.x, v[i].x);
+                out.max.y = std::max(out.max.y, v[i].y);
+                out.max.z = std::max(out.max.z, v[i].z);
+            }
+        }
+        return out;
+    }
+
+    template<typename T>
+    constexpr std::vector<Vector<3, T> > points(const Box<3, T>& a)
+    {
+        std::vector<Vector<3, T> > v;
+        v.push_back(Vector<3, T>(a.max.x, a.max.y, a.max.z));
+        v.push_back(Vector<3, T>(a.max.x, a.max.y, a.min.z));
+        v.push_back(Vector<3, T>(a.min.x, a.max.y, a.min.z));
+        v.push_back(Vector<3, T>(a.min.x, a.max.y, a.max.z));
+
+        v.push_back(Vector<3, T>(a.max.x, a.min.y, a.max.z));
+        v.push_back(Vector<3, T>(a.max.x, a.min.y, a.min.z));
+        v.push_back(Vector<3, T>(a.min.x, a.min.y, a.min.z));
+        v.push_back(Vector<3, T>(a.min.x, a.min.y, a.max.z));
+        return v;
+    }
+
     constexpr Box<2, float> convert(const Box<2, int>& value)
     {
         return Box<2, float>(value.x(), value.y(), value.w(), value.h());

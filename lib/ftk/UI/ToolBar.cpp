@@ -53,13 +53,15 @@ namespace ftk
         return out;
     }
 
-    void ToolBar::addAction(const std::shared_ptr<Action>& action)
+    std::shared_ptr<ToolButton> ToolBar::addAction(const std::shared_ptr<Action>& action)
     {
         FTK_P();
+        std::shared_ptr<ToolButton> out;
         if (auto context = getContext())
         {
-            ToolButton::create(context, action, p.layout);
+            out = ToolButton::create(context, action, p.layout);
         }
+        return out;
     }
 
     void ToolBar::addWidget(const std::shared_ptr<IWidget>& widget)

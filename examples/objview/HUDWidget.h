@@ -30,6 +30,9 @@ namespace objview
             const std::shared_ptr<ftk::IDocument>&,
             const std::shared_ptr<ftk::IWidget>& parent = nullptr);
 
+        void setOrbit(const ftk::V2F&);
+        void setDistance(float);
+
         void setGeometry(const ftk::Box2I&) override;
         void sizeHintEvent(const ftk::SizeHintEvent&) override;
 

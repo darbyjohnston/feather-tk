@@ -9,6 +9,7 @@
 namespace ftk
 {
     class Action;
+    class ToolButton;
 
     //! \name Composite Widgets
     ///@{
@@ -34,7 +35,7 @@ namespace ftk
             const std::shared_ptr<IWidget>& parent = nullptr);
 
         //! Add an action.
-        void addAction(const std::shared_ptr<Action>&);
+        std::shared_ptr<ToolButton> addAction(const std::shared_ptr<Action>&);
 
         //! Add a widget.
         void addWidget(const std::shared_ptr<IWidget>&);

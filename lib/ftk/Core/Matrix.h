@@ -115,6 +115,10 @@ namespace ftk
     template<typename T>
     constexpr Matrix<4, 4, T> perspective(T fov, T aspect, T nearClip, T farClip);
 
+    //! Invert a matrix.
+    template<typename T>
+    bool invert(const Matrix<4, 4, T>&, Matrix<4, 4, T>&);
+
     void to_json(nlohmann::json&, const M33F&);
     void to_json(nlohmann::json&, const M44F&);
 

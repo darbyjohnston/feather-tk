@@ -24,13 +24,12 @@ namespace objview
         IWidget::_init(context, "examples::objview::HUDWidget", parent);
 
         // Create the labels.
-        _labels["Name"] = Label::create(context);
-        _labels["Name"]->setMarginRole(SizeRole::MarginInside);
-        _labels["Name"]->setBackgroundRole(ColorRole::Overlay);
-
-        _labels["Triangles"] = Label::create(context);
-        _labels["Triangles"]->setMarginRole(SizeRole::MarginInside);
-        _labels["Triangles"]->setBackgroundRole(ColorRole::Overlay);
+        for (const auto& key : { "Name", "Triangles", "Orbit", "Distance" })
+        {
+            _labels[key] = Label::create(context);
+            _labels[key]->setMarginRole(SizeRole::MarginInside);
+            _labels[key]->setBackgroundRole(ColorRole::Overlay);
+        }
 
         if (auto doc = std::dynamic_pointer_cast<Document>(idoc))
         {
@@ -43,11 +42,18 @@ namespace objview
         _layout = GridLayout::create(context, shared_from_this());
         _layout->setMarginRole(SizeRole::MarginSmall);
         _layout->setSpacingRole(SizeRole::SpacingSmall);
+
         _labels["Name"]->setParent(_layout);
-            
         _layout->setGridPos(_labels["Name"], 0, 0);
         _labels["Triangles"]->setParent(_layout);
         _layout->setGridPos(_labels["Triangles"], 0, 2);
+
+        _labels["Orbit"]->setParent(_layout);
+        _layout->setGridPos(_labels["Orbit"], 2, 0);
+        _labels["Distance"]->setParent(_layout);
+        _layout->setGridPos(_labels["Distance"], 2, 2);
+
+        // Use an exanding spacer for the center widget.
         auto spacer = Spacer::create(context, Orientation::Horizontal, _layout);
         spacer->setStretch(Stretch::Expanding);
         _layout->setGridPos(spacer, 1, 1);
@@ -64,6 +70,16 @@ namespace objview
         auto out = std::shared_ptr<HUDWidget>(new HUDWidget);
         out->_init(context, doc, parent);
         return out;
+    }
+
+    void HUDWidget::setOrbit(const V2F& value)
+    {
+        _labels["Orbit"]->setText(Format("Orbit: {0} {1}").arg(value.x, 2).arg(value.y, 2));
+    }
+
+    void HUDWidget::setDistance(float value)
+    {
+        _labels["Distance"]->setText(Format("Distance: {0}").arg(value, 2));
     }
 
     void HUDWidget::setGeometry(const Box2I& value)

@@ -10,6 +10,7 @@
 
 #include <ftk/UI/Divider.h>
 #include <ftk/UI/ToolBar.h>
+#include <ftk/UI/ToolButton.h>
 
 #include <ftk/Core/Format.h>
 
@@ -93,11 +94,11 @@ namespace objview
         const std::shared_ptr<Actions>& actions)
     {
         auto toolBar = ftk::ToolBar::create(context, Orientation::Horizontal, _layout);
-        for (const auto& key :
-            { "View/Frame", "View/ZoomIn", "View/ZoomOut" })
-        {
-            toolBar->addAction(actions->getAction(key));
-        }
+        toolBar->addAction(actions->getAction("View/Frame"));
+        auto button = toolBar->addAction(actions->getAction("View/ZoomIn"));
+        button->setRepeatClick(true);
+        button = toolBar->addAction(actions->getAction("View/ZoomOut"));
+        button->setRepeatClick(true);
     }
 
     void ToolBar::_createObjectToolBar(
@@ -198,10 +199,10 @@ namespace objview
     void ToolBar::_rotationUpdate()
     {
         _buttons["Object/RotateX"]->setText(
-            Format("X: {0}").arg(_rotation.x, -1, 3));
+            Format("RX: {0}").arg(_rotation.x, -1, 3));
         _buttons["Object/RotateY"]->setText(
-            Format("Y: {0}").arg(_rotation.y, -1, 3));
+            Format("RY: {0}").arg(_rotation.y, -1, 3));
         _buttons["Object/RotateZ"]->setText(
-            Format("Z: {0}").arg(_rotation.z, -1, 3));
+            Format("RZ: {0}").arg(_rotation.z, -1, 3));
     }
 }

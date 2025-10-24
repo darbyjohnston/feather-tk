@@ -35,6 +35,7 @@ namespace objview
     struct RenderSettings
     {
         RenderMode mode = RenderMode::Shaded;
+        bool       grid = true;
         bool       cull = true;
 
         bool operator == (const RenderSettings&) const;

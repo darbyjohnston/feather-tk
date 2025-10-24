@@ -31,6 +31,7 @@ namespace objview
     {
         return
             mode == other.mode &&
+            grid == other.grid &&
             cull == other.cull;
     }
 

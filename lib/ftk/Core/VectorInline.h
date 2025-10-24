@@ -242,11 +242,14 @@ namespace ftk
     template<int C, typename T>
     inline Vector<C, T> normalize(const Vector<C, T>& v)
     {
-        const T l = length(v);
         Vector<C, T> out = v;
-        for (int c = 0; c < C; ++c)
+        const T l = length(v);
+        if(l > T(0))
         {
-            out[c] /= l;
+            for (int c = 0; c < C; ++c)
+            {
+                out[c] /= l;
+            }
         }
         return out;
     }
@@ -260,6 +263,15 @@ namespace ftk
             out += v0[c] * v1[c];
         }
         return out;
+    }
+
+    template<typename T>
+    constexpr Vector<3, T> cross(const Vector<3, T>& a, const Vector<3, T>& b)
+    {
+        return Vector<3, T>(
+            a.y * b.z - b.y * a.z,
+            a.z * b.x - b.z * a.x,
+            a.x * b.y - b.x * a.y);
     }
 
     template<typename T>

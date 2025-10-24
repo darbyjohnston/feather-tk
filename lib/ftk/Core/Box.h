@@ -137,6 +137,14 @@ namespace ftk
     template<typename T>
     constexpr Box<2, T> margin(const Box<2, T>&, T x0, T y0, T x1, T y1);
 
+    //! Get the bounding box from points.
+    template<int C, typename T>
+    constexpr Box<C, T> bbox(const std::vector<Vector<C, T> >&);
+
+    //! Get the points of a box.
+    template<typename T>
+    constexpr std::vector<Vector<3, T> > points(const Box<3, T>&);
+
     //! Convert box types.
     constexpr Box<2, float> convert(const Box<2, int>&);
 
