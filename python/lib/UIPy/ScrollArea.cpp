@@ -19,7 +19,6 @@ namespace ftk
             .value("Horizontal", ScrollType::Horizontal)
             .value("Vertical", ScrollType::Vertical)
             .value("Both", ScrollType::Both)
-            .value("Menu", ScrollType::Menu)
-            .export_values();
+            .value("Menu", ScrollType::Menu);
     }
 }

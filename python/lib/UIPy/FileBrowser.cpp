@@ -20,8 +20,7 @@ namespace ftk
     {
         py::enum_<FileBrowserMode>(m, "FileBrowserMode")
             .value("File", FileBrowserMode::File)
-            .value("Dir", FileBrowserMode::Dir)
-            .export_values();
+            .value("Dir", FileBrowserMode::Dir);
 
         py::class_<FileBrowserModel, std::shared_ptr<FileBrowserModel> >(m, "FileBrowserModel")
             .def(

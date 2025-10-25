@@ -18,7 +18,6 @@ namespace ftk
     {
         py::enum_<ObserverAction>(m, "ObserverAction")
             .value("Trigger", ObserverAction::Trigger)
-            .value("Suppress", ObserverAction::Suppress)
-            .export_values();
+            .value("Suppress", ObserverAction::Suppress);
     }
 }

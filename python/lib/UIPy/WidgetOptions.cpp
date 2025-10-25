@@ -16,26 +16,22 @@ namespace ftk
     {
         py::enum_<Orientation>(m, "Orientation")
             .value("Horizontal", Orientation::Horizontal)
-            .value("Vertical", Orientation::Vertical)
-            .export_values();
+            .value("Vertical", Orientation::Vertical);
 
         py::enum_<Stretch>(m, "Stretch")
             .value("Fixed", Stretch::Fixed)
-            .value("Expanding", Stretch::Expanding)
-            .export_values();
+            .value("Expanding", Stretch::Expanding);
 
         py::enum_<HAlign>(m, "HAlign")
             .value("Fill", HAlign::Fill)
             .value("Left", HAlign::Left)
             .value("Center", HAlign::Center)
-            .value("Right", HAlign::Right)
-            .export_values();
+            .value("Right", HAlign::Right);
 
         py::enum_<VAlign>(m, "VAlign")
             .value("Fill", VAlign::Fill)
             .value("Top", VAlign::Top)
             .value("Center", VAlign::Center)
-            .value("Bottom", VAlign::Bottom)
-            .export_values();
+            .value("Bottom", VAlign::Bottom);
     }
 }

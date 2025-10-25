@@ -15,7 +15,7 @@ namespace ftk
     void style(py::module_& m)
     {
         py::enum_<SizeRole>(m, "SizeRole")
-            .value("SizeRole_None", SizeRole::None)
+            .value("_None", SizeRole::None)
             .value("Margin", SizeRole::Margin)
             .value("MarginSmall", SizeRole::MarginSmall)
             .value("MarginLarge", SizeRole::MarginLarge)
@@ -35,12 +35,11 @@ namespace ftk
             .value("Swatch", SizeRole::Swatch)
             .value("SwatchLarge", SizeRole::SwatchLarge)
             .value("Shadow", SizeRole::Shadow)
-            .value("DragLength", SizeRole::DragLength)
-            .export_values();
+            .value("DragLength", SizeRole::DragLength);
 
         py::enum_<ColorRole>(m, "ColorRole")
-            .value("ColorRole_None", ColorRole::None)
-            .value("ColorRole_Window", ColorRole::Window)
+            .value("_None", ColorRole::None)
+            .value("Window", ColorRole::Window)
             .value("Base", ColorRole::Base)
             .value("Button", ColorRole::Button)
             .value("Text", ColorRole::Text)
@@ -58,14 +57,12 @@ namespace ftk
             .value("Blue", ColorRole::Blue)
             .value("Cyan", ColorRole::Cyan)
             .value("Magenta", ColorRole::Magenta)
-            .value("Yellow", ColorRole::Yellow)
-            .export_values();
+            .value("Yellow", ColorRole::Yellow);
 
         py::enum_<FontRole>(m, "FontRole")
-            .value("FontRole_None", FontRole::None)
-            .value("FontRole_Label", FontRole::Label)
+            .value("_None", FontRole::None)
+            .value("Label", FontRole::Label)
             .value("Mono", FontRole::Mono)
-            .value("Title", FontRole::Title)
-            .export_values();
+            .value("Title", FontRole::Title);
     }
 }

@@ -68,12 +68,11 @@ namespace ftk
             .def_readwrite("dndCursorHotspot", &MouseMoveEvent::dndCursorHotspot);
 
         py::enum_<KeyModifier>(m, "KeyModifier")
-            .value("KeyModifier_None", KeyModifier::None)
+            .value("_None", KeyModifier::None)
             .value("Shift", KeyModifier::Shift)
             .value("Control", KeyModifier::Control)
             .value("Alt", KeyModifier::Alt)
-            .value("Super", KeyModifier::Super)
-            .export_values();
+            .value("Super", KeyModifier::Super);
         m.attr("commandKeyModifier") = commandKeyModifier;
         m.def("getKeyModifierLabel", &getKeyModifierLabel);
 
@@ -206,8 +205,7 @@ namespace ftk
             .value("Keypad_9", Key::Keypad_9)
             .value("Keypad_0", Key::Keypad_0)
             .value("KeypadPeriod", Key::KeypadPeriod)
-            .value("KeypadEquals", Key::KeypadEquals)
-            .export_values();
+            .value("KeypadEquals", Key::KeypadEquals);
         m.def(
             "getShortcutLabel",
             &getShortcutLabel,

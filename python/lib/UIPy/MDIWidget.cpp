@@ -17,7 +17,7 @@ namespace ftk
     void mdiWidget(py::module_& m)
     {
         py::enum_<MDIResize>(m, "MDIResize")
-            .value("NoneMDIResize", MDIResize::None)
+            .value("_None", MDIResize::None)
             .value("North", MDIResize::North)
             .value("NorthEast", MDIResize::NorthEast)
             .value("East", MDIResize::East)
@@ -25,8 +25,7 @@ namespace ftk
             .value("South", MDIResize::South)
             .value("SouthWest", MDIResize::SouthWest)
             .value("West", MDIResize::West)
-            .value("NorthWest", MDIResize::NorthWest)
-            .export_values();
+            .value("NorthWest", MDIResize::NorthWest);
 
         py::class_<MDIWidget, IWidget, std::shared_ptr<MDIWidget> >(m, "MDIWidget")
             .def(

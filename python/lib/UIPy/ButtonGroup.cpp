@@ -20,8 +20,7 @@ namespace ftk
             .value("Click", ButtonGroupType::Click)
             .value("Check", ButtonGroupType::Check)
             .value("Radio", ButtonGroupType::Radio)
-            .value("Toggle", ButtonGroupType::Toggle)
-            .export_values();
+            .value("Toggle", ButtonGroupType::Toggle);
 
         py::class_<ButtonGroup, std::shared_ptr<ButtonGroup> >(m, "ButtonGroup")
             .def(

@@ -17,7 +17,7 @@ namespace ftk
     void image(py::module_& m)
     {
         py::enum_<ImageType>(m, "ImageType")
-            .value("ImageType_None", ImageType::None)
+            .value("_None", ImageType::None)
             .value("L_U8", ImageType::L_U8)
             .value("L_U16", ImageType::L_U16)
             .value("L_U32", ImageType::L_U32)
@@ -45,21 +45,18 @@ namespace ftk
             .value("YUV_420P_U16", ImageType::YUV_420P_U16)
             .value("YUV_422P_U16", ImageType::YUV_422P_U16)
             .value("YUV_444P_U16", ImageType::YUV_444P_U16)
-            .value("ARGB_4444_Premult", ImageType::ARGB_4444_Premult)
-            .export_values();
+            .value("ARGB_4444_Premult", ImageType::ARGB_4444_Premult);
 
         m.def("getChannelCount", &getChannelCount);
         m.def("getBitDepth", &getBitDepth);
 
         py::enum_<VideoLevels>(m, "VideoLevels")
             .value("FullRange", VideoLevels::FullRange)
-            .value("LegalRange", VideoLevels::LegalRange)
-            .export_values();
+            .value("LegalRange", VideoLevels::LegalRange);
 
         py::enum_<YUVCoefficients>(m, "YUVCoefficients")
             .value("REC709", YUVCoefficients::REC709)
-            .value("BT2020", YUVCoefficients::BT2020)
-            .export_values();
+            .value("BT2020", YUVCoefficients::BT2020);
 
         m.def("getYUVCoefficients", &getYUVCoefficients);
 

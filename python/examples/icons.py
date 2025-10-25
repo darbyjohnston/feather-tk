@@ -18,7 +18,7 @@ window = ftk.MainWindow(context, app, ftk.Size2I(1280, 960))
 # Create a layout.
 layout = ftk.GridLayout(context)
 layout.rowBackgroundRole = ftk.ColorRole.Base
-layout.spacingRole = ftk.SizeRole.SizeRole_None
+layout.spacingRole = ftk.SizeRole._None
 scrollWidget = ftk.ScrollWidget(context, ftk.ScrollType.Both)
 scrollWidget.border = False
 scrollWidget.vStretch = ftk.Stretch.Expanding
