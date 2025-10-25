@@ -170,7 +170,7 @@ namespace ftk
             logSystem->print(
                 "ftk::App",
                 Format("Display DPI: {0}").arg(hDpi));
-            p.defaultDisplayScale = std::ceil(hDpi / getBaseDPI());
+            p.defaultDisplayScale = std::round(hDpi / getBaseDPI());
         }
         if (p.cmdLine.displayScale->hasValue())
         {
