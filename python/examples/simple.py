@@ -3,7 +3,6 @@
 # All rights reserved.
 
 import ftkPy as ftk
-
 import sys
 
 # Create the context and application.
@@ -18,8 +17,8 @@ window = ftk.MainWindow(context, app, "simple", ftk.Size2I(1280, 960))
 # Create a label.
 label = ftk.Label(context, "Hello world")
 label.fontRole = ftk.FontRole.Title
-label.setAlign(ftk.HAlign.Center, ftk.VAlign.Center)
-label.setStretch(ftk.Stretch.Expanding)
+label.setAlign(ftk.HAlign.Center, ftk.VAlign.Center);
+label.setStretch(ftk.Stretch.Expanding);
 window.setWidget(label)
 
 # Show the window and run the application.

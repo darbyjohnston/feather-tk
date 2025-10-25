@@ -8,35 +8,26 @@
 
 using namespace ftk;
 
-FTK_MAIN()
+int main(int argc, char** argv)
 {
-    try
-    {
-        // Create the context and application.
-        auto context = Context::create();
-        auto app = App::create(context, argc, argv, "simple", "Simple example");
-        if (app->getExit() != 0)
-            return app->getExit();
+    // Create the context and application.
+    auto context = Context::create();
+    auto app = App::create(context, argc, argv, "simple", "Simple example");
+    if (app->getExit() != 0)
+        return app->getExit();
 
-        // Create a window.
-        auto window = MainWindow::create(context, app, "simple", Size2I(1280, 960));
+    // Create a window.
+    auto window = MainWindow::create(context, app, "simple", Size2I(1280, 960));
 
-        // Create a label.
-        auto label = Label::create(context, "Hello world");
-        label->setFontRole(FontRole::Title);
-        label->setAlign(HAlign::Center, VAlign::Center);
-        label->setStretch(Stretch::Expanding);
-        window->setWidget(label);
+    // Create a label.
+    auto label = Label::create(context, "Hello world");
+    label->setFontRole(FontRole::Title);
+    label->setAlign(HAlign::Center, VAlign::Center);
+    label->setStretch(Stretch::Expanding);
+    window->setWidget(label);
 
-        // Show the window and run the application.
-        window->show();
-        app->run();
-    }
-    catch (const std::exception& e)
-    {
-        std::cout << "ERROR: " << e.what() << std::endl;
-        return 1;
-    }
+    // Show the window and run the application.
+    window->show();
+    app->run();
     return 0;
 }
-

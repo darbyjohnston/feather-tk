@@ -142,8 +142,8 @@ namespace ftk
     constexpr Box<C, T> bbox(const std::vector<Vector<C, T> >&);
 
     //! Get the points of a box.
-    template<typename T>
-    constexpr std::vector<Vector<3, T> > points(const Box<3, T>&);
+    template<int C, typename T>
+    constexpr std::vector<Vector<C, T> > points(const Box<C, T>&);
 
     //! Convert box types.
     constexpr Box<2, float> convert(const Box<2, int>&);

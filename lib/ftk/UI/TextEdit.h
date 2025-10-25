@@ -23,7 +23,9 @@ namespace ftk
         bool operator != (const TextEditOptions&) const;
     };
         
-    //! Text edit.
+    //! Text edit widget.
+    //! 
+    //! \todo Double-click to select.
     class TextEdit : public IWidget
     {
     protected:

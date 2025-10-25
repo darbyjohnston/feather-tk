@@ -366,6 +366,17 @@ namespace ftk
     }
 
     template<typename T>
+    constexpr std::vector<Vector<2, T> > points(const Box<2, T>& a)
+    {
+        std::vector<Vector<2, T> > v;
+        v.push_back(Vector<2, T>(a.min.x, a.min.y));
+        v.push_back(Vector<2, T>(a.max.x, a.min.y));
+        v.push_back(Vector<2, T>(a.max.x, a.max.y));
+        v.push_back(Vector<2, T>(a.min.x, a.max.y));
+        return v;
+    }
+
+    template<typename T>
     constexpr std::vector<Vector<3, T> > points(const Box<3, T>& a)
     {
         std::vector<Vector<3, T> > v;

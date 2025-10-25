@@ -4,21 +4,7 @@
 
 # feather-tk
 
-A lightweight toolkit for building cross-platform applications.
-
-Features:
-* Available for Linux, macOS, and Windows
-* Collection of widgets including buttons, editors, sliders, and menus
-* Collection of layouts including horizontal, vertical, grid, and tabs
-* Keyboard navigation
-* Command-line parsing
-* Written in C++17 with a CMake build system
-* Entire project and dependencies can be built in a few minutes
-* Statically linked demo binaries are under 10MB
-* BSD open source license
-
-Work in progress:
-* Python bindings
+Feather-tk is a lightweight toolkit for building cross-platform C++ applications.
 
 Projects using feather-tk:
 * https://github.com/darbyjohnston/DJV
@@ -70,7 +56,8 @@ int main(int argc, char** argv)
 }
 ```
 
-Simple Python exmple that shows a window with a text label:
+Simple Python exmple that shows a window with a text label (Python bindings
+are a work in progress):
 ```
 import ftkPy as ftk
 import sys

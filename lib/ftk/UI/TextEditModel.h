@@ -64,6 +64,8 @@ namespace ftk
     };
 
     //! Text edit model.
+    //! 
+    //! \todo Implement undo/redo.
     class TextEditModel : public std::enable_shared_from_this<TextEditModel>
     {
     protected:
