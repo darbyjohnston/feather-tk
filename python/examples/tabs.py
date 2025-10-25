@@ -13,7 +13,7 @@ if app.getExit() != 0:
     sys.exit(1)
 
 # Create a window.
-window = ftk.MainWindow(context, app, "tabs", ftk.Size2I(1280, 960))
+window = ftk.MainWindow(context, app, ftk.Size2I(1280, 960))
 
 # Create a tab widget.
 tabWidget = ftk.TabWidget(context)
@@ -29,8 +29,7 @@ for i in range(0, 10):
     scrollWidget.widget = label
     tabWidget.addTab("Tab {}".format(i), scrollWidget)
 
-# Show the window and run the application.
-window.show()
+# Run the application.
 app.run()
 
 # \bug Need to manually reset the window.

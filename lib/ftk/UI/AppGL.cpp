@@ -587,6 +587,15 @@ namespace ftk
     {
         FTK_P();
         auto t0 = std::chrono::steady_clock::now();
+        bool visible = false;
+        for (const auto& window : p.windows)
+        {
+            visible |= window->isVisible(false);
+        }
+        if (!p.windows.empty() && !visible)
+        {
+            p.windows.front()->show();
+        }
         while (p.running && !p.windows.empty())
         {
             auto logSystem = _context->getSystem<LogSystem>();

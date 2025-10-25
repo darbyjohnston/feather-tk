@@ -29,6 +29,14 @@ namespace ftk
 
     void iWindow(py::module_& m)
     {
-        py::class_<IWindow, IWidget, std::shared_ptr<IWindow>, PyIWindow>(m, "IWindow");
+        py::class_<IWindow, IWidget, std::shared_ptr<IWindow>, PyIWindow>(m, "IWindow")
+            .def_property("keyFocus", &IWindow::getKeyFocus, &IWindow::setKeyFocus)
+            .def("getNextKeyFocus", &IWindow::getNextKeyFocus)
+            .def("getPrevKeyFocus", &IWindow::getPrevKeyFocus)
+            .def_property("tooltipsEnabled", &IWindow::getTooltipsEnabled, &IWindow::setTooltipsEnabled)
+            .def("setIcon", &IWindow::setIcon)
+            .def("screenshot", &IWindow::screenshot)
+            .def("close", &IWindow::close)
+            .def("setCloseCallback", &IWindow::setCloseCallback);
     }
 }

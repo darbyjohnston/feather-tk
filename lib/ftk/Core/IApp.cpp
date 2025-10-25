@@ -116,6 +116,16 @@ namespace ftk
         return _context;
     }
 
+    const std::string& IApp::getName() const
+    {
+        return _p->name;
+    }
+
+    const std::string& IApp::getSummary() const
+    {
+        return _p->summary;
+    }
+
     void IApp::_print(const std::string& value)
     {
         std::cout << value << std::endl;

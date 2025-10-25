@@ -38,7 +38,7 @@ namespace ftk
         
         Window::Window(
             const std::shared_ptr<Context>& context,
-            const std::string& name,
+            const std::string& title,
             const Size2I& size,
             int options,
             const std::shared_ptr<Window>& share) :
@@ -79,7 +79,7 @@ namespace ftk
                 sdlWindowFlags |= SDL_WINDOW_HIDDEN;
             }
             p.sdlWindow = SDL_CreateWindow(
-                name.c_str(),
+                title.c_str(),
                 SDL_WINDOWPOS_UNDEFINED,
                 SDL_WINDOWPOS_UNDEFINED,
                 size.w,
@@ -187,17 +187,27 @@ namespace ftk
 
         std::shared_ptr<Window> Window::create(
             const std::shared_ptr<Context>& context,
-            const std::string& name,
+            const std::string& title,
             const Size2I& size,
             int options,
             const std::shared_ptr<Window>& share)
         {
-            return std::shared_ptr<Window>(new Window(context, name, size, options, share));
+            return std::shared_ptr<Window>(new Window(context, title, size, options, share));
         }
 
         uint32_t Window::getID() const
         {
             return SDL_GetWindowID(_p->sdlWindow);
+        }
+
+        std::string Window::getTitle() const
+        {
+            return SDL_GetWindowTitle(_p->sdlWindow);
+        }
+
+        void Window::setTitle(const std::string& value)
+        {
+            SDL_SetWindowTitle(_p->sdlWindow, value.c_str());
         }
 
         void Window::setSize(const Size2I& value)

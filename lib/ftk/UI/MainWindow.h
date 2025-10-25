@@ -18,7 +18,6 @@ namespace ftk
         void _init(
             const std::shared_ptr<Context>&,
             const std::shared_ptr<App>&,
-            const std::string& name,
             const Size2I&);
 
         MainWindow();
@@ -30,7 +29,6 @@ namespace ftk
         static std::shared_ptr<MainWindow> create(
             const std::shared_ptr<Context>&,
             const std::shared_ptr<App>&,
-            const std::string& name,
             const Size2I& = Size2I(1280, 960));
 
         //! Get the menu bar.

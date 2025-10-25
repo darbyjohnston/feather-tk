@@ -26,7 +26,6 @@ FTK_MAIN()
         auto window = MainWindow::create(
             context,
             app,
-            "windows",
             Size2I(1280, 960));
         auto layout = VerticalLayout::create(context);
         layout->setMarginRole(SizeRole::MarginLarge);
@@ -67,8 +66,7 @@ FTK_MAIN()
                 secondaryWindow->setVisible(value);
             });
 
-        // Show the window and run the application.
-        window->show();
+        // Run the application.
         app->run();
     }
     catch (const std::exception& e)

@@ -28,7 +28,7 @@ namespace widgets
         const std::shared_ptr<Context>& context,
         const std::shared_ptr<App>& app)
     {
-        ftk::MainWindow::_init(context, app, "widgets", Size2I(1920, 1080));
+        ftk::MainWindow::_init(context, app, Size2I(1920, 1080));
 
         _tabWidget = TabWidget::create(context);
         _tabWidget->setVStretch(Stretch::Expanding);

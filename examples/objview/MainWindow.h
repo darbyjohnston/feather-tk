@@ -29,7 +29,6 @@ namespace objview
         void _init(
             const std::shared_ptr<ftk::Context>&,
             const std::shared_ptr<App>&,
-            const std::string& name,
             const ftk::Size2I&);
 
         MainWindow() = default;
@@ -41,7 +40,6 @@ namespace objview
         static std::shared_ptr<MainWindow> create(
             const std::shared_ptr<ftk::Context>&,
             const std::shared_ptr<App>&,
-            const std::string& name,
             const ftk::Size2I&);
 
         //! \name Current View

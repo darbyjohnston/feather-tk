@@ -13,7 +13,7 @@ if app.getExit() != 0:
     sys.exit(app.getExit())
 
 # Create a window.
-window = ftk.MainWindow(context, app, "bellows", ftk.Size2I(1280, 960))
+window = ftk.MainWindow(context, app, ftk.Size2I(1280, 960))
 
 # Create a layout.
 layout = ftk.VerticalLayout(context)
@@ -65,8 +65,7 @@ for i in range(0, 10):
 bellows = ftk.Bellows(context, "Check Boxes", layout)
 bellows.widget = vLayout
 
-# Show the window and run the application.
-window.show()
+# Run the application.
 app.run()
 
 # \bug Need to manually reset the window.

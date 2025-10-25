@@ -17,7 +17,7 @@ int main(int argc, char** argv)
         return app->getExit();
 
     // Create a window.
-    auto window = MainWindow::create(context, app, "simple", Size2I(1280, 960));
+    auto window = MainWindow::create(context, app, Size2I(1280, 960));
 
     // Create a label.
     auto label = Label::create(context, "Hello world");
@@ -26,8 +26,7 @@ int main(int argc, char** argv)
     label->setStretch(Stretch::Expanding);
     window->setWidget(label);
 
-    // Show the window and run the application.
-    window->show();
+    // Run the application.
     app->run();
     return 0;
 }

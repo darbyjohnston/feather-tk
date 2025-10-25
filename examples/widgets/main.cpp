@@ -24,8 +24,7 @@ FTK_MAIN()
         // Create the window.
         auto window = widgets::MainWindow::create(context, app);
 
-        // Show the window and run the application.
-        window->show();
+        // Run the application.
         app->run();
     }
     catch (const std::exception& e)

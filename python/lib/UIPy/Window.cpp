@@ -46,6 +46,19 @@ namespace ftk
                 py::arg("context"),
                 py::arg("name"),
                 py::arg("size"))
-            .def("show", &Window::show);
+            .def_property_readonly("windowID", &Window::getID)
+            .def_property("title", &Window::getTitle, &Window::setTitle)
+            .def_property("size", &Window::getSize, &Window::setSize)
+            .def_property("fullScreen", &Window::isFullScreen, &Window::setFullScreen)
+            .def("observeFullScreen", &Window::observeFullScreen)
+            .def_property_readonly("getScreen", &Window::getScreen)
+            .def_property("floatOnTop", &Window::isFloatOnTop, &Window::setFloatOnTop)
+            .def("observeFloatOnTop", &Window::observeFloatOnTop)
+            .def_property_readonly("frameBufferSize", &Window::getFrameBufferSize)
+            .def_property("frameBufferType", &Window::getFrameBufferType, &Window::setFrameBufferType)
+            .def("observeFrameBufferType", &Window::observeFrameBufferType)
+            .def_property_readonly("contentScale", &Window::getContentScale)
+            .def_property("displayScale", &Window::getDisplayScale, &Window::setDisplayScale)
+            .def("observeDisplayScale", &Window::observeDisplayScale);
     }
 }

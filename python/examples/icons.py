@@ -13,7 +13,7 @@ if app.getExit() != 0:
     sys.exit(app.getExit())
 
 # Create a window.
-window = ftk.MainWindow(context, app, "icons", ftk.Size2I(1280, 960))
+window = ftk.MainWindow(context, app, ftk.Size2I(1280, 960))
 
 # Create a layout.
 layout = ftk.GridLayout(context)
@@ -35,8 +35,7 @@ for name in context.getSystemByName("ftk::IconSystem").names:
     layout.setGridPos(label, row, 1)
     row = row + 1
 
-# Show the window and run the application.
-window.show()
+# Run the application.
 app.run()
 
 # \bug Need to manually reset the window.

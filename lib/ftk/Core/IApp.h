@@ -58,6 +58,12 @@ namespace ftk
         //! Get the context.
         const std::shared_ptr<Context>& getContext() const;
 
+        //! Get the application name.
+        const std::string& getName() const;
+
+        //! Get the application summary.
+        const std::string& getSummary() const;
+
         //! Run the application.
         virtual void run() {}
 

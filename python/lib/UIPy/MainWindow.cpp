@@ -22,7 +22,6 @@ namespace ftk
                 py::init(&MainWindow::create),
                 py::arg("context"),
                 py::arg("app"),
-                py::arg("name"),
                 py::arg("size"))
             .def("getMenuBar", &MainWindow::getMenuBar)
             .def("setWidget", &MainWindow::setWidget);

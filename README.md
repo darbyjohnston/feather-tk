@@ -40,7 +40,7 @@ int main(int argc, char** argv)
         return app->getExit();
 
     // Create a window.
-    auto window = MainWindow::create(context, app, "simple", Size2I(1280, 960));
+    auto window = MainWindow::create(context, app, Size2I(1280, 960));
 
     // Create a label.
     auto label = Label::create(context, "Hello world");
@@ -49,8 +49,7 @@ int main(int argc, char** argv)
     label->setStretch(Stretch::Expanding);
     window->setWidget(label);
 
-    // Show the window and run the application.
-    window->show();
+    // Run the application.
     app->run();
     return 0;
 }
@@ -69,7 +68,7 @@ if app.getExit() != 0:
     sys.exit(app.getExit())
 
 # Create a window.
-window = ftk.MainWindow(context, app, "simple", ftk.Size2I(1280, 960))
+window = ftk.MainWindow(context, app, ftk.Size2I(1280, 960))
 
 # Create a label.
 label = ftk.Label(context, "Hello world")
@@ -78,8 +77,7 @@ label.setAlign(ftk.HAlign.Center, ftk.VAlign.Center);
 label.setStretch(ftk.Stretch.Expanding);
 window.setWidget(label)
 
-# Show the window and run the application.
-window.show()
+# Run the application.
 app.run()
 
 # \bug Need to manually reset the window.

@@ -12,7 +12,7 @@ if app.getExit() != 0:
     sys.exit(app.getExit())
 
 # Create a window.
-window = ftk.MainWindow(context, app, "simple", ftk.Size2I(1280, 960))
+window = ftk.MainWindow(context, app, ftk.Size2I(1280, 960))
 
 # Create a label.
 label = ftk.Label(context, "Hello world")
@@ -21,8 +21,7 @@ label.setAlign(ftk.HAlign.Center, ftk.VAlign.Center);
 label.setStretch(ftk.Stretch.Expanding);
 window.setWidget(label)
 
-# Show the window and run the application.
-window.show()
+# Run the application.
 app.run()
 
 # \bug Need to manually reset the window.

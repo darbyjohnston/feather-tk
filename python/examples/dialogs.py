@@ -7,8 +7,8 @@ import ftkPy as ftk
 import sys
 
 class DialogsWindow(ftk.MainWindow):
-    def __init__(self, context, app, name, size):
-        ftk.MainWindow.__init__(self, context, app, name, size)
+    def __init__(self, context, app, size):
+        ftk.MainWindow.__init__(self, context, app, size)
         
         # Create a layout.
         layout = ftk.VerticalLayout(context)
@@ -65,10 +65,9 @@ if app.getExit() != 0:
 context.getSystemByName("ftk::FileBrowserSystem").nativeFileDialog = False
 
 # Create a window.
-window = DialogsWindow(context, app, "dialogs", ftk.Size2I(1280, 960))
+window = DialogsWindow(context, app, ftk.Size2I(1280, 960))
 
-# Show the window and run the application.
-window.show()
+# Run the application.
 app.run()
 
 # \bug Need to manually reset the window.

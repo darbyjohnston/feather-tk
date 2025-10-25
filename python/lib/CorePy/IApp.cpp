@@ -21,6 +21,8 @@ namespace ftk
             .def("getExeName", &IApp::getExeName)
             .def("getExit", &IApp::getExit)
             .def("getContext", &IApp::getContext)
+            .def("getName", &IApp::getName)
+            .def("getSummary", &IApp::getSummary)
             .def("run", &IApp::run);
     }
 }

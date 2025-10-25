@@ -34,10 +34,9 @@ namespace ftk
     void MainWindow::_init(
         const std::shared_ptr<Context>& context,
         const std::shared_ptr<App>& app,
-        const std::string& name,
         const Size2I& size)
     {
-        Window::_init(context, name, size);
+        Window::_init(context, app->getName(), size);
         FTK_P();
 
         p.menuBar = MenuBar::create(context);
@@ -169,11 +168,10 @@ namespace ftk
     std::shared_ptr<MainWindow> MainWindow::create(
         const std::shared_ptr<Context>& context,
         const std::shared_ptr<App>& app,
-        const std::string& name,
         const Size2I& size)
     {
         auto out = std::shared_ptr<MainWindow>(new MainWindow);
-        out->_init(context, app, name, size);
+        out->_init(context, app, size);
         return out;
     }
 

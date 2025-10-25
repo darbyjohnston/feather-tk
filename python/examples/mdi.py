@@ -8,13 +8,13 @@ import sys
         
 # Create the context and application.
 context = ftk.Context()
-app = ftk.App(context, sys.argv, "buttons", "Buttons example")
+app = ftk.App(context, sys.argv, "MDI", "MDI example")
 if app.getExit() != 0:
     sys.exit(app.getExit())
 
 # Create a window.
 size = ftk.Size2I(1280, 960)
-window = ftk.MainWindow(context, app, "buttons", size)
+window = ftk.MainWindow(context, app, size)
 
 # Create a scroll widget.
 scrollWidget = ftk.ScrollWidget(context, ftk.ScrollType.Both)
@@ -39,8 +39,7 @@ for i in range(0, 10):
         ftk.V2I(random.getI(0, size[0]), random.getI(0, size[1])),
         colorWidget)
 
-# Show the window and run the application.
-window.show()
+# Run the application.
 app.run()
 
 # \bug Need to manually reset the window.

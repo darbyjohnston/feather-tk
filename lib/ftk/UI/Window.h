@@ -14,7 +14,7 @@ namespace ftk
     protected:
         void _init(
             const std::shared_ptr<Context>&,
-            const std::string& name,
+            const std::string& title,
             const Size2I&);
 
         Window();
@@ -25,11 +25,17 @@ namespace ftk
         //! Create a new window.
         static std::shared_ptr<Window> create(
             const std::shared_ptr<Context>&,
-            const std::string& name,
+            const std::string& title,
             const Size2I& = Size2I(1280, 960));
 
         //! Get the window ID.
         uint32_t getID() const;
+
+        //! Get the window title.
+        std::string getTitle() const;
+
+        //! Set the window title.
+        void setTitle(const std::string&);
 
         //! Get the window size.
         const Size2I& getSize() const;

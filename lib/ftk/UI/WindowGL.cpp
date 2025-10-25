@@ -52,10 +52,10 @@ namespace ftk
 
     void Window::_init(
         const std::shared_ptr<Context>& context,
-        const std::string& name,
+        const std::string& title,
         const Size2I& size)
     {
-        IWindow::_init(context, name, nullptr);
+        IWindow::_init(context, title, nullptr);
         FTK_P();
 
         p.context = context;
@@ -68,7 +68,7 @@ namespace ftk
 
         p.window = gl::Window::create(
             context,
-            name,
+            title,
             size,
             static_cast<int>(gl::WindowOptions::DoubleBuffer));
 
@@ -93,17 +93,27 @@ namespace ftk
 
     std::shared_ptr<Window> Window::create(
         const std::shared_ptr<Context>& context,
-        const std::string& name,
+        const std::string& title,
         const Size2I& size)
     {
         auto out = std::shared_ptr<Window>(new Window);
-        out->_init(context, name, size);
+        out->_init(context, title, size);
         return out;
     }
 
     uint32_t Window::getID() const
     {
         return _p->window->getID();
+    }
+
+    std::string Window::getTitle() const
+    {
+        return _p->window->getTitle();
+    }
+
+    void Window::setTitle(const std::string& value)
+    {
+        _p->window->setTitle(value);
     }
 
     const Size2I& Window::getSize() const
@@ -114,7 +124,7 @@ namespace ftk
     void Window::setSize(const Size2I& value)
     {
         FTK_P();
-        if (value != p.size)
+        if (value == p.size)
             return;
         p.size = value;
         p.window->setSize(value);

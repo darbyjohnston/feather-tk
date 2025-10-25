@@ -24,10 +24,9 @@ namespace textedit
     void MainWindow::_init(
         const std::shared_ptr<Context>& context,
         const std::shared_ptr<App>& app,
-        const std::string& name,
         const Size2I& size)
     {
-        ftk::MainWindow::_init(context, app, name, size);
+        ftk::MainWindow::_init(context, app, size);
 
         // Save pointers to the application and settings.
         _app = app;
@@ -81,11 +80,10 @@ namespace textedit
     std::shared_ptr<MainWindow> MainWindow::create(
         const std::shared_ptr<Context>& context,
         const std::shared_ptr<App>& app,
-        const std::string& name,
         const Size2I& size)
     {
         auto out = std::shared_ptr<MainWindow>(new MainWindow);
-        out->_init(context, app, name, size);
+        out->_init(context, app, size);
         return out;
     }
 
