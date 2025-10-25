@@ -61,6 +61,7 @@ namespace objview
     void to_json(nlohmann::json& json, const RenderSettings& value)
     {
         json["Mode"] = to_string(value.mode);
+        json["Grid"] = value.grid;
         json["Cull"] = value.cull;
     }
 
@@ -79,6 +80,7 @@ namespace objview
     void from_json(const nlohmann::json& json, RenderSettings& value)
     {
         from_string(json.at("Mode").get<std::string>(), value.mode);
+        json.at("Grid").get_to(value.grid);
         json.at("Cull").get_to(value.cull);
     }
 
