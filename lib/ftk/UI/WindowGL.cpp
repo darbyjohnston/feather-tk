@@ -130,6 +130,16 @@ namespace ftk
         p.window->setSize(value);
     }
 
+    Size2I Window::getMinSize() const
+    {
+        return _p->window->getMinSize();
+    }
+
+    void Window::setMinSize(const Size2I& value)
+    {
+        _p->window->setMinSize(value);
+    }
+
     bool Window::isFullScreen() const
     {
         return _p->window->isFullScreen();

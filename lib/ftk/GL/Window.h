@@ -63,6 +63,12 @@ namespace ftk
             //! Set the window size.
             void setSize(const Size2I&);
 
+            //! Get the window minimum size.
+            Size2I getMinSize() const;
+
+            //! Set the window minimum size.
+            void setMinSize(const Size2I&);
+
             //! Show the window.
             void show();
 

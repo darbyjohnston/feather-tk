@@ -90,6 +90,7 @@ namespace ftk
                 throw std::runtime_error(Format("Cannot create window: {0}").
                     arg(SDL_GetError()));
             }
+            SDL_SetWindowMinimumSize(p.sdlWindow, 320, 240);
 
             p.sdlGLContext = SDL_GL_CreateContext(p.sdlWindow);
             if (!p.sdlGLContext)
@@ -214,6 +215,18 @@ namespace ftk
         {
             setFullScreen(false);
             SDL_SetWindowSize(_p->sdlWindow, value.w, value.h);
+        }
+
+        Size2I Window::getMinSize() const
+        {
+            Size2I out;
+            SDL_GetWindowMinimumSize(_p->sdlWindow, &out.w, &out.h);
+            return out;
+        }
+
+        void Window::setMinSize(const Size2I& value)
+        {
+            SDL_SetWindowMinimumSize(_p->sdlWindow, value.w, value.h);
         }
 
         void Window::show()

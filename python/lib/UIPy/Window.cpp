@@ -49,6 +49,7 @@ namespace ftk
             .def_property_readonly("windowID", &Window::getID)
             .def_property("title", &Window::getTitle, &Window::setTitle)
             .def_property("size", &Window::getSize, &Window::setSize)
+            .def_property("minSize", &Window::getMinSize, &Window::setMinSize)
             .def_property("fullScreen", &Window::isFullScreen, &Window::setFullScreen)
             .def("observeFullScreen", &Window::observeFullScreen)
             .def_property_readonly("getScreen", &Window::getScreen)
