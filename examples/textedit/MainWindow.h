@@ -47,7 +47,7 @@ namespace textedit
         void close() override;
 
     protected:
-        void _drop(const std::vector<std::string>&);
+        void _drop(const std::vector<std::string>&) override;
  
     private:
 

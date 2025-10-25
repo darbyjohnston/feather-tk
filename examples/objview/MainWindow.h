@@ -53,7 +53,7 @@ namespace objview
         ///@}
 
     protected:
-        void _drop(const std::vector<std::string>&);
+        void _drop(const std::vector<std::string>&) override;
  
     private:
 
