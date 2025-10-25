@@ -81,6 +81,7 @@ namespace ftk_resource
     extern std::vector<uint8_t> ViewZoomReset;
     extern std::vector<uint8_t> Volume;
     extern std::vector<uint8_t> WindowFullScreen;
+    extern std::vector<uint8_t> feather_tk_512;
 }
 
 namespace ftk
@@ -195,6 +196,7 @@ namespace ftk
         p.iconData["ViewZoomReset"] = ftk_resource::ViewZoomReset;
         p.iconData["Volume"] = ftk_resource::Volume;
         p.iconData["WindowFullScreen"] = ftk_resource::WindowFullScreen;
+        p.iconData["feather_tk_512"] = ftk_resource::feather_tk_512;
 
         p.mutex.cache.setMax(1000);
         p.thread.running = true;

@@ -39,6 +39,8 @@ namespace ftk
         Window::_init(context, app->getName(), size);
         FTK_P();
 
+        setIcon(context->getSystem<IconSystem>()->get("feather_tk_512", 1.F));
+
         p.menuBar = MenuBar::create(context);
         auto fileMenu = Menu::create(context);
         std::weak_ptr<App> appWeak(app);

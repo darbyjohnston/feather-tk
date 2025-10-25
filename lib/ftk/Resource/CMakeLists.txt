@@ -65,6 +65,7 @@ set(RESOURCES
     etc/Icons/ViewZoomReset.svg
     etc/Icons/Volume.svg
     etc/Icons/WindowFullScreen.svg
+    etc/Icons/feather_tk_512.svg
     etc/Images/Charlie.png
     etc/Images/TestDrawing.svg)
 foreach(RESOURCE ${RESOURCES})

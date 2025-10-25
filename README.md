@@ -2,7 +2,7 @@
 [![Build Status](https://github.com/darbyjohnston/feather-tk/actions/workflows/ci-workflow.yml/badge.svg)](https://github.com/darbyjohnston/feather-tk/actions/workflows/ci-workflow.yml)
 [![codecov](https://codecov.io/gh/codecov/example-cpp11-cmake/branch/master/graph/badge.svg)](https://codecov.io/gh/darbyjohnston/feather-tk)
 
-# feather-tk
+# ![feather-tk Icon](etc/Icons/feather_tk_32.svg) feather-tk
 
 Feather-tk is a lightweight toolkit for building cross-platform C++ applications.
 
