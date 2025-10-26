@@ -38,9 +38,9 @@ namespace ftk
     public:
         constexpr Matrix();
         constexpr Matrix(
-            T e0, T e1, T e2,
-            T e3, T e4, T e5,
-            T e6, T e7, T e8);
+            T e_0_0, T e_0_1, T e_0_2,
+            T e_1_0, T e_1_1, T e_1_2,
+            T e_2_0, T e_2_1, T e_2_2);
 
         constexpr T get(int row, int column) const;
         constexpr void set(int row, int column, T);
@@ -62,10 +62,10 @@ namespace ftk
     public:
         constexpr Matrix();
         constexpr Matrix(
-            T e0, T e1, T e2, T e3,
-            T e4, T e5, T e6, T e7,
-            T e8, T e9, T e10, T e11,
-            T e12, T e13, T e14, T e15);
+            T e_0_0, T e_0_1, T e_0_2, T e_0_3,
+            T e_1_0, T e_1_1, T e_1_2, T e_1_3,
+            T e_2_0, T e_2_1, T e_2_2, T e_2_3,
+            T e_3_0, T e_3_1, T e_3_2, T e_3_3);
 
         constexpr T get(int row, int column) const;
         constexpr void set(int row, int column, T);
@@ -128,13 +128,13 @@ namespace ftk
     template<typename T>
     Matrix<3, 3, T> operator * (const Matrix<3, 3, T>&, const Matrix<3, 3, T>&);
     template<typename T>
-    Vector<2, T> operator * (const Vector<2, T>& , const Matrix<3, 3, T>&);
+    Vector<2, T> operator * (const Matrix<3, 3, T>&, const Vector<2, T>&);
     template<typename T>
     Matrix<4, 4, T> operator * (const Matrix<4, 4, T>&, const Matrix<4, 4, T>&);
     template<typename T>
-    Vector<3, T> operator * (const Vector<3, T>& , const Matrix<4, 4, T>&);
+    Vector<3, T> operator * (const Matrix<4, 4, T>&, const Vector<3, T>&);
     template<typename T>
-    Vector<4, T> operator * (const Vector<4, T>& , const Matrix<4, 4, T>&);
+    Vector<4, T> operator * (const Matrix<4, 4, T>&, const Vector<4, T>&);
         
     template<int R, int C, typename T>
     constexpr bool operator == (const Matrix<R, C, T>&, const Matrix<R, C, T>&);

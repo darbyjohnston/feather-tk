@@ -154,32 +154,32 @@ namespace ftk
             {
                 const V3F v(1.F, 0.F, 0.F);
                 const auto m = brightness(V3F(2.F, 2.F, 2.F));
-                _print(Format("{0} brightness: {1}").arg(v).arg(v * m));
+                _print(Format("{0} brightness: {1}").arg(v).arg(m * v));
             }
             {
                 const V3F v(1.F, 0.F, 0.F);
                 const auto m = contrast(V3F(.5F, .5F, .5F));
-                _print(Format("{0} contrast: {1}").arg(v).arg(v * m));
+                _print(Format("{0} contrast: {1}").arg(v).arg(m * v));
             }
             {
                 const V3F v(1.F, 0.F, 0.F);
                 const auto m = saturation(V3F(.5F, .5F, .5F));
-                _print(Format("{0} saturation: {1}").arg(v).arg(v * m));
+                _print(Format("{0} saturation: {1}").arg(v).arg(m * v));
             }
             {
                 const V3F v(1.F, 0.F, 0.F);
                 auto m = tint(.0F);
-                _print(Format("{0} tint: {1}").arg(v).arg(v * m));
+                _print(Format("{0} tint: {1}").arg(v).arg(m * v));
                 m = tint(.2F);
-                _print(Format("{0} tint: {1}").arg(v).arg(v * m));
+                _print(Format("{0} tint: {1}").arg(v).arg(m * v));
                 m = tint(.4F);
-                _print(Format("{0} tint: {1}").arg(v).arg(v * m));
+                _print(Format("{0} tint: {1}").arg(v).arg(m * v));
                 m = tint(.6F);
-                _print(Format("{0} tint: {1}").arg(v).arg(v * m));
+                _print(Format("{0} tint: {1}").arg(v).arg(m * v));
                 m = tint(.8F);
-                _print(Format("{0} tint: {1}").arg(v).arg(v * m));
+                _print(Format("{0} tint: {1}").arg(v).arg(m * v));
                 m = tint(1.F);
-                _print(Format("{0} tint: {1}").arg(v).arg(v * m));
+                _print(Format("{0} tint: {1}").arg(v).arg(m * v));
             }
         }
 

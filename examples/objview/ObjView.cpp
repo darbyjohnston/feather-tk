@@ -178,7 +178,7 @@ namespace objview
             "\n"
             "void main()\n"
             "{\n"
-            "    gl_Position = vec4(vPos, 1.0) * transform.mvp;\n"
+            "    gl_Position = transform.mvp * vec4(vPos, 1.0);\n"
             "    fTex = vTex;\n"
             "}\n";
     }
@@ -223,11 +223,11 @@ namespace objview
             "\n"
             "void main()\n"
             "{\n"
-            "    gl_Position = vec4(vPos, 1.0) * transform.mvp;\n"
+            "    gl_Position = transform.mvp * vec4(vPos, 1.0);\n"
             "    fTex = vTex;\n"
             //"    fNorm = vNorm;\n"
             //! \todo Replace this with a pre-computed uniform variable.
-            "    fNorm = vNorm * mat3(transpose(inverse(transform.m)));\n"
+            "    fNorm = mat3(transpose(inverse(transform.m))) * vNorm;\n"
             "    fColor = vColor;\n"
             "}\n";
     }
@@ -600,7 +600,7 @@ namespace objview
         const M44F m = _getModelTransform();
         for (size_t i = 0; i < v.size(); ++i)
         {
-            v[i] = v[i] * m;
+            v[i] = m * v[i];
         }
         return bbox(v);
     }
@@ -612,7 +612,7 @@ namespace objview
         const Size2I size = getGeometry().size();
         for (size_t i = 0; i < v.size(); ++i)
         {
-            const V3F vt = v[i] * mvp;
+            const V3F vt = mvp * v[i];
             v2.push_back(V2I(
                 (vt.x + 1.F) / 2.F * size.w,
                 (vt.y + 1.F) / 2.F * size.h));

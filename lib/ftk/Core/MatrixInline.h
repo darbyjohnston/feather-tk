@@ -67,13 +67,13 @@ namespace ftk
 
     template<typename T>
     constexpr Matrix<3, 3, T>::Matrix(
-        T e0, T e1, T e2,
-        T e3, T e4, T e5,
-        T e6, T e7, T e8) :
+        T e_0_0, T e_0_1, T e_0_2,
+        T e_1_0, T e_1_1, T e_1_2,
+        T e_2_0, T e_2_1, T e_2_2) :
         _e({
-            e0, e1, e2,
-            e3, e4, e5,
-            e6, e7, e8
+            e_0_0, e_0_1, e_0_2,
+            e_1_0, e_1_1, e_1_2,
+            e_2_0, e_2_1, e_2_2
         })
     {}
 
@@ -125,15 +125,15 @@ namespace ftk
 
     template<typename T>
     constexpr Matrix<4, 4, T>::Matrix(
-        T  e0, T  e1, T  e2, T  e3,
-        T  e4, T  e5, T  e6, T  e7,
-        T  e8, T  e9, T e10, T e11,
-        T e12, T e13, T e14, T e15) :
+        T e_0_0, T e_0_1, T e_0_2, T e_0_3,
+        T e_1_0, T e_1_1, T e_1_2, T e_1_3,
+        T e_2_0, T e_2_1, T e_2_2, T e_2_3,
+        T e_3_0, T e_3_1, T e_3_2, T e_3_3) :
         _e({
-             e0,  e1,  e2,  e3,
-             e4,  e5,  e6,  e7,
-             e8,  e9, e10, e11,
-            e12, e13, e14, e15
+            e_0_0, e_0_1, e_0_2, e_0_3,
+            e_1_0, e_1_1, e_1_2, e_1_3,
+            e_2_0, e_2_1, e_2_2, e_2_3,
+            e_3_0, e_3_1, e_3_2, e_3_3
         })
     {}
 
@@ -177,19 +177,19 @@ namespace ftk
     constexpr Matrix<3, 3, T> translate(const Vector<2, T>& value)
     {
         return Matrix<3, 3, T>(
-            T(1), T(0), T(0),
-            T(0), T(1), T(0),
-            value.x, value.y, T(1));
+            T(1), T(0), value.x,
+            T(0), T(1), value.y,
+            T(0), T(0), T(1));
     }
 
     template<typename T>
     constexpr Matrix<4, 4, T> translate(const Vector<3, T>& value)
     {
         return Matrix<4, 4, T>(
-            T(1), T(0), T(0), T(0),
-            T(0), T(1), T(0), T(0),
-            T(0), T(0), T(1), T(0),
-            value.x, value.y, value.z, T(1));
+            T(1), T(0), T(0), value.x,
+            T(0), T(1), T(0), value.y,
+            T(0), T(0), T(1), value.z,
+            T(0), T(0), T(0), T(1));
     }
 
     template<typename T>
@@ -199,8 +199,8 @@ namespace ftk
         const T b = std::sin(deg2rad(angle));
         return Matrix<4, 4, T>(
             T(1), T(0), T(0), T(0),
-            T(0), a,    b,    T(0),
-            T(0), -b,   a,    T(0),
+            T(0),    a,   -b, T(0),
+            T(0),    b,    a, T(0),
             T(0), T(0), T(0), T(1));
     }
 
@@ -210,9 +210,9 @@ namespace ftk
         const T a = std::cos(deg2rad(angle));
         const T b = std::sin(deg2rad(angle));
         return Matrix<4, 4, T>(
-            a,    T(0), -b,   T(0),
+               a, T(0),    b, T(0),
             T(0), T(1), T(0), T(0),
-            b,    T(0), a,    T(0),
+              -b, T(0),    a, T(0),
             T(0), T(0), T(0), T(1));
     }
 
@@ -222,8 +222,8 @@ namespace ftk
         const T a = std::cos(deg2rad(angle));
         const T b = std::sin(deg2rad(angle));
         return Matrix<4, 4, T>(
-            a,   -b,    T(0), T(0),
-            b,    a,    T(0), T(0),
+               a,   b,  T(0), T(0),
+              -b,   a,  T(0), T(0),
             T(0), T(0), T(1), T(0),
             T(0), T(0), T(0), T(1));
     }
@@ -248,10 +248,10 @@ namespace ftk
         const T y = -(top + bottom) / (top - bottom);
         const T z = -(farClip + nearClip) / (farClip - nearClip);
         return Matrix<4, 4, T>(
-            a,    T(0), T(0), T(0),
-            T(0), b,    T(0), T(0),
-            T(0), T(0), c,    T(0),
-            x,    y,    z,    T(1));
+               a, T(0), T(0),    x,
+            T(0),    b, T(0),    y,
+            T(0), T(0),    c,    z,
+            T(0), T(0), T(0), T(1));
     }
 
     template<typename T>
@@ -265,10 +265,10 @@ namespace ftk
         const T c = -(farClip + nearClip) / (farClip - nearClip);
         const T d = -(2 * farClip * nearClip) / (farClip - nearClip);
         return Matrix<4, 4, T>(
-            a, T(0), T(0), T(0),
-            T(0), b, T(0), T(0),
-            T(0), T(0), c, T(-1),
-            T(0), T(0), d, T(0));
+               a, T(0),  T(0),  T(0),
+            T(0),    b,  T(0),  T(0),
+            T(0), T(0),     c,     d,
+            T(0), T(0), T(-1), T(0));
     }
 
     template<typename T>
@@ -427,7 +427,7 @@ namespace ftk
                 float tmp = 0.F;
                 for (int k = 0; k < 3; ++k)
                 {
-                    tmp += b.get(i, k) * a.get(k, j);
+                    tmp += a.get(i, k) * b.get(k, j);
                 }
                 out.set(i, j, tmp);
             }
@@ -436,10 +436,10 @@ namespace ftk
     }
 
     template<typename T>
-    inline Vector<2, T> operator * (const Vector<2, T>& v, const Matrix<3, 3, T>& m)
+    inline Vector<2, T> operator * (const Matrix<3, 3, T>& m, const Vector<2, T>& v)
     {
-        const T x = v[0] * m[0] + v[1] * m[3] + m[6];
-        const T y = v[0] * m[1] + v[1] * m[4] + m[7];
+        const T x = v[0] * m[0] + v[1] * m[1] + m[2];
+        const T y = v[0] * m[3] + v[1] * m[4] + m[5];
         return Vector<2, T>(x, y);
     }
 
@@ -454,7 +454,7 @@ namespace ftk
                 float tmp = 0.F;
                 for (int k = 0; k < 4; ++k)
                 {
-                    tmp += b.get(i, k) * a.get(k, j);
+                    tmp += a.get(i, k) * b.get(k, j);
                 }
                 out.set(i, j, tmp);
             }
@@ -463,23 +463,23 @@ namespace ftk
     }
 
     template<typename T>
-    inline Vector<3, T> operator * (const Vector<3, T>& v, const Matrix<4, 4, T>& m)
+    inline Vector<3, T> operator * (const Matrix<4, 4, T>& m, const Vector<3, T>& v)
     {
-        const T x = v[0] * m[0] + v[1] * m[4] + v[2] * m[8] + m[12];
-        const T y = v[0] * m[1] + v[1] * m[5] + v[2] * m[9] + m[13];
-        const T z = v[0] * m[2] + v[1] * m[6] + v[2] * m[10] + m[14];
-        const T w = v[0] * m[3] + v[1] * m[7] + v[2] * m[11] + m[15];
+        const T x = v[0] * m[ 0] + v[1] * m[ 1] + v[2] * m[ 2] + m[ 3];
+        const T y = v[0] * m[ 4] + v[1] * m[ 5] + v[2] * m[ 6] + m[ 7];
+        const T z = v[0] * m[ 8] + v[1] * m[ 9] + v[2] * m[10] + m[11];
+        const T w = v[0] * m[12] + v[1] * m[13] + v[2] * m[14] + m[15];
         return Vector<3, T>(x / w, y / w, z / w);
     }
 
     template<typename T>
-    inline Vector<4, T> operator * (const Vector<4, T>& v, const Matrix<4, 4, T>& m)
+    inline Vector<4, T> operator * (const Matrix<4, 4, T>& m, const Vector<4, T>& v)
     {
         Vector<4, T> out;
-        out.x = v[0] * m[0] + v[1] * m[4] + v[2] * m[8] + v[3] * m[12];
-        out.y = v[0] * m[1] + v[1] * m[5] + v[2] * m[9] + v[3] * m[13];
-        out.z = v[0] * m[2] + v[1] * m[6] + v[2] * m[10] + v[3] * m[14];
-        out.w = v[0] * m[3] + v[1] * m[7] + v[2] * m[11] + v[3] * m[15];
+        out.x = v[0] * m[ 0] + v[1] * m[ 1] + v[2] * m[ 2] + v[3] * m[ 3];
+        out.y = v[0] * m[ 4] + v[1] * m[ 5] + v[2] * m[ 6] + v[3] * m[ 7];
+        out.z = v[0] * m[ 8] + v[1] * m[ 9] + v[2] * m[10] + v[3] * m[11];
+        out.w = v[0] * m[12] + v[1] * m[13] + v[2] * m[14] + v[3] * m[15];
         return out;
     }
         
