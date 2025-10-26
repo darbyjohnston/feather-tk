@@ -54,7 +54,7 @@ namespace imageview
                     // Create a new view.
                     auto context = getContext();
                     auto app = appWeak.lock();
-                    auto view = ImageView::create(context, doc);
+                    auto view = ImageView::create(context, app, doc);
                     auto scrollWidget = ScrollWidget::create(context);
                     scrollWidget->setBorder(false);
                     scrollWidget->setWidget(view);

@@ -24,31 +24,12 @@ namespace imageview
         _layout = HorizontalLayout::create(context, shared_from_this());
         _layout->setSpacingRole(SizeRole::SpacingSmall);
 
-        // Create the file tool bar.
-        auto fileToolBar = ftk::ToolBar::create(context, Orientation::Horizontal, _layout);
-        for (const auto& key :
-            { "File/Open", "File/Close", "File/CloseAll" })
-        {
-            fileToolBar->addAction(actions->getAction(key));
-        }
+        // Create the tool bars.
+        _createFileToolBar(context, actions);
         Divider::create(context, Orientation::Horizontal, _layout);
-
-        // Create the window tool bar.
-        auto windowToolBar = ftk::ToolBar::create(context, Orientation::Horizontal, _layout);
-        for (const auto& key :
-            { "Window/FullScreen" })
-        {
-            windowToolBar->addAction(actions->getAction(key));
-        }
+        _createWindowToolBar(context, actions);
         Divider::create(context, Orientation::Horizontal, _layout);
-
-        // Create the view tool bar.
-        auto viewToolBar = ftk::ToolBar::create(context, Orientation::Horizontal, _layout);
-        for (const auto& key :
-            { "View/ZoomReset", "View/ZoomIn", "View/ZoomOut" })
-        {
-            viewToolBar->addAction(actions->getAction(key));
-        }
+        _createViewToolBar(context, actions);
     }
 
     ToolBar::~ToolBar()
@@ -73,5 +54,52 @@ namespace imageview
     void ToolBar::sizeHintEvent(const SizeHintEvent& event)
     {
         _setSizeHint(_layout->getSizeHint());
+    }
+
+    void ToolBar::_createFileToolBar(
+        const std::shared_ptr<Context>& context,
+        const std::shared_ptr<Actions>& actions)
+    {
+        auto toolBar = ftk::ToolBar::create(context, Orientation::Horizontal, _layout);
+        for (const auto& key :
+            { "File/Open", "File/Close", "File/CloseAll" })
+        {
+            toolBar->addAction(actions->getAction(key));
+        }
+    }
+
+    void ToolBar::_createWindowToolBar(
+        const std::shared_ptr<Context>& context,
+        const std::shared_ptr<Actions>& actions)
+    {
+        auto toolBar = ftk::ToolBar::create(context, Orientation::Horizontal, _layout);
+        for (const auto& key :
+            { "Window/FullScreen" })
+        {
+            toolBar->addAction(actions->getAction(key));
+        }
+    }
+
+    void ToolBar::_createViewToolBar(
+        const std::shared_ptr<Context>& context,
+        const std::shared_ptr<Actions>& actions)
+    {
+        auto toolBar = ftk::ToolBar::create(context, Orientation::Horizontal, _layout);
+
+        toolBar->addAction(actions->getAction("View/Frame"));
+        toolBar->addAction(actions->getAction("View/ZoomReset"));
+        auto button = toolBar->addAction(actions->getAction("View/ZoomIn"));
+        button->setRepeatClick(true);
+        button = toolBar->addAction(actions->getAction("View/ZoomOut"));
+        button->setRepeatClick(true);
+
+        button = toolBar->addAction(actions->getAction("View/Red"));
+        button->setText("R");
+        button = toolBar->addAction(actions->getAction("View/Green"));
+        button->setText("G");
+        button = toolBar->addAction(actions->getAction("View/Blue"));
+        button->setText("B");
+        button = toolBar->addAction(actions->getAction("View/Alpha"));
+        button->setText("A");
     }
 }

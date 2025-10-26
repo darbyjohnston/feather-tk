@@ -6,10 +6,11 @@
 
 #include <ftk/UI/IWidget.h>
 
-#include <ftk/Core/Image.h>
+#include <ftk/Core/RenderOptions.h>
 
 namespace imageview
 {
+    class App;
     class Document;
 
     //! Image view widget.
@@ -18,6 +19,7 @@ namespace imageview
     protected:
         void _init(
             const std::shared_ptr<ftk::Context>&,
+            const std::shared_ptr<App>&,
             const std::shared_ptr<Document>&,
             const std::shared_ptr<ftk::IWidget>& parent);
 
@@ -29,23 +31,40 @@ namespace imageview
         //! Create a new view.
         static std::shared_ptr<ImageView> create(
             const std::shared_ptr<ftk::Context>&,
+            const std::shared_ptr<App>&,
             const std::shared_ptr<Document>&,
             const std::shared_ptr<ftk::IWidget>& parent = nullptr);
 
-        //! \name View
+        //! \name Zoom
         ///@{
 
+        float getZoom() const;
+        std::shared_ptr<ftk::IObservableValue<float> > observeZoom() const;
+        void setZoom(float);
+        void frame();
         void zoomReset();
         void zoomIn();
         void zoomOut();
 
         ///@}
 
+        //! \name Channel Display
+        ///@{
+
+        ftk::ChannelDisplay getChannelDisplay() const;
+        std::shared_ptr<ftk::IObservableValue<ftk::ChannelDisplay> > observeChannelDisplay() const;
+        void setChannelDisplay(ftk::ChannelDisplay);
+
+        ///@}
+
+        void setGeometry(const ftk::Box2I&) override;
         void sizeHintEvent(const ftk::SizeHintEvent&) override;
         void drawEvent(const ftk::Box2I&, const ftk::DrawEvent&) override;
 
     private:
         std::shared_ptr<ftk::Image> _image;
-        float _zoom = 1.F;
+        std::shared_ptr<ftk::ObservableValue<float> > _zoom;
+        bool _frameInit = true;
+        std::shared_ptr<ftk::ObservableValue<ftk::ChannelDisplay> > _channelDisplay;
     };
 }

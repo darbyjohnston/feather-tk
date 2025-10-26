@@ -181,12 +181,26 @@ namespace imageview
         const std::shared_ptr<MainWindow>& mainWindow)
     {
         std::weak_ptr<MainWindow> mainWindowWeak(mainWindow);
+        _actions["View/Frame"] = Action::create(
+            "Frame",
+            "ViewFrame",
+            Key::Backspace,
+            0,
+            [mainWindowWeak]
+            {
+                if (auto mainWindow = mainWindowWeak.lock())
+                {
+                    mainWindow->getCurrentView()->frame();
+                }
+            });
+        _actions["View/Frame"]->setTooltip("Frame the view");
+
         _actions["View/ZoomReset"] = Action::create(
             "Zoom Reset",
             "ViewZoomReset",
-            Key::Backspace,
+            Key::_0,
             0,
-            [mainWindowWeak](bool value)
+            [mainWindowWeak]
             {
                 if (auto mainWindow = mainWindowWeak.lock())
                 {
@@ -228,6 +242,96 @@ namespace imageview
                 }
             });
         _actions["View/ZoomOut"]->setTooltip("Zoom the view out");
+
+        _actions["View/Red"] = Action::create(
+            "Red Channel",
+            Key::R,
+            0,
+            [mainWindowWeak](bool value)
+            {
+                if (auto mainWindow = mainWindowWeak.lock())
+                {
+                    if (auto view = mainWindow->getCurrentView())
+                    {
+                        view->setChannelDisplay(value ? ChannelDisplay::Red : ChannelDisplay::Color);
+                    }
+                }
+            });
+        _actions["View/Red"]->setTooltip("View the red channel");
+
+        _actions["View/Green"] = Action::create(
+            "Green Channel",
+            Key::G,
+            0,
+            [mainWindowWeak](bool value)
+            {
+                if (auto mainWindow = mainWindowWeak.lock())
+                {
+                    if (auto view = mainWindow->getCurrentView())
+                    {
+                        view->setChannelDisplay(value ? ChannelDisplay::Green : ChannelDisplay::Color);
+                    }
+                }
+            });
+        _actions["View/Green"]->setTooltip("View the green channel");
+
+        _actions["View/Blue"] = Action::create(
+            "Blue Channel",
+            Key::B,
+            0,
+            [mainWindowWeak](bool value)
+            {
+                if (auto mainWindow = mainWindowWeak.lock())
+                {
+                    if (auto view = mainWindow->getCurrentView())
+                    {
+                        view->setChannelDisplay(value ? ChannelDisplay::Blue : ChannelDisplay::Color);
+                    }
+                }
+            });
+        _actions["View/Blue"]->setTooltip("View the blue channel");
+
+        _actions["View/Alpha"] = Action::create(
+            "Alpha Channel",
+            Key::A,
+            0,
+            [mainWindowWeak](bool value)
+            {
+                if (auto mainWindow = mainWindowWeak.lock())
+                {
+                    if (auto view = mainWindow->getCurrentView())
+                    {
+                        view->setChannelDisplay(value ? ChannelDisplay::Alpha : ChannelDisplay::Color);
+                    }
+                }
+            });
+        _actions["View/Alpha"]->setTooltip("View the alpha channel");
+
+        _viewObserver = ValueObserver<std::shared_ptr<ImageView> >::create(
+            mainWindow->observeCurrentView(),
+            [this](const std::shared_ptr<ImageView>& view)
+            {
+                if (view)
+                {
+                    _channelDisplayObserver = ValueObserver<ChannelDisplay>::create(
+                        view->observeChannelDisplay(),
+                        [this](ChannelDisplay value)
+                        {
+                            _actions["View/Red"]->setChecked(ChannelDisplay::Red == value);
+                            _actions["View/Green"]->setChecked(ChannelDisplay::Green == value);
+                            _actions["View/Blue"]->setChecked(ChannelDisplay::Blue == value);
+                            _actions["View/Alpha"]->setChecked(ChannelDisplay::Alpha == value);
+                        });
+                }
+                else
+                {
+                    _channelDisplayObserver.reset();
+                    _actions["View/Red"]->setChecked(false);
+                    _actions["View/Green"]->setChecked(false);
+                    _actions["View/Blue"]->setChecked(false);
+                    _actions["View/Alpha"]->setChecked(false);
+                }
+            });
     }
 
     void Actions::_actionsUpdate()
@@ -241,5 +345,9 @@ namespace imageview
         _actions["View/ZoomReset"]->setEnabled(current);
         _actions["View/ZoomIn"]->setEnabled(current);
         _actions["View/ZoomOut"]->setEnabled(current);
+        _actions["View/Red"]->setEnabled(current);
+        _actions["View/Green"]->setEnabled(current);
+        _actions["View/Blue"]->setEnabled(current);
+        _actions["View/Alpha"]->setEnabled(current);
     }
 }

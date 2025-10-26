@@ -12,6 +12,7 @@
 namespace imageview
 {
     class App;
+    class ImageView;
     class MainWindow;
 
     //! This class provides actions that are used to populate the menus
@@ -65,5 +66,7 @@ namespace imageview
         std::shared_ptr<ftk::ValueObserver<std::shared_ptr<ftk::IDocument> > > _currentObserver;
         std::shared_ptr<ftk::ValueObserver<WindowSettings> > _windowSettingsObserver;
         std::shared_ptr<ftk::ValueObserver<bool> > _fullScreenObserver;
+        std::shared_ptr<ftk::ValueObserver<std::shared_ptr<ImageView> > > _viewObserver;
+        std::shared_ptr<ftk::ValueObserver<ftk::ChannelDisplay> > _channelDisplayObserver;
     };
 }

@@ -78,7 +78,7 @@ namespace ftk
                 action->observeIcon(),
                 [this](const std::string& value)
                 {
-                    setIcon(value);
+                    setIcon(!value.empty() ? value : "Empty");
                 });
             p.checkedIconObserver = ValueObserver<std::string>::create(
                 action->observeCheckedIcon(),

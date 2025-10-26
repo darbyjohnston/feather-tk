@@ -58,7 +58,7 @@ namespace ftk
         auto out = std::shared_ptr<Action>(new Action);
         out->_init(
             text,
-            "Empty",
+            std::string(),
             Key::Unknown,
             0,
             callback,
@@ -91,7 +91,7 @@ namespace ftk
         auto out = std::shared_ptr<Action>(new Action);
         out->_init(
             text,
-            "Empty",
+            std::string(),
             shortcut,
             shortcutModifiers,
             callback,
@@ -124,7 +124,7 @@ namespace ftk
         auto out = std::shared_ptr<Action>(new Action);
         out->_init(
             text,
-            "Empty",
+            std::string(),
             Key::Unknown,
             0,
             nullptr,
@@ -157,7 +157,7 @@ namespace ftk
         auto out = std::shared_ptr<Action>(new Action);
         out->_init(
             text,
-            "Empty",
+            std::string(),
             shortcut,
             shortcutModifiers,
             nullptr,

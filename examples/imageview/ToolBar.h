@@ -35,6 +35,16 @@ namespace imageview
         void sizeHintEvent(const ftk::SizeHintEvent&) override;
 
     private:
+        void _createFileToolBar(
+            const std::shared_ptr<ftk::Context>&,
+            const std::shared_ptr<Actions>&);
+        void _createWindowToolBar(
+            const std::shared_ptr<ftk::Context>&,
+            const std::shared_ptr<Actions>&);
+        void _createViewToolBar(
+            const std::shared_ptr<ftk::Context>&,
+            const std::shared_ptr<Actions>&);
+
         std::map<std::string, std::shared_ptr<ftk::ToolButton> > _buttons;
         std::shared_ptr<ftk::HorizontalLayout> _layout;
     };

@@ -22,14 +22,14 @@ namespace imageview
         IWidget::_init(context, "examples::imageview::StatusBar", parent);
 
         // Create the labels.
-        _labels["Size"] = Label::create(context);
+        _labels["Info"] = Label::create(context);
 
         // Layout the widgets.
         _layout = HorizontalLayout::create(context, shared_from_this());
         _layout->setMarginRole(SizeRole::MarginInside);
         _layout->setSpacingRole(SizeRole::SpacingSmall);
         _layout->addSpacer(Stretch::Expanding);
-        _labels["Size"]->setParent(_layout);
+        _labels["Info"]->setParent(_layout);
 
         // Observe the current document and update the widgets.
         std::weak_ptr<App> appWeak(app);
@@ -43,13 +43,14 @@ namespace imageview
                     if (auto image = doc->getImage())
                     {
                         const Size2I& size = image->getSize();
-                        text = Format("Size: {0}x{1}:{2}").
+                        text = Format("Size: {0}x{1}, Aspect ratio: {2}, Type: {3}").
                             arg(size.w).
                             arg(size.h).
-                            arg(image->getAspect(), 2);
+                            arg(image->getAspect(), 2).
+                            arg(image->getType());
                     }
                 }
-                _labels["Size"]->setText(text);
+                _labels["Info"]->setText(text);
             });
     }
 

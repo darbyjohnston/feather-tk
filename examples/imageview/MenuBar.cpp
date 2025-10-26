@@ -101,9 +101,15 @@ namespace imageview
         const std::shared_ptr<Actions>& actions)
     {
         _menus["View"] = Menu::create(context);
+        _menus["View"]->addAction(actions->getAction("View/Frame"));
         _menus["View"]->addAction(actions->getAction("View/ZoomReset"));
         _menus["View"]->addAction(actions->getAction("View/ZoomIn"));
         _menus["View"]->addAction(actions->getAction("View/ZoomOut"));
+        _menus["View"]->addDivider();
+        _menus["View"]->addAction(actions->getAction("View/Red"));
+        _menus["View"]->addAction(actions->getAction("View/Green"));
+        _menus["View"]->addAction(actions->getAction("View/Blue"));
+        _menus["View"]->addAction(actions->getAction("View/Alpha"));
         addMenu("View", _menus["View"]);
     }
 }
