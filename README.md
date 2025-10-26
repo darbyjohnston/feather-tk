@@ -129,9 +129,9 @@ Run the super build script:
 sh feather-tk/sbuild-linux.sh
 ```
 
-Try running the `demo` example:
+Try running the `objview` example:
 ```
-build-Release/examples/demo/demo
+build-Release/examples/objview/objview feather-tk\etc\Objects\Bolt.obj
 ```
 
 
@@ -151,9 +151,9 @@ Run the super build script:
 sh feather-tk/sbuild-macos.sh
 ```
 
-Try running the `demo` example:
+Try running the `objview` example:
 ```
-build-Release/examples/demo/demo
+build-Release/examples/objview/objview feather-tk\etc\Objects\Bolt.obj
 ```
 
 These aliases are convenient for switching between architectures:
@@ -182,7 +182,7 @@ Run the super build script:
 feather-tk\sbuild-win.bat
 ```
 
-Try running the `simple` example:
+Try running the `objview` example:
 ```
-build-Release\examples\demo\Release\demo
+build-Release\examples\objview\Release\objview feather-tk\etc\Objects\Bolt.obj
 ```
