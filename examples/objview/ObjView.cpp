@@ -29,8 +29,8 @@ namespace objview
         IWidget::_init(context, "examples::objview::ObjView", parent);
 
         // Initialize the mesh.
-        //_mesh = doc->getMesh();
-        _mesh = std::make_shared<ftk::TriMesh3F>(sphere(5.F, 64, 64));
+        _mesh = doc->getMesh();
+        //_mesh = std::make_shared<ftk::TriMesh3F>(sphere(5.F, 64, 64));
         if (_mesh)
         {
             _objectBBox = bbox(*_mesh);
