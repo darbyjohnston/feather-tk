@@ -4,67 +4,22 @@
 
 #include <ftk/Core/File.h>
 
-#if defined(__APPLE__)
-#include <ApplicationServices/ApplicationServices.h>
-#include <CoreFoundation/CFBundle.h>
-#include <CoreServices/CoreServices.h>
-#endif // __APPLE__
-
-#include <cstring>
-#include <filesystem>
-
-#include <sys/types.h>
-#include <pwd.h>
-#include <unistd.h>
+#include <cstdlib>
 
 namespace ftk
 {
     std::filesystem::path getUserPath(UserPath value)
     {
         std::filesystem::path out;
-#if defined(__APPLE__)
-        OSType folderType = kDesktopFolderType;
+        const std::filesystem::path home = std::getenv("HOME");
         switch (value)
         {
-        case UserPath::Home:      folderType = kCurrentUserFolderType; break;
-        case UserPath::Desktop:   folderType = kDesktopFolderType;     break;
-        case UserPath::Documents: folderType = kDocumentsFolderType;   break;
-        case UserPath::Downloads: folderType = kCurrentUserFolderType; break;
+        case UserPath::Home:      out = home; break;
+        case UserPath::Desktop:   out = home / "Desktop";   break;
+        case UserPath::Documents: out = home / "Documents"; break;
+        case UserPath::Downloads: out = home / "Downloads"; break;
         default: break;
         }
-        FSRef ref;
-        FSFindFolder(kUserDomain, folderType, kCreateFolder, &ref);
-        char path[PATH_MAX];
-        FSRefMakePath(&ref, (UInt8*)&path, PATH_MAX);
-        if (UserPath::Downloads == value)
-        {
-            out = std::filesystem::path(path) / std::filesystem::path("Downloads");
-        }
-        else
-        {
-            out = path;
-        }
-#else // __APPLE__
-        if (struct passwd* buf = ::getpwuid(::getuid()))
-        {
-            switch (value)
-            {
-            case UserPath::Home:
-                out = std::filesystem::path(buf->pw_dir);
-                break;
-            case UserPath::Desktop:
-                out = std::filesystem::path(buf->pw_dir) / std::filesystem::path("Desktop");
-                break;
-            case UserPath::Documents:
-                out = std::filesystem::path(buf->pw_dir) / std::filesystem::path("Documents");
-                break;
-            case UserPath::Downloads:
-                out = std::filesystem::path(buf->pw_dir) / std::filesystem::path("Downloads");
-                break;
-            default: break;
-            }
-        }
-#endif // __APPLE__
         return out;
     }
 
