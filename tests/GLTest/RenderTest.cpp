@@ -110,12 +110,12 @@ namespace ftk
                     mesh.v.push_back(V2F(min.x, max.y));
                     Triangle2 triangle;
                     triangle.v[0].v = 1;
-                    triangle.v[1].v = 2;
-                    triangle.v[2].v = 3;
+                    triangle.v[1].v = 3;
+                    triangle.v[2].v = 2;
                     mesh.triangles.push_back(triangle);
                     triangle.v[0].v = 3;
-                    triangle.v[1].v = 4;
-                    triangle.v[2].v = 1;
+                    triangle.v[1].v = 1;
+                    triangle.v[2].v = 4;
                     mesh.triangles.push_back(triangle);
                     render->drawMesh(mesh);
                 }
@@ -132,18 +132,18 @@ namespace ftk
                     mesh.c.push_back(V4F(1.F, 1.F, 1.F, 1.F));
                     Triangle2 triangle;
                     triangle.v[0].v = 1;
-                    triangle.v[1].v = 2;
-                    triangle.v[2].v = 3;
+                    triangle.v[1].v = 3;
+                    triangle.v[2].v = 2;
                     triangle.v[0].c = 1;
-                    triangle.v[1].c = 2;
-                    triangle.v[2].c = 3;
+                    triangle.v[1].c = 3;
+                    triangle.v[2].c = 2;
                     mesh.triangles.push_back(triangle);
                     triangle.v[0].v = 3;
-                    triangle.v[1].v = 4;
-                    triangle.v[2].v = 1;
+                    triangle.v[1].v = 1;
+                    triangle.v[2].v = 4;
                     triangle.v[0].c = 3;
-                    triangle.v[1].c = 4;
-                    triangle.v[2].c = 1;
+                    triangle.v[1].c = 1;
+                    triangle.v[2].c = 4;
                     mesh.triangles.push_back(triangle);
                     render->drawColorMesh(mesh);
                 }

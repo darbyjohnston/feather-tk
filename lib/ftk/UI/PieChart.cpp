@@ -173,7 +173,7 @@ namespace ftk
                     mesh.v.push_back(V2F(
                         cos(deg2rad(std::min(i + inc, a + d) / 100.F * 360.F - 90.F)) * r,
                         sin(deg2rad(std::min(i + inc, a + d) / 100.F * 360.F - 90.F)) * r));
-                    mesh.triangles.push_back({ size + 1, size + 2, size + 3 });
+                    mesh.triangles.push_back({ size + 1, size + 3, size + 2 });
                 }
                 p.draw->meshes.push_back(mesh);
                 a += p.data[i].percentage;

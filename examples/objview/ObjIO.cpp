@@ -61,8 +61,8 @@ namespace objview
                 {
                     Triangle3 t;
                     t.v[0] = vs[0];
-                    t.v[1] = vs[i];
-                    t.v[2] = vs[i + 1];
+                    t.v[2] = vs[i];
+                    t.v[1] = vs[i + 1];
                     out->triangles.push_back(t);
                 }
             }

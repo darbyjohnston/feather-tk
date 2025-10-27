@@ -29,7 +29,8 @@ namespace objview
         IWidget::_init(context, "examples::objview::ObjView", parent);
 
         // Initialize the mesh.
-        _mesh = doc->getMesh();
+        //_mesh = doc->getMesh();
+        _mesh = std::make_shared<ftk::TriMesh3F>(sphere(5.F, 64, 64));
         if (_mesh)
         {
             _objectBBox = bbox(*_mesh);
@@ -383,12 +384,12 @@ namespace objview
                 mesh.t.push_back(V2F(0.F, 1.F));
                 mesh.triangles.push_back({
                     Vertex3(1, 1),
-                    Vertex3(2, 2),
-                    Vertex3(3, 3) });
+                    Vertex3(3, 3),
+                    Vertex3(2, 2) });
                 mesh.triangles.push_back({
                     Vertex3(3, 3),
-                    Vertex3(4, 4),
-                    Vertex3(1, 1) });
+                    Vertex3(1, 1),
+                    Vertex3(4, 4) });
 
                 _gridVbo = gl::VBO::create(
                     mesh.triangles.size() * 3,
@@ -470,6 +471,10 @@ namespace objview
                     if (_settings.cull)
                     {
                         glEnable(GL_CULL_FACE);
+                    }
+                    else
+                    {
+                        glDisable(GL_CULL_FACE);
                     }
                     _vao->bind();
                     _vao->draw(GL_TRIANGLES, 0, _vbo->getSize());

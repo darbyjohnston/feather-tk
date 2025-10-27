@@ -77,18 +77,18 @@ namespace ftk
 
                 Triangle3 triangle;
                 triangle.v[0].v = 1;
-                triangle.v[1].v = 2;
-                triangle.v[2].v = 3;
+                triangle.v[1].v = 3;
+                triangle.v[2].v = 2;
                 triangle.v[0].t = 1;
-                triangle.v[1].t = 2;
-                triangle.v[2].t = 3;
+                triangle.v[1].t = 3;
+                triangle.v[2].t = 2;
                 out.triangles.push_back(triangle);
                 triangle.v[0].v = 3;
-                triangle.v[1].v = 4;
-                triangle.v[2].v = 1;
+                triangle.v[1].v = 1;
+                triangle.v[2].v = 4;
                 triangle.v[0].t = 3;
-                triangle.v[1].t = 4;
-                triangle.v[2].t = 1;
+                triangle.v[1].t = 1;
+                triangle.v[2].t = 4;
                 out.triangles.push_back(triangle);
                 
                 return out;

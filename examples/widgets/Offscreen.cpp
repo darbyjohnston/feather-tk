@@ -125,10 +125,10 @@ namespace widgets
                 event.render->clearViewport(Color4F(0.F, 0.F, 0.F));
 
                 const float aspect = aspectRatio(size);
-                const auto pm = perspective(60.F, aspect, .1F, 10000.F);
-                M44F vm;
-                vm = vm * translate(V3F(0.F, 0.F, -10.F));
-                vm = vm * rotateZ(_rotation);
+                const M44F vm =
+                    translate(V3F(0.F, 0.F, -10.F)) *
+                    rotateZ(_rotation);
+                const M44F pm = perspective(60.F, aspect, .1F, 10000.F);
 
                 _shader->bind();
                 _shader->setUniform("transform.mvp", pm * vm);

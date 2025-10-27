@@ -27,5 +27,8 @@ namespace widgets
 
     private:
         std::shared_ptr<ftk::ScrollWidget> _scrollWidget;
+
+        std::shared_ptr<ftk::ValueObserver<bool> > _hasNextObserver;
+        std::shared_ptr<ftk::ValueObserver<bool> > _hasPrevObserver;
     };
 }

@@ -88,6 +88,7 @@ namespace ftk
                     ImageFilter::Linear);
             }
 
+            glEnable(GL_CULL_FACE);
             glEnable(GL_BLEND);
             glBlendEquation(GL_FUNC_ADD);
 

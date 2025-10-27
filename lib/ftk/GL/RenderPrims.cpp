@@ -51,8 +51,8 @@ namespace ftk
                 mesh.v[v + 2] = rect.max;
                 mesh.v[v + 3].x = rect.min.x;
                 mesh.v[v + 3].y = rect.max.y;
-                mesh.triangles[t + 0] = { v + 1, v + 2, v + 3 };
-                mesh.triangles[t + 1] = { v + 3, v + 4, v + 1 };
+                mesh.triangles[t + 0] = { v + 1, v + 3, v + 2 };
+                mesh.triangles[t + 1] = { v + 3, v + 1, v + 4 };
                 v += 4;
                 t += 2;
             }
@@ -80,8 +80,8 @@ namespace ftk
             mesh.v.push_back(v0 + v2CW);
             mesh.v.push_back(v1 + v2CW);
             mesh.v.push_back(v1 + v2CCW);
-            mesh.triangles.push_back({ 1, 2, 3 });
-            mesh.triangles.push_back({ 3, 4, 1 });
+            mesh.triangles.push_back({ 1, 3, 2 });
+            mesh.triangles.push_back({ 3, 1, 4 });
 
             if (p.vbos["line"])
             {
@@ -115,8 +115,8 @@ namespace ftk
                 mesh.v[v + 1] = i.first + v2CW;
                 mesh.v[v + 2] = i.second + v2CW;
                 mesh.v[v + 3] = i.second + v2CCW;
-                mesh.triangles[t + 0] = { v + 1, v + 2, v + 3 };
-                mesh.triangles[t + 1] = { v + 3, v + 4, v + 1 };
+                mesh.triangles[t + 0] = { v + 1, v + 3, v + 2 };
+                mesh.triangles[t + 1] = { v + 3, v + 1, v + 4 };
                 v += 4;
                 t += 2;
             }
@@ -343,11 +343,11 @@ namespace ftk
                             p.textMesh.t[v + 3].y = item.v.max();
 
                             p.textMesh.triangles[t + 0].v[0] = { v + 1, v + 1 };
-                            p.textMesh.triangles[t + 0].v[1] = { v + 2, v + 2 };
-                            p.textMesh.triangles[t + 0].v[2] = { v + 3, v + 3 };
+                            p.textMesh.triangles[t + 0].v[1] = { v + 3, v + 3 };
+                            p.textMesh.triangles[t + 0].v[2] = { v + 2, v + 2 };
                             p.textMesh.triangles[t + 1].v[0] = { v + 3, v + 3 };
-                            p.textMesh.triangles[t + 1].v[1] = { v + 4, v + 4 };
-                            p.textMesh.triangles[t + 1].v[2] = { v + 1, v + 1 };
+                            p.textMesh.triangles[t + 1].v[1] = { v + 1, v + 1 };
+                            p.textMesh.triangles[t + 1].v[2] = { v + 4, v + 4 };
 
                             v += 4;
                             t += 2;

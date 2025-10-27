@@ -20,6 +20,7 @@ namespace widgets
 
         // Create a layout.
         auto layout = VerticalLayout::create(context);
+        layout->setSpacingRole(SizeRole::None);
         _scrollWidget = ScrollWidget::create(context, ScrollType::Both, shared_from_this());
         _scrollWidget->setBorder(false);
         _scrollWidget->setWidget(layout);
@@ -53,7 +54,7 @@ namespace widgets
             {
                 stackLayout->nextIndex();
             });
-        auto hasNextObserver = ValueObserver<bool>::create(
+        _hasNextObserver = ValueObserver<bool>::create(
             stackLayout->observeHasNextIndex(),
             [nextButton](bool value)
             {
@@ -66,7 +67,7 @@ namespace widgets
             {
                 stackLayout->prevIndex();
             });
-        auto hasPrevObserver = ValueObserver<bool>::create(
+        _hasPrevObserver = ValueObserver<bool>::create(
             stackLayout->observeHasPrevIndex(),
             [prevButton](bool value)
             {
