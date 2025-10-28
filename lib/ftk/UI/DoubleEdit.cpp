@@ -90,7 +90,7 @@ namespace ftk
             [this](const RangeD& value)
             {
                 _p->digits = digits(value.max());
-                _setSizeUpdate();
+                setSizeUpdate();
                 _textUpdate();
             });
 

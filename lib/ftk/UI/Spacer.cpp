@@ -60,7 +60,7 @@ namespace ftk
             return;
         p.spacingRole = value;
         p.size.displayScale.reset();
-        _setSizeUpdate();
+        setSizeUpdate();
     }
 
     void Spacer::sizeHintEvent(const SizeHintEvent& event)

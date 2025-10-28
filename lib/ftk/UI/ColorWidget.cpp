@@ -283,7 +283,7 @@ namespace ftk
         float rgb[3] = { p.color.r, p.color.g, p.color.b };
         rgbToHSV(rgb, p.hsv);
         _colorUpdate();
-        _setDrawUpdate();
+        setDrawUpdate();
     }
 
     void ColorWidget::setCallback(const std::function<void(const Color4F&)>& value)

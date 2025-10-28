@@ -82,8 +82,8 @@ namespace ftk
             return;
         p.text = value;
         p.size.displayScale.reset();
-        _setSizeUpdate();
-        _setDrawUpdate();
+        setSizeUpdate();
+        setDrawUpdate();
     }
 
     FontRole GroupBox::getFontRole() const
@@ -98,8 +98,8 @@ namespace ftk
             return;
         p.fontRole = value;
         p.size.displayScale.reset();
-        _setSizeUpdate();
-        _setDrawUpdate();
+        setSizeUpdate();
+        setDrawUpdate();
     }
 
     void GroupBox::clear()

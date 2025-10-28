@@ -180,7 +180,7 @@ namespace ftk
         if (value == p.popupRole)
             return;
         p.popupRole = value;
-        _setDrawUpdate();
+        setDrawUpdate();
     }
 
     const std::shared_ptr<IWidget>& IWidgetPopup::getWidget() const

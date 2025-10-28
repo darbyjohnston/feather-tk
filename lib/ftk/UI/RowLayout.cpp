@@ -72,8 +72,8 @@ namespace ftk
         if (value == p.marginRole)
             return;
         p.marginRole = value;
-        _setSizeUpdate();
-        _setDrawUpdate();
+        setSizeUpdate();
+        setDrawUpdate();
     }
 
     SizeRole RowLayout::getSpacingRole() const
@@ -87,8 +87,8 @@ namespace ftk
         if (value == p.spacingRole)
             return;
         p.spacingRole = value;
-        _setSizeUpdate();
-        _setDrawUpdate();
+        setSizeUpdate();
+        setDrawUpdate();
     }
 
     void RowLayout::addSpacer(Stretch stretch)
@@ -300,15 +300,15 @@ namespace ftk
     void RowLayout::childAddEvent(const ChildAddEvent& event)
     {
         IWidget::childAddEvent(event);
-        _setSizeUpdate();
-        _setDrawUpdate();
+        setSizeUpdate();
+        setDrawUpdate();
     }
 
     void RowLayout::childRemoveEvent(const ChildRemoveEvent& event)
     {
         IWidget::childRemoveEvent(event);
-        _setSizeUpdate();
-        _setDrawUpdate();
+        setSizeUpdate();
+        setDrawUpdate();
     }
 
     void HorizontalLayout::_init(

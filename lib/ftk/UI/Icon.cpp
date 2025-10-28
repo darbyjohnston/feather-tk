@@ -74,8 +74,8 @@ namespace ftk
             return;
         p.icon = value;
         p.iconImage.reset();
-        _setSizeUpdate();
-        _setDrawUpdate();
+        setSizeUpdate();
+        setDrawUpdate();
     }
 
     SizeRole Icon::getMarginRole() const
@@ -89,8 +89,8 @@ namespace ftk
         if (value == p.marginRole)
             return;
         p.marginRole = value;
-        _setSizeUpdate();
-        _setDrawUpdate();
+        setSizeUpdate();
+        setDrawUpdate();
     }
 
     void Icon::sizeHintEvent(const SizeHintEvent& event)

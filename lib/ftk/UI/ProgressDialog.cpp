@@ -84,7 +84,7 @@ namespace ftk
             return;
         _range = range;
         _value = _range.min();
-        _setDrawUpdate();
+        setDrawUpdate();
     }
 
     double ProgressWidget::getValue() const
@@ -97,7 +97,7 @@ namespace ftk
         if (_value == value)
             return;
         _value = value;
-        _setDrawUpdate();
+        setDrawUpdate();
     }
 
     void ProgressWidget::sizeHintEvent(const SizeHintEvent& event)

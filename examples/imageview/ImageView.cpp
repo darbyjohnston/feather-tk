@@ -55,8 +55,8 @@ namespace imageview
     {
         if (_zoom->setIfChanged(value))
         {
-            _setSizeUpdate();
-            _setDrawUpdate();
+            setSizeUpdate();
+            setDrawUpdate();
         }
     }
 
@@ -104,7 +104,7 @@ namespace imageview
     {
         if (_channelDisplay->setIfChanged(value))
         {
-            _setDrawUpdate();
+            setDrawUpdate();
         }
     }
 

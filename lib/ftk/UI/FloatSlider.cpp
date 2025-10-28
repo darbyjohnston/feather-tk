@@ -56,8 +56,8 @@ namespace ftk
             p.model->observeValue(),
             [this](float value)
             {
-                _setSizeUpdate();
-                _setDrawUpdate();
+                setSizeUpdate();
+                setDrawUpdate();
                 if (_p->callback)
                 {
                     _p->callback(value);
@@ -68,8 +68,8 @@ namespace ftk
             p.model->observeRange(),
             [this](const RangeF&)
             {
-                _setSizeUpdate();
-                _setDrawUpdate();
+                setSizeUpdate();
+                setDrawUpdate();
             });
     }
 
@@ -268,13 +268,13 @@ namespace ftk
     void FloatSlider::mouseEnterEvent(MouseEnterEvent& event)
     {
         IMouseWidget::mouseEnterEvent(event);
-        _setDrawUpdate();
+        setDrawUpdate();
     }
 
     void FloatSlider::mouseLeaveEvent()
     {
         IMouseWidget::mouseLeaveEvent();
-        _setDrawUpdate();
+        setDrawUpdate();
     }
 
     void FloatSlider::mouseMoveEvent(MouseMoveEvent& event)
@@ -296,13 +296,13 @@ namespace ftk
             p.model->setValue(_posToValue(_getMousePos().x));
         }
         takeKeyFocus();
-        _setDrawUpdate();
+        setDrawUpdate();
     }
 
     void FloatSlider::mouseReleaseEvent(MouseClickEvent& event)
     {
         IMouseWidget::mouseReleaseEvent(event);
-        _setDrawUpdate();
+        setDrawUpdate();
     }
 
     void FloatSlider::scrollEvent(ScrollEvent& event)

@@ -75,8 +75,8 @@ namespace ftk
         if (value == p.split)
             return;
         p.split = value;
-        _setSizeUpdate();
-        _setDrawUpdate();
+        setSizeUpdate();
+        setDrawUpdate();
     }
 
     bool Splitter::hasBorder() const
@@ -90,7 +90,7 @@ namespace ftk
         if (value == p.border)
             return;
         p.border = value;
-        _setDrawUpdate();
+        setDrawUpdate();
     }
 
     void Splitter::setGeometry(const Box2I& value)
@@ -270,7 +270,7 @@ namespace ftk
         {
             event.accept = true;
             p.mouse.hoverHandle = true;
-            _setDrawUpdate();
+            setDrawUpdate();
         }
     }
 
@@ -280,7 +280,7 @@ namespace ftk
         if (p.mouse.hoverHandle)
         {
             p.mouse.hoverHandle = false;
-            _setDrawUpdate();
+            setDrawUpdate();
         }
     }
 
@@ -303,18 +303,18 @@ namespace ftk
                 break;
             default: break;
             }
-            _setSizeUpdate();
-            _setDrawUpdate();
+            setSizeUpdate();
+            setDrawUpdate();
         }
         else if (contains(p.size.g, event.pos) && !p.mouse.hoverHandle)
         {
             p.mouse.hoverHandle = true;
-            _setDrawUpdate();
+            setDrawUpdate();
         }
         else if (!contains(p.size.g, event.pos) && p.mouse.hoverHandle)
         {
             p.mouse.hoverHandle = false;
-            _setDrawUpdate();
+            setDrawUpdate();
         }
     }
 
@@ -325,7 +325,7 @@ namespace ftk
         {
             event.accept = true;
             p.mouse.pressedHandle = true;
-            _setDrawUpdate();
+            setDrawUpdate();
         }
     }
 
@@ -334,6 +334,6 @@ namespace ftk
         FTK_P();
         event.accept = true;
         p.mouse.pressedHandle = false;
-        _setDrawUpdate();
+        setDrawUpdate();
     }
 }

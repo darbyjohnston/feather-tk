@@ -73,7 +73,7 @@ namespace ftk
         if (p.current == value)
             return;
         p.current = value;
-        _setDrawUpdate();
+        setDrawUpdate();
     }
 
     void TabBarButton::setText(const std::string& value)
@@ -84,8 +84,8 @@ namespace ftk
         if (changed)
         {
             p.size.displayScale.reset();
-            _setSizeUpdate();
-            _setDrawUpdate();
+            setSizeUpdate();
+            setDrawUpdate();
         }
     }
 

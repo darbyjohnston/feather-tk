@@ -316,7 +316,7 @@ namespace ftk
         if (hover != p.mouse.hover)
         {
             p.mouse.hover = hover;
-            _setDrawUpdate();
+            setDrawUpdate();
         }
     }
 
@@ -328,7 +328,7 @@ namespace ftk
         if (hover != p.mouse.hover)
         {
             p.mouse.hover = hover;
-            _setDrawUpdate();
+            setDrawUpdate();
         }
     }
 
@@ -340,7 +340,7 @@ namespace ftk
         if (hover != p.mouse.hover)
         {
             p.mouse.hover = hover;
-            _setDrawUpdate();
+            setDrawUpdate();
         }
     }
 
@@ -353,13 +353,13 @@ namespace ftk
         if (hover != p.mouse.hover)
         {
             p.mouse.hover = hover;
-            _setDrawUpdate();
+            setDrawUpdate();
         }
         if (p.mouse.hover != -1)
         {
             _setCurrent(p.mouse.hover);
             p.mouse.pressed = p.mouse.hover;
-            _setDrawUpdate();
+            setDrawUpdate();
         }
     }
 
@@ -382,14 +382,14 @@ namespace ftk
                 p.mouse.clickTime = now;
             }
             p.mouse.pressed = -1;
-            _setDrawUpdate();
+            setDrawUpdate();
         }
     }
 
     void FileBrowserView::keyFocusEvent(bool value)
     {
         IMouseWidget::keyFocusEvent(value);
-        _setDrawUpdate();
+        setDrawUpdate();
     }
 
     void FileBrowserView::keyPressEvent(KeyEvent& event)
@@ -649,8 +649,8 @@ namespace ftk
             p.selectCallback(std::filesystem::path());
         }
 
-        _setSizeUpdate();
-        _setDrawUpdate();
+        setSizeUpdate();
+        setDrawUpdate();
         p.size.displayScale.reset();
     }
 
@@ -671,7 +671,7 @@ namespace ftk
             {
                 p.selectCallback(path);
             }
-            _setDrawUpdate();
+            setDrawUpdate();
         }
     }
 

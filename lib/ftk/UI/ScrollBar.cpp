@@ -73,8 +73,8 @@ namespace ftk
         if (value == p.scrollSize)
             return;
         p.scrollSize = value;
-        _setSizeUpdate();
-        _setDrawUpdate();
+        setSizeUpdate();
+        setDrawUpdate();
     }
 
     int ScrollBar::getScrollPos() const
@@ -88,8 +88,8 @@ namespace ftk
         if (value == p.scrollPos)
             return;
         p.scrollPos = value;
-        _setSizeUpdate();
-        _setDrawUpdate();
+        setSizeUpdate();
+        setDrawUpdate();
     }
 
     void ScrollBar::setScrollPosCallback(const std::function<void(int)>& value)
@@ -157,13 +157,13 @@ namespace ftk
     void ScrollBar::mouseEnterEvent(MouseEnterEvent& event)
     {
         IMouseWidget::mouseEnterEvent(event);
-        _setDrawUpdate();
+        setDrawUpdate();
     }
 
     void ScrollBar::mouseLeaveEvent()
     {
         IMouseWidget::mouseLeaveEvent();
-        _setDrawUpdate();
+        setDrawUpdate();
     }
 
     void ScrollBar::mouseMoveEvent(MouseMoveEvent& event)
@@ -191,8 +191,8 @@ namespace ftk
             if (scrollPosClamped != p.scrollPos)
             {
                 p.scrollPos = scrollPosClamped;
-                _setSizeUpdate();
-                _setDrawUpdate();
+                setSizeUpdate();
+                setDrawUpdate();
                 if (p.scrollPosCallback)
                 {
                     p.scrollPosCallback(p.scrollPos);
@@ -226,8 +226,8 @@ namespace ftk
             if (scrollPosClamped != p.scrollPos)
             {
                 p.scrollPos = scrollPosClamped;
-                _setSizeUpdate();
-                _setDrawUpdate();
+                setSizeUpdate();
+                setDrawUpdate();
                 if (p.scrollPosCallback)
                 {
                     p.scrollPosCallback(p.scrollPos);
@@ -235,13 +235,13 @@ namespace ftk
             }
         }
         p.mouse.pressedScrollPos = p.scrollPos;
-        _setDrawUpdate();
+        setDrawUpdate();
     }
 
     void ScrollBar::mouseReleaseEvent(MouseClickEvent& event)
     {
         IMouseWidget::mouseReleaseEvent(event);
-        _setDrawUpdate();
+        setDrawUpdate();
     }
 
     Box2I ScrollBar::_getHandleGeometry() const

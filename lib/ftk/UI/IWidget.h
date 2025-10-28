@@ -41,12 +41,6 @@ namespace ftk
         //! Get the object path.
         std::string getObjectPath() const;
 
-        //! Get the background role.
-        ColorRole getBackgroundRole() const;
-
-        //! Set the background role.
-        void setBackgroundRole(ColorRole);
-
         //! Hierarchy
         ///@{
 
@@ -82,6 +76,13 @@ namespace ftk
 
         //! Geometry
         ///@{
+
+        //! Get whether the widget needs a size update.
+        bool hasSizeUpdate() const;
+
+        //! Set a size update. The sizeHintEvent() and setGeometry() methods
+        //! will be called the next tick of the event loop.
+        void setSizeUpdate(bool value = true);
 
         //! Get the size hint.
         const Size2I& getSizeHint() const;
@@ -168,6 +169,24 @@ namespace ftk
         //! Set whether the widget is enabled. If this method is overridden
         //! the base method should be called.
         virtual void setEnabled(bool);
+
+        ///@}
+
+        //! Drawing
+        ///@{
+
+        //! Get whether the widget needs a draw update.
+        bool hasDrawUpdate() const;
+
+        //! Set a draw update. The drawEvent() method will be called the next
+        //! tick of the event loop.
+        void setDrawUpdate(bool value = true);
+
+        //! Get the background role.
+        ColorRole getBackgroundRole() const;
+
+        //! Set the background role.
+        void setBackgroundRole(ColorRole);
 
         ///@}
 
@@ -279,15 +298,7 @@ namespace ftk
         ///@}
 
     protected:
-        //! Set a size update. The sizeHintEvent() and setGeometry() methods
-        //! will be called the next tick of the event loop.
-        void _setSizeUpdate();
-
         void _setSizeHint(const Size2I&);
-
-        //! Set a draw update. The drawEvent() method will be called the next
-        //! tick of the event loop.
-        void _setDrawUpdate();
 
     private:
         std::weak_ptr<Context> _context;
@@ -318,8 +329,6 @@ namespace ftk
         bool _keyFocus = false;
 
         std::string _tooltip;
-
-        friend class IWindow;
     };
 }
 

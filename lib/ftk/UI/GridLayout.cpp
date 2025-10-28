@@ -98,8 +98,8 @@ namespace ftk
         FTK_P();
         p.gridPos[child].row = row;
         p.gridPos[child].column = column;
-        _setSizeUpdate();
-        _setDrawUpdate();
+        setSizeUpdate();
+        setDrawUpdate();
     }
 
     ColorRole GridLayout::getRowBackgroundRole(ColorRole) const
@@ -113,7 +113,7 @@ namespace ftk
         if (value == p.rowBackgroundRole)
             return;
         p.rowBackgroundRole = value;
-        _setDrawUpdate();
+        setDrawUpdate();
     }
 
     SizeRole GridLayout::getMarginRole() const
@@ -127,8 +127,8 @@ namespace ftk
         if (value == p.marginRole)
             return;
         p.marginRole = value;
-        _setSizeUpdate();
-        _setDrawUpdate();
+        setSizeUpdate();
+        setDrawUpdate();
     }
 
     SizeRole GridLayout::getSpacingRole() const
@@ -142,8 +142,8 @@ namespace ftk
         if (value == p.spacingRole)
             return;
         p.spacingRole = value;
-        _setSizeUpdate();
-        _setDrawUpdate();
+        setSizeUpdate();
+        setDrawUpdate();
     }
 
     void GridLayout::clear()
@@ -344,8 +344,8 @@ namespace ftk
         {
             p.gridPos.erase(i);
         }
-        _setSizeUpdate();
-        _setDrawUpdate();
+        setSizeUpdate();
+        setDrawUpdate();
     }
 
     GridPos GridLayout::Private::getSize() const

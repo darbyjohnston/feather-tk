@@ -122,8 +122,8 @@ namespace ftk
             return;
         p.marginRole = value;
         p.size.displayScale.reset();
-        _setSizeUpdate();
-        _setDrawUpdate();
+        setSizeUpdate();
+        setDrawUpdate();
     }
 
     void StackLayout::clear()
@@ -202,7 +202,7 @@ namespace ftk
         }
         p.hasNextIndex->setIfChanged(p.currentIndex < (static_cast<int>(children.size()) - 1));
         p.hasPrevIndex->setIfChanged(p.currentIndex > 0);
-        _setSizeUpdate();
-        _setDrawUpdate();
+        setSizeUpdate();
+        setDrawUpdate();
     }
 }

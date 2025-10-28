@@ -88,8 +88,8 @@ namespace ftk
             return;
         p.text = value;
         p.size.displayScale.reset();
-        _setSizeUpdate();
-        _setDrawUpdate();
+        setSizeUpdate();
+        setDrawUpdate();
     }
 
     ColorRole Label::getTextRole() const
@@ -103,7 +103,7 @@ namespace ftk
         if (value == p.textRole)
             return;
         p.textRole = value;
-        _setDrawUpdate();
+        setDrawUpdate();
     }
 
     SizeRole Label::getMarginRole() const
@@ -129,8 +129,8 @@ namespace ftk
         p.hMarginRole = value;
         p.vMarginRole = value;
         p.size.displayScale.reset();
-        _setSizeUpdate();
-        _setDrawUpdate();
+        setSizeUpdate();
+        setDrawUpdate();
     }
 
     void Label::setMarginRole(SizeRole horizontal, SizeRole vertical)
@@ -141,8 +141,8 @@ namespace ftk
         p.hMarginRole = horizontal;
         p.vMarginRole = vertical;
         p.size.displayScale.reset();
-        _setSizeUpdate();
-        _setDrawUpdate();
+        setSizeUpdate();
+        setDrawUpdate();
     }
 
     void Label::setHMarginRole(SizeRole value)
@@ -152,8 +152,8 @@ namespace ftk
             return;
         p.hMarginRole = value;
         p.size.displayScale.reset();
-        _setSizeUpdate();
-        _setDrawUpdate();
+        setSizeUpdate();
+        setDrawUpdate();
     }
 
     void Label::setVMarginRole(SizeRole value)
@@ -163,8 +163,8 @@ namespace ftk
             return;
         p.vMarginRole = value;
         p.size.displayScale.reset();
-        _setSizeUpdate();
-        _setDrawUpdate();
+        setSizeUpdate();
+        setDrawUpdate();
     }
 
     FontRole Label::getFontRole() const
@@ -179,8 +179,8 @@ namespace ftk
             return;
         p.fontRole = value;
         p.size.displayScale.reset();
-        _setSizeUpdate();
-        _setDrawUpdate();
+        setSizeUpdate();
+        setDrawUpdate();
     }
 
     const FontInfo& Label::getFontInfo() const
@@ -196,8 +196,8 @@ namespace ftk
         p.fontRole = FontRole::None;
         p.fontInfo = value;
         p.size.displayScale.reset();
-        _setSizeUpdate();
-        _setDrawUpdate();
+        setSizeUpdate();
+        setDrawUpdate();
     }
 
     void Label::setGeometry(const Box2I& value)

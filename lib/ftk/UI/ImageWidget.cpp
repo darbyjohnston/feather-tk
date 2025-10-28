@@ -61,8 +61,8 @@ namespace ftk
         if (value == p.image)
             return;
         p.image = value;
-        _setSizeUpdate();
-        _setDrawUpdate();
+        setSizeUpdate();
+        setDrawUpdate();
     }
 
     SizeRole ImageWidget::getMarginRole() const
@@ -76,8 +76,8 @@ namespace ftk
         if (value == p.marginRole)
             return;
         p.marginRole = value;
-        _setSizeUpdate();
-        _setDrawUpdate();
+        setSizeUpdate();
+        setDrawUpdate();
     }
 
     void ImageWidget::sizeHintEvent(const SizeHintEvent& event)

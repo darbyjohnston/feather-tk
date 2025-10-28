@@ -51,7 +51,7 @@ namespace objview
                 _doRender = true;
                 _gridVbo.reset();
                 _gridVao.reset();
-                _setDrawUpdate();
+                setDrawUpdate();
             });
 
         // Observe the render settings and update the render.
@@ -61,7 +61,7 @@ namespace objview
             {
                 _settings = value;
                 _doRender = true;
-                _setDrawUpdate();
+                setDrawUpdate();
             });
     }
 
@@ -97,7 +97,7 @@ namespace objview
         _orbit = tmp;
         _hudWidget->setOrbit(_orbit);
         _doRender = true;
-        _setDrawUpdate();
+        setDrawUpdate();
     }
 
     void ObjView::setDistance(float value)
@@ -108,7 +108,7 @@ namespace objview
         _distance = tmp;
         _hudWidget->setDistance(_distance);
         _doRender = true;
-        _setDrawUpdate();
+        setDrawUpdate();
     }
 
     void ObjView::frame()

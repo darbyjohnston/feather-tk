@@ -84,8 +84,8 @@ namespace ftk
         if (changed)
         {
             p.size.displayScale.reset();
-            _setSizeUpdate();
-            _setDrawUpdate();
+            setSizeUpdate();
+            setDrawUpdate();
         }
     }
 
@@ -97,8 +97,8 @@ namespace ftk
         if (changed)
         {
             p.size.displayScale.reset();
-            _setSizeUpdate();
-            _setDrawUpdate();
+            setSizeUpdate();
+            setDrawUpdate();
         }
     }
 

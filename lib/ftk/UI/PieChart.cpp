@@ -86,8 +86,8 @@ namespace ftk
         if (value == p.data)
             return;
         p.data = value;
-        _setSizeUpdate();
-        _setDrawUpdate();
+        setSizeUpdate();
+        setDrawUpdate();
     }
 
     int PieChart::getSizeMult() const
@@ -101,8 +101,8 @@ namespace ftk
         if (value == p.sizeMult)
             return;
         p.sizeMult = value;
-        _setSizeUpdate();
-        _setDrawUpdate();
+        setSizeUpdate();
+        setDrawUpdate();
     }
 
     void PieChart::setGeometry(const Box2I& value)

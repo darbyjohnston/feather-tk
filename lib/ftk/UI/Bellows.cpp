@@ -104,8 +104,8 @@ namespace ftk
             p.widget->setParent(_p->layout);
             p.widget->setVisible(p.button->isChecked());
         }
-        _setSizeUpdate();
-        _setDrawUpdate();
+        setSizeUpdate();
+        setDrawUpdate();
     }
 
     bool Bellows::isOpen() const

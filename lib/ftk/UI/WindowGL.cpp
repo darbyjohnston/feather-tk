@@ -198,7 +198,7 @@ namespace ftk
     {
         if (_p->bufferType->setIfChanged(value))
         {
-            _setDrawUpdate();
+            setDrawUpdate();
         }
     }
 
@@ -225,8 +225,8 @@ namespace ftk
         FTK_P();
         if (p.displayScale->setIfChanged(value))
         {
-            _setSizeUpdate();
-            _setDrawUpdate();
+            setSizeUpdate();
+            setDrawUpdate();
         }
     }
 
@@ -316,7 +316,7 @@ namespace ftk
     
     void Window::_refresh()
     {
-        _setDrawUpdate();
+        setDrawUpdate();
         _p->refresh = true;
     }
 
@@ -328,8 +328,8 @@ namespace ftk
             SDL_GetWindowSize(sdlWindow, &p.size.w, &p.size.h);
             SDL_GL_GetDrawableSize(sdlWindow, &p.frameBufferSize.w, &p.frameBufferSize.h);
         }
-        _setSizeUpdate();
-        _setDrawUpdate();
+        setSizeUpdate();
+        setDrawUpdate();
     }
 
     void Window::_update(

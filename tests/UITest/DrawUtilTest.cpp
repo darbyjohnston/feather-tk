@@ -51,7 +51,7 @@ namespace ftk
 
                 void update()
                 {
-                    _setDrawUpdate();
+                    setDrawUpdate();
                 }
 
                 void drawEvent(const Box2I& drawRect, const DrawEvent& event) override

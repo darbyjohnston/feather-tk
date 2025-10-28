@@ -129,8 +129,8 @@ namespace ftk
         p.icon = item.icon;
         p.iconImage.reset();
         p.size.displayScale.reset();
-        _setSizeUpdate();
-        _setDrawUpdate();
+        setSizeUpdate();
+        setDrawUpdate();
     }
 
     void ComboBox::setItems(const std::vector<std::string>& value)
@@ -163,8 +163,8 @@ namespace ftk
         p.icon = item.icon;
         p.iconImage.reset();
         p.size.displayScale.reset();
-        _setSizeUpdate();
-        _setDrawUpdate();
+        setSizeUpdate();
+        setDrawUpdate();
     }
 
     void ComboBox::setIndexCallback(const std::function<void(int)>& value)
@@ -189,8 +189,8 @@ namespace ftk
             return;
         p.fontRole = value;
         p.size.displayScale.reset();
-        _setSizeUpdate();
-        _setDrawUpdate();
+        setSizeUpdate();
+        setDrawUpdate();
     }
 
     void ComboBox::setGeometry(const Box2I& value)
@@ -369,13 +369,13 @@ namespace ftk
     {
         IMouseWidget::mouseEnterEvent(event);
         event.accept = true;
-        _setDrawUpdate();
+        setDrawUpdate();
     }
 
     void ComboBox::mouseLeaveEvent()
     {
         IMouseWidget::mouseLeaveEvent();
-        _setDrawUpdate();
+        setDrawUpdate();
     }
 
     void ComboBox::mousePressEvent(MouseClickEvent& event)
@@ -383,13 +383,13 @@ namespace ftk
         IMouseWidget::mousePressEvent(event);
         FTK_P();
         _click();
-        _setDrawUpdate();
+        setDrawUpdate();
     }
 
     void ComboBox::mouseReleaseEvent(MouseClickEvent& event)
     {
         IMouseWidget::mouseReleaseEvent(event);
-        _setDrawUpdate();
+        setDrawUpdate();
     }
 
     void ComboBox::keyPressEvent(KeyEvent& event)

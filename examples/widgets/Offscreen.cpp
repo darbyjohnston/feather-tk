@@ -27,7 +27,7 @@ namespace widgets
             {
                 _rotation += .1F;
                 _doRender = true;
-                _setDrawUpdate();
+                setDrawUpdate();
             });
     }
 

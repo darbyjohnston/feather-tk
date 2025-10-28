@@ -66,8 +66,8 @@ namespace ftk
             return;
         p.svgData = value;
         p.image.reset();
-        _setSizeUpdate();
-        _setDrawUpdate();
+        setSizeUpdate();
+        setDrawUpdate();
     }
 
     int SvgWidget::getSVGWidth() const
@@ -82,8 +82,8 @@ namespace ftk
             return;
         p.svgWidth = value;
         p.image.reset();
-        _setSizeUpdate();
-        _setDrawUpdate();
+        setSizeUpdate();
+        setDrawUpdate();
     }
 
     SizeRole SvgWidget::getMarginRole() const
@@ -97,8 +97,8 @@ namespace ftk
         if (value == p.marginRole)
             return;
         p.marginRole = value;
-        _setSizeUpdate();
-        _setDrawUpdate();
+        setSizeUpdate();
+        setDrawUpdate();
     }
 
     void SvgWidget::sizeHintEvent(const SizeHintEvent& event)

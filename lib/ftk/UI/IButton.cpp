@@ -48,7 +48,7 @@ namespace ftk
         if (!p.checkable && _checked)
         {
             _checked = false;
-            _setDrawUpdate();
+            setDrawUpdate();
         }
     }
 
@@ -63,7 +63,7 @@ namespace ftk
         if (value == _checked)
             return;
         _checked = value;
-        _setDrawUpdate();
+        setDrawUpdate();
     }
 
     const std::string& IButton::getText() const
@@ -76,8 +76,8 @@ namespace ftk
         if (value == _text)
             return;
         _text = value;
-        _setSizeUpdate();
-        _setDrawUpdate();
+        setSizeUpdate();
+        setDrawUpdate();
     }
 
     FontRole IButton::getFontRole() const
@@ -90,8 +90,8 @@ namespace ftk
         if (value == _fontRole)
             return;
         _fontRole = value;
-        _setSizeUpdate();
-        _setDrawUpdate();
+        setSizeUpdate();
+        setDrawUpdate();
     }
 
     const std::string& IButton::getIcon() const
@@ -106,8 +106,8 @@ namespace ftk
             return;
         _icon = icon;
         _iconImage.reset();
-        _setSizeUpdate();
-        _setDrawUpdate();
+        setSizeUpdate();
+        setDrawUpdate();
     }
 
     const std::string& IButton::getCheckedIcon() const
@@ -122,8 +122,8 @@ namespace ftk
             return;
         _checkedIcon = icon;
         _checkedIconImage.reset();
-        _setSizeUpdate();
-        _setDrawUpdate();
+        setSizeUpdate();
+        setDrawUpdate();
     }
 
     ColorRole IButton::getButtonRole() const
@@ -136,7 +136,7 @@ namespace ftk
         if (value == _buttonRole)
             return;
         _buttonRole = value;
-        _setDrawUpdate();
+        setDrawUpdate();
     }
 
     ColorRole IButton::getCheckedRole() const
@@ -149,7 +149,7 @@ namespace ftk
         if (value == _checkedRole)
             return;
         _checkedRole = value;
-        _setDrawUpdate();
+        setDrawUpdate();
     }
 
     bool IButton::hasRepeatClick() const
@@ -192,7 +192,7 @@ namespace ftk
         if (p.checkable)
         {
             _checked = !_checked;
-            _setDrawUpdate();
+            setDrawUpdate();
             if (_checkedCallback)
             {
                 _checkedCallback(_checked);
@@ -245,7 +245,7 @@ namespace ftk
     {
         IMouseWidget::mouseEnterEvent(event);
         event.accept = true;
-        _setDrawUpdate();
+        setDrawUpdate();
         if (_hoveredCallback)
         {
             _hoveredCallback(_isMouseInside());
@@ -255,7 +255,7 @@ namespace ftk
     void IButton::mouseLeaveEvent()
     {
         IMouseWidget::mouseLeaveEvent();
-        _setDrawUpdate();
+        setDrawUpdate();
         if (_hoveredCallback)
         {
             _hoveredCallback(_isMouseInside());
@@ -270,7 +270,7 @@ namespace ftk
         {
             takeKeyFocus();
         }
-        _setDrawUpdate();
+        setDrawUpdate();
         if (_pressedCallback)
         {
             _pressedCallback();
@@ -285,7 +285,7 @@ namespace ftk
     void IButton::mouseReleaseEvent(MouseClickEvent& event)
     {
         IMouseWidget::mouseReleaseEvent(event);
-        _setDrawUpdate();
+        setDrawUpdate();
         if (contains(getGeometry(), _getMousePos()))
         {
             click();

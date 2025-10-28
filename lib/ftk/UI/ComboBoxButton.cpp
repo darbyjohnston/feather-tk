@@ -77,7 +77,7 @@ namespace ftk
         if (p.current == value)
             return;
         p.current = value;
-        _setDrawUpdate();
+        setDrawUpdate();
     }
 
     void ComboBoxButton::setGeometry(const Box2I& value)

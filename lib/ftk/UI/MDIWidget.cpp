@@ -148,8 +148,8 @@ namespace ftk
         {
             p.widget->setParent(p.widgetLayout);
         }
-        _setSizeUpdate();
-        _setDrawUpdate();
+        setSizeUpdate();
+        setDrawUpdate();
     }
 
     void MDIWidget::setPressCallback(const std::function<void(bool)>& value)
@@ -305,7 +305,7 @@ namespace ftk
         if (p.mouse.resize != MDIResize::None)
         {
             p.mouse.resize = MDIResize::None;
-            _setDrawUpdate();
+            setDrawUpdate();
         }
     }
 
@@ -327,7 +327,7 @@ namespace ftk
             if (resize != p.mouse.resize)
             {
                 p.mouse.resize = resize;
-                _setDrawUpdate();
+                setDrawUpdate();
             }
         }
         else

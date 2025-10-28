@@ -14,11 +14,6 @@ namespace ftk
         return _objectName;
     }
 
-    inline ColorRole IWidget::getBackgroundRole() const
-    {
-        return _backgroundRole;
-    }
-
     inline const std::weak_ptr<IWidget>& IWidget::getParent() const
     {
         return _parent;
@@ -44,6 +39,16 @@ namespace ftk
             parent = parent->_parent.lock();
         }
         return out;
+    }
+
+    inline bool IWidget::hasSizeUpdate() const
+    {
+        return _sizeUpdate;
+    }
+
+    inline void IWidget::setSizeUpdate(bool value)
+    {
+        _sizeUpdate = value;
     }
 
     inline const Size2I& IWidget::getSizeHint() const
@@ -101,6 +106,21 @@ namespace ftk
         return out;
     }
 
+    inline bool IWidget::hasDrawUpdate() const
+    {
+        return _drawUpdate;
+    }
+
+    inline void IWidget::setDrawUpdate(bool value)
+    {
+        _drawUpdate = value;
+    }
+
+    inline ColorRole IWidget::getBackgroundRole() const
+    {
+        return _backgroundRole;
+    }
+
     inline bool IWidget::acceptsKeyFocus() const
     {
         return _acceptsKeyFocus;
@@ -116,18 +136,8 @@ namespace ftk
         return _tooltip;
     }
 
-    inline void IWidget::_setDrawUpdate()
-    {
-        _sizeUpdate = true;
-    }
-
     inline void IWidget::_setSizeHint(const Size2I& value)
     {
         _sizeHint = value;
-    }
-
-    inline void IWidget::_setSizeUpdate()
-    {
-        _drawUpdate = true;
     }
 }

@@ -133,8 +133,8 @@ namespace ftk
         {
             p.widget->setParent(_p->scrollArea);
         }
-        _setSizeUpdate();
-        _setDrawUpdate();
+        setSizeUpdate();
+        setDrawUpdate();
     }
 
     Box2I ScrollWidget::getViewport() const
@@ -233,8 +233,8 @@ namespace ftk
             return;
         p.marginRole = value;
         p.size.displayScale.reset();
-        _setSizeUpdate();
-        _setDrawUpdate();
+        setSizeUpdate();
+        setDrawUpdate();
     }
 
     bool ScrollWidget::hasBorder() const
@@ -248,8 +248,8 @@ namespace ftk
         if (value == p.border)
             return;
         p.border = value;
-        _setSizeUpdate();
-        _setDrawUpdate();
+        setSizeUpdate();
+        setDrawUpdate();
     }
 
     ColorRole ScrollWidget::getBorderColorRole() const
@@ -263,7 +263,7 @@ namespace ftk
         if (value == p.borderColor)
             return;
         p.borderColor = value;
-        _setDrawUpdate();
+        setDrawUpdate();
     }
 
     SizeRole ScrollWidget::getSizeHintRole() const

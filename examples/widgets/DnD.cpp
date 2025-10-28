@@ -85,13 +85,13 @@ namespace widgets
     void DragWidget::mouseEnterEvent(MouseEnterEvent& event)
     {
         IMouseWidget::mouseEnterEvent(event);
-        _setDrawUpdate();
+        setDrawUpdate();
     }
 
     void DragWidget::mouseLeaveEvent()
     {
         IMouseWidget::mouseLeaveEvent();
-        _setDrawUpdate();
+        setDrawUpdate();
     }
 
     void DragWidget::mouseMoveEvent(MouseMoveEvent& event)
@@ -182,14 +182,14 @@ namespace widgets
     {
         event.accept = true;
         _dropTarget = _getDropIndex(event.pos);
-        _setDrawUpdate();
+        setDrawUpdate();
     }
 
     void ContainerWidget::dragLeaveEvent(DragAndDropEvent& event)
     {
         event.accept = true;
         _dropTarget = -1;
-        _setDrawUpdate();
+        setDrawUpdate();
     }
 
     void ContainerWidget::dragMoveEvent(DragAndDropEvent& event)
@@ -199,7 +199,7 @@ namespace widgets
         if (dropTarget != _dropTarget)
         {
             _dropTarget = dropTarget;
-            _setDrawUpdate();
+            setDrawUpdate();
         }
     }
 
@@ -223,7 +223,7 @@ namespace widgets
             }
             _layout->moveToIndex(widget, _dropTarget);
             _dropTarget = -1;
-            _setDrawUpdate();
+            setDrawUpdate();
         }
     }
 

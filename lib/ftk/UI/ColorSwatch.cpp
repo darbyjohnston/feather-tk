@@ -70,7 +70,7 @@ namespace ftk
         if (value == p.color)
             return;
         p.color = value;
-        _setDrawUpdate();
+        setDrawUpdate();
     }
 
     void ColorSwatch::setPressedCallback(const std::function<void(void)>& value)
@@ -110,8 +110,8 @@ namespace ftk
             return;
         p.sizeRole = value;
         p.size.displayScale.reset();
-        _setSizeUpdate();
-        _setDrawUpdate();
+        setSizeUpdate();
+        setDrawUpdate();
     }
 
     void ColorSwatch::setGeometry(const Box2I& value)
@@ -201,7 +201,7 @@ namespace ftk
                     [this](const Color4F& value)
                     {
                         _p->color = value;
-                        _setDrawUpdate();
+                        setDrawUpdate();
                         if (_p->colorCallback)
                         {
                             _p->colorCallback(value);

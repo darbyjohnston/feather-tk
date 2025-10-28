@@ -79,7 +79,7 @@ namespace ftk
         if (value == p.scrollType)
             return;
         p.scrollType = value;
-        _setSizeUpdate();
+        setSizeUpdate();
     }
 
     const Size2I& ScrollArea::getScrollSize() const
@@ -111,8 +111,8 @@ namespace ftk
         if (tmp == p.scrollPos)
             return;
         p.scrollPos = tmp;
-        _setSizeUpdate();
-        _setDrawUpdate();
+        setSizeUpdate();
+        setDrawUpdate();
         if (p.scrollPosCallback)
         {
             p.scrollPosCallback(p.scrollPos);
@@ -160,8 +160,8 @@ namespace ftk
             return;
         p.sizeHintRole = value;
         p.size.displayScale.reset();
-        _setSizeUpdate();
-        _setDrawUpdate();
+        setSizeUpdate();
+        setDrawUpdate();
     }
 
     void ScrollArea::setGeometry(const Box2I& value)
@@ -200,8 +200,8 @@ namespace ftk
         if (scrollSize != p.scrollSize)
         {
             p.scrollSize = scrollSize;
-            _setSizeUpdate();
-            _setDrawUpdate();
+            setSizeUpdate();
+            setDrawUpdate();
             if (p.scrollSizeCallback)
             {
                 p.scrollSizeCallback(p.scrollSize);
@@ -214,8 +214,8 @@ namespace ftk
         if (scrollPos != p.scrollPos)
         {
             p.scrollPos = scrollPos;
-            _setSizeUpdate();
-            _setDrawUpdate();
+            setSizeUpdate();
+            setDrawUpdate();
             if (p.scrollPosCallback)
             {
                 p.scrollPosCallback(p.scrollPos);

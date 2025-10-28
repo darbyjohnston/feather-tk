@@ -74,8 +74,8 @@ namespace ftk
                     p.textCallback(value);
                 }
                 p.size.textSize.reset();
-                _setSizeUpdate();
-                _setDrawUpdate();
+                setSizeUpdate();
+                setDrawUpdate();
             });
 
         p.cursorObserver = ValueObserver<TextEditPos>::create(
@@ -83,7 +83,7 @@ namespace ftk
             [this](const TextEditPos&)
             {
                 _cursorReset();
-                _setDrawUpdate();
+                setDrawUpdate();
             });
 
         p.selectionObserver = ValueObserver<TextEditSelection>::create(
@@ -91,7 +91,7 @@ namespace ftk
             [this](const TextEditSelection& value)
             {
                 _p->selection = value;
-                _setDrawUpdate();
+                setDrawUpdate();
             });
     }
 
@@ -155,8 +155,8 @@ namespace ftk
         p.options = value;
         p.size.displayScale.reset();
         p.size.textSize.reset();
-        _setSizeUpdate();
-        _setDrawUpdate();
+        setSizeUpdate();
+        setDrawUpdate();
     }
 
     Box2I TextEditWidget::getCursorBox(bool margin) const
@@ -201,7 +201,7 @@ namespace ftk
             if (p.cursorVisible)
             {
                 p.cursorVisible = false;
-                _setDrawUpdate();
+                setDrawUpdate();
             }
         }
     }
@@ -216,7 +216,7 @@ namespace ftk
             if (p.cursorVisible)
             {
                 p.cursorVisible = false;
-                _setDrawUpdate();
+                setDrawUpdate();
             }
         }
     }
@@ -236,14 +236,14 @@ namespace ftk
             if (diff.count() > p.options.cursorBlink)
             {
                 p.cursorVisible = !p.cursorVisible;
-                _setDrawUpdate();
+                setDrawUpdate();
                 p.cursorTimer = now;
             }
         }
         else if (p.cursorVisible)
         {
             p.cursorVisible = false;
-            _setDrawUpdate();
+            setDrawUpdate();
         }
 
         if (p.autoScroll.x != 0 || p.autoScroll.y != 0)

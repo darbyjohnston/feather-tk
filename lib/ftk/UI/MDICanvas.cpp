@@ -65,8 +65,8 @@ namespace ftk
         if (value == p.canvasSize)
             return;
         p.canvasSize = value;
-        _setSizeUpdate();
-        _setDrawUpdate();
+        setSizeUpdate();
+        setDrawUpdate();
     }
 
     const Size2I& MDICanvas::getGridSize() const
@@ -80,8 +80,8 @@ namespace ftk
         if (value == p.gridSize)
             return;
         p.gridSize = value;
-        _setSizeUpdate();
-        _setDrawUpdate();
+        setSizeUpdate();
+        setDrawUpdate();
     }
 
     std::shared_ptr<MDIWidget> MDICanvas::addWidget(
@@ -215,8 +215,8 @@ namespace ftk
                     }
                 });
             p.newWidgets.push_back(std::make_pair(pos, out));
-            _setSizeUpdate();
-            _setDrawUpdate();
+            setSizeUpdate();
+            setDrawUpdate();
         }
         return out;
     }

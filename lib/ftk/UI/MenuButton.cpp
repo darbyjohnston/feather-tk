@@ -150,7 +150,7 @@ namespace ftk
         if (value == p.current)
             return;
         p.current = value;
-        _setDrawUpdate();
+        setDrawUpdate();
     }
 
     void MenuButton::setShortcut(Key key, int modifiers)
@@ -162,8 +162,8 @@ namespace ftk
         p.shortcutModifiers = modifiers;
         p.shortcutText = getShortcutLabel(p.shortcut, p.shortcutModifiers);
         p.size.displayScale.reset();
-        _setSizeUpdate();
-        _setDrawUpdate();
+        setSizeUpdate();
+        setDrawUpdate();
     }
 
     void MenuButton::setSubMenuIcon(const std::string& name)
@@ -188,8 +188,8 @@ namespace ftk
         if (changed)
         {
             p.size.displayScale.reset();
-            _setSizeUpdate();
-            _setDrawUpdate();
+            setSizeUpdate();
+            setDrawUpdate();
         }
     }
 

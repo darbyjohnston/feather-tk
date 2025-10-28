@@ -49,14 +49,6 @@ namespace ftk
         return join(names, '/');
     }
 
-    void IWidget::setBackgroundRole(ColorRole value)
-    {
-        if (value == _backgroundRole)
-            return;
-        _backgroundRole = value;
-        _setDrawUpdate();
-    }
-
     void IWidget::setParent(const std::shared_ptr<IWidget>& value)
     {
         if (!value)
@@ -80,8 +72,8 @@ namespace ftk
                 ChildRemoveEvent event(*i, j);
                 parent->_children.erase(i);
                 parent->childRemoveEvent(event);
-                parent->_setSizeUpdate();
-                parent->_setDrawUpdate();
+                parent->setSizeUpdate();
+                parent->setDrawUpdate();
             }
         }
         _parent = value;
@@ -91,8 +83,8 @@ namespace ftk
                 std::static_pointer_cast<IWidget>(shared_from_this()));
             ChildAddEvent event(shared_from_this());
             value->childAddEvent(event);
-            value->_setSizeUpdate();
-            value->_setDrawUpdate();
+            value->setSizeUpdate();
+            value->setDrawUpdate();
         }
     }
 
@@ -118,8 +110,8 @@ namespace ftk
             auto child = *i;
             _children.erase(i);
             _children.push_back(child);
-            _setSizeUpdate();
-            _setDrawUpdate();
+            setSizeUpdate();
+            setDrawUpdate();
         }
     }
 
@@ -131,8 +123,8 @@ namespace ftk
             auto child = *i;
             _children.erase(i);
             _children.push_front(child);
-            _setSizeUpdate();
-            _setDrawUpdate();
+            setSizeUpdate();
+            setDrawUpdate();
         }
     }
 
@@ -156,8 +148,8 @@ namespace ftk
             {
                 _children.push_back(value);
             }
-            _setSizeUpdate();
-            _setDrawUpdate();
+            setSizeUpdate();
+            setDrawUpdate();
         }
     }
 
@@ -178,8 +170,8 @@ namespace ftk
         if (value == _hStretch)
             return;
         _hStretch = value;
-        _setSizeUpdate();
-        _setDrawUpdate();
+        setSizeUpdate();
+        setDrawUpdate();
     }
 
     void IWidget::setVStretch(Stretch value)
@@ -187,8 +179,8 @@ namespace ftk
         if (value == _vStretch)
             return;
         _vStretch = value;
-        _setSizeUpdate();
-        _setDrawUpdate();
+        setSizeUpdate();
+        setDrawUpdate();
     }
 
     void IWidget::setStretch(Stretch horizontal, Stretch vertical)
@@ -197,8 +189,8 @@ namespace ftk
             return;
         _hStretch = horizontal;
         _vStretch = vertical;
-        _setSizeUpdate();
-        _setDrawUpdate();
+        setSizeUpdate();
+        setDrawUpdate();
     }
 
     void IWidget::setStretch(Stretch value)
@@ -211,8 +203,8 @@ namespace ftk
         if (value == _hAlign)
             return;
         _hAlign = value;
-        _setSizeUpdate();
-        _setDrawUpdate();
+        setSizeUpdate();
+        setDrawUpdate();
     }
 
     void IWidget::setVAlign(VAlign value)
@@ -220,8 +212,8 @@ namespace ftk
         if (value == _vAlign)
             return;
         _vAlign = value;
-        _setSizeUpdate();
-        _setDrawUpdate();
+        setSizeUpdate();
+        setDrawUpdate();
     }
 
     void IWidget::setAlign(HAlign hAlign, VAlign vAlign)
@@ -230,8 +222,8 @@ namespace ftk
             return;
         _hAlign = hAlign;
         _vAlign = vAlign;
-        _setSizeUpdate();
-        _setDrawUpdate();
+        setSizeUpdate();
+        setDrawUpdate();
     }
 
     void IWidget::setGeometry(const Box2I& value)
@@ -239,8 +231,8 @@ namespace ftk
         if (value == _geometry)
             return;
         _geometry = value;
-        _setSizeUpdate();
-        _setDrawUpdate();
+        setSizeUpdate();
+        setDrawUpdate();
     }
 
     void IWidget::setPos(const V2I& value)
@@ -262,12 +254,12 @@ namespace ftk
         {
             releaseKeyFocus();
         }
-        _setSizeUpdate();
-        _setDrawUpdate();
+        setSizeUpdate();
+        setDrawUpdate();
         if (auto parent = _parent.lock())
         {
-            parent->_setSizeUpdate();
-            parent->_setDrawUpdate();
+            parent->setSizeUpdate();
+            parent->setDrawUpdate();
         }
     }
 
@@ -295,8 +287,16 @@ namespace ftk
         {
             releaseKeyFocus();
         }
-        _setSizeUpdate();
-        _setDrawUpdate();
+        setSizeUpdate();
+        setDrawUpdate();
+    }
+
+    void IWidget::setBackgroundRole(ColorRole value)
+    {
+        if (value == _backgroundRole)
+            return;
+        _backgroundRole = value;
+        setDrawUpdate();
     }
 
     void IWidget::setAcceptsKeyFocus(bool value)

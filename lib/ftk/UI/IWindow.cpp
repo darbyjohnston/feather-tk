@@ -74,7 +74,7 @@ namespace ftk
         {
             p.keyFocus.reset();
             widget->keyFocusEvent(false);
-            _setDrawUpdate();
+            setDrawUpdate();
         }
         if (value && value->acceptsKeyFocus())
         {
@@ -82,7 +82,7 @@ namespace ftk
             if (auto widget = p.keyFocus.lock())
             {
                 widget->keyFocusEvent(true);
-                _setDrawUpdate();
+                setDrawUpdate();
             }
         }
     }
@@ -303,7 +303,7 @@ namespace ftk
 
     bool IWindow::_hasSizeUpdate(const std::shared_ptr<IWidget>& widget) const
     {
-        bool out = widget->_sizeUpdate;
+        bool out = widget->hasSizeUpdate();
         if (out)
         {
             //std::cout << "Size update: " << widget->getObjectName() << std::endl;
@@ -327,7 +327,7 @@ namespace ftk
             _sizeHintEventRecursive(child, event);
         }
         widget->sizeHintEvent(event);
-        widget->_sizeUpdate = false;
+        widget->setSizeUpdate(false);
     }
 
     bool IWindow::_hasDrawUpdate(const std::shared_ptr<IWidget>& widget) const
@@ -335,7 +335,7 @@ namespace ftk
         bool out = false;
         if (!widget->isClipped())
         {
-            out = widget->_drawUpdate;
+            out = widget->hasDrawUpdate();
             if (out)
             {
                 //std::cout << "Draw update: " << widget->getObjectName() << std::endl;
@@ -361,7 +361,7 @@ namespace ftk
         {
             event.render->setClipRect(drawRect);
             widget->drawEvent(drawRect, event);
-            widget->_drawUpdate = false;
+            widget->setDrawUpdate(false);
             const Box2I childrenClipRect = intersect(
                 widget->getChildrenClipRect(),
                 drawRect);
@@ -560,7 +560,7 @@ namespace ftk
 
         if (widget && p.dndCursor)
         {
-            _setDrawUpdate();
+            setDrawUpdate();
         }
 
         if (length(p.cursorPos - p.tooltipPos) > p.size.dl)
@@ -618,7 +618,7 @@ namespace ftk
                 }
                 p.dndData.reset();
                 p.dndCursor.reset();
-                _setDrawUpdate();
+                setDrawUpdate();
             }
 
             MouseMoveEvent event(

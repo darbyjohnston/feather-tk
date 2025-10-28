@@ -221,7 +221,7 @@ namespace ftk
         {
             p.selection.clear();
             p.selection.select(select);
-            _setDrawUpdate();
+            setDrawUpdate();
         }
     }
 
@@ -231,7 +231,7 @@ namespace ftk
         if (p.selection.isValid())
         {
             p.selection.clear();
-            _setDrawUpdate();
+            setDrawUpdate();
         }
     }
 
@@ -246,8 +246,8 @@ namespace ftk
         if (value == p.fontRole)
             return;
         p.fontRole = value;
-        _setSizeUpdate();
-        _setDrawUpdate();
+        setSizeUpdate();
+        setDrawUpdate();
     }
 
     ColorRole LineEdit::getBorderRole() const
@@ -261,7 +261,7 @@ namespace ftk
         if (value == p.borderRole)
             return;
         p.borderRole = value;
-        _setDrawUpdate();
+        setDrawUpdate();
     }
 
     void LineEdit::setGeometry(const Box2I& value)
@@ -285,7 +285,7 @@ namespace ftk
             if (p.cursorVisible)
             {
                 p.cursorVisible = false;
-                _setDrawUpdate();
+                setDrawUpdate();
             }
         }
     }
@@ -300,7 +300,7 @@ namespace ftk
             if (p.cursorVisible)
             {
                 p.cursorVisible = false;
-                _setDrawUpdate();
+                setDrawUpdate();
             }
         }
     }
@@ -319,14 +319,14 @@ namespace ftk
             if (diff.count() > .5F)
             {
                 p.cursorVisible = !p.cursorVisible;
-                _setDrawUpdate();
+                setDrawUpdate();
                 p.cursorTimer = now;
             }
         }
         else if (p.cursorVisible)
         {
             p.cursorVisible = false;
-            _setDrawUpdate();
+            setDrawUpdate();
         }
     }
 
@@ -461,12 +461,12 @@ namespace ftk
                 p.cursorPos = cursorPos;
                 p.cursorVisible = true;
                 p.cursorTimer = std::chrono::steady_clock::now();
-                _setDrawUpdate();
+                setDrawUpdate();
             }
             if (cursorPos != p.selection.get().second)
             {
                 p.selection.setSecond(cursorPos);
-                _setDrawUpdate();
+                setDrawUpdate();
             }
         }
     }
@@ -481,13 +481,13 @@ namespace ftk
             p.cursorPos = cursorPos;
             p.cursorVisible = true;
             p.cursorTimer = std::chrono::steady_clock::now();
-            _setDrawUpdate();
+            setDrawUpdate();
         }
         const SelectionPair selection(cursorPos, cursorPos);
         if (selection != p.selection.get())
         {
             p.selection.set(selection);
-            _setDrawUpdate();
+            setDrawUpdate();
         }
         takeKeyFocus();
     }
@@ -503,7 +503,7 @@ namespace ftk
             //{
             //    p.textCallback(p.text);
             //}
-            _setDrawUpdate();
+            setDrawUpdate();
         }
         if (p.focusCallback)
         {
@@ -620,7 +620,7 @@ namespace ftk
                     p.cursorVisible = true;
                     p.cursorTimer = std::chrono::steady_clock::now();
 
-                    _setDrawUpdate();
+                    setDrawUpdate();
                 }
                 break;
             case Key::Right:
@@ -640,7 +640,7 @@ namespace ftk
                     p.cursorVisible = true;
                     p.cursorTimer = std::chrono::steady_clock::now();
 
-                    _setDrawUpdate();
+                    setDrawUpdate();
                 }
                 break;
             case Key::Home:
@@ -660,7 +660,7 @@ namespace ftk
                     p.cursorVisible = true;
                     p.cursorTimer = std::chrono::steady_clock::now();
 
-                    _setDrawUpdate();
+                    setDrawUpdate();
                 }
                 break;
             case Key::End:
@@ -680,7 +680,7 @@ namespace ftk
                     p.cursorVisible = true;
                     p.cursorTimer = std::chrono::steady_clock::now();
 
-                    _setDrawUpdate();
+                    setDrawUpdate();
                 }
                 break;
             case Key::Backspace:
@@ -823,7 +823,7 @@ namespace ftk
     {
         FTK_P();
         p.size.displayScale.reset();
-        _setSizeUpdate();
-        _setDrawUpdate();
+        setSizeUpdate();
+        setDrawUpdate();
     }
 }
