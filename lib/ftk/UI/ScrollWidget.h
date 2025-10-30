@@ -91,12 +91,6 @@ namespace ftk
         //! Set whether the scroll area has a border.
         void setBorder(bool);
 
-        //! Get the border color role.
-        ColorRole getBorderColorRole() const;
-
-        //! Set the border color role.
-        void setBorderColorRole(ColorRole);
-
         //! Get the size hint role.
         SizeRole getSizeHintRole() const;
 

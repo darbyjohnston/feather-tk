@@ -25,7 +25,7 @@ namespace ftk
         {
             std::optional<float> displayScale;
             int margin = 0;
-            int border = 0;
+            int keyFocus = 0;
             int pad = 0;
             FontInfo fontInfo;
             FontMetrics fontMetrics;
@@ -38,7 +38,7 @@ namespace ftk
             Box2I g;
             Box2I g2;
             TriMesh2F mesh;
-            TriMesh2F border;
+            TriMesh2F keyFocus;
             std::vector<std::shared_ptr<Glyph> > glyphs;
         };
         std::optional<DrawData> draw;
@@ -208,7 +208,7 @@ namespace ftk
         {
             p.size.displayScale = event.displayScale;
             p.size.margin = event.style->getSizeRole(SizeRole::MarginInside, event.displayScale);
-            p.size.border = event.style->getSizeRole(SizeRole::Border, event.displayScale);
+            p.size.keyFocus = event.style->getSizeRole(SizeRole::KeyFocus, event.displayScale);
             p.size.pad = event.style->getSizeRole(SizeRole::LabelPad, event.displayScale);
             p.size.fontInfo = event.style->getFontRole(_fontRole, event.displayScale);
             p.size.fontMetrics = event.fontSystem->getMetrics(p.size.fontInfo);
@@ -236,7 +236,7 @@ namespace ftk
         sizeHint = margin(sizeHint, p.size.margin);
         if (acceptsKeyFocus())
         {
-            sizeHint = margin(sizeHint, p.size.border);
+            sizeHint = margin(sizeHint, p.size.keyFocus);
         }
         _setSizeHint(sizeHint);
     }
@@ -265,10 +265,10 @@ namespace ftk
             p.draw->g2 = margin(p.draw->g, -p.size.margin);
             if (acceptsKeyFocus())
             {
-                p.draw->g2 = margin(p.draw->g2, -p.size.border);
+                p.draw->g2 = margin(p.draw->g2, -p.size.keyFocus);
             }
             p.draw->mesh = rect(p.draw->g);
-            p.draw->border = border(p.draw->g, p.size.border);
+            p.draw->keyFocus = border(p.draw->g, p.size.keyFocus);
         }
 
         // Draw the background.
@@ -284,7 +284,7 @@ namespace ftk
         if (hasKeyFocus())
         {
             event.render->drawMesh(
-                p.draw->border,
+                p.draw->keyFocus,
                 event.style->getColorRole(ColorRole::KeyFocus));
         }
 

@@ -4,7 +4,6 @@
 
 #include "Buttons.h"
 
-#include <ftk/UI/ButtonGroup.h>
 #include <ftk/UI/CheckBox.h>
 #include <ftk/UI/GroupBox.h>
 #include <ftk/UI/MainWindow.h>
@@ -50,8 +49,8 @@ namespace widgets
         groupBox = GroupBox::create(context, "Tool Buttons", layout);
         hLayout = HorizontalLayout::create(context, groupBox);
         hLayout->setSpacingRole(SizeRole::SpacingSmall);
-        auto toolButtonGroup = ButtonGroup::create(context, ButtonGroupType::Radio);
-        toolButtonGroup->setCheckedCallback(
+        _toolButtonGroup = ButtonGroup::create(context, ButtonGroupType::Radio);
+        _toolButtonGroup->setCheckedCallback(
             [](int index, bool value)
             {
                 std::cout << Format("Tool {0}").arg(index) << std::endl;
@@ -77,7 +76,7 @@ namespace widgets
             toolButton->setChecked(0 == i);
             toolButton->setIcon(toolIcons[i]);
             toolButton->setTooltip(toolTooltips[i]);
-            toolButtonGroup->addButton(toolButton);
+            _toolButtonGroup->addButton(toolButton);
         }
         auto playStopButton = ToolButton::create(context, hLayout);
         playStopButton->setIcon("PlaybackStop");
@@ -88,17 +87,23 @@ namespace widgets
         toolButton->setIcon("Settings");
         toolButton = ToolButton::create(context, "Disabled", hLayout);
         toolButton->setEnabled(false);
-        toolButtonGroup->addButton(toolButton);
+        _toolButtonGroup->addButton(toolButton);
 
         // Create check boxes.
         groupBox = GroupBox::create(context, "Check Boxes", layout);
         auto vLayout = VerticalLayout::create(context, groupBox);
         vLayout->setSpacingRole(SizeRole::SpacingSmall);
-        auto checkBox = CheckBox::create(context, "Check", vLayout);
+        auto checkBox = CheckBox::create(context, "Check 0", vLayout);
         checkBox->setCheckedCallback(
             [](bool value)
             {
-                std::cout << Format("Checked: {0}").arg(value) << std::endl;
+                std::cout << Format("Checked 0: {0}").arg(value) << std::endl;
+            });
+        checkBox = CheckBox::create(context, "Check 1", vLayout);
+        checkBox->setCheckedCallback(
+            [](bool value)
+            {
+                std::cout << Format("Checked 1: {0}").arg(value) << std::endl;
             });
         checkBox = CheckBox::create(context, "Disabled", vLayout);
         checkBox->setEnabled(false);
@@ -107,8 +112,8 @@ namespace widgets
         groupBox = GroupBox::create(context, "Radio Buttons", layout);
         vLayout = VerticalLayout::create(context, groupBox);
         vLayout->setSpacingRole(SizeRole::SpacingSmall);
-        auto radioButtonGroup = ButtonGroup::create(context, ButtonGroupType::Radio);
-        radioButtonGroup->setCheckedCallback(
+        _radioButtonGroup = ButtonGroup::create(context, ButtonGroupType::Radio);
+        _radioButtonGroup->setCheckedCallback(
             [](int index, bool value)
             {
                 std::cout << Format("Radio {0}").arg(index) << std::endl;
@@ -118,7 +123,7 @@ namespace widgets
             auto radioButton = RadioButton::create(context, vLayout);
             radioButton->setText(Format("Radio {0}").arg(i));
             radioButton->setChecked(0 == i);
-            radioButtonGroup->addButton(radioButton);
+            _radioButtonGroup->addButton(radioButton);
         }
         auto radioButton = RadioButton::create(context, "Disabled", vLayout);
         radioButton->setEnabled(false);

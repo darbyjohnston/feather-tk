@@ -164,7 +164,7 @@ namespace ftk
         FTK_P();
         const auto& text = p.model->getText();
         const TextEditPos& cursor = p.model->getCursor();
-        V2I pos(p.size.margin, 0);
+        V2I pos(p.size.margin, p.size.margin);
         if (cursor.line >= 0 && cursor.line < text.size())
         {
             pos.y += p.size.fontMetrics.lineHeight * cursor.line;
@@ -175,7 +175,7 @@ namespace ftk
         Box2I out = Box2I(pos.x, pos.y, p.size.border, p.size.fontMetrics.lineHeight);
         if (margin)
         {
-            out = ftk::margin(out, p.size.margin, 0, p.size.margin, 0);
+            out = ftk::margin(out, p.size.margin);
         }
         return out;
     }
@@ -292,7 +292,7 @@ namespace ftk
             }
         }
 
-        _setSizeHint(margin(p.size.textSize.value(), p.size.margin, 0));
+        _setSizeHint(margin(p.size.textSize.value(), p.size.margin));
     }
 
     void TextEditWidget::drawEvent(
@@ -308,9 +308,9 @@ namespace ftk
         const auto& text = p.model->getText();
         const Box2I g2(
             g.min.x + p.size.margin,
-            g.min.y,
+            g.min.y + p.size.margin,
             g.w() - p.size.margin * 2,
-            g.h());
+            g.h() - p.size.margin * 2);
         if (p.selection.isValid() &&
             p.selection.first.line >= 0 &&
             p.selection.first.line < static_cast<int>(text.size()) &&
@@ -520,7 +520,7 @@ namespace ftk
         const Box2I& g = getGeometry();
         const auto& text = p.model->getText();
         out.line = clamp(
-            (value.y - g.min.y) / p.size.fontMetrics.lineHeight,
+            (value.y - g.min.y - p.size.margin) / p.size.fontMetrics.lineHeight,
             0,
             static_cast<int>(text.size()) - 1);
         if (out.line >= 0 && out.line < text.size())

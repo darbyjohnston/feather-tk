@@ -4,6 +4,7 @@
 
 #pragma once
 
+#include <ftk/UI/ButtonGroup.h>
 #include <ftk/UI/ScrollWidget.h>
 
 using namespace ftk;
@@ -27,5 +28,7 @@ namespace widgets
 
     private:
         std::shared_ptr<ftk::ScrollWidget> _scrollWidget;
+        std::shared_ptr<ftk::ButtonGroup> _toolButtonGroup;
+        std::shared_ptr<ftk::ButtonGroup> _radioButtonGroup;
     };
 }

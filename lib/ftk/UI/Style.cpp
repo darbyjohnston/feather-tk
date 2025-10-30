@@ -26,6 +26,7 @@ namespace ftk
         "SpacingTool",
         "Icon",
         "Border",
+        "KeyFocus",
         "LabelPad",
         "ScrollArea",
         "ScrollAreaSmall",
@@ -50,6 +51,7 @@ namespace ftk
         out[SizeRole::SpacingTool] = 2;
         out[SizeRole::Icon] = 20;
         out[SizeRole::Border] = 1;
+        out[SizeRole::KeyFocus] = 2;
         out[SizeRole::LabelPad] = 4;
         out[SizeRole::ScrollArea] = 200;
         out[SizeRole::ScrollAreaSmall] = 100;

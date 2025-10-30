@@ -116,6 +116,7 @@ namespace ftk
             std::optional<float> displayScale;
             int margin = 0;
             int border = 0;
+            int keyFocus = 0;
             FontInfo fontInfo;
             FontMetrics fontMetrics;
             Size2I textSize;
@@ -128,6 +129,7 @@ namespace ftk
             Box2I g2;
             Box2I g3;
             TriMesh2F border;
+            TriMesh2F keyFocus;
             std::vector<std::shared_ptr<Glyph> > glyphs;
             std::vector<Box2I> glyphsBox;
         };
@@ -341,6 +343,7 @@ namespace ftk
             p.size.displayScale = event.displayScale;
             p.size.margin = event.style->getSizeRole(SizeRole::MarginInside, event.displayScale);
             p.size.border = event.style->getSizeRole(SizeRole::Border, event.displayScale);
+            p.size.keyFocus = event.style->getSizeRole(SizeRole::KeyFocus, event.displayScale);
             p.size.fontInfo = event.style->getFontRole(p.fontRole, event.displayScale);
             p.size.fontMetrics = event.fontSystem->getMetrics(p.size.fontInfo);
             p.size.textSize = event.fontSystem->getSize(p.text, p.size.fontInfo);
@@ -351,8 +354,8 @@ namespace ftk
         Size2I sizeHint(p.size.formatSize.w, p.size.fontMetrics.lineHeight);
         sizeHint = margin(
             sizeHint,
-            p.size.margin * 2 + p.size.border,
-            p.size.margin + p.size.border);
+            p.size.margin * 2 + p.size.keyFocus,
+            p.size.margin + p.size.keyFocus);
         _setSizeHint(sizeHint);
     }
 
@@ -377,20 +380,22 @@ namespace ftk
         {
             p.draw = Private::DrawData();
             const Box2I g = align(getGeometry(), getSizeHint(), getHAlign(), getVAlign());
-            p.draw->g2 = margin(g, -p.size.border);
+            p.draw->g2 = margin(g, -p.size.keyFocus);
             p.draw->g3 = margin(
                 p.draw->g2,
                 -p.size.margin * 2,
                 -p.size.margin);
             p.draw->border = border(g, p.size.border);
+            p.draw->keyFocus = border(g, p.size.keyFocus);
         }
 
         const bool enabled = isEnabled();
 
         // Draw the focus and border.
+        const bool keyFocus = hasKeyFocus();
         event.render->drawMesh(
-            p.draw->border,
-            event.style->getColorRole(hasKeyFocus() ? ColorRole::KeyFocus : ColorRole::Border));
+            keyFocus ? p.draw->keyFocus : p.draw->border,
+            event.style->getColorRole(keyFocus ? ColorRole::KeyFocus : ColorRole::Border));
 
 
         // Draw the background.
@@ -499,10 +504,6 @@ namespace ftk
         if (!value)
         {
             p.selection.clear();
-            //if (p.textCallback)
-            //{
-            //    p.textCallback(p.text);
-            //}
             setDrawUpdate();
         }
         if (p.focusCallback)

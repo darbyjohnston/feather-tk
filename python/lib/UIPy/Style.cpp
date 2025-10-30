@@ -27,6 +27,7 @@ namespace ftk
             .value("SpacingTool", SizeRole::SpacingTool)
             .value("SizeRole_Icon", SizeRole::Icon)
             .value("Border", SizeRole::Border)
+            .value("KeyFocus", SizeRole::KeyFocus)
             .value("LabelPad", SizeRole::LabelPad)
             .value("ScrollArea", SizeRole::ScrollArea)
             .value("ScrollAreaSmall", SizeRole::ScrollAreaSmall)
