@@ -1,6 +1,5 @@
 // SPDX-License-Identifier: BSD-3-Clause
-// Cspyright (c) 2024 Darby Johnston
-// All rights reserved.
+// Copyright Contributors to the feather-tk project.
 
 #pragma once
 
