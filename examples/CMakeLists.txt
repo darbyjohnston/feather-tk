@@ -1,3 +1,4 @@
+add_subdirectory(gfx)
 add_subdirectory(imageview)
 add_subdirectory(objview)
 add_subdirectory(simple)

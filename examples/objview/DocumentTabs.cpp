@@ -19,8 +19,6 @@ namespace objview
     {
         IWidget::_init(context, "examples::objview::DocumentTabs", parent);
 
-        setStretch(Stretch::Expanding);
-
         _tabWidget = TabWidget::create(context, shared_from_this());
         _tabWidget->setTabsClosable(true);
 

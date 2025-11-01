@@ -46,7 +46,6 @@ int main(int argc, char** argv)
     auto label = Label::create(context, "Hello world");
     label->setFontRole(FontRole::Title);
     label->setAlign(HAlign::Center, VAlign::Center);
-    label->setStretch(Stretch::Expanding);
     window->setWidget(label);
 
     // Run the application.
@@ -73,8 +72,7 @@ window = ftk.MainWindow(context, app, ftk.Size2I(1280, 960))
 # Create a label.
 label = ftk.Label(context, "Hello world")
 label.fontRole = ftk.FontRole.Title
-label.setAlign(ftk.HAlign.Center, ftk.VAlign.Center);
-label.setStretch(ftk.Stretch.Expanding);
+label.setAlign(ftk.HAlign.Center, ftk.VAlign.Center)
 window.setWidget(label)
 
 # Run the application.

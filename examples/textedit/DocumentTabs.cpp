@@ -18,8 +18,6 @@ namespace textedit
     {
         IWidget::_init(context, "examples::textedit::DocumentTabs", parent);
 
-        setStretch(Stretch::Expanding);
-
         _tabWidget = TabWidget::create(context, shared_from_this());
         _tabWidget->setTabsClosable(true);
 

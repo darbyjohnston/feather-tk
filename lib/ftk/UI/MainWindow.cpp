@@ -23,7 +23,6 @@ namespace ftk
         std::shared_ptr<Divider> menuBarDivider;
         std::shared_ptr<IWidget> centralWidget;
         std::shared_ptr<VerticalLayout> layout;
-        std::shared_ptr<VerticalLayout> centralLayout;
 
         std::shared_ptr<ValueObserver<float> > displayScaleObserver;
         std::shared_ptr<ValueObserver<ColorStyle> > colorStyleObserver;
@@ -118,9 +117,6 @@ namespace ftk
         p.layout->setSpacingRole(SizeRole::None);
         p.menuBar->setParent(p.layout);
         p.menuBarDivider->setParent(p.layout);
-        p.centralLayout = VerticalLayout::create(context, p.layout);
-        p.centralLayout->setSpacingRole(SizeRole::None);
-        p.centralLayout->setVStretch(Stretch::Expanding);
 
         p.colorStyleObserver = ValueObserver<ColorStyle>::create(
             app->observeColorStyle(),
@@ -207,7 +203,8 @@ namespace ftk
         p.centralWidget = value;
         if (p.centralWidget)
         {
-            p.centralWidget->setParent(p.centralLayout);
+            p.centralWidget->setStretch(Stretch::Expanding);
+            p.centralWidget->setParent(p.layout);
         }
     }
 

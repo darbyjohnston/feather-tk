@@ -30,7 +30,6 @@ namespace widgets
         ftk::MainWindow::_init(context, app, Size2I(1920, 1080));
 
         _tabWidget = TabWidget::create(context);
-        _tabWidget->setVStretch(Stretch::Expanding);
         _tabWidget->addTab("Bellows", Bellows::create(context));
         _tabWidget->addTab("Buttons", Buttons::create(context));
         _tabWidget->addTab("Charts", Charts::create(context));

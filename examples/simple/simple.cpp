@@ -22,7 +22,6 @@ int main(int argc, char** argv)
     auto label = Label::create(context, "Hello world");
     label->setFontRole(FontRole::Title);
     label->setAlign(HAlign::Center, VAlign::Center);
-    label->setStretch(Stretch::Expanding);
     window->setWidget(label);
 
     // Run the application.
