@@ -88,8 +88,8 @@ jobs:
         xvfb-run ctest --verbose -C Debug
         xvfb-run ctest --verbose --rerun-failed --output-on-failure -C Debug
 
-  macos-13-build:
-    runs-on: macos-13
+  macos-15-intel-build:
+    runs-on: macos-15-intel
 
     env:
       FTK_API: GL_4_1
